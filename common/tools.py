@@ -18,7 +18,12 @@ def get_elevation(lat: int | float, long: int | float) -> float:
     Retrieves elevation data from Open-meteo elevation
     API based on the latitude and longitude coordinates.
 
+    Args:
+        lat (int | float): latitudinal coordinates of the location.
+        long (int | float): longitudinal coordinates of the location.
+
     Raises:
+        ValueError: If `lat` or `long` aren't integers or floating point numbers.
         RequestError: If there's a server related error while requesting elevation data from the API.
 
     Example:
