@@ -18,12 +18,12 @@ def get_elevation(lat: int | float, long: int | float) -> float:
     Retrieves elevation data from Open-meteo elevation
     API based on the latitude and longitude coordinates.
 
-    Args:
+    Params:
         lat (int | float): latitudinal coordinates of the location.
         long (int | float): longitudinal coordinates of the location.
 
     Raises:
-        ValueError: If `lat` or `long` aren't integers or floating point numbers.
+        ValueError: If `lat` or `long` are not integers or floating point numbers.
         RequestError: If there's a server related error while requesting elevation data from the API.
 
     Example:
@@ -53,7 +53,7 @@ def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
     Retrieves the city details from Open-meteo
     geocoding API based on the name of the city.
 
-    Args:
+    Params:
         name (str): The name of the city to retrieve details for.
         count (int): The number of results to be shown.
 
