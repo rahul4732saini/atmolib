@@ -5,6 +5,8 @@ This module contains utility functions and tools used throughout
 the pyweather package.
 """
 
+from typing import Any
+
 import requests
 
 from . import constants
@@ -36,3 +38,43 @@ def get_elevation(lat: int | float, long: int | float) -> float:
         (elevation,) = response.json()["elevation"]
 
     return elevation
+
+
+def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
+    r"""
+    Retrieves the city details from Open-meteo
+    geocoding API based on the name of the city.
+
+    Args:
+        name (str): The name of the city to retrieve details for.
+        count (int): The number of results to be shown.
+
+    Returns:
+        List[Dict[str, Any]] | None: Returns a list of dictionaries containing details of the city.
+        Each dictionary represents a result, containing various information about the city. None is
+        returned if no cities corresponding to the supplied name are found in the database.
+
+    Raises:
+        ValueError: If `count` is not a positive integer.
+        RequestError: If there's a server related error while requesting elevation data from the API.
+    """
+
+    if not isinstance(count, int) or count <= 0:
+        raise ValueError("Count must be a positive integer.")
+
+    url: str = f"{constants.GEOCODING_API}?name={name}&count={count}&language=en"
+
+    with requests.get(url) as response:
+        if response.status_code != 200:
+            message = response.json()["reason"]
+
+            raise RequestError(response.status_code, message)
+
+        result: dict[str, Any] = response.json()
+
+    # Returns None if no matching results are found.
+    if result.get("results") is None:
+        return None
+
+    details: list[dict[str, Any]] = result["results"]
+    return details
