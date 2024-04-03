@@ -27,6 +27,9 @@ def get_elevation(lat: int | float, long: int | float) -> float:
         300.0  # Example elevation value in meters
     """
 
+    if not isinstance(lat, int | float) or not isinstance(long, int | float):
+        raise ValueError("lat and long must be integers or floating point numbers.")
+
     url: str = f"{constants.ELEVATION_API}?latitude={lat}&longitude={long}"
 
     with requests.get(url) as response:
