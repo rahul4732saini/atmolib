@@ -86,3 +86,45 @@ def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
 
     details: list[dict[str, Any]] = result["results"]
     return details
+
+
+def get_current_data(
+    session: requests.Session, api: str, params: dict[str, Any]
+) -> str | int:
+    r"""
+    Base function for retrieving the current forecast data from supplied API.
+
+    This function is intended for internal use within the package and may not be called
+    directly by the users. It is exposed publicly for use by other modules within the package.
+
+    Params:
+        - session (requests.Session): A requests session object for making the API requests.
+        - api (str): Absolute URL of the API.
+        - params (dict[str, Any]): Necessary parameters for the API request including the coordinates
+        of the location, requested data type, etc.
+
+    Returns:
+        - str | int: Returns the requested current forecast data in string or integer format.
+
+    Raises:
+        - RequestError: If there's a server related error while requesting elevation data from the API.
+    """
+
+    with session.get(api, params=params) as response:
+        results: dict[str, Any] = response.json()
+
+        # Raises a custom RequestError if the response status code is not 200 (OK).
+        # The error message is extracted from the API response.
+        if response.status_code != 200:
+            message: str = results.get("reason", "Unknown Error")
+
+            raise RequestError(response.status_code, message)
+
+    # The "current" key in the results dictionary holds all the current weather data key-value pairs.
+    data: dict[str, Any] = results["current"]
+
+    # Extracts the specific current weather data requested by the user.
+    # The name of the key for the requested data is obtained from
+    # the 'current' key in the 'params' dictionary.
+    # The value associated with this key is returned as the result.
+    return data[params["current"]]
