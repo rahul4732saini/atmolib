@@ -19,12 +19,13 @@ def get_elevation(lat: int | float, long: int | float) -> float:
     API based on the latitude and longitude coordinates.
 
     Params:
-        lat (int | float): latitudinal coordinates of the location.
-        long (int | float): longitudinal coordinates of the location.
+        - lat (int | float): latitudinal coordinates of the location.
+        - long (int | float): longitudinal coordinates of the location.
 
     Raises:
-        ValueError: If `lat` or `long` are not integers or floating point numbers.
-        RequestError: If there's a server related error while requesting elevation data from the API.
+        - ValueError: If `lat` or `long` are not integers or floating point numbers.
+        - RequestError: If there's an error while making the HTTP request to retrieve
+        forecast data from the API.
 
     Example:
         >>> altitude = get_elevation(26.91, 32.89)
@@ -54,17 +55,18 @@ def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
     geocoding API based on the name of the city.
 
     Params:
-        name (str): The name of the city to retrieve details for.
-        count (int): The number of results to be shown.
+        - name (str): The name of the city to retrieve details for.
+        - count (int): The number of results to be shown.
 
     Returns:
-        List[Dict[str, Any]] | None: Returns a list of dictionaries containing details of the city.
+        - List[Dict[str, Any]] | None: Returns a list of dictionaries containing details of the city.
         Each dictionary represents a result, containing various information about the city. None is
         returned if no cities corresponding to the supplied name are found in the database.
 
     Raises:
-        ValueError: If `count` is not a positive integer.
-        RequestError: If there's a server related error while requesting elevation data from the API.
+        - ValueError: If `count` is not a positive integer.
+        - RequestError: If there's an error while making the HTTP request to retrieve
+        forecast data from the API.
     """
 
     if not isinstance(count, int) or count <= 0:
