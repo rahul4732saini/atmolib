@@ -95,7 +95,7 @@ def get_current_data(
     Base function for retrieving the current forecast data from supplied API.
 
     This function is intended for internal use within the package and may not be called
-    directly by the users. It is exposed publicly for use by other modules within the package.
+    directly by its users. It is exposed publicly for use by other modules within the package.
 
     Params:
         - session (requests.Session): A requests session object for making the API requests.
@@ -107,7 +107,8 @@ def get_current_data(
         - int | float: Returns the requested current forecast data in string or integer format.
 
     Raises:
-        - RequestError: If there's a server related error while requesting elevation data from the API.
+        - RequestError: If there's an error while making the HTTP request to retrieve
+        forecast data from the API.
     """
 
     with session.get(api, params=params) as response:
