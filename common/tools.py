@@ -27,6 +27,9 @@ def get_elevation(lat: int | float, long: int | float) -> float:
         - RequestError: If there's an error while making the HTTP request to retrieve
         forecast data from the API.
 
+    Returns:
+        - float: Returns the elevation at the supplied coordinates in meters(m).
+
     Example:
         >>> altitude = get_elevation(26.91, 32.89)
         >>> print(altitude)
