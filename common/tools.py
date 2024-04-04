@@ -89,8 +89,8 @@ def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
 
 
 def get_current_data(
-    session: requests.Session, api: str, params: dict[str, Any]
-) -> str | int:
+    session: requests.Session, api: str, params: dict[str, str | int]
+) -> int | float:
     r"""
     Base function for retrieving the current forecast data from supplied API.
 
@@ -100,11 +100,11 @@ def get_current_data(
     Params:
         - session (requests.Session): A requests session object for making the API requests.
         - api (str): Absolute URL of the API.
-        - params (dict[str, Any]): Necessary parameters for the API request including the coordinates
-        of the location, requested data type, etc.
+        - params (dict[str, str | int]): Necessary parameters for the API request including the
+        coordinates of the location, requested data type, etc.
 
     Returns:
-        - str | int: Returns the requested current forecast data in string or integer format.
+        - int | float: Returns the requested current forecast data in string or integer format.
 
     Raises:
         - RequestError: If there's a server related error while requesting elevation data from the API.
