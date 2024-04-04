@@ -35,9 +35,9 @@ def get_elevation(lat: int | float, long: int | float) -> float:
     if not isinstance(lat, int | float) or not isinstance(long, int | float):
         raise ValueError("lat and long must be integers or floating point numbers.")
 
-    url: str = f"{constants.ELEVATION_API}?latitude={lat}&longitude={long}"
+    params: dict[str, int] = {"lat": lat, "long": long}
 
-    with requests.get(url) as response:
+    with requests.get(constants.ELEVATION_API, params=params) as response:
         if response.status_code != 200:
             message = response.json()["reason"]
 
