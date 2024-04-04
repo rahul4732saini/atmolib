@@ -70,9 +70,9 @@ def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
     if not isinstance(count, int) or count <= 0:
         raise ValueError("Count must be a positive integer.")
 
-    url: str = f"{constants.GEOCODING_API}?name={name}&count={count}&language=en"
+    params: dict[str, str | int] = {"name": name, "count": count}
 
-    with requests.get(url) as response:
+    with requests.get(constants.GEOCODING_API, params=params) as response:
         if response.status_code != 200:
             message = response.json()["reason"]
 
