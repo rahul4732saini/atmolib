@@ -50,7 +50,7 @@ def get_elevation(lat: int | float, long: int | float) -> float:
 
             raise RequestError(response.status_code, message)
 
-        (elevation,) = results["elevation"]
+    (elevation,) = results["elevation"]
 
     return elevation
 
@@ -196,19 +196,19 @@ def get_hourly_forecast(
             # The error message is extracted from the API response.
             raise RequestError(response.status_code, message)
 
-        # The "hourly" key in the results dictionary holds all the hourly
-        # weather forecast data key-value pairs.
-        hourly_data: dict[str, Any] = results["hourly"]
+    # The "hourly" key in the results dictionary holds all the hourly
+    # weather forecast data key-value pairs.
+    hourly_data: dict[str, Any] = results["hourly"]
 
-        # pandas DataFrame containing time and hourly weather forecast data.
-        # The object comprises of two columns namely 'time' and 'forecast'.
-        # 'forecast' column data is retrived from the key-value pair named after the
-        # requested data type (eg. temperature_2m, weather_code, etc.) in the hourly_data mapping.
-        dataframe = pd.DataFrame(
-            {
-                "time": hourly_data["time"],
-                "forecast": hourly_data[params["hourly"]],
-            }
-        )
+    # pandas DataFrame containing time and hourly weather forecast data.
+    # The object comprises of two columns namely 'time' and 'forecast'.
+    # 'forecast' column data is retrived from the key-value pair named after the
+    # requested data type (eg. temperature_2m, weather_code, etc.) in the hourly_data mapping.
+    dataframe = pd.DataFrame(
+        {
+            "time": hourly_data["time"],
+            "forecast": hourly_data[params["hourly"]],
+        }
+    )
 
-        return dataframe
+    return dataframe
