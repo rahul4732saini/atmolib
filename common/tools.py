@@ -38,17 +38,19 @@ def get_elevation(lat: int | float, long: int | float) -> float:
     """
 
     if not isinstance(lat, int | float) or not isinstance(long, int | float):
-        raise ValueError("lat and long must be integers or floating point numbers.")
+        raise ValueError("`lat` and `long` must be integers or floating point numbers.")
 
     params: dict[str, int] = {"latitude": lat, "longitude": long}
 
     with requests.get(constants.ELEVATION_API, params=params) as response:
+        results: dict[str, Any] = response.json()
+
         if response.status_code != 200:
-            message = response.json()["reason"]
+            message = results["reason"]
 
             raise RequestError(response.status_code, message)
 
-        (elevation,) = response.json()["elevation"]
+        (elevation,) = results["elevation"]
 
     return elevation
 
@@ -74,24 +76,22 @@ def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
     """
 
     if not isinstance(count, int) or count <= 0:
-        raise ValueError("Count must be a positive integer.")
+        raise ValueError("`count` must be a positive integer.")
 
     params: dict[str, str | int] = {"name": name, "count": count}
 
     with requests.get(constants.GEOCODING_API, params=params) as response:
+        results: dict[str, Any] = response.json()
+
         if response.status_code != 200:
-            message = response.json()["reason"]
+            message: str = results.get("reason", "Unknown Error")
 
             raise RequestError(response.status_code, message)
 
-        result: dict[str, Any] = response.json()
+    details: list[dict[str, Any]] | None = results.get("results")
 
     # Returns None if no matching results are found.
-    if result.get("results") is None:
-        return None
-
-    details: list[dict[str, Any]] = result["results"]
-    return details
+    return details if details is not None else None
 
 
 def get_current_forecast(
