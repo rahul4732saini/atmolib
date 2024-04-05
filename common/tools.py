@@ -93,7 +93,7 @@ def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
     return details
 
 
-def get_current_data(
+def get_current_forecast(
     session: requests.Session, api: str, params: dict[str, str | int]
 ) -> int | float:
     r"""
