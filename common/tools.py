@@ -50,7 +50,7 @@ def get_elevation(lat: int | float, long: int | float) -> float:
 
             raise RequestError(response.status_code, message)
 
-    # Extracts the elevation data from the 'elevation' key-value pair in the results dictionary.
+    # Extracts the elevation data from the 'elevation' key-value pair in the `results` dictionary.
     (elevation,) = results["elevation"]
 
     return elevation
@@ -89,7 +89,7 @@ def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
 
             raise RequestError(response.status_code, message)
 
-    # Extracts city details from the 'results' key-value pair in the results dictionary.
+    # Extracts city details from the 'results' key-value pair in the `results` dictionary.
     # The key-value pair is only present if cities with matching names are found in the
     # Open-Meteo database. None is assigned and returned if matching cities are not found.
     details: list[dict[str, Any]] | None = results.get("results")
@@ -122,13 +122,13 @@ def get_current_forecast(
 
     if not params.get("latitude") or not params.get("longitude"):
         raise KeyError(
-            "`latitude` and `longitude` keys not found in the params dictionary "
+            "`latitude` and `longitude` keys not found in the `params` dictionary "
             "indicating the coordinates of the location."
         )
 
     if not params.get("current"):
         raise KeyError(
-            "`current` key not found in the params dictionary with the requested weather data type."
+            "`current` key not found in the `params` dictionary with the requested weather data type."
         )
 
     with session.get(api, params=params) as response:
@@ -141,12 +141,12 @@ def get_current_forecast(
 
             raise RequestError(response.status_code, message)
 
-    # The "current" key in the results dictionary holds all the current weather data key-value pairs.
+    # The 'current' key in the `results` dictionary holds all the current weather data key-value pairs.
     data: dict[str, Any] = results["current"]
 
     # Extracts the specific current weather data requested by the user.
     # The name of the key for the requested data is obtained from
-    # the 'current' key in the 'params' dictionary.
+    # the 'current' key in the `params` dictionary.
     # The value associated with this key is returned as the result.
     return data[params["current"]]
 
@@ -167,7 +167,7 @@ def get_hourly_forecast(
         coordinates of the location, requested data type, etc.
 
     Returns:
-        - pd.DataFrame: Returns a pandas DataFrame of hourly weather forecast data comprising of
+        - pd.DataFrame: Returns a pandas DataFrame of hourly weather forecast data comprising
         two columns namely 'time' and 'forecast' where 'time' column indicates the time of the
         forecast data in ISO 8601 format (YYYY-MM-DDTHH:MM) and 'forecast' columns contains the
         hourly weather forecast data.
@@ -180,13 +180,13 @@ def get_hourly_forecast(
 
     if not params.get("latitude") or not params.get("longitude"):
         raise KeyError(
-            "`latitude` and `longitude` keys not found in the params dictionary "
+            "`latitude` and `longitude` keys not found in the `params` dictionary "
             "indicating the coordinates of the location."
         )
 
     if not params.get("hourly"):
         raise KeyError(
-            "`hourly` key not found in the params dictionary with the requested weather data type."
+            "`hourly` key not found in the `params` dictionary with the requested weather data type."
         )
 
     with session.get(api, params=params) as response:
@@ -199,14 +199,14 @@ def get_hourly_forecast(
             # The error message is extracted from the API response.
             raise RequestError(response.status_code, message)
 
-    # The "hourly" key in the results dictionary holds all the hourly
+    # The "hourly" key in the `results` dictionary holds all the hourly
     # weather forecast data key-value pairs.
     hourly_data: dict[str, Any] = results["hourly"]
 
     # pandas DataFrame containing time and hourly weather forecast data.
-    # The object comprises of two columns namely 'time' and 'forecast'.
-    # 'forecast' column data is retrived from the key-value pair named after the
-    # requested data type (eg. temperature_2m, weather_code, etc.) in the hourly_data mapping.
+    # The object comprises two columns namely 'time' and 'forecast'.
+    # 'forecast' column data is retrieved from the key-value pair named after the
+    # requested data type (e.g. temperature_2m, weather_code, etc.) in the `hourly_data` mapping.
     dataframe = pd.DataFrame(
         {
             "time": hourly_data["time"],
