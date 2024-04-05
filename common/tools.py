@@ -117,6 +117,17 @@ def get_current_forecast(
         forecast data from the API.
     """
 
+    if not params.get("latitude") or not params.get("longitude"):
+        raise KeyError(
+            "`latitude` and `longitude` keys not found in the params dictionary "
+            "indicating the coordinates of the location."
+        )
+
+    if not params.get("current"):
+        raise KeyError(
+            "`current` key not found in the params dictionary with the requested weather data type."
+        )
+
     with session.get(api, params=params) as response:
         results: dict[str, Any] = response.json()
 
