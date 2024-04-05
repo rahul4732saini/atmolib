@@ -5,7 +5,7 @@ This module contains utility functions and tools used throughout
 the pyweather package.
 """
 
-from typing import Any
+from typing import Literal, Any
 
 import requests
 import pandas as pd
@@ -158,11 +158,14 @@ def get_current_forecast(
     return data[params["current"]]
 
 
-def get_hourly_forecast(
-    session: requests.Session, api: str, params: dict[str, str | int]
+def get_periodical_forecast(
+    session: requests.Session,
+    api: str,
+    frequency: Literal["hourly", "daily"],
+    params: dict[str, str | int],
 ) -> pd.DataFrame:
     r"""
-    Base function for retrieving the hourly forecast data from supplied API.
+    Base function for retrieving the periodical forecast data from supplied API.
 
     This function is intended for internal use within the package and may not be called
     directly by its users. It is exposed publicly for use by other modules within the package.
@@ -170,18 +173,26 @@ def get_hourly_forecast(
     Params:
         - session (requests.Session): A requests session object for making the API requests.
         - api (str): Absolute URL of the API.
+        - frequency (str): Frequency of the weather forecast data, 'hourly' or 'daily'.
         - params (dict[str, str | int]): Necessary parameters for the API request including the
         coordinates of the location, requested data type, etc.
 
     Returns:
         - pd.DataFrame: Returns a pandas DataFrame of hourly weather forecast data comprising
         two columns namely 'time' and 'forecast' where 'time' column indicates the time of the
-        forecast data in ISO 8601 format (YYYY-MM-DDTHH:MM) and 'forecast' columns contains the
-        hourly weather forecast data.
+        forecast data in ISO 8601 format (YYYY-MM-DDTHH:MM) or the date of the forecast as
+        (YYYY-MM-DD) depending upon the frequency supplied and 'forecast' column contains the
+        weather forecast data.
 
     Raises:
+        - ValueError: If `frequency` is assigned to a value other than 'hourly' or 'daily'.
         - KeyError: If 'hourly' key is not found in the `params` dictionary.
     """
+
+    if frequency not in ("hourly", "daily"):
+        raise ValueError(
+            "Invalid frequency provided. Frequency must be 'hourly' or 'daily'."
+        )
 
     if not params.get("latitude") or not params.get("longitude"):
         raise KeyError(
@@ -189,16 +200,16 @@ def get_hourly_forecast(
             "indicating the coordinates of the location."
         )
 
-    if not params.get("hourly"):
+    if not params.get(frequency):
         raise KeyError(
-            "`hourly` key not found in the `params` dictionary with the requested weather data type."
+            f"`{frequency}` key not found in the `params` dictionary with the requested weather data type."
         )
 
     results: dict[str, Any] = _request_json(api, params, session)
 
     # The "hourly" key in the `results` dictionary holds all the hourly
     # weather forecast data key-value pairs.
-    hourly_data: dict[str, Any] = results["hourly"]
+    hourly_data: dict[str, Any] = results[frequency]
 
     # pandas DataFrame containing time and hourly weather forecast data.
     # The object comprises two columns namely 'time' and 'forecast'.
@@ -207,7 +218,7 @@ def get_hourly_forecast(
     dataframe = pd.DataFrame(
         {
             "time": hourly_data["time"],
-            "forecast": hourly_data[params["hourly"]],
+            "forecast": hourly_data[params[frequency]],
         }
     )
 
