@@ -14,6 +14,43 @@ from . import constants
 from errors import RequestError
 
 
+def _request_json(
+    api: str, params: dict[str, Any], session: requests.Session = None
+) -> dict[str, Any]:
+    r"""
+    [PRIVATE] Sends a GET request to the supplied API, retrieves the JSON data, and returns it.
+
+    Parameters:
+    - api_url (str): The URL of the API endpoint to request data from.
+    - params (dict, optional): (Default None) Optional parameters to be sent with the request.
+    - session: (optional): A requests.Session object to use for making the request. If not provided,
+    the default requests session will be used.
+
+    Returns:
+    - dict[str, Any]: A dictionary containing the JSON response from the API.
+
+    Raises:
+    - RequestError: If there's an error while making the HTTP request to retrieve
+    forecast data from the API.
+    """
+
+    # The session is used as the handler if supplied else the module
+    # itself is used to execute the get method for retrieving data.
+    request_handler = session if session else requests
+
+    with request_handler.get(api, params=params) as response:
+        results: dict[str, Any] = response.json()
+
+        # Raises a custom RequestError if the response status code is not 200 (OK).
+        # The error message is extracted from the API response.
+        if response.status_code != 200:
+            message = results["reason"]
+
+            raise RequestError(response.status_code, message)
+
+    return results
+
+
 def get_elevation(lat: int | float, long: int | float) -> float:
     r"""
     Retrieves elevation data from Open-meteo elevation
@@ -41,14 +78,7 @@ def get_elevation(lat: int | float, long: int | float) -> float:
         raise ValueError("`lat` and `long` must be integers or floating point numbers.")
 
     params: dict[str, int] = {"latitude": lat, "longitude": long}
-
-    with requests.get(constants.ELEVATION_API, params=params) as response:
-        results: dict[str, Any] = response.json()
-
-        if response.status_code != 200:
-            message = results["reason"]
-
-            raise RequestError(response.status_code, message)
+    results: dict[str, Any] = _request_json(constants.ELEVATION_API, params)
 
     # Extracts the elevation data from the 'elevation' key-value pair in the `results` dictionary.
     (elevation,) = results["elevation"]
@@ -80,14 +110,7 @@ def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
         raise ValueError("`count` must be a positive integer.")
 
     params: dict[str, str | int] = {"name": name, "count": count}
-
-    with requests.get(constants.GEOCODING_API, params=params) as response:
-        results: dict[str, Any] = response.json()
-
-        if response.status_code != 200:
-            message: str = results.get("reason", "Unknown Error")
-
-            raise RequestError(response.status_code, message)
+    results: dict[str, Any] = _request_json(constants.GEOCODING_API, params)
 
     # Extracts city details from the 'results' key-value pair in the `results` dictionary.
     # The key-value pair is only present if cities with matching names are found in the
@@ -131,15 +154,7 @@ def get_current_forecast(
             "`current` key not found in the `params` dictionary with the requested weather data type."
         )
 
-    with session.get(api, params=params) as response:
-        results: dict[str, Any] = response.json()
-
-        # Raises a custom RequestError if the response status code is not 200 (OK).
-        # The error message is extracted from the API response.
-        if response.status_code != 200:
-            message: str = results.get("reason", "Unknown Error")
-
-            raise RequestError(response.status_code, message)
+    results: dict[str, Any] = _request_json(api, params, session)
 
     # The 'current' key in the `results` dictionary holds all the current weather data key-value pairs.
     data: dict[str, Any] = results["current"]
@@ -189,15 +204,7 @@ def get_hourly_forecast(
             "`hourly` key not found in the `params` dictionary with the requested weather data type."
         )
 
-    with session.get(api, params=params) as response:
-        results: dict[str, Any] = response.json()
-
-        if response.status_code != 200:
-            message: str = results.get("reason", "Unknown Error")
-
-            # Raises a custom RequestError if the response status code is not 200 (OK).
-            # The error message is extracted from the API response.
-            raise RequestError(response.status_code, message)
+    results: dict[str, Any] = _request_json(api, params, session)
 
     # The "hourly" key in the `results` dictionary holds all the hourly
     # weather forecast data key-value pairs.
