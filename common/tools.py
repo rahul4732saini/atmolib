@@ -50,6 +50,7 @@ def get_elevation(lat: int | float, long: int | float) -> float:
 
             raise RequestError(response.status_code, message)
 
+    # Extracts the elevation data from the 'elevation' key-value pair in the results dictionary.
     (elevation,) = results["elevation"]
 
     return elevation
@@ -88,10 +89,12 @@ def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
 
             raise RequestError(response.status_code, message)
 
+    # Extracts city details from the 'results' key-value pair in the results dictionary.
+    # The key-value pair is only present if cities with matching names are found in the
+    # Open-Meteo database. None is assigned and returned if matching cities are not found.
     details: list[dict[str, Any]] | None = results.get("results")
 
-    # Returns None if no matching results are found.
-    return details if details is not None else None
+    return details
 
 
 def get_current_forecast(
