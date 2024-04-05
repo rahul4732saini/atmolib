@@ -62,8 +62,6 @@ def get_elevation(lat: int | float, long: int | float) -> float:
 
     Raises:
         - ValueError: If `lat` or `long` are not integers or floating point numbers.
-        - RequestError: If there's an error while making the HTTP request to retrieve
-        forecast data from the API.
 
     Returns:
         - float: Returns the elevation at the supplied coordinates in meters(m).
@@ -102,8 +100,6 @@ def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
 
     Raises:
         - ValueError: If `count` is not a positive integer.
-        - RequestError: If there's an error while making the HTTP request to retrieve
-        forecast data from the API.
     """
 
     if not isinstance(count, int) or count <= 0:
@@ -137,10 +133,6 @@ def get_current_forecast(
 
     Returns:
         - int | float: Returns the requested current forecast data in string or integer format.
-
-    Raises:
-        - RequestError: If there's an error while making the HTTP request to retrieve
-        forecast data from the API.
     """
 
     if not params.get("latitude") or not params.get("longitude"):
@@ -189,8 +181,6 @@ def get_hourly_forecast(
 
     Raises:
         - KeyError: If 'hourly' key is not found in the `params` dictionary.
-        - RequestError: If there's an error while making the HTTP request to retrieve
-        forecast data from the API.
     """
 
     if not params.get("latitude") or not params.get("longitude"):
