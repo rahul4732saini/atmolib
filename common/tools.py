@@ -77,7 +77,7 @@ def get_elevation(lat: int | float, long: int | float) -> float:
     if not isinstance(lat, int | float) or not isinstance(long, int | float):
         raise ValueError("`lat` and `long` must be integers or floating point numbers.")
 
-    params: dict[str, int] = {"latitude": lat, "longitude": long}
+    params: dict[str, int | float] = {"latitude": lat, "longitude": long}
     results: dict[str, Any] = _request_json(constants.ELEVATION_API, params)
 
     # Extracts the elevation data from the 'elevation' key-value pair in the `results` dictionary.
@@ -119,7 +119,7 @@ def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
 
 
 def get_current_forecast(
-    session: requests.Session, api: str, params: dict[str, str | int]
+    session: requests.Session, api: str, params: dict[str, Any]
 ) -> int | float:
     r"""
     Base function for retrieving the current forecast data from supplied API.
@@ -164,7 +164,7 @@ def get_periodical_data(
     session: requests.Session,
     api: str,
     frequency: Literal["hourly", "daily"],
-    params: dict[str, str | int],
+    params: dict[str, Any],
 ) -> pd.DataFrame:
     r"""
     Base function for retrieving the periodical weather data from supplied API.
