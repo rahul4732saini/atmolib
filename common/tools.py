@@ -5,6 +5,7 @@ This module contains utility functions and tools used throughout
 the pyweather package.
 """
 
+from types import ModuleType
 from typing import Literal, Any
 from datetime import date, datetime
 
@@ -16,7 +17,7 @@ from errors import RequestError
 
 
 def _request_json(
-    api: str, params: dict[str, Any], session: requests.Session = None
+    api: str, params: dict[str, Any], session: requests.Session | None = None
 ) -> dict[str, Any]:
     r"""
     [PRIVATE] Sends a GET request to the supplied API, retrieves the JSON data, and returns it.
@@ -38,7 +39,7 @@ def _request_json(
 
     # The session is used as the handler if supplied else the module
     # itself is used to execute the get method for retrieving data.
-    request_handler = session if session else requests
+    request_handler: requests.Session | ModuleType = session if session else requests
 
     with request_handler.get(api, params=params) as response:
         results: dict[str, Any] = response.json()
@@ -268,23 +269,23 @@ def get_historical_weather_data(
     # formatted date objects for using them to request the Open-Meteo Weather History API.
 
     if isinstance(start_date, date | datetime):
-        start_date: str = start_date.strftime(r"%Y-%m-%d")
+        start_date = start_date.strftime(r"%Y-%m-%d")
 
     elif isinstance(start_date, str):
         try:
             datetime.strptime(start_date, r"%Y-%m-%d")
 
-        except ValueError | TypeError:
+        except (ValueError, TypeError):
             ValueError("Invalid value for `start_date` parameter.")
 
     if isinstance(end_date, date | datetime):
-        end_date: str = end_date.strftime(r"%Y-%m-%d")
+        end_date = end_date.strftime(r"%Y-%m-%d")
 
     elif isinstance(end_date, str):
         try:
             datetime.strptime(end_date, r"%Y-%m-%d").date()
 
-        except ValueError | TypeError:
+        except (ValueError, TypeError):
             ValueError("Invalid value for `end_date` parameter.")
 
     # Updating the `params` with the `start_date` and `end_date` after verifying the paramerters.
