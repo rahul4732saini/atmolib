@@ -159,14 +159,14 @@ def get_current_forecast(
     return data[params["current"]]
 
 
-def get_periodical_forecast(
+def get_periodical_data(
     session: requests.Session,
     api: str,
     frequency: Literal["hourly", "daily"],
     params: dict[str, str | int],
 ) -> pd.DataFrame:
     r"""
-    Base function for retrieving the periodical forecast data from supplied API.
+    Base function for retrieving the periodical weather data from supplied API.
 
     This function is intended for internal use within the package and may not be called
     directly by its users. It is exposed publicly for use by other modules within the package.
@@ -179,11 +179,11 @@ def get_periodical_forecast(
         coordinates of the location, requested data type, etc.
 
     Returns:
-        - pd.DataFrame: Returns a pandas DataFrame of hourly weather forecast data comprising
-        two columns namely 'time' and 'forecast' where 'time' column indicates the time of the
-        forecast data in ISO 8601 format (YYYY-MM-DDTHH:MM) or the date of the forecast as
-        (YYYY-MM-DD) depending upon the frequency supplied and 'forecast' column contains the
-        weather forecast data.
+        - pd.DataFrame: Returns a pandas DataFrame of hourly weather data comprising two
+        columns namely 'time' and 'data' where 'time' column indicates the time of the
+        weather data in ISO 8601 format (YYYY-MM-DDTHH:MM) or the date of the weather data as
+        (YYYY-MM-DD) depending upon the frequency supplied and 'data' column contains the
+        weather data.
 
     Raises:
         - ValueError: If `frequency` is assigned to a value other than 'hourly' or 'daily'.
@@ -197,29 +197,29 @@ def get_periodical_forecast(
 
     if not params.get("latitude") or not params.get("longitude"):
         raise KeyError(
-            "`latitude` and `longitude` keys not found in the `params` dictionary "
+            "'latitude' and 'longitude' keys not found in the `params` dictionary "
             "indicating the coordinates of the location."
         )
 
     if not params.get(frequency):
         raise KeyError(
-            f"`{frequency}` key not found in the `params` dictionary with the requested weather data type."
+            f"'{frequency}' key not found in the `params` dictionary with the requested weather data type."
         )
 
     results: dict[str, Any] = _request_json(api, params, session)
 
-    # The "hourly" key in the `results` dictionary holds all the hourly
-    # weather forecast data key-value pairs.
-    hourly_data: dict[str, Any] = results[frequency]
+    # The key corresponding to the supplied `frequency` in the `results` dictionary
+    # holds all the periodical weather data key-value pairs.
+    data: dict[str, Any] = results[frequency]
 
-    # pandas DataFrame containing time and hourly weather forecast data.
-    # The object comprises two columns namely 'time' and 'forecast'.
-    # 'forecast' column data is retrieved from the key-value pair named after the
-    # requested data type (e.g. temperature_2m, weather_code, etc.) in the `hourly_data` mapping.
+    # pandas DataFrame containing time and periodical weather data.
+    # The object comprises two columns namely 'time' and 'data'.
+    # 'data' column data is retrieved from the key-value pair named after the
+    # requested data type (e.g. temperature_2m, weather_code, etc.) in the `data` dictionary.
     dataframe = pd.DataFrame(
         {
-            "time": hourly_data["time"],
-            "forecast": hourly_data[params[frequency]],
+            "time": data["time"],
+            "data": data[params[frequency]],
         }
     )
 
