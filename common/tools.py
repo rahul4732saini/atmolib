@@ -22,10 +22,11 @@ def _request_json(
     [PRIVATE] Sends a GET request to the supplied API, retrieves the JSON data, and returns it.
 
     Parameters:
-    - api_url (str): The URL of the API endpoint to request data from.
-    - params (dict, optional): (Default None) Optional parameters to be sent with the request.
-    - session: (optional): A requests.Session object to use for making the request. If not provided,
-    the default requests session will be used.
+    - api (str): Absolute URL of the API.
+    - params (dict[str, Any]): Necessary parameters for the API request including the
+    coordinates of the location, requested data type, etc.
+    - session: (optional): A requests.Session object for making the API requests. If not provided,
+    the default requests session is used.
 
     Returns:
     - dict[str, Any]: A dictionary containing the JSON response from the API.
@@ -127,19 +128,19 @@ def get_current_forecast(
     directly by its users. It is exposed publicly for use by other modules within the package.
 
     Params:
-        - session (requests.Session): A requests session object for making the API requests.
+        - session (requests.Session): A requests.Session object for making the API requests.
         - api (str): Absolute URL of the API.
         - params (dict[str, str | int]): Necessary parameters for the API request including the
         coordinates of the location, requested data type, etc.
 
     Returns:
-        - int | float: Returns the requested current forecast data in string or integer format.
+        - int | float: Returns the requested current forecast data in integet or float format.
     """
 
     if not params.get("latitude") or not params.get("longitude"):
         raise KeyError(
-            "`latitude` and `longitude` keys not found in the `params` dictionary "
-            "indicating the coordinates of the location."
+            "'latitude' and 'longitude' keys not found in the `params` dictionary "
+            "to indicate the coordinates of the location."
         )
 
     if not params.get("current"):
@@ -152,7 +153,7 @@ def get_current_forecast(
     # The 'current' key in the `results` dictionary holds all the current weather data key-value pairs.
     data: dict[str, Any] = results["current"]
 
-    # Extracts the specific current weather data requested by the user.
+    # Extracts the requested current weather data.
     # The name of the key for the requested data is obtained from
     # the 'current' key in the `params` dictionary.
     # The value associated with this key is returned as the result.
@@ -172,14 +173,14 @@ def get_periodical_data(
     directly by its users. It is exposed publicly for use by other modules within the package.
 
     Params:
-        - session (requests.Session): A requests session object for making the API requests.
+        - session (requests.Session): A requests.Session object for making the API requests.
         - api (str): Absolute URL of the API.
         - frequency (str): Frequency of the weather forecast data, 'hourly' or 'daily'.
-        - params (dict[str, str | int]): Necessary parameters for the API request including the
+        - params (dict[str, Any]): Necessary parameters for the API request including the
         coordinates of the location, requested data type, etc.
 
     Returns:
-        - pd.DataFrame: Returns a pandas DataFrame of hourly weather data comprising two
+        - pd.DataFrame: Returns a pandas DataFrame of periodical weather data comprising two
         columns namely 'time' and 'data' where 'time' column indicates the time of the
         weather data in ISO 8601 format (YYYY-MM-DDTHH:MM) or the date of the weather data as
         (YYYY-MM-DD) depending upon the frequency supplied and 'data' column contains the
@@ -198,7 +199,7 @@ def get_periodical_data(
     if not params.get("latitude") or not params.get("longitude"):
         raise KeyError(
             "'latitude' and 'longitude' keys not found in the `params` dictionary "
-            "indicating the coordinates of the location."
+            "to indicate the coordinates of the location."
         )
 
     if not params.get(frequency):
@@ -244,7 +245,7 @@ def get_historical_weather_data(
     to the end_date.
 
     Params:
-        - session (requests.Session): A requests session object for making the API requests.
+        - session (requests.Session): A requests.Session object for making the API requests.
         - frequency (str): Frequency of the weather forecast data, 'hourly' or 'daily'.
         - start_date (str | date | datetime): Starting date of the weather data.
         - end_date (str | date | datetime): Ending date of the weather date.
@@ -253,18 +254,18 @@ def get_historical_weather_data(
 
     Returns:
         - pd.DataFrame: Returns a pandas DataFrame of historical weather data comprising
-        two columns namely 'time' and 'forecast' where 'time' column indicates the time of the
+        two columns namely 'time' and 'data' where 'time' column indicates the time of the
         weather data in ISO 8601 format (YYYY-MM-DDTHH:MM) or the date of the weather data as
-        (YYYY-MM-DD) depending upon the frequency supplied and 'forecast' column contains the
+        (YYYY-MM-DD) depending upon the frequency supplied and 'data' column contains the
         historical weather data.
 
     Raises:
-        - ValueError: If `frequency` is assigned to a value other than 'hourly' or 'daily'.
+        - ValueError: If invalid `start_date` or `end_date` arguments are supplied.
         - KeyError: If 'hourly' key is not found in the `params` dictionary.
     """
 
-    # `start_date` and `end_Date` arguments are verified and converted into
-    # string formatted date objects for using them with the Open-Meteo API.
+    # `start_date` and `end_Date` arguments are verified and converted into string
+    # formatted date objects for using them to request the Open-Meteo Weather History API.
 
     if isinstance(start_date, date | datetime):
         start_date: str = start_date.strftime(r"%Y-%m-%d")
