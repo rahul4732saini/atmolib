@@ -12,7 +12,6 @@ from pathlib import Path
 # API endpoint URLs
 WEATHER_API = "https://api.open-meteo.com/v1/forecast"
 WEATHER_HISTORY_API = "https://archive-api.open-meteo.com/v1/archive"
-HISTORIC_WEATHER_API = "https://archive-api.open-meteo.com/v1/archive"
 MARINE_API = "https://marine-api.open-meteo.com/v1/marine"
 AIR_QUALITY_API = "https://air-quality-api.open-meteo.com/v1/air-quality"
 GEOCODING_API = "https://geocoding-api.open-meteo.com/v1/search"
