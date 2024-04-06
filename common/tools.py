@@ -6,6 +6,7 @@ the pyweather package.
 """
 
 from typing import Literal, Any
+from datetime import date, datetime
 
 import requests
 import pandas as pd
@@ -223,3 +224,74 @@ def get_periodical_forecast(
     )
 
     return dataframe
+
+
+def get_historical_weather_data(
+    session: requests.Session,
+    frequency: Literal["daily", "hourly"],
+    start_date: str | date | datetime,
+    end_date: str | date | datetime,
+    params: dict[str, Any],
+) -> pd.DataFrame:
+    r"""
+    Base function for retrieving the historical weather data from Open-Meteo Weather History API.
+
+    This function is intended for internal use within the package and may not be called
+    directly by its users. It is exposed publicly for use by other modules within the package.
+
+    The date parameters `start_date` and `end_date` must be assigned with date or datetime objects
+    or strings formatted with the ISO 8601 format (YYYY-MM-DD). The start_date must be less or equal
+    to the end_date.
+
+    Params:
+        - session (requests.Session): A requests session object for making the API requests.
+        - frequency (str): Frequency of the weather forecast data, 'hourly' or 'daily'.
+        - start_date (str | date | datetime): Starting date of the weather data.
+        - end_date (str | date | datetime): Ending date of the weather date.
+        - params (dict[str, str | int]): Necessary parameters for the API request including the
+        coordinates of the location, requested data type, etc.
+
+    Returns:
+        - pd.DataFrame: Returns a pandas DataFrame of historical weather data comprising
+        two columns namely 'time' and 'forecast' where 'time' column indicates the time of the
+        weather data in ISO 8601 format (YYYY-MM-DDTHH:MM) or the date of the weather data as
+        (YYYY-MM-DD) depending upon the frequency supplied and 'forecast' column contains the
+        historical weather data.
+
+    Raises:
+        - ValueError: If `frequency` is assigned to a value other than 'hourly' or 'daily'.
+        - KeyError: If 'hourly' key is not found in the `params` dictionary.
+    """
+
+    # `start_date` and `end_Date` arguments are verified and converted into
+    # string formatted date objects for using them with the Open-Meteo API.
+
+    if isinstance(start_date, date | datetime):
+        start_date: str = start_date.strftime(r"%Y-%m-%d")
+
+    elif isinstance(start_date, str):
+        try:
+            datetime.strptime(start_date, r"%Y-%m-%d")
+
+        except ValueError | TypeError:
+            ValueError("Invalid value for `start_date` parameter.")
+
+    if isinstance(end_date, date | datetime):
+        end_date: str = end_date.strftime(r"%Y-%m-%d")
+
+    elif isinstance(end_date, str):
+        try:
+            datetime.strptime(end_date, r"%Y-%m-%d").date()
+
+        except ValueError | TypeError:
+            ValueError("Invalid value for `end_date` parameter.")
+
+    # Updating the `params` with the `start_date` and `end_date` after verifying the paramerters.
+    params.update({"start_date": start_date, "end_date": end_date})
+
+    # Extracting weather data using the `get_periodical_data` function with additional parameters.
+    data: pd.DataFrame = get_periodical_forecast(
+        session, constants.WEATHER_HISTORY_API, frequency, params
+    )
+
+    return data
