@@ -1,9 +1,9 @@
 r"""
 Constants Module for the pyweather package
 
-This module comprises all the constants to be used throughout
-the pyweather package. These constants are designed to assist
-the other functionalities present within the package.
+This module comprises all the constants used throughout the
+pyweather package. These constants are designed to assist
+other functionalities present within the package.
 """
 
 import json
