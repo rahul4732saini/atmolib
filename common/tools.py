@@ -290,7 +290,7 @@ def get_historical_weather_data(
     params.update({"start_date": start_date, "end_date": end_date})
 
     # Extracting weather data using the `get_periodical_data` function with additional parameters.
-    data: pd.DataFrame = get_periodical_forecast(
+    data: pd.DataFrame = get_periodical_data(
         session, constants.WEATHER_HISTORY_API, frequency, params
     )
 
