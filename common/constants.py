@@ -28,4 +28,5 @@ CLOUD_COVER_LEVEL = Literal["low", "mid", "high"]
 PRESSURE_LEVELS = {"sealevel": "pressure_msl", "surface": "surface_pressure"}
 
 # Holds the altitude in meters(m) above the surface level.
-ALTITUDE = Literal[2, 80, 120, 180]
+TEMPERATURE_ALTITUDE = Literal[2, 80, 120, 180]
+WIND_ALTITUDE = Literal[10, 80, 120, 180]
