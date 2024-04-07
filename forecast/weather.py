@@ -3,7 +3,7 @@ This module defines the Weather class facilitating the retrieval of weather data
 the Open-Meteo Weather API based on latitudinal and longitudinal coordinates of the location.
 
 The Weather class allows users to extract various types of weather information, including 
-current weather data, upto upcoming 16-days hourly weather forecast data, and upto upcoming
+current weather data, up to upcoming 16-days hourly weather forecast data, and up to upcoming
 16-days daily weather forecast data.
 """
 
@@ -26,8 +26,8 @@ class Weather:
 
     This class allows the user to extract the following:
     - Current weather data such as temperature, atmospheric pressure, weather code, etc.
-    - Upto upcoming 16-days hourly weather forecast data including the current day.
-    - Upto upcoming 16-days daily weather forecast data including the current day.
+    - Up to upcoming 16-days hourly weather forecast data including the current day.
+    - Up to upcoming 16-days daily weather forecast data including the current day.
     """
 
     __slots__ = "_lat", "_long", "_params"
@@ -70,7 +70,7 @@ class Weather:
 
         Params:
         - altitude (int): Altitude from the ground level. Must be in (2, 80, 120, 180).
-        - unit (str): Temperature unit. Must be 'celcius' or 'fahrenheit'.
+        - unit (str): Temperature unit. Must be 'celsius' or 'fahrenheit'.
         """
 
         if altitude not in (2, 80, 120, 180):
@@ -121,7 +121,7 @@ class Weather:
         Params:
         - level (str): Altitude level of the desired cloud coverage. Level supplied must be
         one of the following:
-            - 'low' (clouds and fog upto an altitude of 3 km.)
+            - 'low' (clouds and fog up to an altitude of 3 km.)
             - 'mid' (clouds at an altitude between 3 km and 8 km.)
             - 'high' (clouds at an altitude higher than 8 km.)
         """
@@ -148,7 +148,7 @@ class Weather:
         combining wind chill factor, relative humidity and solar radiation.
 
         Params:
-        - unit (str): Temperature unit. Must be 'celcius' or 'fahrenheit'.
+        - unit (str): Temperature unit. Must be 'celsius' or 'fahrenheit'.
         """
 
         if unit not in ("celsius", "fahrenheit"):
@@ -201,7 +201,7 @@ class Weather:
         self, altitude: constants.WIND_ALTITUDE, unit: constants.WIND_SPEED_UNITS
     ) -> int | float:
         r"""
-        Returns the current wind diection at the supplied altitude and in the supplied unit.
+        Returns the current wind direction at the supplied altitude and in the supplied unit.
 
         Params:
         - altitude (int): Altitude from the ground level. Must be in (10, 80, 120, 180).
