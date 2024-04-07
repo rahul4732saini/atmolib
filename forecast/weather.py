@@ -3,8 +3,7 @@ This module defines the Weather class facilitating the retrieval of weather data
 the Open-Meteo Weather API based on latitudinal and longitudinal coordinates of the location.
 
 The Weather class allows users to extract various types of weather information, including 
-current weather data, up to upcoming 16-days hourly weather forecast data, and up to upcoming
-16-days daily weather forecast data.
+current weather data and up to upcoming 16-days hourly and daily weather forecast data.
 """
 
 from typing import Any
@@ -21,14 +20,9 @@ class Weather(BaseWeather):
     It interacts with the Open-Meteo Weather API to fetch the current or upcoming 7-days
     forecast weather data.
 
-    Initialization(__init__) Params:
-    - lat (int | float): latitudinal coordinates of the location.
-    - long (int | float): longitudinal coordinates of the location.
-
     This class allows the user to extract the following:
     - Current weather data such as temperature, atmospheric pressure, weather code, etc.
-    - Up to upcoming 16-days hourly weather forecast data including the current day.
-    - Up to upcoming 16-days daily weather forecast data including the current day.
+    - Up to upcoming 16-days hourly and daily weather forecast data including the current day.
     """
 
     __slots__ = "_lat", "_long", "_params"
