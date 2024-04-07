@@ -7,9 +7,11 @@ current weather data, upcoming 7-days hourly weather forecast data, and upcoming
 daily weather forecast data.
 """
 
+from typing import Any
+
 import requests
 
-from common import constants
+from common import constants, tools
 
 
 class Weather:
@@ -56,3 +58,19 @@ class Weather:
 
     def __repr__(self) -> str:
         return f"Weather(lat={self.lat}, long={self.long})"
+
+    def get_current_temperature(self, altitude: constants.ALTITUDE = 2) -> float:
+        r"""
+        Returns the current temperature at the supplied altitude from the ground level.
+
+        Params:
+        - altitude (int): Altitude from the ground level. Must be in (2, 80, 120, 180).
+        """
+
+        if altitude not in (2, 80, 120, 180):
+            raise ValueError(f"`altitude` must be in (2, 80, 120, 180). Got {altitude}")
+
+        params: dict[str, Any] = self._params | {"current": f"temperature_{altitude}m"}
+        temperature: float = tools.get_current_data(self._session, self._api, params)
+
+        return temperature
