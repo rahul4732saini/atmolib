@@ -89,7 +89,7 @@ class Weather:
 
     def get_current_weather_code(self) -> tuple[int, str]:
         r"""
-        Returns a tuple comprising the weather code followed
+        Returns a tuple comprising the current weather code followed
         by a string description of the weather code.
         """
 
@@ -102,7 +102,7 @@ class Weather:
 
     def get_current_total_cloud_cover(self) -> int | float:
         r"""
-        Returns the total cloud cover in percentage(%) at the supplied coordinates.
+        Returns the current total cloud cover in percentage(%) at the supplied coordinates.
         """
 
         params: dict[str, Any] = self._params | {"current": "cloud_cover"}
@@ -116,7 +116,7 @@ class Weather:
         self, level: constants.CLOUD_COVER_LEVEL = "low"
     ) -> int | float:
         r"""
-        Returns the cloud cover in percentage(%) at the supplied level and coordinates.
+        Returns the current cloud cover in percentage(%) at the supplied level and coordinates.
 
         Params:
         - level (str): Altitude level of the desired cloud coverage. Level supplied must be
@@ -142,7 +142,7 @@ class Weather:
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
     ) -> int | float:
         r"""
-        Returns the apparent temperature at the supplied coordinates.
+        Returns the current apparent temperature at the supplied coordinates.
 
         Apparent temperature is the perceived feels-like temperature
         combining wind chill factor, relative humidity and solar radiation.
@@ -168,10 +168,10 @@ class Weather:
         self, altitude: constants.WIND_ALTITUDE, unit: constants.WIND_SPEED_UNITS
     ) -> int | float:
         r"""
-        Returns the wind speed at the supplied altitude and in the supplied unit.
+        Returns the current wind speed at the supplied altitude and in the supplied unit.
 
         Params:
-        - altitude (int): Altitude from the ground level. Must be in (2, 80, 120, 180).
+        - altitude (int): Altitude from the ground level. Must be in (10, 80, 120, 180).
         - unit (str): Wind speed unit. The unit must be one of the following:
             - 'kmh' (kilometers per hour)
             - 'mph' (miles per hour)
@@ -180,7 +180,9 @@ class Weather:
         """
 
         if altitude not in (2, 80, 120, 180):
-            raise ValueError(f"`altitude` must be in (2, 80, 120, 180). Got {altitude}")
+            raise ValueError(
+                f"`altitude` must be in (10, 80, 120, 180). Got {altitude}"
+            )
 
         if unit not in ("kmh", "mph", "ms", "kn"):
             raise ValueError(
@@ -199,10 +201,10 @@ class Weather:
         self, altitude: constants.WIND_ALTITUDE, unit: constants.WIND_SPEED_UNITS
     ) -> int | float:
         r"""
-        Returns the wind diection at the supplied altitude and in the supplied unit.
+        Returns the current wind diection at the supplied altitude and in the supplied unit.
 
         Params:
-        - altitude (int): Altitude from the ground level. Must be in (2, 80, 120, 180).
+        - altitude (int): Altitude from the ground level. Must be in (10, 80, 120, 180).
         - unit (str): Wind speed unit. The unit must be one of the following:
             - 'kmh' (kilometers per hour)
             - 'mph' (miles per hour)
@@ -211,7 +213,9 @@ class Weather:
         """
 
         if altitude not in (2, 80, 120, 180):
-            raise ValueError(f"`altitude` must be in (2, 80, 120, 180). Got {altitude}")
+            raise ValueError(
+                f"`altitude` must be in (10, 80, 120, 180). Got {altitude}"
+            )
 
         if unit not in ("kmh", "mph", "ms", "kn"):
             raise ValueError(
@@ -230,7 +234,7 @@ class Weather:
 
     def get_current_wind_gusts(self, unit: constants.WIND_SPEED_UNITS) -> int | float:
         r"""
-        Returns the current wind gusts at the supplied altitude and in the supplied unit.
+        Returns the current wind gusts in the supplied unit.
 
         Params:
         - unit (str): Wind speed unit. The unit must be one of the following:
