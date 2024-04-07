@@ -213,7 +213,9 @@ class Weather:
             {"current": f"wind_direction_{altitude}m"}
         )
 
-    def get_current_wind_gusts(self, unit: constants.WIND_SPEED_UNITS) -> int | float:
+    def get_current_wind_gusts(
+        self, unit: constants.WIND_SPEED_UNITS = "kmh"
+    ) -> int | float:
         r"""
         Returns the current wind gusts above 10 meters(m) from ground level in the supplied unit.
 
@@ -242,7 +244,7 @@ class Weather:
         return self._get_current_weather_data({"current": "relative_humidity_2m"})
 
     def get_current_precipitation(
-        self, unit: constants.PRECIPITATION_UNITS
+        self, unit: constants.PRECIPITATION_UNITS = "mm"
     ) -> int | float:
         r"""
         Returns the current precipitation (sum of rain, showers, and snowfall) at
