@@ -259,3 +259,29 @@ class Weather:
         humidity: int | float = tools.get_current_data(self._session, self._api, params)
 
         return humidity
+
+    def get_current_precipitation(
+        self, unit: constants.PRECIPITATION_UNITS
+    ) -> int | float:
+        r"""
+        Returns the current precipitation (sum of rain, showers, and snowfall) at
+        the supplied coordinates.
+
+        Params:
+        - unit: Precipitation unit. It must be in ('mm', 'inch').
+        """
+
+        if unit not in ("mm", "inch"):
+            raise ValueError(
+                f"Expected `unit` to be one of 'mm' or 'inch'. Got {unit!r}."
+            )
+
+        params: dict[str, Any] = self._params | {
+            "current": "precipitation",
+            "precipitation_unit": unit,
+        }
+        precipitation: int | float = tools.get_current_data(
+            self._session, self._api, params
+        )
+
+        return precipitation
