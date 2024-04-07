@@ -87,3 +87,15 @@ class Weather:
         description: str = constants.WEATHER_CODES[str(weather_code)]
 
         return weather_code, description
+
+    def get_current_total_cloud_cover(self) -> int | float:
+        r"""
+        Returns the total cloud cover in percentage(%) at the supplied coordinates.
+        """
+
+        params: dict[str, Any] = self._params | {"current": "cloud_cover"}
+        cloud_cover: int | float = tools.get_current_data(
+            self._session, self._api, params
+        )
+
+        return cloud_cover
