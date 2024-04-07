@@ -22,4 +22,6 @@ WEATHER_CODES_FILE = Path("weather_codes.json")
 WEATHER_CODES = json.load(WEATHER_CODES_FILE.open())
 
 PRESSURE_LEVELS = {"sealevel": "pressure_msl", "surface": "surface_pressure"}
+
+# Holds the altitude in meters(m) above the surface level.
 ALTITUDE = Literal[2, 80, 120, 180]
