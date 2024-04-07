@@ -119,11 +119,11 @@ def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
     return details
 
 
-def get_current_forecast(
+def get_current_data(
     session: requests.Session, api: str, params: dict[str, Any]
 ) -> int | float:
     r"""
-    Base function for retrieving the current forecast data from supplied API.
+    Base function for retrieving the current weather data from supplied API.
 
     This function is intended for internal use within the package and may not be called
     directly by its users. It is exposed publicly for use by other modules within the package.
@@ -135,7 +135,7 @@ def get_current_forecast(
         coordinates of the location, requested data type, etc.
 
     Returns:
-        - int | float: Returns the requested current forecast data in integet or float format.
+        - int | float: Returns the requested current weather data in integet or float format.
     """
 
     if not params.get("latitude") or not params.get("longitude"):
