@@ -51,3 +51,6 @@ class Weather:
     @property
     def long(self) -> int | float:
         return self._params["longitude"]
+
+    def __repr__(self) -> str:
+        return f"Weather(lat={self.lat}, long={self.long})"
