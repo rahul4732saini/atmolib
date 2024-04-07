@@ -8,6 +8,7 @@ other functionalities present within the package.
 
 import json
 from pathlib import Path
+from typing import Literal
 
 # API endpoint URLs
 WEATHER_API = "https://api.open-meteo.com/v1/forecast"
@@ -19,3 +20,6 @@ ELEVATION_API = "https://api.open-meteo.com/v1/elevation"
 
 WEATHER_CODES_FILE = Path("weather_codes.json")
 WEATHER_CODES = json.load(WEATHER_CODES_FILE.open())
+
+PRESSURE_LEVELS = {"sealevel": "pressure_msl", "surface": "surface_pressure"}
+ALTITUDE = Literal[2, 80, 120, 180]
