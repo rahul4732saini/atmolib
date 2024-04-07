@@ -227,3 +227,28 @@ class Weather:
         )
 
         return direction
+
+    def get_current_wind_gusts(self, unit: constants.WIND_SPEED_UNITS) -> int | float:
+        r"""
+        Returns the current wind gusts at the supplied altitude and in the supplied unit.
+
+        Params:
+        - unit (str): Wind speed unit. The unit must be one of the following:
+            - 'kmh' (kilometers per hour)
+            - 'mph' (miles per hour)
+            - 'ms' (meter per second)
+            - 'kn' (knots)
+        """
+
+        if unit not in ("kmh", "mph", "ms", "kn"):
+            raise ValueError(
+                f"`unit` must be in ('kmh', 'mph', 'ms', 'kn'). Got '{unit}'."
+            )
+
+        params: dict[str, Any] = self._params | {
+            "current": "wind_gusts_10",
+            "wind_speed_unit": unit,
+        }
+        gusts: int | float = tools.get_current_data(self._session, self._api, params)
+
+        return gusts
