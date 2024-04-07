@@ -74,3 +74,16 @@ class Weather:
         temperature: float = tools.get_current_data(self._session, self._api, params)
 
         return temperature
+
+    def get_current_weather_code(self) -> tuple[int, str]:
+        r"""
+        Returns a tuple comprising the weather code followed
+        by a string description of the weather code.
+        """
+
+        params: dict[str, Any] = self._params | {"current": "weather_code"}
+
+        weather_code: int = tools.get_current_data(self._session, self._api, params)
+        description: str = constants.WEATHER_CODES[str(weather_code)]
+
+        return weather_code, description
