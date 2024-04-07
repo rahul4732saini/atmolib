@@ -59,6 +59,21 @@ class Weather:
     def __repr__(self) -> str:
         return f"Weather(lat={self.lat}, long={self.long})"
 
+    def _get_current_weather_data(self, params: dict[str, Any]) -> int | float:
+        r"""
+        [PRIVATE] Uses the supplied parameters to request the Open-Meteo
+        Weather API and returns the result.
+
+        Params:
+        - params (dict[str, Any]): A dictionary all the necessary parameters except the
+        coordinate parameters to request the Open-Meteo Weather API.
+        """
+
+        params |= self._params
+        data: int | float = tools.get_current_data(self._session, self._api, params)
+
+        return data
+
     def get_current_temperature(
         self,
         altitude: constants.TEMPERATURE_ALTITUDE = 2,
@@ -79,13 +94,9 @@ class Weather:
         if unit not in ("celsius", "fahrenheit"):
             raise ValueError(f"`unit` must be 'celsius' or 'fahrenheit'. Got '{unit}'.")
 
-        params: dict[str, Any] = self._params | {
-            "current": f"temperature_{altitude}m",
-            "temperature_unit": unit,
-        }
-        temperature: float = tools.get_current_data(self._session, self._api, params)
-
-        return temperature
+        return self._get_current_weather_data(
+            {"current": f"temperature_{altitude}m", "temperature_unit": unit}
+        )
 
     def get_current_weather_code(self) -> tuple[int, str]:
         r"""
@@ -93,9 +104,7 @@ class Weather:
         by a string description of the weather code.
         """
 
-        params: dict[str, Any] = self._params | {"current": "weather_code"}
-
-        weather_code: int = tools.get_current_data(self._session, self._api, params)
+        weather_code: int = self._get_current_weather_data({"current": "weather_code"})
         description: str = constants.WEATHER_CODES[str(weather_code)]
 
         return weather_code, description
@@ -104,13 +113,7 @@ class Weather:
         r"""
         Returns the current total cloud cover in percentage(%) at the supplied coordinates.
         """
-
-        params: dict[str, Any] = self._params | {"current": "cloud_cover"}
-        cloud_cover: int | float = tools.get_current_data(
-            self._session, self._api, params
-        )
-
-        return cloud_cover
+        return self._get_current_weather_data({"current": "cloud_cover"})
 
     def get_current_cloud_cover(
         self, level: constants.CLOUD_COVER_LEVEL = "low"
@@ -131,12 +134,7 @@ class Weather:
                 f"`level` must be in ('low', 'mid', 'high'). Got '{level}'."
             )
 
-        params: dict[str, Any] = self._params | {"current": f"cloud_cover_{level}"}
-        cloud_cover: int | float = tools.get_current_data(
-            self._session, self._api, params
-        )
-
-        return cloud_cover
+        return self._get_current_weather_data({"current": f"cloud_cover_{level}"})
 
     def get_current_apparent_temperature(
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
@@ -154,15 +152,9 @@ class Weather:
         if unit not in ("celsius", "fahrenheit"):
             raise ValueError(f"`unit` must be 'celsius' or 'fahrenheit'. Got '{unit}'.")
 
-        params: dict[str, Any] = self._params | {
-            "current": "apparent_temperature",
-            "temperature_unit": unit,
-        }
-        temperature: int | float = tools.get_current_data(
-            self._session, self._api, params
+        return self._get_current_weather_data(
+            {"current": "apparent_temperature", "temperature_unit": unit}
         )
-
-        return temperature
 
     def get_current_wind_speed(
         self,
@@ -191,13 +183,9 @@ class Weather:
                 f"`unit` must be in ('kmh', 'mph', 'ms', 'kn'). Got '{unit}'."
             )
 
-        params: dict[str, Any] = self._params | {
-            "current": f"wind_speed_{altitude}m",
-            "wind_speed_unit": unit,
-        }
-        speed: int | float = tools.get_current_data(self._session, self._api, params)
-
-        return speed
+        return self._get_current_weather_data(
+            {"current": f"wind_speed_{altitude}m", "wind_speed_unit": unit}
+        )
 
     def get_current_wind_direction(
         self,
@@ -215,14 +203,9 @@ class Weather:
                 f"`altitude` must be in (10, 80, 120, 180). Got {altitude}"
             )
 
-        params: dict[str, Any] = self._params | {
-            "current": f"wind_direction_{altitude}m"
-        }
-        direction: int | float = tools.get_current_data(
-            self._session, self._api, params
+        return self._get_current_weather_data(
+            {"current": f"wind_direction_{altitude}m"}
         )
-
-        return direction
 
     def get_current_wind_gusts(self, unit: constants.WIND_SPEED_UNITS) -> int | float:
         r"""
@@ -241,24 +224,16 @@ class Weather:
                 f"`unit` must be in ('kmh', 'mph', 'ms', 'kn'). Got '{unit}'."
             )
 
-        params: dict[str, Any] = self._params | {
-            "current": "wind_gusts_10",
-            "wind_speed_unit": unit,
-        }
-        gusts: int | float = tools.get_current_data(self._session, self._api, params)
-
-        return gusts
+        return self._get_current_weather_data(
+            {"current": "wind_gusts_10", "wind_speed_unit": unit}
+        )
 
     def get_current_relative_humidity(self) -> int | float:
         r"""
         Returns the current relative humidity 2 meters(m) above the
         ground level in percentage(%) at the supplied coordinates.
         """
-
-        params: dict[str, Any] = self._params | {"current": "relative_humidity_2m"}
-        humidity: int | float = tools.get_current_data(self._session, self._api, params)
-
-        return humidity
+        return self._get_current_weather_data({"current": "relative_humidity_2m"})
 
     def get_current_precipitation(
         self, unit: constants.PRECIPITATION_UNITS
@@ -276,12 +251,6 @@ class Weather:
                 f"Expected `unit` to be one of 'mm' or 'inch'. Got {unit!r}."
             )
 
-        params: dict[str, Any] = self._params | {
-            "current": "precipitation",
-            "precipitation_unit": unit,
-        }
-        precipitation: int | float = tools.get_current_data(
-            self._session, self._api, params
+        return self._get_current_weather_data(
+            {"current": "precipitation", "precipitation_unit": unit}
         )
-
-        return precipitation
