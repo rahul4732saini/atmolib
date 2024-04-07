@@ -59,18 +59,32 @@ class Weather:
     def __repr__(self) -> str:
         return f"Weather(lat={self.lat}, long={self.long})"
 
-    def get_current_temperature(self, altitude: constants.ALTITUDE = 2) -> float:
+    def get_current_temperature(
+        self,
+        altitude: constants.ALTITUDE = 2,
+        unit: constants.TEMPERATURE_UNITS = "celcius",
+    ) -> float:
         r"""
-        Returns the current temperature at the supplied altitude from the ground level.
+        Returns the current temperature in the supplied temperature unit
+        at the supplied altitude in meters(m) from the ground level.
 
         Params:
         - altitude (int): Altitude from the ground level. Must be in (2, 80, 120, 180).
+        - unit (str): Temperature unit. Must be 'celcius' or 'fahrenheit'.
         """
 
         if altitude not in (2, 80, 120, 180):
             raise ValueError(f"`altitude` must be in (2, 80, 120, 180). Got {altitude}")
 
-        params: dict[str, Any] = self._params | {"current": f"temperature_{altitude}m"}
+        if unit not in ("celcius", "fahrenheit"):
+            raise ValueError(
+                f"`unit` must be in 'celcius' or 'fahrenheit'. Got '{unit}'"
+            )
+
+        params: dict[str, Any] = self._params | {
+            "current": f"temperature_{altitude}m",
+            "temperature_unit": unit,
+        }
         temperature: float = tools.get_current_data(self._session, self._api, params)
 
         return temperature
