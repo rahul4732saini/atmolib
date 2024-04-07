@@ -163,3 +163,34 @@ class Weather:
         )
 
         return temperature
+
+    def get_current_wind_speed(
+        self, altitude: constants.ALTITUDE, unit: constants.WIND_SPEED_UNITS
+    ) -> int | float:
+        r"""
+        Returns the wind speed at the supplied altitude and in the supplied unit.
+
+        Params:
+        - altitude (int): Altitude from the ground level. Must be in (2, 80, 120, 180).
+        - unit (str): Wind speed unit. The unit must be one of the following:
+            - 'kmh' (kilometers per hour)
+            - 'mph' (miles per hour)
+            - 'ms' (meter per second)
+            - 'kn' (knots)
+        """
+
+        if altitude not in (2, 80, 120, 180):
+            raise ValueError(f"`altitude` must be in (2, 80, 120, 180). Got {altitude}")
+
+        if unit not in ("kmh", "mph", "ms", "kn"):
+            raise ValueError(
+                f"`unit` must be in ('kmh', 'mph', 'ms', 'kn'). Got '{unit}'."
+            )
+
+        params: dict[str, Any] = self._params | {
+            "current": f"wind_speed_{altitude}m",
+            "wind_speed_unit": unit,
+        }
+        speed: int | float = tools.get_current_data(self._session, self._api, params)
+
+        return speed
