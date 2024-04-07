@@ -59,18 +59,107 @@ class Weather:
     def __repr__(self) -> str:
         return f"Weather(lat={self.lat}, long={self.long})"
 
-    def get_current_temperature(self, altitude: constants.ALTITUDE = 2) -> float:
+    def get_current_temperature(
+        self,
+        altitude: constants.ALTITUDE = 2,
+        unit: constants.TEMPERATURE_UNITS = "celsius",
+    ) -> float:
         r"""
-        Returns the current temperature at the supplied altitude from the ground level.
+        Returns the current temperature in the supplied temperature unit
+        at the supplied altitude in meters(m) from the ground level.
 
         Params:
         - altitude (int): Altitude from the ground level. Must be in (2, 80, 120, 180).
+        - unit (str): Temperature unit. Must be 'celcius' or 'fahrenheit'.
         """
 
         if altitude not in (2, 80, 120, 180):
             raise ValueError(f"`altitude` must be in (2, 80, 120, 180). Got {altitude}")
 
-        params: dict[str, Any] = self._params | {"current": f"temperature_{altitude}m"}
+        if unit not in ("celsius", "fahrenheit"):
+            raise ValueError(f"`unit` must be 'celsius' or 'fahrenheit'. Got '{unit}'.")
+
+        params: dict[str, Any] = self._params | {
+            "current": f"temperature_{altitude}m",
+            "temperature_unit": unit,
+        }
         temperature: float = tools.get_current_data(self._session, self._api, params)
+
+        return temperature
+
+    def get_current_weather_code(self) -> tuple[int, str]:
+        r"""
+        Returns a tuple comprising the weather code followed
+        by a string description of the weather code.
+        """
+
+        params: dict[str, Any] = self._params | {"current": "weather_code"}
+
+        weather_code: int = tools.get_current_data(self._session, self._api, params)
+        description: str = constants.WEATHER_CODES[str(weather_code)]
+
+        return weather_code, description
+
+    def get_current_total_cloud_cover(self) -> int | float:
+        r"""
+        Returns the total cloud cover in percentage(%) at the supplied coordinates.
+        """
+
+        params: dict[str, Any] = self._params | {"current": "cloud_cover"}
+        cloud_cover: int | float = tools.get_current_data(
+            self._session, self._api, params
+        )
+
+        return cloud_cover
+
+    def get_current_cloud_cover(
+        self, level: constants.CLOUD_COVER_LEVEL = "low"
+    ) -> int | float:
+        r"""
+        Returns the cloud cover in percentage(%) at the supplied level and coordinates.
+
+        Params:
+        - level (str): Altitude level of the desired cloud coverage. Level supplied must be
+        one of the following:
+            - 'low' (clouds and fog upto an altitude of 3 km.)
+            - 'mid' (clouds at an altitude between 3 km and 8 km.)
+            - 'high' (clouds at an altitude higher than 8 km.)
+        """
+
+        if level not in ("low", "mid", "high"):
+            raise ValueError(
+                f"`level` must be in ('low', 'mid', 'high'). Got '{level}'."
+            )
+
+        params: dict[str, Any] = self._params | {"current": f"cloud_cover_{level}"}
+        cloud_cover: int | float = tools.get_current_data(
+            self._session, self._api, params
+        )
+
+        return cloud_cover
+
+    def get_current_apparent_temperature(
+        self, unit: constants.TEMPERATURE_UNITS = "celsius"
+    ) -> int | float:
+        r"""
+        Returns the apparent temperature at the supplied coordinates.
+
+        Apparent temperature is the perceived feels-like temperature
+        combining wind chill factor, relative humidity and solar radiation.
+
+        Params:
+        - unit (str): Temperature unit. Must be 'celcius' or 'fahrenheit'.
+        """
+
+        if unit not in ("celsius", "fahrenheit"):
+            raise ValueError(f"`unit` must be 'celsius' or 'fahrenheit'. Got '{unit}'.")
+
+        params: dict[str, Any] = self._params | {
+            "current": "apparent_temperature",
+            "temperature_unit": unit,
+        }
+        temperature: int | float = tools.get_current_data(
+            self._session, self._api, params
+        )
 
         return temperature
