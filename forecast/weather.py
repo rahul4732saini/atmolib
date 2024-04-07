@@ -77,9 +77,7 @@ class Weather:
             raise ValueError(f"`altitude` must be in (2, 80, 120, 180). Got {altitude}")
 
         if unit not in ("celsius", "fahrenheit"):
-            raise ValueError(
-                f"`unit` must be in 'celcius' or 'fahrenheit'. Got '{unit}'"
-            )
+            raise ValueError(f"`unit` must be 'celcius' or 'fahrenheit'. Got '{unit}'.")
 
         params: dict[str, Any] = self._params | {
             "current": f"temperature_{altitude}m",
