@@ -62,7 +62,7 @@ class Weather:
     def get_current_temperature(
         self,
         altitude: constants.ALTITUDE = 2,
-        unit: constants.TEMPERATURE_UNITS = "celcius",
+        unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> float:
         r"""
         Returns the current temperature in the supplied temperature unit
@@ -77,7 +77,7 @@ class Weather:
             raise ValueError(f"`altitude` must be in (2, 80, 120, 180). Got {altitude}")
 
         if unit not in ("celsius", "fahrenheit"):
-            raise ValueError(f"`unit` must be 'celcius' or 'fahrenheit'. Got '{unit}'.")
+            raise ValueError(f"`unit` must be 'celsius' or 'fahrenheit'. Got '{unit}'.")
 
         params: dict[str, Any] = self._params | {
             "current": f"temperature_{altitude}m",
@@ -139,7 +139,7 @@ class Weather:
         return cloud_cover
 
     def get_current_apparent_temperature(
-        self, unit: constants.TEMPERATURE_UNITS = "celcius"
+        self, unit: constants.TEMPERATURE_UNITS = "celsius"
     ) -> int | float:
         r"""
         Returns the apparent temperature at the supplied coordinates.
@@ -152,7 +152,7 @@ class Weather:
         """
 
         if unit not in ("celsius", "fahrenheit"):
-            raise ValueError(f"`unit` must be 'celcius' or 'fahrenheit'. Got '{unit}'.")
+            raise ValueError(f"`unit` must be 'celsius' or 'fahrenheit'. Got '{unit}'.")
 
         params: dict[str, Any] = self._params | {
             "current": "apparent_temperature",
