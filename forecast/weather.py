@@ -89,10 +89,14 @@ class Weather:
         """
 
         if altitude not in (2, 80, 120, 180):
-            raise ValueError(f"`altitude` must be in (2, 80, 120, 180). Got {altitude}")
+            raise ValueError(
+                f"Expected `altitude` to be one of (2, 80, 120, 180). Got {altitude}"
+            )
 
         if unit not in ("celsius", "fahrenheit"):
-            raise ValueError(f"`unit` must be 'celsius' or 'fahrenheit'. Got '{unit}'.")
+            raise ValueError(
+                f"Expected `unit` to be one of 'celsius' or 'fahrenheit'. Got {unit!r}."
+            )
 
         return self._get_current_weather_data(
             {"current": f"temperature_{altitude}m", "temperature_unit": unit}
@@ -131,7 +135,7 @@ class Weather:
 
         if level not in ("low", "mid", "high"):
             raise ValueError(
-                f"`level` must be in ('low', 'mid', 'high'). Got '{level}'."
+                f"Expected `level` to be one of ('low', 'mid', 'high'). Got {level!r}."
             )
 
         return self._get_current_weather_data({"current": f"cloud_cover_{level}"})
@@ -150,7 +154,9 @@ class Weather:
         """
 
         if unit not in ("celsius", "fahrenheit"):
-            raise ValueError(f"`unit` must be 'celsius' or 'fahrenheit'. Got '{unit}'.")
+            raise ValueError(
+                f"Expected `unit` to be 'celsius' or 'fahrenheit'. Got {unit!r}."
+            )
 
         return self._get_current_weather_data(
             {"current": "apparent_temperature", "temperature_unit": unit}
@@ -175,12 +181,12 @@ class Weather:
 
         if altitude not in (2, 80, 120, 180):
             raise ValueError(
-                f"`altitude` must be in (10, 80, 120, 180). Got {altitude}"
+                f"Expected `altitute` to be one of (10, 80, 120, 180). Got {altitude}"
             )
 
         if unit not in ("kmh", "mph", "ms", "kn"):
             raise ValueError(
-                f"`unit` must be in ('kmh', 'mph', 'ms', 'kn'). Got '{unit}'."
+                f"Expected `unit` to be one of ('kmh', 'mph', 'ms', 'kn'). Got {unit!r}."
             )
 
         return self._get_current_weather_data(
@@ -200,7 +206,7 @@ class Weather:
 
         if altitude not in (2, 80, 120, 180):
             raise ValueError(
-                f"`altitude` must be in (10, 80, 120, 180). Got {altitude}"
+                f"Expected `altitude` to be one of (10, 80, 120, 180). Got {altitude}."
             )
 
         return self._get_current_weather_data(
@@ -221,7 +227,7 @@ class Weather:
 
         if unit not in ("kmh", "mph", "ms", "kn"):
             raise ValueError(
-                f"`unit` must be in ('kmh', 'mph', 'ms', 'kn'). Got '{unit}'."
+                f"Expected `unit` to be one of ('kmh', 'mph', 'ms', 'kn'). Got {unit!r}."
             )
 
         return self._get_current_weather_data(
