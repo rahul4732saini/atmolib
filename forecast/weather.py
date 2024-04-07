@@ -139,3 +139,29 @@ class Weather:
         )
 
         return cloud_cover
+
+    def get_current_apparent_temperature(
+        self, unit: constants.TEMPERATURE_UNITS = "celcius"
+    ) -> int | float:
+        r"""
+        Returns the apparent temperature at the supplied coordinates.
+
+        Apparent temperature is the perceived feels-like temperature
+        combining wind chill factor, relative humidity and solar radiation.
+
+        Params:
+        - unit (str): Temperature unit. Must be 'celcius' or 'fahrenheit'.
+        """
+
+        if unit not in ("celcius", "fahrenheit"):
+            raise ValueError(f"`unit` must be 'celcius' or 'fahrenheit'. Got '{unit}'.")
+
+        params: dict[str, Any] = self._params | {
+            "current": "apparent_temperature",
+            "temperature_unit": unit,
+        }
+        temperature: int | float = tools.get_current_data(
+            self._session, self._api, params
+        )
+
+        return temperature
