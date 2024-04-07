@@ -21,6 +21,7 @@ ELEVATION_API = "https://api.open-meteo.com/v1/elevation"
 WEATHER_CODES_FILE = Path("weather_codes.json")
 WEATHER_CODES = json.load(WEATHER_CODES_FILE.open())
 
+CLOUD_COVER = Literal["low", "mid", "high"]
 PRESSURE_LEVELS = {"sealevel": "pressure_msl", "surface": "surface_pressure"}
 
 # Holds the altitude in meters(m) above the surface level.
