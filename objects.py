@@ -9,6 +9,8 @@ class BaseWeather:
     BaseClass for all weather classes.
     """
 
+    __slots__ = "_lat", "_long", "_params"
+
     def __init__(self, lat: int | float, long: int | float) -> None:
 
         # Verifying the supplied `lat` and `long` arguments.
