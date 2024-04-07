@@ -22,7 +22,7 @@ WEATHER_CODES_FILE = Path("weather_codes.json")
 WEATHER_CODES = json.load(WEATHER_CODES_FILE.open())
 
 TEMPERATURE_UNITS = ["celcius", "fahrenheit"]
-CLOUD_COVER = Literal["low", "mid", "high"]
+CLOUD_COVER_LEVEL = Literal["low", "mid", "high"]
 PRESSURE_LEVELS = {"sealevel": "pressure_msl", "surface": "surface_pressure"}
 
 # Holds the altitude in meters(m) above the surface level.
