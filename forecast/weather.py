@@ -248,3 +248,14 @@ class Weather:
         gusts: int | float = tools.get_current_data(self._session, self._api, params)
 
         return gusts
+
+    def get_current_relative_humidity(self) -> int | float:
+        r"""
+        Returns the current relative humidity 2 meters(m) above the
+        ground level in percentage(%) at the supplied coordinates.
+        """
+
+        params: dict[str, Any] = self._params | {"current": "relative_humity_2m"}
+        humidity: int | float = tools.get_current_data(self._session, self._api, params)
+
+        return humidity
