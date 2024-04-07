@@ -61,7 +61,7 @@ class Weather:
 
     def get_current_temperature(
         self,
-        altitude: constants.ALTITUDE = 2,
+        altitude: constants.TEMPERATURE_ALTITUDE = 2,
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> float:
         r"""
@@ -165,7 +165,7 @@ class Weather:
         return temperature
 
     def get_current_wind_speed(
-        self, altitude: constants.ALTITUDE, unit: constants.WIND_SPEED_UNITS
+        self, altitude: constants.WIND_ALTITUDE, unit: constants.WIND_SPEED_UNITS
     ) -> int | float:
         r"""
         Returns the wind speed at the supplied altitude and in the supplied unit.
@@ -196,7 +196,7 @@ class Weather:
         return speed
 
     def get_current_wind_direction(
-        self, altitude: constants.ALTITUDE, unit: constants.WIND_SPEED_UNITS
+        self, altitude: constants.WIND_ALTITUDE, unit: constants.WIND_SPEED_UNITS
     ) -> int | float:
         r"""
         Returns the wind diection at the supplied altitude and in the supplied unit.
