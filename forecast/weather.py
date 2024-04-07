@@ -255,7 +255,7 @@ class Weather:
         ground level in percentage(%) at the supplied coordinates.
         """
 
-        params: dict[str, Any] = self._params | {"current": "relative_humity_2m"}
+        params: dict[str, Any] = self._params | {"current": "relative_humidity_2m"}
         humidity: int | float = tools.get_current_data(self._session, self._api, params)
 
         return humidity
