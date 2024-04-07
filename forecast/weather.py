@@ -99,3 +99,29 @@ class Weather:
         )
 
         return cloud_cover
+
+    def get_current_cloud_cover(
+        self, level: constants.CLOUD_COVER_LEVEL = "low"
+    ) -> int | float:
+        r"""
+        Returns the cloud cover in percentage(%) at the supplied level and coordinates.
+
+        Params:
+        - level (str): Altitude level of the desired cloud coverage. Level supplied must be
+        one of the following:
+            - 'low' (clouds and fog upto an altitude of 3 km.)
+            - 'mid' (clouds at an altitude between 3 km and 8 km.)
+            - 'high' (clouds at an altitude higher than 8 km.)
+        """
+
+        if level not in ("low", "mid", "high"):
+            raise ValueError(
+                f"`level` must be in ('low', 'mid', 'high'). Got '{level}'."
+            )
+
+        params: dict[str, Any] = self._params | {"current": f"cloud_cover_{level}"}
+        cloud_cover: int | float = tools.get_current_data(
+            self._session, self._api, params
+        )
+
+        return cloud_cover
