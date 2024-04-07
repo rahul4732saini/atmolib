@@ -7,12 +7,9 @@ current weather data, upcoming 7-days hourly weather forecast data, and upcoming
 daily weather forecast data.
 """
 
-from typing import Literal, Any
-
 import requests
-import pandas as pd
 
-from common import constants, tools
+from common import constants
 
 
 class Weather:
@@ -31,7 +28,10 @@ class Weather:
     - Upcoming 7-days daily weather forecast data including the current day.
     """
 
-    __slots__ = "_lat", "_long", "_session", "_api", "_params"
+    __slots__ = "_lat", "_long", "_params"
+
+    _api = constants.WEATHER_API
+    _session = requests.Session()
 
     def __init__(self, lat: int | float, long: int | float) -> None:
 
@@ -42,9 +42,6 @@ class Weather:
         assert -180 <= long <= 180, ValueError(
             f"`long` must be in the range of -180 and 180. Got {long}"
         )
-
-        self._api = constants.WEATHER_API
-        self._session = requests.Session()
 
         # Template of the params dictionary to be used for API requests.
         self._params = {"latitude": lat, "longitude": long}
