@@ -11,10 +11,11 @@ from typing import Any
 
 import requests
 
+from objects import BaseWeather
 from common import constants, tools
 
 
-class Weather:
+class Weather(BaseWeather):
     r"""
     Weather class to extract weather data based on latitude and longitude coordinates.
     It interacts with the Open-Meteo Weather API to fetch the current or upcoming 7-days
@@ -34,30 +35,6 @@ class Weather:
 
     _api = constants.WEATHER_API
     _session = requests.Session()
-
-    def __init__(self, lat: int | float, long: int | float) -> None:
-
-        # Verifying the supplied `lat` and `long` arguments.
-        assert -90 <= lat <= 90, ValueError(
-            f"`lat` must be in the range of -90 and 90. Got {lat}"
-        )
-        assert -180 <= long <= 180, ValueError(
-            f"`long` must be in the range of -180 and 180. Got {long}"
-        )
-
-        # Template of the params dictionary to be used for API requests.
-        self._params = {"latitude": lat, "longitude": long}
-
-    @property
-    def lat(self) -> int | float:
-        return self._params["latitude"]
-
-    @property
-    def long(self) -> int | float:
-        return self._params["longitude"]
-
-    def __repr__(self) -> str:
-        return f"Weather(lat={self.lat}, long={self.long})"
 
     def _get_current_weather_data(self, params: dict[str, Any]) -> int | float:
         r"""
