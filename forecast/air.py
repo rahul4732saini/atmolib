@@ -70,3 +70,10 @@ class AirQuality(BaseWeather):
             )
 
         return self.get_current_weather_data({"current": gas})
+
+    def get_current_pm2_5_conc(self) -> int | float:
+        r"""
+        Returns the current concentration(micro g/m^3) of particulate matter with diameter
+        smaller than the 2.5 micro meter(m) in air 10 meters(m) above the ground level.
+        """
+        return self.get_current_weather_data({"current": "pm2_5"})
