@@ -89,8 +89,8 @@ class Archive(BaseWeather):
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
     ) -> pd.DataFrame:
         r"""
-        Returns the temperature 2 meters(m) above the ground level at the specified
-        coordinates within the supplied date range.
+        Returns a pandas Dataframe of hourly temperature 2 meters(m) above the ground
+        level at the specified coordinates within the supplied date range.
         """
 
         if unit not in ("celsius", "fahrenheit"):
@@ -107,8 +107,8 @@ class Archive(BaseWeather):
 
     def get_hourly_relative_humidity(self) -> int | float:
         r"""
-        Returns the hourly relative humidity percentage(%) at the
-        specified coordinates within the date range.
+        Returns a pandas DataFrame of hourly relative humidity percentage(%)
+        at the specified coordinates within the date range.
         """
         return self.get_periodical_weather_data(
             "hourly", self._params | {"hourly": "relative_humidity_2m"}
