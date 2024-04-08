@@ -34,3 +34,13 @@ WIND_ALTITUDE = Literal[10, 80, 120, 180]
 
 # Air Quality Index sources.
 AQI_SOURCES = Literal["european", "us"]
+
+# Description of Air Quality Index falling in different ranges.
+AQI_LEVELS = {
+    range(50): "Good",
+    range(51, 101): "Moderate",
+    range(101, 151): "Slight Unhealthy",
+    range(151, 201): "Unhealthy",
+    range(201, 301): "Very Unhealthy",
+    range(301, 501): "Harazdous",
+}
