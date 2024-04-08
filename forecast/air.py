@@ -84,3 +84,21 @@ class AirQuality(BaseWeather):
         smaller than the 10 micro meter(m) in air 10 meters(m) above the ground level.
         """
         return self.get_current_weather_data({"current": "pm10"})
+
+    def get_current_pollen_conc(self, plant: constants.PLANTS) -> int | float:
+        r"""
+        Returns the current concentration(grains/m^3) of pollens of the specified plant.
+        Only available for Europe as provided by CAMS European Air Quality forecast.
+
+        Params:
+        - plant (str): Plant whose pollen concentration can be retrieved. Must be one of
+        ('alder', 'birch', 'grass', 'mugwort', 'olive', 'ragweed').
+        """
+
+        if plant not in ("alder", "birch", "grass", "mugwort", "olive", "ragweed"):
+            raise ValueError(
+                "Expected `plant` to be one of ('alder', 'birch', 'grass', 'mugwort',"
+                f"'olive', 'ragweed'). Got {plant!r}."
+            )
+
+        return self.get_current_weather_data({"current": f"{plant}_pollen"})
