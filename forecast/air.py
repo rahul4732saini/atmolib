@@ -24,7 +24,7 @@ class AirQuality(BaseWeather):
 
     def get_current_aqi(self, source: constants.AQI_SOURCES = "european") -> int:
         r"""
-        Returns the current European air quality index value.
+        Returns the current European air quality index value at the supplied coordinates.
 
         Params:
         - source: Source of the Air Quality Index. Must be one of the following:
@@ -41,8 +41,8 @@ class AirQuality(BaseWeather):
 
     def get_current_ammonia_conc(self) -> int | float | None:
         r"""
-        Returns the current concentration of ammonia(NH3) in air. Only available for Europe.
-        Returns None for Non-European regions.
+        Returns the current concentration(micro g/m^3) of ammonia(NH3) in air.
+        Only available for Europe. Returns None for Non-European regions.
         """
         return self.get_current_weather_data({"current": "ammonia"})
 
@@ -56,6 +56,10 @@ class AirQuality(BaseWeather):
         r"""
         Returns the current concentration(miro g/m^3) of the
         supplied gas in air 10 meters above ground level.
+
+        Params:
+        - gas (str): Gas whose concetration needs to be extracted. Must be one of the following:
+        ('ozone', 'carbon_monoxide', 'nitrogen_dioxide', 'sulphur_dioxide').
         """
 
         if gas not in (
