@@ -102,3 +102,9 @@ class AirQuality(BaseWeather):
             )
 
         return self.get_current_weather_data({"current": f"{plant}_pollen"})
+
+    def get_current_uv_index(self) -> int | float:
+        r"""
+        Returns the current Ultra-Violet radiation index value at the supplied coordinates.
+        """
+        return self.get_current_weather_data({"current": "uv_index"})
