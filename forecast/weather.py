@@ -6,12 +6,10 @@ The Weather class allows users to extract various types of weather information, 
 current weather data and up to upcoming 16-days hourly and daily weather forecast data.
 """
 
-from typing import Any
-
 import requests
 
+from common import constants
 from objects import BaseWeather
-from common import constants, tools
 
 
 class Weather(BaseWeather):
@@ -25,21 +23,6 @@ class Weather(BaseWeather):
 
     _api = constants.WEATHER_API
     _session = requests.Session()
-
-    def _get_current_weather_data(self, params: dict[str, Any]) -> int | float:
-        r"""
-        [PRIVATE] Uses the supplied parameters to request the Open-Meteo
-        Weather API and returns the result.
-
-        Params:
-        - params (dict[str, Any]): A dictionary all the necessary parameters except the
-        coordinate parameters to request the Open-Meteo Weather API.
-        """
-
-        params |= self._params
-        data: int | float = tools.get_current_data(self._session, self._api, params)
-
-        return data
 
     def get_current_temperature(
         self,
@@ -65,7 +48,7 @@ class Weather(BaseWeather):
                 f"Expected `unit` to be one of 'celsius' or 'fahrenheit'. Got {unit!r}."
             )
 
-        return self._get_current_weather_data(
+        return self.get_current_weather_data(
             {"current": f"temperature_{altitude}m", "temperature_unit": unit}
         )
 
@@ -75,7 +58,7 @@ class Weather(BaseWeather):
         by a string description of the weather code.
         """
 
-        weather_code: int = self._get_current_weather_data({"current": "weather_code"})
+        weather_code: int = self.get_current_weather_data({"current": "weather_code"})
         description: str = constants.WEATHER_CODES[str(weather_code)]
 
         return weather_code, description
@@ -84,7 +67,7 @@ class Weather(BaseWeather):
         r"""
         Returns the current total cloud cover in percentage(%) at the supplied coordinates.
         """
-        return self._get_current_weather_data({"current": "cloud_cover"})
+        return self.get_current_weather_data({"current": "cloud_cover"})
 
     def get_current_cloud_cover(
         self, level: constants.CLOUD_COVER_LEVEL = "low"
@@ -105,7 +88,7 @@ class Weather(BaseWeather):
                 f"Expected `level` to be one of ('low', 'mid', 'high'). Got {level!r}."
             )
 
-        return self._get_current_weather_data({"current": f"cloud_cover_{level}"})
+        return self.get_current_weather_data({"current": f"cloud_cover_{level}"})
 
     def get_current_apparent_temperature(
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
@@ -125,7 +108,7 @@ class Weather(BaseWeather):
                 f"Expected `unit` to be 'celsius' or 'fahrenheit'. Got {unit!r}."
             )
 
-        return self._get_current_weather_data(
+        return self.get_current_weather_data(
             {"current": "apparent_temperature", "temperature_unit": unit}
         )
 
@@ -156,7 +139,7 @@ class Weather(BaseWeather):
                 f"Expected `unit` to be one of ('kmh', 'mph', 'ms', 'kn'). Got {unit!r}."
             )
 
-        return self._get_current_weather_data(
+        return self.get_current_weather_data(
             {"current": f"wind_speed_{altitude}m", "wind_speed_unit": unit}
         )
 
@@ -176,9 +159,7 @@ class Weather(BaseWeather):
                 f"Expected `altitude` to be one of (10, 80, 120, 180). Got {altitude}."
             )
 
-        return self._get_current_weather_data(
-            {"current": f"wind_direction_{altitude}m"}
-        )
+        return self.get_current_weather_data({"current": f"wind_direction_{altitude}m"})
 
     def get_current_wind_gusts(
         self, unit: constants.WIND_SPEED_UNITS = "kmh"
@@ -199,7 +180,7 @@ class Weather(BaseWeather):
                 f"Expected `unit` to be one of ('kmh', 'mph', 'ms', 'kn'). Got {unit!r}."
             )
 
-        return self._get_current_weather_data(
+        return self.get_current_weather_data(
             {"current": "wind_gusts_10", "wind_speed_unit": unit}
         )
 
@@ -208,7 +189,7 @@ class Weather(BaseWeather):
         Returns the current relative humidity 2 meters(m) above the
         ground level in percentage(%) at the supplied coordinates.
         """
-        return self._get_current_weather_data({"current": "relative_humidity_2m"})
+        return self.get_current_weather_data({"current": "relative_humidity_2m"})
 
     def get_current_precipitation(
         self, unit: constants.PRECIPITATION_UNITS = "mm"
@@ -226,6 +207,6 @@ class Weather(BaseWeather):
                 f"Expected `unit` to be one of 'mm' or 'inch'. Got {unit!r}."
             )
 
-        return self._get_current_weather_data(
+        return self.get_current_weather_data(
             {"current": "precipitation", "precipitation_unit": unit}
         )
