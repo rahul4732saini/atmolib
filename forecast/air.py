@@ -21,3 +21,20 @@ class AirQuality(BaseWeather):
 
     _session = requests.Session()
     _api = constants.AIR_QUALITY_API
+
+    def get_current_aqi(self, source: constants.AQI_SOURCES = "european") -> int:
+        r"""
+        Returns the current European air quality index value.
+
+        Params:
+        - source: Source of the Air Quality Index. Must be one of the following:
+            - 'european' (Extracts the European Air Quality Index)
+            - 'us' (Extracts the USA Air Quality Index)
+        """
+
+        if source not in ("european", "us"):
+            raise ValueError(
+                f"Expected `source` to be 'european' or 'us'. Got {source}."
+            )
+
+        return self.get_current_weather_data({"current": "european_aqi"})
