@@ -44,3 +44,5 @@ AQI_LEVELS = {
     range(201, 301): "Very Unhealthy",
     range(301, 501): "Harazdous",
 }
+
+GASES = Literal["ozone", "carbon_monoxide", "nitrogen_dioxide", "suphur_dioxide"]
