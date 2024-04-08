@@ -139,3 +139,10 @@ class Archive(BaseWeather):
         )
 
         return data
+
+    def get_hourly_total_cloud_cover(self) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly total cloud cover data percentage(%) at
+        the specified coordinates within the supplied date range.
+        """
+        return self.get_periodical_weather_data("hourly", {"hourly": "cloud_cover"})
