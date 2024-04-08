@@ -45,3 +45,9 @@ class AirQuality(BaseWeather):
         Returns None for Non-European regions.
         """
         return self.get_current_weather_data({"current": "ammonia"})
+
+    def get_current_dust_conc(self) -> int | float:
+        r"""
+        Returns the current concentration(micro g/m^3) of dust in air 10 meters above ground level.
+        """
+        return self.get_current_weather_data({"current": "dust"})
