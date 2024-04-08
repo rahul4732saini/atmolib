@@ -113,3 +113,26 @@ class Archive(BaseWeather):
         return self.get_periodical_weather_data(
             "hourly", self._params | {"hourly": "relative_humidity_2m"}
         )
+
+    def get_hourly_weather_code(self) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly weather code data with its corresponding
+        description at the specified coordinates withing the date range.
+
+        Columns:
+        - time: time of the forecast data in ISO 8601 format (YYYY-MM-DDTHH-MM).
+        - data: weather code at the corresponding hour.
+        - description: description of the corresponding weather code.
+        """
+
+        data: pd.DataFrame = self.get_periodical_weather_data(
+            "hourly", {"hourly": "weather_code"}
+        )
+
+        # Creating a new column 'description' mapped to the the
+        # description of the corresponding weather code.
+        data["description"] = data["data"].map(
+            lambda x: constants.WEATHER_CODES[str(x)]
+        )
+
+        return data
