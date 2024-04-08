@@ -3,9 +3,9 @@ This module comprises classes that serve as foundational components
 for various functionalities within the package.
 """
 
+import pandas as pd
 from typing import Any
-
-from common import tools
+from common import tools, constants
 
 
 class BaseWeather:
@@ -44,8 +44,8 @@ class BaseWeather:
 
     def get_current_weather_data(self, params: dict[str, Any]) -> int | float:
         r"""
-        Uses the supplied parameters to request the
-        supplied Open-Meteo API and returns the result.
+        Uses the supplied parameters to request the supplied
+        Open-Meteo API and returns the current weather data.
 
         This function is intended for internal use within the package and may not be called
         directly by its users. It is exposed publicly for use by other modules within the package.
@@ -59,5 +59,30 @@ class BaseWeather:
 
         # _session and _api class attributes must be defined by the child class.
         data: int | float = tools.get_current_data(self._session, self._api, params)
+
+        return data
+
+    def get_periodical_weather_data(
+        self, frequnecy: constants.FREQUENCY, params: dict[str, Any]
+    ) -> pd.DataFrame:
+        r"""
+        Uses the supplied parameters to request the supplied
+        Open-Meteo API and returns the periodical weather data.
+
+        This function is intended for internal use within the package and may not be called
+        directly by its users. It is exposed publicly for use by other modules within the package.
+
+        Params:
+        - frequency (str): Frequency of the weather forecast data, 'hourly' or 'daily'.
+        - params (dict[str, Any]): A dictionary all the necessary parameters except the
+        coordinate parameters to request the Open-Meteo Weather API.
+        """
+
+        params |= self._params
+
+        # _session and _api class attributes must be defined by the child class.
+        data: pd.DataFrame = tools.get_periodical_data(
+            self._session, self._api, frequnecy, params
+        )
 
         return data
