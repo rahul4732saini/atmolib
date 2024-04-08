@@ -146,3 +146,26 @@ class Archive(BaseWeather):
         at the specified coordinates within the supplied date range.
         """
         return self.get_periodical_weather_data("hourly", {"hourly": "cloud_cover"})
+
+    def get_hourly_apparent_temperature(
+        self, unit: constants.TEMPERATURE_UNITS = "celsius"
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of apparent temperature data at
+        the specified coordinates within the supplied date range.
+
+        Params:
+        - unit: Temperature unit. Must be 'celsius' or 'fahrenheit'.
+        """
+
+        if unit not in ("celsius", "fahrenheit"):
+            raise ValueError(
+                f"Expected `unit` to be one of 'celsius' or 'fahrenheit'. Got {unit!r}."
+            )
+
+        params: dict[str, str] = {
+            "hourly": "apparent_temperature",
+            "temperature_unit": unit,
+        }
+
+        return self.get_periodical_weather_data("hourly", params)
