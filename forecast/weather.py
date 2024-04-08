@@ -17,12 +17,8 @@ from common import constants, tools
 class Weather(BaseWeather):
     r"""
     Weather class to extract weather data based on latitude and longitude coordinates.
-    It interacts with the Open-Meteo Weather API to fetch the current or upcoming 7-days
-    forecast weather data.
-
-    This class allows the user to extract the following:
-    - Current weather data such as temperature, atmospheric pressure, weather code, etc.
-    - Up to upcoming 16-days hourly and daily weather forecast data including the current day.
+    It interacts with the Open-Meteo Weather API to fetch the current or upcoming 8-days
+    hourly and daily weather forecast data.
     """
 
     __slots__ = "_lat", "_long", "_params"
