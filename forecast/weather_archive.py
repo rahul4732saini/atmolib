@@ -46,6 +46,8 @@ class Archive(BaseWeather):
         self.start_date = start_date
         self.end_date = end_date
 
+        self._params |= {"start_date": start_date, "end_date": end_date}
+
     @staticmethod
     def _resolve_date(target: str | date | datetime, var: str) -> date:
         r"""
@@ -98,9 +100,16 @@ class Archive(BaseWeather):
 
         params: dict[str, str] = {
             "hourly": "temperature_2m",
-            "start_date": self._start_date,
-            "end_date": self._end_date,
             "temperature_unit": unit,
         }
 
-        return self.get_periodical_weather_data("hourly", params)
+        return self.get_periodical_weather_data("hourly", self._params | params)
+
+    def get_hourly_relative_humidity(self) -> int | float:
+        r"""
+        Returns the hourly relative humidity percentage(%) at the
+        specified coordinates within the date range.
+        """
+        return self.get_periodical_weather_data(
+            "hourly", self._params | {"hourly": "relative_humidity_2m"}
+        )
