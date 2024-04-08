@@ -38,3 +38,10 @@ class AirQuality(BaseWeather):
             )
 
         return self.get_current_weather_data({"current": "european_aqi"})
+
+    def get_current_ammonia_conc(self) -> int | float | None:
+        r"""
+        Returns the current concentration of ammonia(NH3) in air. Only available for Europe.
+        Returns None for Non-European regions.
+        """
+        return self.get_current_weather_data({"current": "ammonia"})
