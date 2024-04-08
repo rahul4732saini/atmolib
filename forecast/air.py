@@ -108,3 +108,14 @@ class AirQuality(BaseWeather):
         Returns the current Ultra-Violet radiation index value at the supplied coordinates.
         """
         return self.get_current_weather_data({"current": "uv_index"})
+
+    def get_current_aerosol_optical_depth(self) -> int | float:
+        r"""
+        Returns the current aerosal optical depth at 550 nm at the supplied coordinates.
+
+        Aerosol optical depth (AOD) at 550 nm is a measure of the extinction of solar radiation
+        at a wavelength of 550 nanometers (green-yellow region of the visible spectrum) due to
+        aerosol particles in the atmosphere. It is commonly used as an indicator of haze or the
+        presence of aerosols in the atmosphere.
+        """
+        return self.get_current_weather_data({"current": "aerosol_optical_depth"})
