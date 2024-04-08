@@ -46,3 +46,4 @@ AQI_LEVELS = {
 }
 
 GASES = Literal["ozone", "carbon_monoxide", "nitrogen_dioxide", "suphur_dioxide"]
+PLANTS = Literal["alder", "birch", "grass", "mugwort", "olive", "ragweed"]
