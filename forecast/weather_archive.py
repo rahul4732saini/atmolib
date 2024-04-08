@@ -120,7 +120,7 @@ class Archive(BaseWeather):
     def get_hourly_weather_code(self) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly weather code data with its corresponding
-        description at the specified coordinates withing the date range.
+        description at the specified coordinates within the date range.
 
         Columns:
         - time: time of the forecast data in ISO 8601 format (YYYY-MM-DDTHH-MM).
@@ -142,7 +142,7 @@ class Archive(BaseWeather):
 
     def get_hourly_total_cloud_cover(self) -> pd.DataFrame:
         r"""
-        Returns a pandas DataFrame of hourly total cloud cover data percentage(%) at
-        the specified coordinates within the supplied date range.
+        Returns a pandas DataFrame of hourly total cloud cover percentage(%) data
+        at the specified coordinates within the supplied date range.
         """
         return self.get_periodical_weather_data("hourly", {"hourly": "cloud_cover"})
