@@ -51,3 +51,22 @@ class AirQuality(BaseWeather):
         Returns the current concentration(micro g/m^3) of dust in air 10 meters above ground level.
         """
         return self.get_current_weather_data({"current": "dust"})
+
+    def get_current_gaseous_conc(self, gas: constants.GASES = "ozone") -> int | float:
+        r"""
+        Returns the current concentration(miro g/m^3) of the
+        supplied gas in air 10 meters above ground level.
+        """
+
+        if gas not in (
+            "ozone",
+            "carbon_monoxide",
+            "nitrogen_dioxide",
+            "sulphur_dioxide",
+        ):
+            raise ValueError(
+                "Expected `gas` to be one of ('ozone', 'carbon_monoxide',"
+                f"'nitrogen_dioxide', 'sulphur_dioxide'). Got {gas}"
+            )
+
+        return self.get_current_weather_data({"current": gas})
