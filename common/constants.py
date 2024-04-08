@@ -21,6 +21,9 @@ ELEVATION_API = "https://api.open-meteo.com/v1/elevation"
 WEATHER_CODES_FILE = Path("weather_codes.json")
 WEATHER_CODES = json.load(WEATHER_CODES_FILE.open())
 
+# Available freuqencies of periodical weather data.
+FREQUENCY = Literal["hourly", "daily"]
+
 TEMPERATURE_UNITS = Literal["celcius", "fahrenheit"]
 WIND_SPEED_UNITS = Literal["kmh", "mph", "ms", "kn"]
 PRECIPITATION_UNITS = Literal["mm", "inch"]
