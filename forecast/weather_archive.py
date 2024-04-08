@@ -9,6 +9,7 @@ ranging from 1940 till the present.
 from datetime import date, datetime
 
 import requests
+import pandas as pd
 
 from common import constants
 from objects import BaseWeather
@@ -81,3 +82,25 @@ class Archive(BaseWeather):
     @end_date.setter
     def end_date(self, __value: str | date | datetime) -> None:
         self._end_date = self._resolve_date(__value, "end_date")
+
+    def get_hourly_temperature(
+        self, unit: constants.TEMPERATURE_UNITS = "celsius"
+    ) -> pd.DataFrame:
+        r"""
+        Returns the temperature 2 meters(m) above the ground level at the specified
+        coordinates within the supplied date range.
+        """
+
+        if unit not in ("celsius", "fahrenheit"):
+            raise ValueError(
+                f"Expected `unit` to be one of 'celsius' or 'fahrenheit'. Got {unit!r}."
+            )
+
+        params: dict[str, str] = {
+            "hourly": "temperature_2m",
+            "start_date": self._start_date,
+            "end_date": self._end_date,
+            "temperature_unit": unit,
+        }
+
+        return self.get_periodical_weather_data("hourly", params)
