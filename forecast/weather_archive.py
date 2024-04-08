@@ -89,8 +89,11 @@ class Archive(BaseWeather):
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
     ) -> pd.DataFrame:
         r"""
-        Returns a pandas Dataframe of hourly temperature 2 meters(m) above the ground
+        Returns a pandas DataFrame of temperature data 2 meters(m) above the ground
         level at the specified coordinates within the supplied date range.
+
+        Params:
+        - unit: Temperature unit. Must be 'celsius' or 'fahrenheit'.
         """
 
         if unit not in ("celsius", "fahrenheit"):
@@ -108,8 +111,38 @@ class Archive(BaseWeather):
     def get_hourly_relative_humidity(self) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly relative humidity percentage(%)
-        at the specified coordinates within the date range.
+        data at the specified coordinates within the date range.
         """
         return self.get_periodical_weather_data(
             "hourly", self._params | {"hourly": "relative_humidity_2m"}
         )
+
+    def get_hourly_weather_code(self) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly weather code data with its corresponding
+        description at the specified coordinates within the date range.
+
+        Columns:
+        - time: time of the forecast data in ISO 8601 format (YYYY-MM-DDTHH-MM).
+        - data: weather code at the corresponding hour.
+        - description: description of the corresponding weather code.
+        """
+
+        data: pd.DataFrame = self.get_periodical_weather_data(
+            "hourly", {"hourly": "weather_code"}
+        )
+
+        # Creating a new column 'description' mapped to the the
+        # description of the corresponding weather code.
+        data["description"] = data["data"].map(
+            lambda x: constants.WEATHER_CODES[str(x)]
+        )
+
+        return data
+
+    def get_hourly_total_cloud_cover(self) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly total cloud cover percentage(%) data
+        at the specified coordinates within the supplied date range.
+        """
+        return self.get_periodical_weather_data("hourly", {"hourly": "cloud_cover"})
