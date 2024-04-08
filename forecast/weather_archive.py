@@ -6,6 +6,9 @@ The Archive class allows users to extract vaious types of historical weather dat
 ranging from 1940 till the present.
 """
 
+import requests
+
+from common import constants
 from objects import BaseWeather
 
 
@@ -15,3 +18,6 @@ class Archive(BaseWeather):
     the location within the specified date range. It interacts with the Open-Meteo Weather History
     API to fetch the weather data ranging from 1940 till the present.
     """
+
+    _session = requests.Session()
+    _api = constants.WEATHER_HISTORY_API

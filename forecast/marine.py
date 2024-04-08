@@ -6,6 +6,9 @@ The MarineWeather class allows users to extract various types of marine weather 
 current marine weather data and up to upcoming 8-days hourly and daily marine weather forecast data.
 """
 
+import requests
+
+from common import constants
 from objects import BaseWeather
 
 
@@ -15,3 +18,6 @@ class MarineWeather(BaseWeather):
     It interacts with the Open-Meteo Marine Weather API to fetch the current or up to upcoming 8-days
     hourly and daily marine weather forecast data.
     """
+
+    _session = requests.Session()
+    _api = constants.MARINE_API

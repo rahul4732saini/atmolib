@@ -6,6 +6,9 @@ The AirQuality class allows users to extract various types of air quality inform
 current air quality index data and up to upcoming 7-days hourly air quality forecast data.
 """
 
+import requests
+
+from common import constants
 from objects import BaseWeather
 
 
@@ -15,3 +18,6 @@ class AirQuality(BaseWeather):
     It interacts with the Open-Meteo Air Quality API to fetch the current or up to upcoming 7-days
     hourly and daily air quality forecast data.
     """
+
+    _session = requests.Session()
+    _api = constants.AIR_QUALITY_API
