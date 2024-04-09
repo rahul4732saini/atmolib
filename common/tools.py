@@ -5,9 +5,8 @@ This module contains utility functions and tools used throughout
 the pyweather package.
 """
 
+from typing import Any
 from types import ModuleType
-from typing import Literal, Any
-from datetime import date, datetime
 
 import requests
 import pandas as pd
