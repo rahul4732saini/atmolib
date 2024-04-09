@@ -4,7 +4,10 @@ for various functionalities within the package.
 """
 
 import pandas as pd
+
 from typing import Any
+import requests
+
 from common import tools
 
 
@@ -13,8 +16,8 @@ class BaseWeather:
     BaseClass for all weather classes.
     """
 
-    _session = None
-    _api = None
+    _session: requests.Session
+    _api: str
 
     __slots__ = "_lat", "_long", "_params"
 
