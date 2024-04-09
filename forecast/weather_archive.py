@@ -363,13 +363,15 @@ class Archive(BaseWeather):
         ground level at the specified coordinates within the supplied date range.
 
         Params:
-        - type: Specifies the type of daily temperature to be retrieved, must be 'min' or 'max'.
+        - type: Specifies the type of daily temperature to be retrieved,
+        must be 'min', 'max' or 'mean'.
             - 'min': Daily minimum temperature.
             - 'max': Daily maximum temperature.
+            - 'mean': Daily mean temperature.
         - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
         """
 
-        if type not in ("max", "min"):
+        if type not in ("max", "min", "mean"):
             raise ValueError(f"Expected `type` to be 'min' or 'max', got {type!r}.")
 
         if unit not in ("celsius", "fahrenheit"):
@@ -392,13 +394,14 @@ class Archive(BaseWeather):
 
         Params:
         - type: Specifies the type of daily apparent temperature to be retrieved,
-        must be 'min' or 'max'.
-            - 'min': Daily minimum temperature.
-            - 'max': Daily maximum temperature.
+        must be 'min', 'max' or 'mean'.
+            - 'min': Daily minimum apparent temperature.
+            - 'max': Daily maximum apparent temperature.
+            - 'mean': Daily mean apparent temperature.
         - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
         """
 
-        if type not in ("max", "min"):
+        if type not in ("max", "min", "mean"):
             raise ValueError(f"Expected `type` to be 'min' or 'max', got {type!r}.")
 
         if unit not in ("celsius", "fahrenheit"):
