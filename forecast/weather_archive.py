@@ -357,3 +357,26 @@ class Archive(BaseWeather):
         }
 
         return self.get_periodical_weather_data("hourly", self._params | params)
+
+    def get_daily_max_temperature(
+        self, unit: constants.TEMPERATURE_UNITS = "celsius"
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of daily max temperature data 2 meters(m) above the
+        ground level at the specified coordinates within the supplied date range.
+
+        Params:
+        - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
+        """
+
+        if unit not in ("celsius", "fahrenheit"):
+            raise ValueError(
+                f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
+            )
+
+        params: dict[str, str] = {
+            "daily": "temperature_2m_max",
+            "temperature_unit": unit,
+        }
+
+        return self.get_periodical_weather_data("daily", self._params | params)
