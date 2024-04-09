@@ -368,6 +368,9 @@ class Archive(BaseWeather):
         ground level at the specified coordinates within the supplied date range.
 
         Params:
+        - type: Specifies the type of daily temperature to be retrieved, must be 'min' or 'max'.
+            - 'min': Daily minimum temperature.
+            - 'max': Daily maximum temperature.
         - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
         """
 
