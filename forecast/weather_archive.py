@@ -265,3 +265,22 @@ class Archive(BaseWeather):
         }
 
         return self.get_periodical_weather_data("hourly", params)
+
+    def get_hourly_wind_direction(
+        self,
+        altitude: constants.ARCHIVE_WIND_ALTITUDES = 10,
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly wind direction data at the
+        specified altitude and coorindates within the supplied date range.
+
+        Params:
+        - altitude (int): Altitude from the ground level in meters(m). Must be 10 or 100.
+        """
+
+        if altitude not in (10, 100):
+            raise ValueError(f"Expected `altitute` to be 10 or 100. Got {altitude}.")
+
+        return self.get_periodical_weather_data(
+            "hourly", {"hourly": f"wind_direction_{altitude}"}
+        )
