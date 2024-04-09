@@ -108,7 +108,7 @@ class Archive(BaseWeather):
 
         return self.get_periodical_weather_data("hourly", self._params | params)
 
-    def get_hourly_relative_humidity(self) -> int | float:
+    def get_hourly_relative_humidity(self) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly relative humidity percentage(%)
         data at the specified coordinates within the date range.

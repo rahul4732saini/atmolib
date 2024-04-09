@@ -35,6 +35,9 @@ PRESSURE_LEVELS = {"sealevel": "pressure_msl", "surface": "surface_pressure"}
 TEMPERATURE_ALTITUDE = Literal[2, 80, 120, 180]
 WIND_ALTITUDE = Literal[10, 80, 120, 180]
 
+# Available altitude in meters(m) options for historial wind data.
+ARCHIVE_WIND_ALTITUDES = Literal[10, 100]
+
 # Air Quality Index sources.
 AQI_SOURCES = Literal["european", "us"]
 
