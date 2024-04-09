@@ -52,13 +52,15 @@ class Weather(BaseWeather):
             {"current": f"temperature_{altitude}m", "temperature_unit": unit}
         )
 
-    def get_current_weather_code(self) -> tuple[int, str]:
+    def get_current_weather_code(self) -> tuple[int | float, str]:
         r"""
         Returns a tuple comprising the current weather code followed
         by a string description of the weather code.
         """
 
-        weather_code: int = self.get_current_weather_data({"current": "weather_code"})
+        weather_code: int | float = self.get_current_weather_data(
+            {"current": "weather_code"}
+        )
         description: str = constants.WEATHER_CODES[str(weather_code)]
 
         return weather_code, description
