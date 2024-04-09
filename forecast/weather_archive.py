@@ -356,10 +356,12 @@ class Archive(BaseWeather):
             "temperature_unit": unit,
         }
 
-        return self.get_periodical_weather_data("hourly", self._params | params)
+        return self.get_periodical_weather_data("hourly", params)
 
-    def get_daily_max_temperature(
-        self, unit: constants.TEMPERATURE_UNITS = "celsius"
+    def get_daily_temperature(
+        self,
+        type: constants.DAILY_WEATHER_REQUEST_TYPES = "max",
+        unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of daily max temperature data 2 meters(m) above the
@@ -369,14 +371,17 @@ class Archive(BaseWeather):
         - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
         """
 
+        if type not in ("max", "min"):
+            raise ValueError(f"Expected `type` to be 'min' or 'max', got {type!r}.")
+
         if unit not in ("celsius", "fahrenheit"):
             raise ValueError(
                 f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
             )
 
         params: dict[str, str] = {
-            "daily": "temperature_2m_max",
+            "daily": f"temperature_2m_{type}",
             "temperature_unit": unit,
         }
 
-        return self.get_periodical_weather_data("daily", self._params | params)
+        return self.get_periodical_weather_data("daily", params)
