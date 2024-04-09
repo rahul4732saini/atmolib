@@ -62,9 +62,7 @@ class BaseWeather:
 
         return data
 
-    def get_periodical_weather_data(
-        self, frequnecy: constants.FREQUENCY, params: dict[str, Any]
-    ) -> pd.DataFrame:
+    def get_periodical_weather_data(self, params: dict[str, Any]) -> pd.DataFrame:
         r"""
         Uses the supplied parameters to request the supplied
         Open-Meteo API and returns the periodical weather data.
@@ -73,7 +71,6 @@ class BaseWeather:
         directly by its users. It is exposed publicly for use by other modules within the package.
 
         Params:
-        - frequency (str): Frequency of the weather forecast data, 'hourly' or 'daily'.
         - params (dict[str, Any]): A dictionary all the necessary parameters except the
         coordinate parameters to request the Open-Meteo Weather API.
         """
@@ -81,8 +78,6 @@ class BaseWeather:
         params |= self._params
 
         # _session and _api class attributes must be defined by the child class.
-        data: pd.DataFrame = tools.get_periodical_data(
-            self._session, self._api, frequnecy, params
-        )
+        data: pd.DataFrame = tools.get_periodical_data(self._session, self._api, params)
 
         return data
