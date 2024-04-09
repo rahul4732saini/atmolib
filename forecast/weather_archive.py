@@ -101,21 +101,16 @@ class Archive(BaseWeather):
                 f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
             )
 
-        params: dict[str, str] = {
-            "hourly": "temperature_2m",
-            "temperature_unit": unit,
-        }
-
-        return self.get_periodical_weather_data("hourly", self._params | params)
+        return self.get_periodical_data(
+            {"hourly": "temperature_2m", "temperature_unit": unit}
+        )
 
     def get_hourly_relative_humidity(self) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly relative humidity percentage(%)
         data at the specified coordinates within the date range.
         """
-        return self.get_periodical_weather_data(
-            "hourly", self._params | {"hourly": "relative_humidity_2m"}
-        )
+        return self.get_periodical_data({"hourly": "relative_humidity_2m"})
 
     def get_hourly_weather_code(self) -> pd.DataFrame:
         r"""
@@ -128,9 +123,7 @@ class Archive(BaseWeather):
         - description: description of the corresponding weather code.
         """
 
-        data: pd.DataFrame = self.get_periodical_weather_data(
-            "hourly", {"hourly": "weather_code"}
-        )
+        data: pd.DataFrame = self.get_periodical_data({"hourly": "weather_code"})
 
         # Creating a new column 'description' mapped to the
         # description of the corresponding weather code.
@@ -145,7 +138,7 @@ class Archive(BaseWeather):
         Returns a pandas DataFrame of hourly total cloud cover percentage(%) data
         at the specified coordinates within the supplied date range.
         """
-        return self.get_periodical_weather_data("hourly", {"hourly": "cloud_cover"})
+        return self.get_periodical_data({"hourly": "cloud_cover"})
 
     def get_hourly_cloud_cover(
         self, level: constants.CLOUD_COVER_LEVEL = "low"
@@ -167,8 +160,7 @@ class Archive(BaseWeather):
                 f"Expected `level` to be 'low', 'mid' or 'high'. Got {level!r}."
             )
 
-        params: dict[str, str] = {"hourly": f"cloud_cover_{level}"}
-        return self.get_periodical_weather_data("hourly", params)
+        return self.get_periodical_data({"hourly": f"cloud_cover_{level}"})
 
     def get_hourly_apparent_temperature(
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
@@ -186,12 +178,9 @@ class Archive(BaseWeather):
                 f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
             )
 
-        params: dict[str, str] = {
-            "hourly": "apparent_temperature",
-            "temperature_unit": unit,
-        }
-
-        return self.get_periodical_weather_data("hourly", params)
+        return self.get_periodical_data(
+            {"hourly": "apparent_temperature", "temperature_unit": unit}
+        )
 
     def get_hourly_dew_point(
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
@@ -209,12 +198,9 @@ class Archive(BaseWeather):
                 f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
             )
 
-        params: dict[str, str] = {
-            "hourly": "dew_point_2m",
-            "temperature_unit": unit,
-        }
-
-        return self.get_periodical_weather_data("hourly", params)
+        return self.get_periodical_data(
+            {"hourly": "dew_point_2m", "temperature_unit": unit}
+        )
 
     def get_hourly_precipitation(
         self, unit: constants.PRECIPITATION_UNITS = "mm"
@@ -230,8 +216,9 @@ class Archive(BaseWeather):
         if unit not in ("mm", "inch"):
             raise ValueError(f"Expected `unit` to be 'mm' or 'inch', got {unit!r}.")
 
-        params: dict[str, str] = {"hourly": "precipitation", "precipitation_unit": unit}
-        return self.get_periodical_weather_data("hourly", params)
+        return self.get_periodical_data(
+            {"hourly": "precipitation", "precipitation_unit": unit}
+        )
 
     def get_hourly_wind_speed(
         self,
@@ -259,12 +246,9 @@ class Archive(BaseWeather):
                 f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
             )
 
-        params: dict[str, str] = {
-            "hourly": f"wind_speed_{altitude}m",
-            "wind_speed_unit": unit,
-        }
-
-        return self.get_periodical_weather_data("hourly", params)
+        return self.get_periodical_data(
+            {"hourly": f"wind_speed_{altitude}m", "wind_speed_unit": unit}
+        )
 
     def get_hourly_wind_direction(
         self,
@@ -281,9 +265,7 @@ class Archive(BaseWeather):
         if altitude not in (10, 100):
             raise ValueError(f"Expected `altitute` to be 10 or 100, got {altitude}.")
 
-        return self.get_periodical_weather_data(
-            "hourly", {"hourly": f"wind_direction_{altitude}"}
-        )
+        return self.get_periodical_data({"hourly": f"wind_direction_{altitude}"})
 
     def get_hourly_wind_gusts(
         self,
@@ -311,12 +293,9 @@ class Archive(BaseWeather):
                 f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
             )
 
-        params: dict[str, str] = {
-            "hourly": f"wind_gusts_{altitude}m",
-            "wind_speed_unit": unit,
-        }
-
-        return self.get_periodical_weather_data("hourly", params)
+        return self.get_periodical_data(
+            {"hourly": f"wind_gusts_{altitude}m", "wind_speed_unit": unit}
+        )
 
     def get_hourly_soil_temperature(
         self, depth: int, unit: constants.TEMPERATURE_UNITS = "celsius"
@@ -351,12 +330,9 @@ class Archive(BaseWeather):
                 f"Expected `depth` to be in the range of 0 and 255, got {depth}."
             )
 
-        params: dict[str, str] = {
-            "hourly": f"soil_temperature_{depth_range}cm",
-            "temperature_unit": unit,
-        }
-
-        return self.get_periodical_weather_data("hourly", params)
+        return self.get_periodical_data(
+            {"hourly": f"soil_temperature_{depth_range}cm", "temperature_unit": unit},
+        )
 
     def get_daily_temperature(
         self,
@@ -382,9 +358,6 @@ class Archive(BaseWeather):
                 f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
             )
 
-        params: dict[str, str] = {
-            "daily": f"temperature_2m_{type}",
-            "temperature_unit": unit,
-        }
-
-        return self.get_periodical_weather_data("daily", params)
+        return self.get_periodical_data(
+            {"daily": f"temperature_2m_{type}", "temperature_unit": unit}
+        )
