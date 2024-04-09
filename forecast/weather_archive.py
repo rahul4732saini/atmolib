@@ -284,3 +284,36 @@ class Archive(BaseWeather):
         return self.get_periodical_weather_data(
             "hourly", {"hourly": f"wind_direction_{altitude}"}
         )
+
+    def get_hourly_wind_gusts(
+        self,
+        altitude: constants.ARCHIVE_WIND_ALTITUDES = 10,
+        unit: constants.WIND_SPEED_UNITS = "kmh",
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly wind gusts data at the specified
+        altitude and coorindates within the supplied date range.
+
+        Params:
+        - altitude (int): Altitude from the ground level in meters(m). Must be 10 or 100.
+        - unit (str): Wind speed unit. It Must be one of the following:
+            - 'kmh' (kilometers per hour)
+            - 'mph' (miles per hour)
+            - 'ms' (meter per second)
+            - 'kn' (knots)
+        """
+
+        if altitude not in (10, 100):
+            raise ValueError(f"Expected `altitute` to be 10 or 100. Got {altitude}.")
+
+        if unit not in ("kmh", "mph", "ms", "kn"):
+            raise ValueError(
+                f"Expected `unit` to be one of ('kmh', 'mph', 'ms', 'kn'). Got {unit!r}."
+            )
+
+        params: dict[str, str] = {
+            "hourly": f"wind_gusts_{altitude}m",
+            "wind_speed_unit": unit,
+        }
+
+        return self.get_periodical_weather_data("hourly", params)
