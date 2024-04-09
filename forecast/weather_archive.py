@@ -90,7 +90,7 @@ class Archive(BaseWeather):
     def end_date(self, __value: str | date | datetime) -> None:
         end_date: date = self._resolve_date(__value, "end_date")
 
-        assert end_date < self._start_date, ValueError(
+        assert end_date > self._start_date, ValueError(
             f"`end_date` must be greater or equal to `start_date`."
         )
 
@@ -123,10 +123,13 @@ class Archive(BaseWeather):
         """
         return self.get_periodical_data({"hourly": "relative_humidity_2m"})
 
-    def get_hourly_weather_code(self) -> pd.DataFrame:
+    def get_periodic_weather_code(self, frequency: constants.FREQUENCY) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly weather code data with its corresponding
         description at the specified coordinates within the supplied date range.
+
+        Params:
+        - frequency: Frequency of the data distribution, must be 'daily' or 'hourly'.
 
         Columns:
         - time: time of the forecast data in ISO 8601 format (YYYY-MM-DDTHH-MM).
@@ -134,7 +137,12 @@ class Archive(BaseWeather):
         - description: description of the corresponding weather code.
         """
 
-        data: pd.DataFrame = self.get_periodical_data({"hourly": "weather_code"})
+        if frequency not in ("hourly", "daily"):
+            raise ValueError(
+                f"Expected `frequency` to be 'hourly' or 'daily', got {frequency!r}."
+            )
+
+        data: pd.DataFrame = self.get_periodical_data({frequency: "weather_code"})
 
         # Creating a new column 'description' mapped to the
         # description of the corresponding weather code.
