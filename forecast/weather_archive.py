@@ -3,7 +3,7 @@ This module defines the Archive class facilitating the retrieval of historical w
 the Open-Meteo Weather History API based on latitudinal and longitudinal coordinates of the location.
 
 The Archive class allows users to extract vaious types of historical weather data information
-ranging from 1940 till the present.
+ranging from the year 1940 till the present.
 """
 
 from datetime import date, datetime
@@ -21,8 +21,8 @@ class Archive(BaseWeather):
     the location within the specified date range. It interacts with the Open-Meteo Weather History
     API to fetch the weather data ranging from 1940 till the present.
 
-    Date parameters must be date or datetime objects or strings formatted
-    in the ISO-8601 date format (YYYY-MM-DD).
+    Date parameters must be date or datetime objects or strings
+    formatted in the ISO-8601 date format (YYYY-MM-DD).
 
     Params:
     - lat (int | float): Latitudinal coordinates of the location.
@@ -51,8 +51,8 @@ class Archive(BaseWeather):
     @staticmethod
     def _resolve_date(target: str | date | datetime, var: str) -> date:
         r"""
-        [PRIVATE] Verifies the supplied date argument, resolves it into the
-        string formatted date with the ISO-8601 format (YYYY-MM-DD).
+        [PRIVATE] Verifies the supplied date argument, resolves it into a
+        string formatted date object with ISO-8601 format (YYYY-MM-DD).
 
         The `var` parameter has to be the name of the actual date parameter
         (`start_date` or `end_date`) for reference in custom error messages.
@@ -93,12 +93,12 @@ class Archive(BaseWeather):
         level at the specified coordinates within the supplied date range.
 
         Params:
-        - unit: Temperature unit. Must be 'celsius' or 'fahrenheit'.
+        - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
         """
 
         if unit not in ("celsius", "fahrenheit"):
             raise ValueError(
-                f"Expected `unit` to be one of 'celsius' or 'fahrenheit'. Got {unit!r}."
+                f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
             )
 
         params: dict[str, str] = {
@@ -120,7 +120,7 @@ class Archive(BaseWeather):
     def get_hourly_weather_code(self) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly weather code data with its corresponding
-        description at the specified coordinates within the date range.
+        description at the specified coordinates within the supplied date range.
 
         Columns:
         - time: time of the forecast data in ISO 8601 format (YYYY-MM-DDTHH-MM).
@@ -132,7 +132,7 @@ class Archive(BaseWeather):
             "hourly", {"hourly": "weather_code"}
         )
 
-        # Creating a new column 'description' mapped to the the
+        # Creating a new column 'description' mapped to the
         # description of the corresponding weather code.
         data["description"] = data["data"].map(
             lambda x: constants.WEATHER_CODES[str(x)]
@@ -152,10 +152,10 @@ class Archive(BaseWeather):
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly cloud cover percentage(%) data
-        at the specified level and coordinates within the date range.
+        at the specified level and coordinates within the supplied date range.
 
         Params:
-        - level (str): Altitude level of the desired cloud coverage. Level supplied must be
+        - level (str): Altitude level of the desired cloud coverage, must be
         one of the following:
             - 'low' (clouds and fog up to an altitude of 3 km.)
             - 'mid' (clouds at an altitude between 3 km and 8 km.)
@@ -178,12 +178,12 @@ class Archive(BaseWeather):
         the specified coordinates within the supplied date range.
 
         Params:
-        - unit: Temperature unit. Must be 'celsius' or 'fahrenheit'.
+        - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
         """
 
         if unit not in ("celsius", "fahrenheit"):
             raise ValueError(
-                f"Expected `unit` to be one of 'celsius' or 'fahrenheit'. Got {unit!r}."
+                f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
             )
 
         params: dict[str, str] = {
@@ -198,15 +198,15 @@ class Archive(BaseWeather):
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly dew point data 2 meters(m) above the
-        ground level at the specified coordinates withing the date range.
+        ground level at the specified coordinates within the date range.
 
         Params:
-        - unit: Temperature unit. Must be 'celsius' or 'fahrenheit'.
+        - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
         """
 
         if unit not in ("celsius", "fahrenheit"):
             raise ValueError(
-                f"Expected `unit` to be one of 'celsius' or 'fahrenheit'. Got {unit!r}."
+                f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
             )
 
         params: dict[str, str] = {
@@ -221,14 +221,14 @@ class Archive(BaseWeather):
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly precipitation (sum of rain, showers, and snowfall)
-        data at the specified coordinates within the date range.
+        data at the specified coordinates within the supplied date range.
 
         Params:
-        - unit: Precipitation unit. Must be in 'mm' or 'inch'.
+        - unit: Precipitation unit, must be 'mm' or 'inch'.
         """
 
         if unit not in ("mm", "inch"):
-            raise ValueError(f"Expected `unit` to be 'mm' or 'inch'. Got {unit!r}.")
+            raise ValueError(f"Expected `unit` to be 'mm' or 'inch', got {unit!r}.")
 
         params: dict[str, str] = {"hourly": "precipitation", "precipitation_unit": unit}
         return self.get_periodical_weather_data("hourly", params)
@@ -239,12 +239,12 @@ class Archive(BaseWeather):
         unit: constants.WIND_SPEED_UNITS = "kmh",
     ) -> pd.DataFrame:
         r"""
-        Returns a pandas DataFrame of hourly wind speed data at the specified altitude
-        and coorindates within the supplied date range.
+        Returns a pandas DataFrame of hourly wind speed data at the specified
+        altitude and coorindates within the supplied date range.
 
         Params:
-        - altitude (int): Altitude from the ground level in meters(m). Must be 10 or 100.
-        - unit (str): Wind speed unit. It Must be one of the following:
+        - altitude (int): Altitude from the ground level in meters(m), must be 10 or 100.
+        - unit (str): Wind speed unit, must be one of the following:
             - 'kmh' (kilometers per hour)
             - 'mph' (miles per hour)
             - 'ms' (meter per second)
@@ -252,11 +252,11 @@ class Archive(BaseWeather):
         """
 
         if altitude not in (10, 100):
-            raise ValueError(f"Expected `altitute` to be 10 or 100. Got {altitude}.")
+            raise ValueError(f"Expected `altitute` to be 10 or 100, got {altitude}.")
 
         if unit not in ("kmh", "mph", "ms", "kn"):
             raise ValueError(
-                f"Expected `unit` to be one of ('kmh', 'mph', 'ms', 'kn'). Got {unit!r}."
+                f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
             )
 
         params: dict[str, str] = {
@@ -275,11 +275,11 @@ class Archive(BaseWeather):
         specified altitude and coorindates within the supplied date range.
 
         Params:
-        - altitude (int): Altitude from the ground level in meters(m). Must be 10 or 100.
+        - altitude (int): Altitude from the ground level in meters(m), must be 10 or 100.
         """
 
         if altitude not in (10, 100):
-            raise ValueError(f"Expected `altitute` to be 10 or 100. Got {altitude}.")
+            raise ValueError(f"Expected `altitute` to be 10 or 100, got {altitude}.")
 
         return self.get_periodical_weather_data(
             "hourly", {"hourly": f"wind_direction_{altitude}"}
@@ -295,8 +295,8 @@ class Archive(BaseWeather):
         altitude and coorindates within the supplied date range.
 
         Params:
-        - altitude (int): Altitude from the ground level in meters(m). Must be 10 or 100.
-        - unit (str): Wind speed unit. It Must be one of the following:
+        - altitude (int): Altitude from the ground level in meters(m), must be 10 or 100.
+        - unit (str): Wind speed unit, must be one of the following:
             - 'kmh' (kilometers per hour)
             - 'mph' (miles per hour)
             - 'ms' (meter per second)
@@ -304,11 +304,11 @@ class Archive(BaseWeather):
         """
 
         if altitude not in (10, 100):
-            raise ValueError(f"Expected `altitute` to be 10 or 100. Got {altitude}.")
+            raise ValueError(f"Expected `altitute` to be 10 or 100, got {altitude}.")
 
         if unit not in ("kmh", "mph", "ms", "kn"):
             raise ValueError(
-                f"Expected `unit` to be one of ('kmh', 'mph', 'ms', 'kn'). Got {unit!r}."
+                f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
             )
 
         params: dict[str, str] = {
