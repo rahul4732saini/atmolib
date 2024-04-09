@@ -58,20 +58,25 @@ class Archive(BaseWeather):
         (`start_date` or `end_date`) for reference in custom error messages.
         """
 
-        if isinstance(target, date | datetime):
-            target = date.strftime(r"%Y-%m-%d")
+        if not isinstance(target, date | datetime):
+            try:
+                target = datetime.strptime(target, r"%Y-%m-%d").date()
 
-        try:
-            datetime.strptime(target, r"%Y-%m-%d")
+            except (ValueError, TypeError):
+                raise ValueError(f"Invalid value for `{var}` parameter.")
 
-        except (ValueError, TypeError):
-            raise ValueError(f"Invalid value for `{var}` parameter.")
+        if isinstance(target, datetime):
+            target = target.date()
+
+        assert target <= date.today(), ValueError(
+            f"`{var}` must not be some date in the future."
+        )
 
         return target
 
     @property
     def start_date(self) -> str:
-        return self._start_date
+        return self._start_date.strftime(r"%Y-%m-%d")
 
     @start_date.setter
     def start_date(self, __value: str | date | datetime) -> None:
@@ -79,11 +84,17 @@ class Archive(BaseWeather):
 
     @property
     def end_date(self) -> str:
-        return self._end_date
+        return self._end_date.strftime(r"%Y-%m-%d")
 
     @end_date.setter
     def end_date(self, __value: str | date | datetime) -> None:
-        self._end_date = self._resolve_date(__value, "end_date")
+        end_date: date = self._resolve_date(__value, "end_date")
+
+        assert end_date < self._start_date, ValueError(
+            f"`end_date` must be greater or equal to `start_date`."
+        )
+
+        self._end_date = end_date
 
     def get_hourly_temperature(
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
