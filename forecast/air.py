@@ -22,7 +22,9 @@ class AirQuality(BaseWeather):
     _session = requests.Session()
     _api = constants.AIR_QUALITY_API
 
-    def get_current_aqi(self, source: constants.AQI_SOURCES = "european") -> int:
+    def get_current_aqi(
+        self, source: constants.AQI_SOURCES = "european"
+    ) -> int | float:
         r"""
         Returns the current European air quality index value at the supplied coordinates.
 
