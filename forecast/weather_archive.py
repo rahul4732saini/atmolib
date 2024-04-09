@@ -169,3 +169,26 @@ class Archive(BaseWeather):
         }
 
         return self.get_periodical_weather_data("hourly", params)
+
+    def get_hourly_dew_point(
+        self, unit: constants.TEMPERATURE_UNITS = "celsius"
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly dew point data 2 meters(m) above the
+        ground level at the specified coordinates withing the date range.
+
+        Params:
+        - unit: Temperature unit. Must be 'celsius' or 'fahrenheit'.
+        """
+
+        if unit not in ("celsius", "fahrenheit"):
+            raise ValueError(
+                f"Expected `unit` to be one of 'celsius' or 'fahrenheit'. Got {unit!r}."
+            )
+
+        params: dict[str, str] = {
+            "hourly": "dew_point_2m",
+            "temperature_unit": unit,
+        }
+
+        return self.get_periodical_weather_data("hourly", params)
