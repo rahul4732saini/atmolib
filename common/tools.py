@@ -162,10 +162,7 @@ def get_current_data(
 
 
 def get_periodical_data(
-    session: requests.Session,
-    api: str,
-    frequency: Literal["hourly", "daily"],
-    params: dict[str, Any],
+    session: requests.Session, api: str, params: dict[str, Any]
 ) -> pd.DataFrame:
     r"""
     Base function for retrieving the periodical weather data from supplied API.
@@ -192,15 +189,22 @@ def get_periodical_data(
         - KeyError: If 'hourly' key is not found in the `params` dictionary.
     """
 
-    if frequency not in ("hourly", "daily"):
-        raise ValueError(
-            "Invalid frequency provided. Frequency must be 'hourly' or 'daily'."
-        )
-
     if not params.get("latitude") or not params.get("longitude"):
         raise KeyError(
             "'latitude' and 'longitude' keys not found in the `params` dictionary "
             "to indicate the coordinates of the location."
+        )
+
+    # Iterates through the `params` dicionary searching for the `key` named after
+    # the frequency ('hourly' or 'daily') of the requested data and assigns the key
+    # to the `frequency` variable to be used ahead. Raises a KeyError is none is found.
+    for key in params:
+        if key in ("hourly", "daily"):
+            frequency: str = key
+            break
+    else:
+        raise KeyError(
+            "Expected 'daily' or 'hourly' parameter in the `params` dictionary, got none."
         )
 
     if not params.get(frequency):
