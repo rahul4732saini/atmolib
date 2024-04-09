@@ -24,7 +24,7 @@ WEATHER_CODES = json.load(WEATHER_CODES_FILE.open())
 # Available freuqencies of periodical weather data.
 FREQUENCY = Literal["hourly", "daily"]
 
-TEMPERATURE_UNITS = Literal["celcius", "fahrenheit"]
+TEMPERATURE_UNITS = Literal["celsius", "fahrenheit"]
 WIND_SPEED_UNITS = Literal["kmh", "mph", "ms", "kn"]
 PRECIPITATION_UNITS = Literal["mm", "inch"]
 
