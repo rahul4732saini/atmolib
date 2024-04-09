@@ -356,7 +356,7 @@ class Archive(BaseWeather):
             "temperature_unit": unit,
         }
 
-        return self.get_periodical_weather_data("hourly", self._params | params)
+        return self.get_periodical_weather_data("hourly", params)
 
     def get_hourly_soil_moisture(
         self, depth: constants.ARCHIVE_SOIL_DEPTH
