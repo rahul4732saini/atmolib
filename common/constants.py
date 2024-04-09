@@ -38,10 +38,10 @@ WIND_ALTITUDE = Literal[10, 80, 120, 180]
 # Available depth in centimeters(cm) options for
 # historical soil temperature and moisture data.
 ARCHIVE_SOIL_DEPTH = {
-    range(7): "0_7",
-    range(7, 28): "0_28",
-    range(28, 100): "28_100",
-    range(100, 255): "100_255",
+    range(7): "0_to_7",
+    range(7, 28): "0_to_28",
+    range(28, 100): "28_to_100",
+    range(100, 255): "100_to_255",
 }
 
 # Available altitude in meters(m) options for historial wind data.
