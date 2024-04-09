@@ -357,3 +357,34 @@ class Archive(BaseWeather):
         }
 
         return self.get_periodical_weather_data("hourly", self._params | params)
+
+    def get_hourly_soil_moisture(
+        self, depth: constants.ARCHIVE_SOIL_DEPTH
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly soil moisture(m^3/m^3) data at the
+        specified depth and coordinatest within the supplied date range.
+
+        Params:
+        - depth (int): Desired depth of the temperature data within the ground level in
+        centimeters(m). Temperature is extracted as a part of a range of depth. Available
+        depth ranges are 0-7cm, 7-28cm, 28-100cm, 100-255cm. The supplied depth must fall
+        in the range of 0 and 255.
+        """
+
+        for key, value in constants.ARCHIVE_SOIL_DEPTH.items():
+            if depth in key:
+
+                # The range is represented in a string format as being
+                # a supported type for requesting the API.
+                depth_range: str = value
+                break
+
+        else:
+            raise ValueError(
+                f"Expected `depth` to be in the range of 0 and 255, got {depth}."
+            )
+
+        return self.get_periodical_weather_data(
+            "hourly", {"hourly": f"soil_temperature_{depth_range}cm"}
+        )
