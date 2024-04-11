@@ -82,3 +82,10 @@ class MarineWeather(BaseWeather):
         Returns the wave height of the specified wave type at the supplied coorinates.
         """
         return self.get_current_weather_data({"current": f"{self._type}wave_height"})
+
+    def get_current_wave_direction(self) -> int | float:
+        r"""
+        Returns the wave direction in degress of the specified
+        wave type at the supplied coorinates.
+        """
+        return self.get_current_weather_data({"current": f"{self._type}wave_direction"})
