@@ -137,13 +137,13 @@ def get_current_data(
         - int | float: Returns the requested current weather data in integet or float format.
     """
 
-    if not params.get("latitude") or not params.get("longitude"):
+    if params.get("latitude") is None or params.get("longitude") is None:
         raise KeyError(
             "'latitude' and 'longitude' keys not found in the `params` dictionary "
             "to indicate the coordinates of the location."
         )
 
-    if not params.get("current"):
+    if params.get("current") is None:
         raise KeyError(
             "`current` key not found in the `params` dictionary with the requested weather data type."
         )
