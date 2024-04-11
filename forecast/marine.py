@@ -21,3 +21,34 @@ class MarineWeather(BaseWeather):
 
     _session = requests.Session()
     _api = constants.MARINE_API
+
+    def __init__(
+        self, lat: int | float, long: int | float, wave_type: constants.WAVE_TYPES
+    ) -> None:
+        super().__init__(lat, long)
+
+        self.wave_type = wave_type
+
+    @property
+    def wave_type(self) -> str:
+        return self._wave_type
+
+    @wave_type.setter
+    def wave_type(self, __value: str) -> None:
+
+        # Retrieves the corresponding wave type value used as a request parameter for
+        # extracting marine weather data from the Open-Meteo Marine Weather API.
+        wave_type: str = constants.WAVE_TYPES_MAP.get(__value)
+
+        if wave_type is None:
+            raise ValueError(
+                f"Expected `wave_type` to be 'composite', 'wind' or 'swell', got {__value}"
+            )
+
+        # self._wave_type is assigned the wave type
+        # value same as provided for user reference.
+        self._wave_type = __value
+
+        # self._type is used by the internally by the methods
+        # for requesting marine weather data from the API.
+        self._type = wave_type
