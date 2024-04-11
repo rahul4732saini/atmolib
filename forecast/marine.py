@@ -16,7 +16,7 @@ class MarineWeather(BaseWeather):
     r"""
     MarineWeather class to extract marine weather data based on latitude and longitude coordinates.
     It interacts with the Open-Meteo Marine Weather API to fetch the current or up to upcoming 8-days
-    hourly and daily marine weather forecast data.
+    hourly and daily marine weather forecast data with a resolution of 5 kilometers(km).
     """
 
     __slots__ = "_lat", "_long", "_wave_type", "_type"
