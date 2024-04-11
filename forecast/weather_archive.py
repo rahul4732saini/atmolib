@@ -359,8 +359,8 @@ class Archive(BaseWeather):
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.DataFrame:
         r"""
-        Returns a pandas DataFrame of daily max temperature data 2 meters(m) above the
-        ground level at the specified coordinates within the supplied date range.
+        Returns a pandas DataFrame of daily maximum or minimum temperature data 2 meters(m)
+        above the ground level at the specified coordinates within the supplied date range.
 
         Params:
         - type: Specifies the type of daily temperature to be retrieved,
@@ -411,4 +411,22 @@ class Archive(BaseWeather):
 
         return self.get_periodical_data(
             {"daily": f"apparent_temperature_{type}", "temperature_unit": unit}
+        )
+
+    def get_daily_total_precipitation(
+        self, unit: constants.PRECIPITATION_UNITS
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly precipitation (sum of rain, showers, and snowfall)
+        data at the specified coordinates within the supplied date range.
+
+        Params:
+        - unit: Precipitation unit, must be 'mm' or 'inch'.
+        """
+
+        if unit not in ("mm", "inch"):
+            raise ValueError(f"Expected `unit` to be 'mm' or 'inch', got {unit!r}.")
+
+        return self.get_periodical_data(
+            {"daily": "precipitation_sum", "precipitation_unit": unit}
         )
