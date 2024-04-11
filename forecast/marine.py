@@ -6,9 +6,12 @@ The MarineWeather class allows users to extract various types of marine weather 
 current marine weather data and up to upcoming 8-days hourly and daily marine weather forecast data.
 """
 
+from typing import Any
+
 import requests
 
 from common import constants
+from errors import RequestError
 from objects import BaseWeather
 
 
@@ -62,3 +65,14 @@ class MarineWeather(BaseWeather):
         # self._type is used by the internally by the methods
         # for requesting marine weather data from the API.
         self._type = wave_type
+
+    def _check_data_availability(self) -> None:
+        r"""
+        Verifies the availability of marine weather data for the supplied coordinates.
+        """
+
+        with self._session.get(constants.MARINE_API, params=self._params) as response:
+            data: dict[str, Any] = response.json()
+
+            if response.status_code != 200:
+                raise RequestError(response.status_code, data["reason"])
