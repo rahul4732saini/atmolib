@@ -19,6 +19,8 @@ class MarineWeather(BaseWeather):
     hourly and daily marine weather forecast data.
     """
 
+    __slots__ = "_lat", "_long", "_wave_type", "_type"
+
     _session = requests.Session()
     _api = constants.MARINE_API
 
