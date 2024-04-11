@@ -76,3 +76,9 @@ class MarineWeather(BaseWeather):
 
             if response.status_code != 200:
                 raise RequestError(response.status_code, data["reason"])
+
+    def get_current_wave_height(self) -> int | float:
+        r"""
+        Returns the wave height of the specified wave type at the supplied coorinates.
+        """
+        return self.get_current_weather_data({"current": f"{self._type}wave_height"})
