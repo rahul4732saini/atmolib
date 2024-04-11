@@ -31,6 +31,8 @@ class Archive(BaseWeather):
     - end_date(str | date | datetime): Final date for the weather data.
     """
 
+    __slots__ = "_lat", "_long", "_start_date", "_end_date", "_params"
+
     _session = requests.Session()
     _api = constants.WEATHER_HISTORY_API
 
