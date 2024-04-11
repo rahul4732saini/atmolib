@@ -66,3 +66,7 @@ PLANTS = Literal["alder", "birch", "grass", "mugwort", "olive", "ragweed"]
 DAILY_WEATHER_REQUEST_TYPES = Literal["max", "min", "mean"]
 
 WAVE_TYPES = Literal["composite", "wind", "swell"]
+
+# Dictionary of keys as accepted arguments by users mapped to values used
+# as request parameter for extracting data from the Open-Meteo Marine API.
+WAVE_TYPES_MAP = {"composite": "", "wind": "wind_", "swell": "swell_"}
