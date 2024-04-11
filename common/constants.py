@@ -64,3 +64,5 @@ GASES = Literal["ozone", "carbon_monoxide", "nitrogen_dioxide", "suphur_dioxide"
 PLANTS = Literal["alder", "birch", "grass", "mugwort", "olive", "ragweed"]
 
 DAILY_WEATHER_REQUEST_TYPES = Literal["max", "min", "mean"]
+
+WAVE_TYPES = Literal["composite", "wind", "swell"]
