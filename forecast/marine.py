@@ -89,3 +89,11 @@ class MarineWeather(BaseWeather):
         wave type at the supplied coorinates.
         """
         return self.get_current_weather_data({"current": f"{self._type}wave_direction"})
+
+    def get_current_wave_period(self) -> int | float:
+        r"""
+        Returns the wave period (It refers to the time taken by two consecutive
+        wave crests (or troughs) to pass a fixed point) in seconds of the
+        specified wave type at the supplied coorinates.
+        """
+        return self.get_current_weather_data({"current": f"{self._type}wave_period"})
