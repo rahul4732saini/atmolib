@@ -50,6 +50,28 @@ class Archive(BaseWeather):
 
         self._params |= {"start_date": start_date, "end_date": end_date}
 
+    @property
+    def start_date(self) -> str:
+        return self._start_date.strftime(r"%Y-%m-%d")
+
+    @start_date.setter
+    def start_date(self, __value: str | date | datetime) -> None:
+        self._start_date = self._resolve_date(__value, "start_date")
+
+    @property
+    def end_date(self) -> str:
+        return self._end_date.strftime(r"%Y-%m-%d")
+
+    @end_date.setter
+    def end_date(self, __value: str | date | datetime) -> None:
+        end_date: date = self._resolve_date(__value, "end_date")
+
+        assert end_date > self._start_date, ValueError(
+            f"`end_date` must be greater or equal to `start_date`."
+        )
+
+        self._end_date = end_date
+
     @staticmethod
     def _resolve_date(target: str | date | datetime, var: str) -> date:
         r"""
@@ -75,28 +97,6 @@ class Archive(BaseWeather):
         )
 
         return target
-
-    @property
-    def start_date(self) -> str:
-        return self._start_date.strftime(r"%Y-%m-%d")
-
-    @start_date.setter
-    def start_date(self, __value: str | date | datetime) -> None:
-        self._start_date = self._resolve_date(__value, "start_date")
-
-    @property
-    def end_date(self) -> str:
-        return self._end_date.strftime(r"%Y-%m-%d")
-
-    @end_date.setter
-    def end_date(self, __value: str | date | datetime) -> None:
-        end_date: date = self._resolve_date(__value, "end_date")
-
-        assert end_date > self._start_date, ValueError(
-            f"`end_date` must be greater or equal to `start_date`."
-        )
-
-        self._end_date = end_date
 
     def get_hourly_temperature(
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
