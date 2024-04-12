@@ -26,8 +26,8 @@ class BaseWeather:
         # Template of the params dictionary to be used for API requests.
         self._params = {"latitude": None, "longitude": None}
 
-        self._lat = lat
-        self._long = long
+        self.lat = lat
+        self.long = long
 
     @property
     def lat(self) -> int | float:
