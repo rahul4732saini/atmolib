@@ -75,7 +75,10 @@ class MarineWeather(BaseForecast):
         self._type = wave_type
 
     def __repr__(self) -> str:
-        return f"MarineWeather(lat={self._lat}, long={self._long}, wave_type={self._wave_type!r})"
+        return (
+            f"MarineWeather(lat={self._lat}, long={self._long}, "
+            f"wave_type={self._wave_type!r}, forecast_days={self._forecast_days})"
+        )
 
     def __setattr__(self, __name: str, __value: Any) -> None:
         super().__setattr__(__name, __value)
