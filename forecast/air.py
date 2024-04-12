@@ -29,14 +29,14 @@ class AirQuality(BaseWeather):
         Returns the current European air quality index value at the supplied coordinates.
 
         Params:
-        - source: Source of the Air Quality Index. Must be one of the following:
+        - source: Source of the Air Quality Index, must be one of the following:
             - 'european' (Extracts the European Air Quality Index)
             - 'us' (Extracts the USA Air Quality Index)
         """
 
         if source not in ("european", "us"):
             raise ValueError(
-                f"Expected `source` to be 'european' or 'us'. Got {source}."
+                f"Expected `source` to be 'european' or 'us', got {source!r}."
             )
 
         return self.get_current_weather_data({"current": "european_aqi"})
@@ -60,7 +60,7 @@ class AirQuality(BaseWeather):
         supplied gas in air 10 meters above ground level.
 
         Params:
-        - gas (str): Gas whose concetration needs to be extracted. Must be one of the following:
+        - gas (str): Gas whose concetration needs to be extracted, must be one of the following:
         ('ozone', 'carbon_monoxide', 'nitrogen_dioxide', 'sulphur_dioxide').
         """
 
@@ -71,8 +71,8 @@ class AirQuality(BaseWeather):
             "sulphur_dioxide",
         ):
             raise ValueError(
-                "Expected `gas` to be one of ('ozone', 'carbon_monoxide',"
-                f"'nitrogen_dioxide', 'sulphur_dioxide'). Got {gas}"
+                "Expected `gas` to be 'ozone', 'carbon_monoxide',"
+                f"'nitrogen_dioxide' or 'sulphur_dioxide', got {gas!r}."
             )
 
         return self.get_current_weather_data({"current": gas})
@@ -97,14 +97,14 @@ class AirQuality(BaseWeather):
         Only available for Europe as provided by CAMS European Air Quality forecast.
 
         Params:
-        - plant (str): Plant whose pollen concentration can be retrieved. Must be one of
+        - plant (str): Plant whose pollen concentration can be retrieved, must be one of
         ('alder', 'birch', 'grass', 'mugwort', 'olive', 'ragweed').
         """
 
         if plant not in ("alder", "birch", "grass", "mugwort", "olive", "ragweed"):
             raise ValueError(
-                "Expected `plant` to be one of ('alder', 'birch', 'grass', 'mugwort',"
-                f"'olive', 'ragweed'). Got {plant!r}."
+                "Expected `plant` to be one of 'alder', 'birch', 'grass', 'mugwort',"
+                f"'olive' or 'ragweed', got {plant!r}."
             )
 
         return self.get_current_weather_data({"current": f"{plant}_pollen"})
