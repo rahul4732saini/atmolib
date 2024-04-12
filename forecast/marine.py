@@ -40,6 +40,10 @@ class MarineWeather(BaseWeather):
     ) -> None:
         super().__init__(lat, long)
 
+        # Verifies the availability of marine weather data at the
+        # supplied coorindates at object initilization.
+        self._check_data_availability()
+
         self.wave_type = wave_type
 
     @property
@@ -65,6 +69,20 @@ class MarineWeather(BaseWeather):
         # self._type is used by the internally by the methods
         # for requesting marine weather data from the API.
         self._type = wave_type
+
+    def __setattr__(self, __name: str, __value: Any) -> None:
+        super().__setattr__(__name, __value)
+
+        if __name in ("_lat", "_long"):
+
+            # Only executes the verification method if coordinate attributes
+            # (`_lat`, `_long`) are altered post initialization by verifying
+            # it with the `_params` dictionary.
+            if (
+                self._params["latitude"] is not None
+                and self._params["longitude"] is not None
+            ):
+                self._check_data_availability()
 
     def _check_data_availability(self) -> None:
         r"""
