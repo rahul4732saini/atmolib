@@ -12,10 +12,10 @@ import requests
 
 from common import constants
 from errors import RequestError
-from objects import BaseWeather
+from objects import BaseForecast
 
 
-class MarineWeather(BaseWeather):
+class MarineWeather(BaseForecast):
     r"""
     MarineWeather class to extract marine weather data based on latitude and longitude coordinates.
     It interacts with the Open-Meteo Marine Weather API to fetch the current or up to upcoming 8-days
@@ -30,15 +30,19 @@ class MarineWeather(BaseWeather):
         - 'swell' (Extracts data related to waves travelling across long distances.)
     """
 
-    __slots__ = "_lat", "_long", "_wave_type", "_type", "_params"
+    __slots__ = "_lat", "_long", "_wave_type", "_type", "_params", "_forecast_days"
 
     _session = requests.Session()
     _api = constants.MARINE_API
 
     def __init__(
-        self, lat: int | float, long: int | float, wave_type: constants.WAVE_TYPES
+        self,
+        lat: int | float,
+        long: int | float,
+        wave_type: constants.WAVE_TYPES,
+        forecast_days: int = 7,
     ) -> None:
-        super().__init__(lat, long)
+        super().__init__(lat, long, forecast_days)
 
         # Verifies the availability of marine weather data at the
         # supplied coorindates at object initilization.
