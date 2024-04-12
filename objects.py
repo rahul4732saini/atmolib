@@ -36,7 +36,7 @@ class BaseWeather:
     @lat.setter
     def lat(self, __value: int | float) -> None:
         assert -90 <= __value <= 90, ValueError(
-            f"`lat` must be in the range of -90 and 90. Got {__value}"
+            f"`lat` must be in the range of -90 and 90, got {__value}."
         )
         self._lat = self._params["latitude"] = __value
 
@@ -47,7 +47,7 @@ class BaseWeather:
     @long.setter
     def long(self, __value: int | float) -> None:
         assert -90 <= __value <= 90, ValueError(
-            f"`lat` must be in the range of -90 and 90. Got {__value}"
+            f"`lat` must be in the range of -90 and 90, got {__value}."
         )
         self._long = self._params["longitude"] = __value
 
