@@ -72,6 +72,12 @@ class Archive(BaseWeather):
 
         self._end_date = end_date
 
+    def __repr__(self) -> str:
+        return (
+            f"Archive(lat={self._lat}, long={self._long},"
+            f"start_date={self._start_date}, end_date={self._end_date})"
+        )
+
     @staticmethod
     def _resolve_date(target: str | date | datetime, var: str) -> date:
         r"""
