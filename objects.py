@@ -13,7 +13,7 @@ from common import tools
 
 class BaseWeather:
     r"""
-    BaseClass for all weather classes.
+    Base class for all weather classes.
     """
 
     _session: requests.Session
@@ -36,7 +36,7 @@ class BaseWeather:
     @lat.setter
     def lat(self, __value: int | float) -> None:
         assert -90 <= __value <= 90, ValueError(
-            f"`lat` must be in the range of -90 and 90. Got {__value}"
+            f"`lat` must be in the range of -90 and 90, got {__value}."
         )
         self._lat = self._params["latitude"] = __value
 
@@ -47,7 +47,7 @@ class BaseWeather:
     @long.setter
     def long(self, __value: int | float) -> None:
         assert -90 <= __value <= 90, ValueError(
-            f"`lat` must be in the range of -90 and 90. Got {__value}"
+            f"`lat` must be in the range of -90 and 90, got {__value}."
         )
         self._long = self._params["longitude"] = __value
 
@@ -90,3 +90,39 @@ class BaseWeather:
         data: pd.DataFrame = tools.get_periodical_data(self._session, self._api, params)
 
         return data
+
+
+class BaseForecast(BaseWeather):
+    r"""
+    Base class for all weather forecast classes.
+    """
+
+    __slots__ = "_lat", "_long", "_params", "_forecast_days"
+
+    def __init__(
+        self, lat: int | float, long: int | float, forecast_days: int = 7
+    ) -> None:
+        super().__init__(lat, long)
+
+        self.forecast_days = forecast_days
+
+    @property
+    def forecast_days(self) -> int:
+        return self._forecast_days
+
+    @forecast_days.setter
+    def forecast_days(self, __value: int) -> None:
+        assert __value in range(1, 17), ValueError(
+            f"`forecast_days` must be in the range of 1 and 16, got {__value}."
+        )
+        self._forecast_days = __value
+
+        # Updating the `_params` dictionary with the 'forecast_days' key-value
+        # pair to be used as a parameter in requesting the API.
+        self._params["forecast_days"] = __value
+
+    def __repr__(self) -> str:
+        return (
+            f"{self.__class__.__name__}(lat={self._lat}, long={self._long},"
+            f"forecast_days={self._forecast_days})"
+        )
