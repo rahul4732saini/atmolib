@@ -51,9 +51,6 @@ class BaseWeather:
         )
         self._long = self._params["longitude"] = __value
 
-    def __repr__(self) -> str:
-        return f"{self.__class__.__name__}(lat={self._lat}, long={self._long})"
-
     def get_current_weather_data(self, params: dict[str, Any]) -> int | float:
         r"""
         Uses the supplied parameters to request the supplied
