@@ -9,10 +9,10 @@ current air quality index data and up to upcoming 7-days hourly air quality fore
 import requests
 
 from common import constants
-from objects import BaseWeather
+from objects import BaseForecast
 
 
-class AirQuality(BaseWeather):
+class AirQuality(BaseForecast):
     r"""
     AirQuality class to extract air quality data based on latitude and longitude coordinates.
     It interacts with the Open-Meteo Air Quality API to fetch the current or up to upcoming 7-days
