@@ -19,10 +19,32 @@ class Weather(BaseWeather):
     hourly and daily weather forecast data.
     """
 
-    __slots__ = "_lat", "_long", "_params"
+    __slots__ = "_lat", "_long", "_params", "_forecast_days"
 
     _api = constants.WEATHER_API
     _session = requests.Session()
+
+    def __init__(
+        self, lat: int | float, long: int | float, forecast_days: int = 7
+    ) -> None:
+        super().__init__(lat, long)
+
+        self.forecast_days = forecast_days
+
+    @property
+    def forecast_days(self) -> int:
+        return self._forecast_days
+
+    @forecast_days.setter
+    def forecast_days(self, __value: int) -> None:
+        assert __value in range(1, 17), ValueError(
+            f"`forecast_days` must be in the range of 1 and 16, got {__value}."
+        )
+        self._forecast_days = __value
+
+        # Updating the `_params` dictionary with the 'forecast_days' key-value
+        # pair to be used as a parameter in requesting the API.
+        self._params["forecast_days"] = __value
 
     def get_current_temperature(
         self,
