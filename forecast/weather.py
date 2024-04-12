@@ -9,10 +9,10 @@ current weather data and up to upcoming 16-days hourly and daily weather forecas
 import requests
 
 from common import constants
-from objects import BaseWeather
+from objects import BaseForecast
 
 
-class Weather(BaseWeather):
+class Weather(BaseForecast):
     r"""
     Weather class to extract weather data based on latitude and longitude coordinates.
     It interacts with the Open-Meteo Weather API to fetch the current or upcoming 16-days
@@ -29,31 +29,6 @@ class Weather(BaseWeather):
 
     _api = constants.WEATHER_API
     _session = requests.Session()
-
-    def __init__(
-        self, lat: int | float, long: int | float, forecast_days: int = 7
-    ) -> None:
-        super().__init__(lat, long)
-
-        self.forecast_days = forecast_days
-
-    @property
-    def forecast_days(self) -> int:
-        return self._forecast_days
-
-    @forecast_days.setter
-    def forecast_days(self, __value: int) -> None:
-        assert __value in range(1, 17), ValueError(
-            f"`forecast_days` must be in the range of 1 and 16, got {__value}."
-        )
-        self._forecast_days = __value
-
-        # Updating the `_params` dictionary with the 'forecast_days' key-value
-        # pair to be used as a parameter in requesting the API.
-        self._params["forecast_days"] = __value
-
-    def __repr__(self) -> str:
-        return f"Weather(lat={self._lat}, long={self._long}, forecast_days={self._forecast_days})"
 
     def get_current_temperature(
         self,
