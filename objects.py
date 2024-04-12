@@ -23,24 +23,33 @@ class BaseWeather:
 
     def __init__(self, lat: int | float, long: int | float) -> None:
 
-        # Verifying the supplied `lat` and `long` arguments.
-        assert -90 <= lat <= 90, ValueError(
-            f"`lat` must be in the range of -90 and 90. Got {lat}"
-        )
-        assert -180 <= long <= 180, ValueError(
-            f"`long` must be in the range of -180 and 180. Got {long}"
-        )
-
         # Template of the params dictionary to be used for API requests.
-        self._params = {"latitude": lat, "longitude": long}
+        self._params = {"latitude": None, "longitude": None}
+
+        self._lat = lat
+        self._long = long
 
     @property
     def lat(self) -> int | float:
-        return self._params["latitude"]
+        return self._lat
+
+    @lat.setter
+    def lat(self, __value: int | float) -> None:
+        assert -90 <= __value <= 90, ValueError(
+            f"`lat` must be in the range of -90 and 90. Got {__value}"
+        )
+        self._lat = self._params["latitude"] = __value
 
     @property
     def long(self) -> int | float:
-        return self._params["longitude"]
+        return self._long
+
+    @long.setter
+    def long(self, __value: int | float) -> None:
+        assert -90 <= __value <= 90, ValueError(
+            f"`lat` must be in the range of -90 and 90. Got {__value}"
+        )
+        self._long = self._params["longitude"] = __value
 
     def __repr__(self) -> str:
         return f"Weather(lat={self.lat}, long={self.long})"
