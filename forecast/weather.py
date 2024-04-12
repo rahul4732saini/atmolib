@@ -52,6 +52,9 @@ class Weather(BaseWeather):
         # pair to be used as a parameter in requesting the API.
         self._params["forecast_days"] = __value
 
+    def __repr__(self) -> str:
+        return f"Weather(lat={self._lat}, long={self._long}, forecast_days={self._forecast_days})"
+
     def get_current_temperature(
         self,
         altitude: constants.TEMPERATURE_ALTITUDE = 2,
