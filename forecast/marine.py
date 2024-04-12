@@ -55,7 +55,7 @@ class MarineWeather(BaseWeather):
 
         # Retrieves the corresponding wave type value used as a request parameter for
         # extracting marine weather data from the Open-Meteo Marine Weather API.
-        wave_type: str = constants.WAVE_TYPES_MAP.get(__value)
+        wave_type: str | None = constants.WAVE_TYPES_MAP.get(__value)
 
         if wave_type is None:
             raise ValueError(
