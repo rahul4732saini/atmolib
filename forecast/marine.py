@@ -70,6 +70,9 @@ class MarineWeather(BaseWeather):
         # for requesting marine weather data from the API.
         self._type = wave_type
 
+    def __repr__(self) -> str:
+        return f"MarineWeather(lat={self._lat}, long={self._long}, wave_type={self._wave_type!r})"
+
     def __setattr__(self, __name: str, __value: Any) -> None:
         super().__setattr__(__name, __value)
 
