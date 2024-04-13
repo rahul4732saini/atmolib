@@ -240,3 +240,33 @@ class Weather(BaseForecast):
         return self.get_periodical_data(
             {"daily": f"temperature_2m_{type}", "temperature_unit": unit}
         )
+
+    def get_daily_apparent_temperature(
+        self,
+        type: constants.DAILY_WEATHER_REQUEST_TYPES,
+        unit: constants.TEMPERATURE_UNITS = "celsius",
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of daily maximum, minimum or mean apparent temperature
+        data 2 meters(m) above the ground level at the specified coordinates.
+
+        Params:
+        - type: Specifies the type of daily apparent temperature to be retrieved,
+        must be 'min', 'max' or 'mean'.
+            - 'min': Daily minimum apparent temperature.
+            - 'max': Daily maximum apparent temperature.
+            - 'mean': Daily mean apparent temperature.
+        - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
+        """
+
+        if type not in ("max", "min", "mean"):
+            raise ValueError(f"Expected `type` to be 'min' or 'max', got {type!r}.")
+
+        if unit not in ("celsius", "fahrenheit"):
+            raise ValueError(
+                f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
+            )
+
+        return self.get_periodical_data(
+            {"daily": f"apparent_temperature_{type}", "temperature_unit": unit}
+        )
