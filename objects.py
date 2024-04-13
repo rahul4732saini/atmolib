@@ -121,7 +121,7 @@ class BaseForecast(BaseWeather):
         # of the maximum forecast days assigned by the child class
         # with the `_max_forecast_days` class attribute.
         assert __value in range(1, self._max_forecast_days + 1), ValueError(
-            f"`forecast_days` must be in the range of 1 and 16, got {__value}."
+            f"`forecast_days` must be in the range of 1 and {self._max_forecast_days}, got {__value!r}."
         )
         self._forecast_days = __value
 
