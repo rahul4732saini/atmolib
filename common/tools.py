@@ -134,7 +134,7 @@ def get_current_data(
         coordinates of the location, requested data type, etc.
 
     Returns:
-        - int | float: Returns the requested current weather data in integet or float format.
+        - int | float: Returns the requested current weather data in integer or float format.
     """
 
     if params.get("latitude") is None or params.get("longitude") is None:
@@ -194,7 +194,7 @@ def get_periodical_data(
             "to indicate the coordinates of the location."
         )
 
-    # Iterates through the `params` dicionary searching for the `key` named after
+    # Iterates through the `params` dictionary searching for the `key` named after
     # the frequency ('hourly' or 'daily') of the requested data and assigns the key
     # to the `frequency` variable to be used ahead. Raises a KeyError is none is found.
     for key in params:
