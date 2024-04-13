@@ -24,7 +24,7 @@ class BaseWeather:
     def __init__(self, lat: int | float, long: int | float) -> None:
 
         # params dictionary to be used to store request parameters for API requests.
-        self._params = {}
+        self._params: dict[str, Any] = {}
 
         self.lat = lat
         self.long = long
