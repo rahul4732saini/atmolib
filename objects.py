@@ -23,8 +23,8 @@ class BaseWeather:
 
     def __init__(self, lat: int | float, long: int | float) -> None:
 
-        # Template of the params dictionary to be used for API requests.
-        self._params = {"latitude": None, "longitude": None}
+        # params dictionary to be used to store request parameters for API requests.
+        self._params = {}
 
         self.lat = lat
         self.long = long
