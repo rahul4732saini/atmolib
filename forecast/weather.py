@@ -277,3 +277,21 @@ class Weather(BaseForecast):
         above the ground level at the specified coordinates.
         """
         return self.get_periodical_data({"daily": "wind_direction_10m_dominant"})
+
+    def get_daily_total_precipitation(
+        self, unit: constants.PRECIPITATION_UNITS = "mm"
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly precipitation (sum of rain, showers, and snowfall)
+        data at the specified coordinates.
+
+        Params:
+        - unit: Precipitation unit, must be 'mm' or 'inch'.
+        """
+
+        if unit not in ("mm", "inch"):
+            raise ValueError(f"Expected `unit` to be 'mm' or 'inch', got {unit!r}.")
+
+        return self.get_periodical_data(
+            {"daily": "precipitation_sum", "precipitation_unit": unit}
+        )
