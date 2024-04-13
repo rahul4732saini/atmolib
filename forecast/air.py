@@ -149,3 +149,10 @@ class AirQuality(BaseForecast):
         smaller than the 2.5 micro meter(m) in air 10 meters(m) above the ground level.
         """
         return self.get_periodical_data({"hourly": "pm2_5"})
+
+    def get_hourly_pm10_conc(self) -> pd.DataFrame:
+        r"""
+        Returns the hourly concentration(micro g/m^3) of particulate matter with diameter
+        smaller than the 10 micro meter(m) in air 10 meters(m) above the ground level.
+        """
+        return self.get_periodical_data({"hourly": "pm10"})
