@@ -31,6 +31,9 @@ class MarineWeather(BaseForecast):
         - 'swell' (Extracts data related to waves travelling across long distances.)
     - forecast_days (int): Number of days for which the forecast has to
     be extracted, must be in the range of 1 and 16.
+
+    Raises:
+    - RequestError: If no marine data is available at the specified coordinates.
     """
 
     __slots__ = "_lat", "_long", "_wave_type", "_type", "_params", "_forecast_days"
@@ -110,7 +113,8 @@ class MarineWeather(BaseForecast):
 
     def get_current_wave_height(self) -> int | float:
         r"""
-        Returns the wave height of the specified wave type at the supplied coorinates.
+        Returns the wave height in meters(m) of the
+        specified wave type at the supplied coorinates.
         """
         return self.get_current_weather_data({"current": f"{self._type}wave_height"})
 
@@ -129,8 +133,46 @@ class MarineWeather(BaseForecast):
         """
         return self.get_current_weather_data({"current": f"{self._type}wave_period"})
 
+    def get_hourly_wave_height(self) -> pd.DataFrame:
+        r"""
+        Returns the hourly mean wave height in meters of the
+        specified wave type at the supplied coorindates.
+        """
+        return self.get_periodical_data({"hourly": f"{self._type}wave_height"})
+
+    def get_hourly_wave_direction(self) -> pd.DataFrame:
+        r"""
+        Returns the hourly wave direction in degress of the
+        specified wave type at the supplied coordinates.
+        """
+        return self.get_periodical_data({"hourly": f"{self._type}wave_direction"})
+
+    def get_hourly_wave_period(self) -> pd.DataFrame:
+        r"""
+        Returns the hourly wave period in seconds of the
+        specified wave type at the supplied coordinates.
+        """
+        return self.get_periodical_data({"hourly": f"{self._type}wave_period"})
+
     def get_daily_max_wave_height(self) -> pd.DataFrame:
         r"""
-        Returns the daily maximum wave height at the specified coorindates.
+        Returns the daily maximum wave height in meters of the
+        specified wave type at the supplied coorindates.
         """
         return self.get_periodical_data({"daily": f"{self._type}wave_height_max"})
+
+    def get_daily_dominant_wave_direction(self) -> pd.DataFrame:
+        r"""
+        Returns the daily dominant wave direction in degress of the
+        specified wave type at the supplied coordinates.
+        """
+        return self.get_periodical_data(
+            {"daily": f"{self._type}wave_direction_dominant"}
+        )
+
+    def get_daily_max_wave_period(self) -> pd.DataFrame:
+        r"""
+        Returns the daily maximum wave period in seconds of the
+        specified wave type at the supplied coordinates.
+        """
+        return self.get_periodical_data({"daily": f"{self._type}wave_period_max"})
