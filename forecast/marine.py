@@ -54,7 +54,7 @@ class MarineWeather(BaseForecast):
         super().__init__(lat, long, forecast_days)
 
         # Verifies the availability of marine weather data at the
-        # supplied coorindates at object initilization.
+        # supplied coordinates at object initialization.
         self._check_data_availability()
 
         self.wave_type = wave_type
@@ -117,14 +117,14 @@ class MarineWeather(BaseForecast):
     def get_current_wave_height(self) -> int | float:
         r"""
         Returns the wave height in meters(m) of the
-        specified wave type at the supplied coorinates.
+        specified wave type at the supplied coordinates.
         """
         return self.get_current_weather_data({"current": f"{self._type}wave_height"})
 
     def get_current_wave_direction(self) -> int | float:
         r"""
-        Returns the wave direction in degress of the specified
-        wave type at the supplied coorinates.
+        Returns the wave direction in degrees of the specified
+        wave type at the supplied coordinates.
         """
         return self.get_current_weather_data({"current": f"{self._type}wave_direction"})
 
@@ -132,20 +132,20 @@ class MarineWeather(BaseForecast):
         r"""
         Returns the wave period (It refers to the time taken by two consecutive
         wave crests (or troughs) to pass a fixed point) in seconds of the
-        specified wave type at the supplied coorinates.
+        specified wave type at the supplied coordinates.
         """
         return self.get_current_weather_data({"current": f"{self._type}wave_period"})
 
     def get_hourly_wave_height(self) -> pd.DataFrame:
         r"""
         Returns the hourly mean wave height in meters of the
-        specified wave type at the supplied coorindates.
+        specified wave type at the supplied coordinates.
         """
         return self.get_periodical_data({"hourly": f"{self._type}wave_height"})
 
     def get_hourly_wave_direction(self) -> pd.DataFrame:
         r"""
-        Returns the hourly wave direction in degress of the
+        Returns the hourly wave direction in degrees of the
         specified wave type at the supplied coordinates.
         """
         return self.get_periodical_data({"hourly": f"{self._type}wave_direction"})
@@ -160,13 +160,13 @@ class MarineWeather(BaseForecast):
     def get_daily_max_wave_height(self) -> pd.DataFrame:
         r"""
         Returns the daily maximum wave height in meters of the
-        specified wave type at the supplied coorindates.
+        specified wave type at the supplied coordinates.
         """
         return self.get_periodical_data({"daily": f"{self._type}wave_height_max"})
 
     def get_daily_dominant_wave_direction(self) -> pd.DataFrame:
         r"""
-        Returns the daily dominant wave direction in degress of the
+        Returns the daily dominant wave direction in degrees of the
         specified wave type at the supplied coordinates.
         """
         return self.get_periodical_data(
