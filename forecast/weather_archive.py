@@ -380,7 +380,7 @@ class Archive(BaseWeather):
         """
 
         if type_ not in ("max", "min", "mean"):
-            raise ValueError(f"Expected `type` to be 'min' or 'max', got {type!r}.")
+            raise ValueError(f"Expected `type` to be 'min' or 'max', got {type_!r}.")
 
         if unit not in ("celsius", "fahrenheit"):
             raise ValueError(
@@ -388,7 +388,7 @@ class Archive(BaseWeather):
             )
 
         return self.get_periodical_data(
-            {"daily": f"temperature_2m_{type}", "temperature_unit": unit}
+            {"daily": f"temperature_2m_{type_}", "temperature_unit": unit}
         )
 
     def get_daily_apparent_temperature(
@@ -410,7 +410,7 @@ class Archive(BaseWeather):
         """
 
         if type_ not in ("max", "min", "mean"):
-            raise ValueError(f"Expected `type` to be 'min' or 'max', got {type!r}.")
+            raise ValueError(f"Expected `type` to be 'min' or 'max', got {type_!r}.")
 
         if unit not in ("celsius", "fahrenheit"):
             raise ValueError(
@@ -418,7 +418,7 @@ class Archive(BaseWeather):
             )
 
         return self.get_periodical_data(
-            {"daily": f"apparent_temperature_{type}", "temperature_unit": unit}
+            {"daily": f"apparent_temperature_{type_}", "temperature_unit": unit}
         )
 
     def get_daily_dominant_wind_direction(self) -> pd.DataFrame:
