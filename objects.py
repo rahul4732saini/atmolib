@@ -23,8 +23,8 @@ class BaseWeather:
 
     def __init__(self, lat: int | float, long: int | float) -> None:
 
-        # Template of the params dictionary to be used for API requests.
-        self._params = {"latitude": None, "longitude": None}
+        # params dictionary to be used to store request parameters for API requests.
+        self._params: dict[str, Any] = {}
 
         self.lat = lat
         self.long = long
@@ -97,6 +97,10 @@ class BaseForecast(BaseWeather):
     Base class for all weather forecast classes.
     """
 
+    # This attribute must be individually defined in
+    # the child classes as per their customs.
+    _max_forecast_days: int
+
     __slots__ = "_lat", "_long", "_params", "_forecast_days"
 
     def __init__(
@@ -112,8 +116,12 @@ class BaseForecast(BaseWeather):
 
     @forecast_days.setter
     def forecast_days(self, __value: int) -> None:
-        assert __value in range(1, 17), ValueError(
-            f"`forecast_days` must be in the range of 1 and 16, got {__value}."
+
+        # Asserts if the forecast days value is within the range
+        # of the maximum forecast days assigned by the child class
+        # with the `_max_forecast_days` class attribute.
+        assert __value in range(1, self._max_forecast_days + 1), ValueError(
+            f"`forecast_days` must be in the range of 1 and {self._max_forecast_days}, got {__value!r}."
         )
         self._forecast_days = __value
 

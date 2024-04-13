@@ -2,7 +2,7 @@ r"""
 This module defines the Archive class facilitating the retrieval of historical weather data from
 the Open-Meteo Weather History API based on latitudinal and longitudinal coordinates of the location.
 
-The Archive class allows users to extract vaious types of historical weather data information
+The Archive class allows users to extract various types of historical weather data information
 ranging from the year 1940 till the present.
 """
 
@@ -254,7 +254,7 @@ class Archive(BaseWeather):
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly wind speed data at the specified
-        altitude and coorindates within the supplied date range.
+        altitude and coordinates within the supplied date range.
 
         Params:
         - altitude (int): Altitude from the ground level in meters(m), must be 10 or 100.
@@ -266,7 +266,7 @@ class Archive(BaseWeather):
         """
 
         if altitude not in (10, 100):
-            raise ValueError(f"Expected `altitute` to be 10 or 100, got {altitude}.")
+            raise ValueError(f"Expected `altitude` to be 10 or 100, got {altitude}.")
 
         if unit not in ("kmh", "mph", "ms", "kn"):
             raise ValueError(
@@ -283,14 +283,14 @@ class Archive(BaseWeather):
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly wind direction data at the
-        specified altitude and coorindates within the supplied date range.
+        specified altitude and coordinates within the supplied date range.
 
         Params:
         - altitude (int): Altitude from the ground level in meters(m), must be 10 or 100.
         """
 
         if altitude not in (10, 100):
-            raise ValueError(f"Expected `altitute` to be 10 or 100, got {altitude}.")
+            raise ValueError(f"Expected `altitude` to be 10 or 100, got {altitude}.")
 
         return self.get_periodical_data({"hourly": f"wind_direction_{altitude}"})
 
@@ -301,7 +301,7 @@ class Archive(BaseWeather):
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly wind gusts data at the specified
-        altitude and coorindates within the supplied date range.
+        altitude and coordinates within the supplied date range.
 
         Params:
         - altitude (int): Altitude from the ground level in meters(m), must be 10 or 100.
@@ -313,7 +313,7 @@ class Archive(BaseWeather):
         """
 
         if altitude not in (10, 100):
-            raise ValueError(f"Expected `altitute` to be 10 or 100, got {altitude}.")
+            raise ValueError(f"Expected `altitude` to be 10 or 100, got {altitude}.")
 
         if unit not in ("kmh", "mph", "ms", "kn"):
             raise ValueError(
@@ -363,7 +363,7 @@ class Archive(BaseWeather):
 
     def get_daily_temperature(
         self,
-        type: constants.DAILY_WEATHER_REQUEST_TYPES,
+        type_: constants.DAILY_WEATHER_REQUEST_TYPES,
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.DataFrame:
         r"""
@@ -379,8 +379,8 @@ class Archive(BaseWeather):
         - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
         """
 
-        if type not in ("max", "min", "mean"):
-            raise ValueError(f"Expected `type` to be 'min' or 'max', got {type!r}.")
+        if type_ not in ("max", "min", "mean"):
+            raise ValueError(f"Expected `type` to be 'min' or 'max', got {type_!r}.")
 
         if unit not in ("celsius", "fahrenheit"):
             raise ValueError(
@@ -388,12 +388,12 @@ class Archive(BaseWeather):
             )
 
         return self.get_periodical_data(
-            {"daily": f"temperature_2m_{type}", "temperature_unit": unit}
+            {"daily": f"temperature_2m_{type_}", "temperature_unit": unit}
         )
 
     def get_daily_apparent_temperature(
         self,
-        type: constants.DAILY_WEATHER_REQUEST_TYPES,
+        type_: constants.DAILY_WEATHER_REQUEST_TYPES,
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.DataFrame:
         r"""
@@ -409,8 +409,8 @@ class Archive(BaseWeather):
         - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
         """
 
-        if type not in ("max", "min", "mean"):
-            raise ValueError(f"Expected `type` to be 'min' or 'max', got {type!r}.")
+        if type_ not in ("max", "min", "mean"):
+            raise ValueError(f"Expected `type` to be 'min' or 'max', got {type_!r}.")
 
         if unit not in ("celsius", "fahrenheit"):
             raise ValueError(
@@ -418,7 +418,7 @@ class Archive(BaseWeather):
             )
 
         return self.get_periodical_data(
-            {"daily": f"apparent_temperature_{type}", "temperature_unit": unit}
+            {"daily": f"apparent_temperature_{type_}", "temperature_unit": unit}
         )
 
     def get_daily_dominant_wind_direction(self) -> pd.DataFrame:

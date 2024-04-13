@@ -25,6 +25,9 @@ class Weather(BaseForecast):
     _api = constants.WEATHER_API
     _session = requests.Session()
 
+    # The maximum number of days for which forecast data can be requested.
+    _max_forecast_days = 16
+
     def get_current_temperature(
         self,
         altitude: constants.TEMPERATURE_ALTITUDE = 2,
@@ -133,7 +136,7 @@ class Weather(BaseForecast):
 
         if altitude not in (2, 80, 120, 180):
             raise ValueError(
-                f"Expected `altitute` to be 10, 80, 120 or 180, got {altitude}."
+                f"Expected `altitude` to be 10, 80, 120 or 180, got {altitude}."
             )
 
         if unit not in ("kmh", "mph", "ms", "kn"):
@@ -213,7 +216,7 @@ class Weather(BaseForecast):
 
     def get_daily_temperature(
         self,
-        type: constants.DAILY_WEATHER_REQUEST_TYPES,
+        type_: constants.DAILY_WEATHER_REQUEST_TYPES,
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.DataFrame:
         r"""
@@ -229,8 +232,8 @@ class Weather(BaseForecast):
         - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
         """
 
-        if type not in ("max", "min", "mean"):
-            raise ValueError(f"Expected `type` to be 'min' or 'max', got {type!r}.")
+        if type_ not in ("max", "min", "mean"):
+            raise ValueError(f"Expected `type` to be 'min' or 'max', got {type_!r}.")
 
         if unit not in ("celsius", "fahrenheit"):
             raise ValueError(
@@ -243,7 +246,7 @@ class Weather(BaseForecast):
 
     def get_daily_apparent_temperature(
         self,
-        type: constants.DAILY_WEATHER_REQUEST_TYPES,
+        type_: constants.DAILY_WEATHER_REQUEST_TYPES,
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.DataFrame:
         r"""
@@ -259,8 +262,8 @@ class Weather(BaseForecast):
         - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
         """
 
-        if type not in ("max", "min", "mean"):
-            raise ValueError(f"Expected `type` to be 'min' or 'max', got {type!r}.")
+        if type_ not in ("max", "min", "mean"):
+            raise ValueError(f"Expected `type` to be 'min' or 'max', got {type_!r}.")
 
         if unit not in ("celsius", "fahrenheit"):
             raise ValueError(
@@ -268,7 +271,7 @@ class Weather(BaseForecast):
             )
 
         return self.get_periodical_data(
-            {"daily": f"apparent_temperature_{type}", "temperature_unit": unit}
+            {"daily": f"apparent_temperature_{type_}", "temperature_unit": unit}
         )
 
     def get_daily_dominant_wind_direction(self) -> pd.DataFrame:

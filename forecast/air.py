@@ -7,6 +7,7 @@ current air quality index data and up to upcoming 7-days hourly air quality fore
 """
 
 import requests
+import pandas as pd
 
 from common import constants
 from objects import BaseForecast
@@ -21,6 +22,9 @@ class AirQuality(BaseForecast):
 
     _session = requests.Session()
     _api = constants.AIR_QUALITY_API
+
+    # The maximum number of days for which forecast data can be requested.
+    _max_forecast_days = 7
 
     def get_current_aqi(
         self, source: constants.AQI_SOURCES = "european"
@@ -125,3 +129,30 @@ class AirQuality(BaseForecast):
         presence of aerosols in the atmosphere.
         """
         return self.get_current_weather_data({"current": "aerosol_optical_depth"})
+
+    def get_hourly_dust_conc(self) -> pd.DataFrame:
+        r"""
+        Returns the hourly concentration(micro g/m^3) of dust in air 10 meters
+        above ground level at the specified coordinates.
+        """
+        return self.get_periodical_data({"hourly": "dust"})
+
+    def get_hourly_uv_index(self) -> pd.DataFrame:
+        r"""
+        Returns the hourly Ultra-Violet radiation index value at the supplied coordinates.
+        """
+        return self.get_periodical_data({"hourly": "uv_index"})
+
+    def get_hourly_pm2_5_conc(self) -> pd.DataFrame:
+        r"""
+        Returns the hourly concentration(micro g/m^3) of particulate matter with diameter
+        smaller than the 2.5 micro meter(m) in air 10 meters(m) above the ground level.
+        """
+        return self.get_periodical_data({"hourly": "pm2_5"})
+
+    def get_hourly_pm10_conc(self) -> pd.DataFrame:
+        r"""
+        Returns the hourly concentration(micro g/m^3) of particulate matter with diameter
+        smaller than the 10 micro meter(m) in air 10 meters(m) above the ground level.
+        """
+        return self.get_periodical_data({"hourly": "pm10"})
