@@ -145,3 +145,10 @@ class MarineWeather(BaseForecast):
         return self.get_periodical_data(
             {"daily": f"{self._type}wave_direction_dominant"}
         )
+
+    def get_daily_max_wave_period(self) -> pd.DataFrame:
+        r"""
+        Returns the daily maximum wave period in seconds of the
+        specified wave type at the supplied coordinates.
+        """
+        return self.get_periodical_data({"daily": f"{self._type}wave_period_max"})
