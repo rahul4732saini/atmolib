@@ -136,3 +136,9 @@ class AirQuality(BaseForecast):
         above ground level at the specified coordinates.
         """
         return self.get_periodical_data({"hourly": "dust"})
+
+    def get_hourly_uv_index(self) -> pd.DataFrame:
+        r"""
+        Returns the hourly Ultra-Violet radiation index value at the supplied coordinates.
+        """
+        return self.get_periodical_data({"hourly": "uv_index"})
