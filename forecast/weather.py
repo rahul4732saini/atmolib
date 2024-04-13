@@ -25,6 +25,9 @@ class Weather(BaseForecast):
     _api = constants.WEATHER_API
     _session = requests.Session()
 
+    # The maximum number of days for which forecast data can be requested.
+    _max_forecast_days = 16
+
     def get_current_temperature(
         self,
         altitude: constants.TEMPERATURE_ALTITUDE = 2,
