@@ -31,6 +31,9 @@ class MarineWeather(BaseForecast):
         - 'swell' (Extracts data related to waves travelling across long distances.)
     - forecast_days (int): Number of days for which the forecast has to
     be extracted, must be in the range of 1 and 16.
+
+    Raises:
+    - RequestError: If no marine data is available at the specified coordinates.
     """
 
     __slots__ = "_lat", "_long", "_wave_type", "_type", "_params", "_forecast_days"
