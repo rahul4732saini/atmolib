@@ -363,7 +363,7 @@ class Archive(BaseWeather):
 
     def get_daily_temperature(
         self,
-        type: constants.DAILY_WEATHER_REQUEST_TYPES,
+        type_: constants.DAILY_WEATHER_REQUEST_TYPES,
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.DataFrame:
         r"""
@@ -379,7 +379,7 @@ class Archive(BaseWeather):
         - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
         """
 
-        if type not in ("max", "min", "mean"):
+        if type_ not in ("max", "min", "mean"):
             raise ValueError(f"Expected `type` to be 'min' or 'max', got {type!r}.")
 
         if unit not in ("celsius", "fahrenheit"):
@@ -393,7 +393,7 @@ class Archive(BaseWeather):
 
     def get_daily_apparent_temperature(
         self,
-        type: constants.DAILY_WEATHER_REQUEST_TYPES,
+        type_: constants.DAILY_WEATHER_REQUEST_TYPES,
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.DataFrame:
         r"""
@@ -409,7 +409,7 @@ class Archive(BaseWeather):
         - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
         """
 
-        if type not in ("max", "min", "mean"):
+        if type_ not in ("max", "min", "mean"):
             raise ValueError(f"Expected `type` to be 'min' or 'max', got {type!r}.")
 
         if unit not in ("celsius", "fahrenheit"):
