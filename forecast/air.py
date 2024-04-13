@@ -142,3 +142,10 @@ class AirQuality(BaseForecast):
         Returns the hourly Ultra-Violet radiation index value at the supplied coordinates.
         """
         return self.get_periodical_data({"hourly": "uv_index"})
+
+    def get_hourly_pm2_5_conc(self) -> pd.DataFrame:
+        r"""
+        Returns the hourly concentration(micro g/m^3) of particulate matter with diameter
+        smaller than the 2.5 micro meter(m) in air 10 meters(m) above the ground level.
+        """
+        return self.get_periodical_data({"hourly": "pm2_5"})
