@@ -147,6 +147,13 @@ class MarineWeather(BaseForecast):
         """
         return self.get_periodical_data({"hourly": f"{self._type}wave_direction"})
 
+    def get_hourly_wave_period(self) -> pd.DataFrame:
+        r"""
+        Returns the hourly wave period in seconds of the
+        specified wave type at the supplied coordinates.
+        """
+        return self.get_periodical_data({"hourly": f"{self._type}wave_period"})
+
     def get_daily_max_wave_height(self) -> pd.DataFrame:
         r"""
         Returns the daily maximum wave height in meters of the
