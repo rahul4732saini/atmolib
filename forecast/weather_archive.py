@@ -364,6 +364,7 @@ class Archive(BaseWeather):
     def get_daily_temperature(
         self,
         type_: constants.DAILY_WEATHER_REQUEST_TYPES,
+        type_: constants.DAILY_WEATHER_REQUEST_TYPES,
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.DataFrame:
         r"""
@@ -393,6 +394,7 @@ class Archive(BaseWeather):
 
     def get_daily_apparent_temperature(
         self,
+        type_: constants.DAILY_WEATHER_REQUEST_TYPES,
         type_: constants.DAILY_WEATHER_REQUEST_TYPES,
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.DataFrame:
