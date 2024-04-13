@@ -7,6 +7,7 @@ current air quality index data and up to upcoming 7-days hourly air quality fore
 """
 
 import requests
+import pandas as pd
 
 from common import constants
 from objects import BaseForecast
@@ -128,3 +129,10 @@ class AirQuality(BaseForecast):
         presence of aerosols in the atmosphere.
         """
         return self.get_current_weather_data({"current": "aerosol_optical_depth"})
+
+    def get_hourly_dust_conc(self) -> pd.DataFrame:
+        r"""
+        Returns the hourly concentration(micro g/m^3) of dust in air 10 meters
+        above ground level at the specified coordinates.
+        """
+        return self.get_periodical_data({"hourly": "dust"})
