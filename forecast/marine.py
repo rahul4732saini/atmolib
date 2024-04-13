@@ -133,6 +133,15 @@ class MarineWeather(BaseForecast):
     def get_daily_max_wave_height(self) -> pd.DataFrame:
         r"""
         Returns the daily maximum wave height in meters of the
-        specified wave type at the specified coorindates.
+        specified wave type at the supplied coorindates.
         """
         return self.get_periodical_data({"daily": f"{self._type}wave_height_max"})
+
+    def get_daily_dominant_wave_direction(self) -> pd.DataFrame:
+        r"""
+        Returns the daily dominant wave direction in degress of the
+        specified wave type at the supplied coordinates.
+        """
+        return self.get_periodical_data(
+            {"daily": f"{self._type}wave_direction_dominant"}
+        )
