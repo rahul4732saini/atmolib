@@ -110,7 +110,8 @@ class MarineWeather(BaseForecast):
 
     def get_current_wave_height(self) -> int | float:
         r"""
-        Returns the wave height of the specified wave type at the supplied coorinates.
+        Returns the wave height in meters(m) of the
+        specified wave type at the supplied coorinates.
         """
         return self.get_current_weather_data({"current": f"{self._type}wave_height"})
 
@@ -131,6 +132,7 @@ class MarineWeather(BaseForecast):
 
     def get_daily_max_wave_height(self) -> pd.DataFrame:
         r"""
-        Returns the daily maximum wave height at the specified coorindates.
+        Returns the daily maximum wave height in meters of the
+        specified wave type at the specified coorindates.
         """
         return self.get_periodical_data({"daily": f"{self._type}wave_height_max"})
