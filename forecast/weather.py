@@ -270,3 +270,10 @@ class Weather(BaseForecast):
         return self.get_periodical_data(
             {"daily": f"apparent_temperature_{type}", "temperature_unit": unit}
         )
+
+    def get_daily_dominant_wind_direction(self) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of daily dominant wind direction in degrees data 10 meters(m)
+        above the ground level at the specified coordinates.
+        """
+        return self.get_periodical_data({"daily": "wind_direction_10m_dominant"})
