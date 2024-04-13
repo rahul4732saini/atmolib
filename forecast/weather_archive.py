@@ -2,7 +2,7 @@ r"""
 This module defines the Archive class facilitating the retrieval of historical weather data from
 the Open-Meteo Weather History API based on latitudinal and longitudinal coordinates of the location.
 
-The Archive class allows users to extract vaious types of historical weather data information
+The Archive class allows users to extract various types of historical weather data information
 ranging from the year 1940 till the present.
 """
 
@@ -254,7 +254,7 @@ class Archive(BaseWeather):
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly wind speed data at the specified
-        altitude and coorindates within the supplied date range.
+        altitude and coordinates within the supplied date range.
 
         Params:
         - altitude (int): Altitude from the ground level in meters(m), must be 10 or 100.
@@ -266,7 +266,7 @@ class Archive(BaseWeather):
         """
 
         if altitude not in (10, 100):
-            raise ValueError(f"Expected `altitute` to be 10 or 100, got {altitude}.")
+            raise ValueError(f"Expected `altitude` to be 10 or 100, got {altitude}.")
 
         if unit not in ("kmh", "mph", "ms", "kn"):
             raise ValueError(
@@ -283,14 +283,14 @@ class Archive(BaseWeather):
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly wind direction data at the
-        specified altitude and coorindates within the supplied date range.
+        specified altitude and coordinates within the supplied date range.
 
         Params:
         - altitude (int): Altitude from the ground level in meters(m), must be 10 or 100.
         """
 
         if altitude not in (10, 100):
-            raise ValueError(f"Expected `altitute` to be 10 or 100, got {altitude}.")
+            raise ValueError(f"Expected `altitude` to be 10 or 100, got {altitude}.")
 
         return self.get_periodical_data({"hourly": f"wind_direction_{altitude}"})
 
@@ -301,7 +301,7 @@ class Archive(BaseWeather):
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly wind gusts data at the specified
-        altitude and coorindates within the supplied date range.
+        altitude and coordinates within the supplied date range.
 
         Params:
         - altitude (int): Altitude from the ground level in meters(m), must be 10 or 100.
@@ -313,7 +313,7 @@ class Archive(BaseWeather):
         """
 
         if altitude not in (10, 100):
-            raise ValueError(f"Expected `altitute` to be 10 or 100, got {altitude}.")
+            raise ValueError(f"Expected `altitude` to be 10 or 100, got {altitude}.")
 
         if unit not in ("kmh", "mph", "ms", "kn"):
             raise ValueError(
