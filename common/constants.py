@@ -21,7 +21,7 @@ ELEVATION_API = "https://api.open-meteo.com/v1/elevation"
 WEATHER_CODES_FILE = Path("weather_codes.json")
 WEATHER_CODES = json.load(WEATHER_CODES_FILE.open())
 
-# Available freuqencies of periodical weather data.
+# Available frequencies of periodical weather data.
 FREQUENCY = Literal["hourly", "daily"]
 
 TEMPERATURE_UNITS = Literal["celsius", "fahrenheit"]
@@ -44,7 +44,7 @@ ARCHIVE_SOIL_DEPTH = {
     range(100, 255): "100_to_255",
 }
 
-# Available altitude in meters(m) options for historial wind data.
+# Available altitude in meters(m) options for historical wind data.
 ARCHIVE_WIND_ALTITUDES = Literal[10, 100]
 
 # Air Quality Index sources.
@@ -57,10 +57,10 @@ AQI_LEVELS = {
     range(101, 151): "Slight Unhealthy",
     range(151, 201): "Unhealthy",
     range(201, 301): "Very Unhealthy",
-    range(301, 501): "Harazdous",
+    range(301, 501): "Hazardous",
 }
 
-GASES = Literal["ozone", "carbon_monoxide", "nitrogen_dioxide", "suphur_dioxide"]
+GASES = Literal["ozone", "carbon_monoxide", "nitrogen_dioxide", "sulphur_dioxide"]
 PLANTS = Literal["alder", "birch", "grass", "mugwort", "olive", "ragweed"]
 
 DAILY_WEATHER_REQUEST_TYPES = Literal["max", "min", "mean"]
