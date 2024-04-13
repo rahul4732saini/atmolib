@@ -9,6 +9,7 @@ current marine weather data and up to upcoming 8-days hourly and daily marine we
 from typing import Any
 
 import requests
+import pandas as pd
 
 from common import constants
 from errors import RequestError
@@ -127,3 +128,9 @@ class MarineWeather(BaseForecast):
         specified wave type at the supplied coorinates.
         """
         return self.get_current_weather_data({"current": f"{self._type}wave_period"})
+
+    def get_daily_max_wave_height(self) -> pd.DataFrame:
+        r"""
+        Returns the daily maximum wave height at the specified coorindates.
+        """
+        return self.get_periodical_data({"daily": f"{self._type}wave_height_max"})
