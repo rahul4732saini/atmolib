@@ -22,6 +22,9 @@ class AirQuality(BaseForecast):
     _session = requests.Session()
     _api = constants.AIR_QUALITY_API
 
+    # The maximum number of days for which forecast data can be requested.
+    _max_forecast_days = 7
+
     def get_current_aqi(
         self, source: constants.AQI_SOURCES = "european"
     ) -> int | float:
