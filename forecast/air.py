@@ -64,7 +64,7 @@ class AirQuality(BaseForecast):
         supplied gas in air 10 meters above ground level.
 
         Params:
-        - gas (str): Gas whose concetration needs to be extracted, must be one of the following:
+        - gas (str): Gas whose concentration needs to be extracted, must be one of the following:
         ('ozone', 'carbon_monoxide', 'nitrogen_dioxide', 'sulphur_dioxide').
         """
 
@@ -121,7 +121,7 @@ class AirQuality(BaseForecast):
 
     def get_current_aerosol_optical_depth(self) -> int | float:
         r"""
-        Returns the current aerosal optical depth at 550 nm at the supplied coordinates.
+        Returns the current aerosol optical depth at 550 nm at the supplied coordinates.
 
         Aerosol optical depth (AOD) at 550 nm is a measure of the extinction of solar radiation
         at a wavelength of 550 nanometers (green-yellow region of the visible spectrum) due to
