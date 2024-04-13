@@ -66,7 +66,7 @@ class MarineWeather(BaseForecast):
 
         if wave_type is None:
             raise ValueError(
-                f"Expected `wave_type` to be 'composite', 'wind' or 'swell', got {__value}"
+                f"Expected `wave_type` to be 'composite', 'wind' or 'swell', got {__value!r}."
             )
 
         # self._wave_type is assigned the wave type
