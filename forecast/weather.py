@@ -136,7 +136,7 @@ class Weather(BaseForecast):
 
         if altitude not in (2, 80, 120, 180):
             raise ValueError(
-                f"Expected `altitute` to be 10, 80, 120 or 180, got {altitude}."
+                f"Expected `altitude` to be 10, 80, 120 or 180, got {altitude}."
             )
 
         if unit not in ("kmh", "mph", "ms", "kn"):
