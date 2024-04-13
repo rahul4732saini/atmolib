@@ -70,3 +70,6 @@ WAVE_TYPES = Literal["composite", "wind", "swell"]
 # Dictionary of keys as accepted arguments by users mapped to values used
 # as request parameter for extracting data from the Open-Meteo Marine API.
 WAVE_TYPES_MAP = {"composite": "", "wind": "wind_", "swell": "swell_"}
+
+# Available types of temperatures which can be extracted from the API.
+TEMPERATURE_TYPES = Literal["temperature_2m", "apparent_temperature"]
