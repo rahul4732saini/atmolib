@@ -174,3 +174,14 @@ class AirQuality(BaseForecast):
             )
 
         return self.get_periodical_data({"hourly": f"{plant}_pollen"})
+
+    def get_hourly_aerosol_optical_depth(self) -> int | float:
+        r"""
+        Returns the hourly aerosol optical depth at 550 nm at the supplied coordinates.
+
+        Aerosol optical depth (AOD) at 550 nm is a measure of the extinction of solar radiation
+        at a wavelength of 550 nanometers (green-yellow region of the visible spectrum) due to
+        aerosol particles in the atmosphere. It is commonly used as an indicator of haze or the
+        presence of aerosols in the atmosphere.
+        """
+        return self.get_periodical_data({"hourly": "aerosol_optical_depth"})
