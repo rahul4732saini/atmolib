@@ -185,3 +185,26 @@ class AirQuality(BaseForecast):
         presence of aerosols in the atmosphere.
         """
         return self.get_periodical_data({"hourly": "aerosol_optical_depth"})
+
+    def get_hourly_gaseous_conc(self, gas: constants.GASES = "ozone") -> pd.DataFrame:
+        r"""
+        Returns the hourly concentration(miro g/m^3) of the
+        supplied gas in air 10 meters above ground level.
+
+        Params:
+        - gas (str): Gas whose concentration needs to be extracted, must be one of the following:
+        ('ozone', 'carbon_monoxide', 'nitrogen_dioxide', 'sulphur_dioxide').
+        """
+
+        if gas not in (
+            "ozone",
+            "carbon_monoxide",
+            "nitrogen_dioxide",
+            "sulphur_dioxide",
+        ):
+            raise ValueError(
+                "Expected `gas` to be 'ozone', 'carbon_monoxide',"
+                f"'nitrogen_dioxide' or 'sulphur_dioxide', got {gas!r}."
+            )
+
+        return self.get_periodical_data({"hourly": gas})
