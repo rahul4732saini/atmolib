@@ -156,3 +156,62 @@ class AirQuality(BaseForecast):
         smaller than the 10 micro meter(m) in air 10 meters(m) above the ground level.
         """
         return self.get_periodical_data({"hourly": "pm10"})
+
+    def get_hourly_pollen_conc(self, plant: constants.PLANTS) -> pd.DataFrame:
+        r"""
+        Returns the hourly concentration(grains/m^3) of pollens of the specified plant.
+        Only available for Europe as provided by CAMS European Air Quality forecast.
+
+        Params:
+        - plant (str): Plant whose pollen concentration can be retrieved, must be one of
+        ('alder', 'birch', 'grass', 'mugwort', 'olive', 'ragweed').
+        """
+
+        if plant not in ("alder", "birch", "grass", "mugwort", "olive", "ragweed"):
+            raise ValueError(
+                "Expected `plant` to be one of 'alder', 'birch', 'grass', 'mugwort',"
+                f"'olive' or 'ragweed', got {plant!r}."
+            )
+
+        return self.get_periodical_data({"hourly": f"{plant}_pollen"})
+
+    def get_hourly_aerosol_optical_depth(self) -> pd.DataFrame:
+        r"""
+        Returns the hourly aerosol optical depth at 550 nm at the supplied coordinates.
+
+        Aerosol optical depth (AOD) at 550 nm is a measure of the extinction of solar radiation
+        at a wavelength of 550 nanometers (green-yellow region of the visible spectrum) due to
+        aerosol particles in the atmosphere. It is commonly used as an indicator of haze or the
+        presence of aerosols in the atmosphere.
+        """
+        return self.get_periodical_data({"hourly": "aerosol_optical_depth"})
+
+    def get_hourly_gaseous_conc(self, gas: constants.GASES = "ozone") -> pd.DataFrame:
+        r"""
+        Returns the hourly concentration(miro g/m^3) of the
+        supplied gas in air 10 meters above ground level.
+
+        Params:
+        - gas (str): Gas whose concentration needs to be extracted, must be one of the following:
+        ('ozone', 'carbon_monoxide', 'nitrogen_dioxide', 'sulphur_dioxide').
+        """
+
+        if gas not in (
+            "ozone",
+            "carbon_monoxide",
+            "nitrogen_dioxide",
+            "sulphur_dioxide",
+        ):
+            raise ValueError(
+                "Expected `gas` to be 'ozone', 'carbon_monoxide',"
+                f"'nitrogen_dioxide' or 'sulphur_dioxide', got {gas!r}."
+            )
+
+        return self.get_periodical_data({"hourly": gas})
+
+    def get_hourly_ammonia_conc(self) -> pd.DataFrame:
+        r"""
+        Returns the hourly concentration(micro g/m^3) of ammonia(NH3) in air.
+        Only available for Europe. Returns None for Non-European regions.
+        """
+        return self.get_periodical_data({"hourly": "ammonia"})
