@@ -157,7 +157,7 @@ class AirQuality(BaseForecast):
         """
         return self.get_periodical_data({"hourly": "pm10"})
 
-    def get_hourly_pollen_conc(self, plant: constants.PLANTS) -> int | float:
+    def get_hourly_pollen_conc(self, plant: constants.PLANTS) -> pd.DataFrame:
         r"""
         Returns the hourly concentration(grains/m^3) of pollens of the specified plant.
         Only available for Europe as provided by CAMS European Air Quality forecast.
@@ -175,7 +175,7 @@ class AirQuality(BaseForecast):
 
         return self.get_periodical_data({"hourly": f"{plant}_pollen"})
 
-    def get_hourly_aerosol_optical_depth(self) -> int | float:
+    def get_hourly_aerosol_optical_depth(self) -> pd.DataFrame:
         r"""
         Returns the hourly aerosol optical depth at 550 nm at the supplied coordinates.
 
