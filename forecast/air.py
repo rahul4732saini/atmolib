@@ -156,3 +156,21 @@ class AirQuality(BaseForecast):
         smaller than the 10 micro meter(m) in air 10 meters(m) above the ground level.
         """
         return self.get_periodical_data({"hourly": "pm10"})
+
+    def get_hourly_pollen_conc(self, plant: constants.PLANTS) -> int | float:
+        r"""
+        Returns the hourly concentration(grains/m^3) of pollens of the specified plant.
+        Only available for Europe as provided by CAMS European Air Quality forecast.
+
+        Params:
+        - plant (str): Plant whose pollen concentration can be retrieved, must be one of
+        ('alder', 'birch', 'grass', 'mugwort', 'olive', 'ragweed').
+        """
+
+        if plant not in ("alder", "birch", "grass", "mugwort", "olive", "ragweed"):
+            raise ValueError(
+                "Expected `plant` to be one of 'alder', 'birch', 'grass', 'mugwort',"
+                f"'olive' or 'ragweed', got {plant!r}."
+            )
+
+        return self.get_periodical_data({"hourly": f"{plant}_pollen"})
