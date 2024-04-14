@@ -208,3 +208,10 @@ class AirQuality(BaseForecast):
             )
 
         return self.get_periodical_data({"hourly": gas})
+
+    def get_hourly_ammonia_conc(self) -> pd.DataFrame:
+        r"""
+        Returns the hourly concentration(micro g/m^3) of ammonia(NH3) in air.
+        Only available for Europe. Returns None for Non-European regions.
+        """
+        return self.get_periodical_data({"hourly": "ammonia"})
