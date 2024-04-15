@@ -61,7 +61,8 @@ class AirQuality(BaseForecast):
         self, source: constants.AQI_SOURCES = "european"
     ) -> int | float:
         r"""
-        Returns the current European air quality index value at the supplied coordinates.
+        Returns the current American/European Air Quality
+        Index value at the supplied coordinates.
 
         Params:
         - source: Source of the Air Quality Index, must be one of the following:
@@ -91,8 +92,8 @@ class AirQuality(BaseForecast):
 
     def get_current_gaseous_conc(self, gas: constants.GASES = "ozone") -> int | float:
         r"""
-        Returns the current concentration(miro g/m^3) of the
-        supplied gas in air 10 meters above ground level.
+        Returns the current concentration(miro g/m^3) of the specified
+        atmospheric gas in air 10 meters above ground level.
 
         Params:
         - gas (str): Gas whose concentration needs to be extracted, must be one of the following:
@@ -117,8 +118,9 @@ class AirQuality(BaseForecast):
 
     def get_current_pollen_conc(self, plant: constants.PLANTS) -> int | float:
         r"""
-        Returns the current concentration(grains/m^3) of pollens of the specified plant.
-        Only available for Europe as provided by CAMS European Air Quality forecast.
+        Returns the current concentration(grains/m^3) of pollens of the specified
+        plant. Only available for Europe as provided by CAMS European Air Quality
+        forecast. Returns None for Non-European regions.
 
         Params:
         - plant (str): Plant whose pollen concentration can be retrieved, must be one of
@@ -173,8 +175,9 @@ class AirQuality(BaseForecast):
 
     def get_hourly_pollen_conc(self, plant: constants.PLANTS) -> pd.DataFrame:
         r"""
-        Returns the hourly concentration(grains/m^3) of pollens of the specified plant.
-        Only available for Europe as provided by CAMS European Air Quality forecast.
+        Returns the hourly concentration(grains/m^3) of pollens of the specified
+        plant. Only available for Europe as provided by CAMS European Air Quality
+        forecast. Returns None for Non-European regions.
 
         Params:
         - plant (str): Plant whose pollen concentration can be retrieved, must be one of
@@ -196,8 +199,8 @@ class AirQuality(BaseForecast):
 
     def get_hourly_gaseous_conc(self, gas: constants.GASES = "ozone") -> pd.DataFrame:
         r"""
-        Returns the hourly concentration(miro g/m^3) of the
-        supplied gas in air 10 meters above ground level.
+        Returns the hourly concentration(miro g/m^3) of the specified
+        atmospheric gas in air 10 meters above ground level.
 
         Params:
         - gas (str): Gas whose concentration needs to be extracted, must be one of the following:
