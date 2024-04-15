@@ -44,6 +44,19 @@ class AirQuality(BaseForecast):
                 f"'nitrogen_dioxide' or 'sulphur_dioxide', got {gas!r}."
             )
 
+    @staticmethod
+    def _verify_plant_species(plant: constants.PLANTS) -> None:
+        r"""
+        Verifies whether the specified plant species is supported by the Open-Meteo
+        Air Quality API for the retrieval of pollen grain concentration in the air.
+        """
+
+        if plant not in ("alder", "birch", "grass", "mugwort", "olive", "ragweed"):
+            raise ValueError(
+                "Expected `plant` to be one of 'alder', 'birch', 'grass', 'mugwort',"
+                f"'olive' or 'ragweed', got {plant!r}."
+            )
+
     def get_current_aqi(
         self, source: constants.AQI_SOURCES = "european"
     ) -> int | float:
@@ -111,13 +124,7 @@ class AirQuality(BaseForecast):
         - plant (str): Plant whose pollen concentration can be retrieved, must be one of
         ('alder', 'birch', 'grass', 'mugwort', 'olive', 'ragweed').
         """
-
-        if plant not in ("alder", "birch", "grass", "mugwort", "olive", "ragweed"):
-            raise ValueError(
-                "Expected `plant` to be one of 'alder', 'birch', 'grass', 'mugwort',"
-                f"'olive' or 'ragweed', got {plant!r}."
-            )
-
+        self._verify_plant_species(plant)
         return self.get_current_weather_data({"current": f"{plant}_pollen"})
 
     def get_current_uv_index(self) -> int | float:
@@ -173,13 +180,7 @@ class AirQuality(BaseForecast):
         - plant (str): Plant whose pollen concentration can be retrieved, must be one of
         ('alder', 'birch', 'grass', 'mugwort', 'olive', 'ragweed').
         """
-
-        if plant not in ("alder", "birch", "grass", "mugwort", "olive", "ragweed"):
-            raise ValueError(
-                "Expected `plant` to be one of 'alder', 'birch', 'grass', 'mugwort',"
-                f"'olive' or 'ragweed', got {plant!r}."
-            )
-
+        self._verify_plant_species(plant)
         return self.get_periodical_data({"hourly": f"{plant}_pollen"})
 
     def get_hourly_aerosol_optical_depth(self) -> pd.DataFrame:
