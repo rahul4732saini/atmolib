@@ -26,6 +26,24 @@ class AirQuality(BaseForecast):
     # The maximum number of days for which forecast data can be requested.
     _max_forecast_days = 7
 
+    @staticmethod
+    def _verify_atmospheric_gas(gas: constants.GASES) -> None:
+        r"""
+        Verifies whether the specified atmospheric gas is supported by the Open-Meteo API
+        for network requests.
+        """
+
+        if gas not in (
+            "ozone",
+            "carbon_monoxide",
+            "nitrogen_dioxide",
+            "sulphur_dioxide",
+        ):
+            raise ValueError(
+                "Expected `gas` to be 'ozone', 'carbon_monoxide',"
+                f"'nitrogen_dioxide' or 'sulphur_dioxide', got {gas!r}."
+            )
+
     def get_current_aqi(
         self, source: constants.AQI_SOURCES = "european"
     ) -> int | float:
@@ -67,18 +85,7 @@ class AirQuality(BaseForecast):
         - gas (str): Gas whose concentration needs to be extracted, must be one of the following:
         ('ozone', 'carbon_monoxide', 'nitrogen_dioxide', 'sulphur_dioxide').
         """
-
-        if gas not in (
-            "ozone",
-            "carbon_monoxide",
-            "nitrogen_dioxide",
-            "sulphur_dioxide",
-        ):
-            raise ValueError(
-                "Expected `gas` to be 'ozone', 'carbon_monoxide',"
-                f"'nitrogen_dioxide' or 'sulphur_dioxide', got {gas!r}."
-            )
-
+        self._verify_atmospheric_gas(gas)
         return self.get_current_weather_data({"current": gas})
 
     def get_current_pm2_5_conc(self) -> int | float:
@@ -195,18 +202,7 @@ class AirQuality(BaseForecast):
         - gas (str): Gas whose concentration needs to be extracted, must be one of the following:
         ('ozone', 'carbon_monoxide', 'nitrogen_dioxide', 'sulphur_dioxide').
         """
-
-        if gas not in (
-            "ozone",
-            "carbon_monoxide",
-            "nitrogen_dioxide",
-            "sulphur_dioxide",
-        ):
-            raise ValueError(
-                "Expected `gas` to be 'ozone', 'carbon_monoxide',"
-                f"'nitrogen_dioxide' or 'sulphur_dioxide', got {gas!r}."
-            )
-
+        self._verify_atmospheric_gas(gas)
         return self.get_periodical_data({"hourly": gas})
 
     def get_hourly_ammonia_conc(self) -> pd.DataFrame:
