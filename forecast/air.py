@@ -29,8 +29,8 @@ class AirQuality(BaseForecast):
     @staticmethod
     def _verify_atmospheric_gas(gas: constants.GASES) -> None:
         r"""
-        Verifies whether the specified atmospheric gas is supported by the Open-Meteo API
-        for network requests.
+        Verifies whether the specified atmospheric gas is supported by the Open-Meteo
+        Air Quality API for the retrieval of gaseous concentration in the air.
         """
 
         if gas not in (
