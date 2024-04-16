@@ -450,3 +450,10 @@ class Archive(BaseWeather):
         at the specified coordinates within the supplied date range.
         """
         return self.get_periodical_data({"daily": "sunrise"})
+
+    def get_daily_sunset_time(self) -> pd.DataFrame:
+        r"""
+        Returns the daily sunset time in the ISO-8601 datetime format (YYYY-MM-DDTHH:MM)
+        at the specified coordinates within the supplied date range.
+        """
+        return self.get_periodical_data({"daily": "sunrise"})
