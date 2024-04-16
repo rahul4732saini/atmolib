@@ -428,6 +428,50 @@ class Archive(BaseWeather):
             {"daily": f"apparent_temperature_{type_}", "temperature_unit": unit}
         )
 
+    def get_daily_max_wind_speed(
+        self, unit: constants.WIND_SPEED_UNITS = "kmh"
+    ) -> pd.DataFrame:
+        r"""
+        Returns the daily maximum wind speed 2 meters(m) above the ground
+        level at the specified coordinates within the supplied date range.
+
+        Params:
+        - unit (str): Wind speed unit, must be one of the following:
+            - 'kmh' (kilometers per hour)
+            - 'mph' (miles per hour)
+            - 'ms' (meter per second)
+            - 'kn' (knots)
+        """
+
+        if unit not in ("kmh", "mph", "ms", "kn"):
+            raise ValueError(
+                f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
+            )
+
+        return self.get_periodical_data({"daily": "wind_speed_10m_max"})
+
+    def get_daily_max_wind_gusts(
+        self, unit: constants.WIND_SPEED_UNITS = "kmh"
+    ) -> pd.DataFrame:
+        r"""
+        Returns the daily maximum wind gusts 2 meters(m) above the ground
+        level at the specified coordinates within the supplied date range.
+
+        Params:
+        - unit (str): Wind speed unit, must be one of the following:
+            - 'kmh' (kilometers per hour)
+            - 'mph' (miles per hour)
+            - 'ms' (meter per second)
+            - 'kn' (knots)
+        """
+
+        if unit not in ("kmh", "mph", "ms", "kn"):
+            raise ValueError(
+                f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
+            )
+
+        return self.get_periodical_data({"daily": "wind_gusts_10m_max"})
+
     def get_daily_dominant_wind_direction(self) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of daily dominant wind direction in degrees data 10 meters(m)
@@ -466,3 +510,24 @@ class Archive(BaseWeather):
         at the specified coordinates within the supplied date range.
         """
         return self.get_periodical_data({"daily": "sunrise"})
+
+    def get_daily_daylight_duration(self) -> pd.DataFrame:
+        r"""
+        Returns the daily daylight duration in seconds(s) at the
+        specified coordinates within the supplid date range.
+        """
+        return self.get_periodical_data({"daily": "daylight_duration"})
+
+    def get_daily_sunshine_duration(self) -> pd.DataFrame:
+        r"""
+        Returns the daily sunshine duration in seconds(s) at the
+        specified coordinates within the supplid date range.
+        """
+        return self.get_periodical_data({"daily": "sunshine_duration"})
+
+    def get_daily_total_shortwave_radiation(self) -> pd.DataFrame:
+        r"""
+        Returns the daily sum of shortwave radiation in Mega Joules per square meter
+        (MJ/m^2) sat the specified coordinates within the supplied date range.
+        """
+        return self.get_periodical_data({"daily": "shortwave_radiation_sum"})
