@@ -297,15 +297,13 @@ class Archive(BaseWeather):
 
     def get_hourly_wind_gusts(
         self,
-        altitude: constants.ARCHIVE_WIND_ALTITUDES = 10,
         unit: constants.WIND_SPEED_UNITS = "kmh",
     ) -> pd.DataFrame:
         r"""
-        Returns a pandas DataFrame of hourly wind gusts data at the specified
-        altitude and coordinates within the supplied date range.
+        Returns a pandas DataFrame of hourly wind gusts data 10 meters(m) above the
+        ground level and specified coordinates within the supplied date range.
 
         Params:
-        - altitude (int): Altitude from the ground level in meters(m), must be 10 or 100.
         - unit (str): Wind speed unit, must be one of the following:
             - 'kmh' (kilometers per hour)
             - 'mph' (miles per hour)
@@ -313,16 +311,13 @@ class Archive(BaseWeather):
             - 'kn' (knots)
         """
 
-        if altitude not in (10, 100):
-            raise ValueError(f"Expected `altitude` to be 10 or 100, got {altitude}.")
-
         if unit not in ("kmh", "mph", "ms", "kn"):
             raise ValueError(
                 f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
             )
 
         return self.get_periodical_data(
-            {"hourly": f"wind_gusts_{altitude}m", "wind_speed_unit": unit}
+            {"hourly": f"wind_gusts_10m", "wind_speed_unit": unit}
         )
 
     def get_hourly_soil_temperature(
