@@ -221,6 +221,21 @@ class Weather(BaseForecast):
             {"current": "precipitation", "precipitation_unit": unit}
         )
 
+    def get_current_pressure(self, level: constants.PRESSURE_LEVELS) -> int | float:
+        r"""
+        Returns the current atmospheric pressure in Hectopascal (hPa) at the supplied coordinates.
+        """
+
+        # Mapped value of the specified pressure level.
+        pressure: str | None = constants.PRESSURE_LEVEL_MAPPING.get(level)
+
+        if not pressure:
+            raise ValueError(
+                f"Expected `level` to be 'sealevel' or 'surface', got {level!r}."
+            )
+
+        return self.get_current_weather_data({"current": pressure})
+
     def get_daily_temperature(
         self,
         type_: constants.DAILY_WEATHER_REQUEST_TYPES,
