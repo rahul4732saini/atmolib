@@ -41,7 +41,7 @@ ARCHIVE_SOIL_DEPTH = {
     range(7): "0_to_7",
     range(7, 28): "7_to_28",
     range(28, 100): "28_to_100",
-    range(100, 255): "100_to_255",
+    range(100, 256): "100_to_255",
 }
 
 # Available altitude in meters(m) options for historical wind data.
