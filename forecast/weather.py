@@ -224,6 +224,9 @@ class Weather(BaseForecast):
     def get_current_pressure(self, level: constants.PRESSURE_LEVELS) -> int | float:
         r"""
         Returns the current atmospheric pressure in Hectopascal (hPa) at the supplied coordinates.
+
+        Params:
+        - level (str): Desired level of the atmospheric data, must be 'surface' or 'sealevel'.
         """
 
         # Mapped value of the specified pressure level.
