@@ -350,7 +350,7 @@ class Archive(BaseWeather):
 
         else:
             raise ValueError(
-                f"Expected `depth` to be in the range of 0 and 255, got {depth}."
+                f"Expected `depth` to be in the range of 0 and 256, got {depth}."
             )
 
         return self.get_periodical_data(
@@ -363,8 +363,9 @@ class Archive(BaseWeather):
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.DataFrame:
         r"""
-        Returns a pandas DataFrame of daily maximum or minimum temperature data 2 meters(m)
-        above the ground level at the specified coordinates within the supplied date range.
+        Returns a pandas DataFrame of daily maximum, minimum or mean
+        temperature data 2 meters(m) above the ground level at the
+        specified coordinates within the supplied date range.
 
         Params:
         - type: Specifies the type of daily temperature to be retrieved,
@@ -393,8 +394,9 @@ class Archive(BaseWeather):
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.DataFrame:
         r"""
-        Returns a pandas DataFrame of daily max apparent temperature data 2 meters(m) above
-        the ground level at the specified coordinates within the supplied date range.
+        Returns a pandas DataFrame of daily maximum, minimum or mean
+        apparent temperature data 2 meters(m) above the ground level
+        at the specified coordinates within the supplied date range.
 
         Params:
         - type: Specifies the type of daily apparent temperature to be retrieved,
