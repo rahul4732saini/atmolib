@@ -61,7 +61,7 @@ class Archive(BaseWeather):
                 "`start_date` must be lower or equal to `end_date`."
             )
 
-        # Updaing the `_params` dictionary with the `start_date` attribute.
+        # Updating the `_params` dictionary with the `start_date` attribute.
         self._params["start_date"] = self._start_date.strftime(r"%Y-%m-%d")
 
     @property
@@ -78,7 +78,7 @@ class Archive(BaseWeather):
 
         self._end_date = end_date
 
-        # Updaing the `_params` dictionary with the `end_date` attribute.
+        # Updating the `_params` dictionary with the `end_date` attribute.
         self._params["end_date"] = end_date.strftime(r"%Y-%m-%d")
 
     def __repr__(self) -> str:
@@ -532,14 +532,14 @@ class Archive(BaseWeather):
     def get_daily_daylight_duration(self) -> pd.DataFrame:
         r"""
         Returns the daily daylight duration in seconds(s) at the
-        specified coordinates within the supplid date range.
+        specified coordinates within the supplied date range.
         """
         return self.get_periodical_data({"daily": "daylight_duration"})
 
     def get_daily_sunshine_duration(self) -> pd.DataFrame:
         r"""
         Returns the daily sunshine duration in seconds(s) at the
-        specified coordinates within the supplid date range.
+        specified coordinates within the supplied date range.
         """
         return self.get_periodical_data({"daily": "sunshine_duration"})
 
