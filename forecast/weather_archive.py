@@ -56,6 +56,11 @@ class Archive(BaseWeather):
     def start_date(self, __value: str | date | datetime) -> None:
         self._start_date = self._resolve_date(__value, "start_date")
 
+        if hasattr(self, "_end_date"):
+            assert self._end_date > self._start_date, ValueError(
+                "`start_date` must be lower or equal to `end_date`."
+            )
+
         # Updaing the `_params` dictionary with the `start_date` attribute.
         self._params["start_date"] = self._start_date.strftime(r"%Y-%m-%d")
 
@@ -68,7 +73,7 @@ class Archive(BaseWeather):
         end_date: date = self._resolve_date(__value, "end_date")
 
         assert end_date > self._start_date, ValueError(
-            f"`end_date` must be greater or equal to `start_date`."
+            "`end_date` must be greater or equal to `start_date`."
         )
 
         self._end_date = end_date
