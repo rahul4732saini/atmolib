@@ -29,7 +29,7 @@ WIND_SPEED_UNITS = Literal["kmh", "mph", "ms", "kn"]
 PRECIPITATION_UNITS = Literal["mm", "inch"]
 
 CLOUD_COVER_LEVEL = Literal["low", "mid", "high"]
-PRESSURE_LEVELS = {"sealevel": "pressure_msl", "surface": "surface_pressure"}
+PRESSURE_LEVELS = Literal["sealevel", "surface"]
 
 # Holds the altitude in meters(m) above the surface level.
 TEMPERATURE_ALTITUDE = Literal[2, 80, 120, 180]
