@@ -18,6 +18,12 @@ class Weather(BaseForecast):
     Weather class to extract weather data based on latitude and longitude coordinates.
     It interacts with the Open-Meteo Weather API to fetch the current or upcoming 16-days
     hourly and daily weather forecast data.
+
+    Params:
+    - lat (int | float): Latitudinal coordinates of the location.
+    - long (int | float): Longitudinal coordinates of the location.
+    - forecast_days (int): Number of days for which the forecast has to
+    be extracted, must be in the range of 1 and 16.
     """
 
     __slots__ = "_lat", "_long", "_params", "_forecast_days"
