@@ -159,7 +159,8 @@ class Weather(BaseForecast):
         altitude: constants.WIND_ALTITUDE = 10,
     ) -> int | float:
         r"""
-        Returns the current wind direction at the supplied altitude and in the supplied unit.
+        Returns the current wind direction in degrees at the
+        supplied altitude and in the supplied unit.
 
         Params:
         - altitude (int): Altitude from the ground level, must be 10, 80, 120 or 180.
