@@ -18,6 +18,12 @@ class AirQuality(BaseForecast):
     AirQuality class to extract air quality data based on latitude and longitude coordinates.
     It interacts with the Open-Meteo Air Quality API to fetch the current or up to upcoming 7-days
     hourly and daily air quality forecast data.
+
+    Params:
+    - lat (int | float): Latitudinal coordinates of the location.
+    - long (int | float): Longitudinal coordinates of the location.
+    - forecast_days (int): Number of days for which the forecast has to
+    be extracted, must be in the range of 1 and 7.
     """
 
     _session = requests.Session()
