@@ -135,8 +135,9 @@ class Archive(BaseWeather):
 
     def get_hourly_relative_humidity(self) -> pd.DataFrame:
         r"""
-        Returns a pandas DataFrame of hourly relative humidity percentage(%)
-        data at the specified coordinates within the date range.
+        Returns a pandas DataFrame of hourly relative humidity
+        percentage(%) data 2 meters(m) above the ground level at
+        the specified coordinates within the date range.
         """
         return self.get_periodical_data({"hourly": "relative_humidity_2m"})
 
@@ -149,7 +150,7 @@ class Archive(BaseWeather):
         - frequency: Frequency of the data distribution, must be 'daily' or 'hourly'.
 
         Columns:
-        - time: time of the forecast data in ISO 8601 format (YYYY-MM-DDTHH-MM).
+        - time: time of the forecast data in ISO 8601 format (YYYY-MM-DDTHH-MM) or (YYYY-MM-DD).
         - data: weather code at the corresponding hour.
         - description: description of the corresponding weather code.
         """
@@ -305,15 +306,13 @@ class Archive(BaseWeather):
 
     def get_hourly_wind_gusts(
         self,
-        altitude: constants.ARCHIVE_WIND_ALTITUDES = 10,
         unit: constants.WIND_SPEED_UNITS = "kmh",
     ) -> pd.DataFrame:
         r"""
-        Returns a pandas DataFrame of hourly wind gusts data at the specified
-        altitude and coordinates within the supplied date range.
+        Returns a pandas DataFrame of hourly wind gusts data 10 meters(m) above the
+        ground level and specified coordinates within the supplied date range.
 
         Params:
-        - altitude (int): Altitude from the ground level in meters(m), must be 10 or 100.
         - unit (str): Wind speed unit, must be one of the following:
             - 'kmh' (kilometers per hour)
             - 'mph' (miles per hour)
@@ -321,16 +320,13 @@ class Archive(BaseWeather):
             - 'kn' (knots)
         """
 
-        if altitude not in (10, 100):
-            raise ValueError(f"Expected `altitude` to be 10 or 100, got {altitude}.")
-
         if unit not in ("kmh", "mph", "ms", "kn"):
             raise ValueError(
                 f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
             )
 
         return self.get_periodical_data(
-            {"hourly": f"wind_gusts_{altitude}m", "wind_speed_unit": unit}
+            {"hourly": f"wind_gusts_10m", "wind_speed_unit": unit}
         )
 
     def get_hourly_soil_temperature(
@@ -363,7 +359,7 @@ class Archive(BaseWeather):
 
         else:
             raise ValueError(
-                f"Expected `depth` to be in the range of 0 and 255, got {depth}."
+                f"Expected `depth` to be in the range of 0 and 256, got {depth}."
             )
 
         return self.get_periodical_data(
@@ -376,8 +372,9 @@ class Archive(BaseWeather):
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.DataFrame:
         r"""
-        Returns a pandas DataFrame of daily maximum or minimum temperature data 2 meters(m)
-        above the ground level at the specified coordinates within the supplied date range.
+        Returns a pandas DataFrame of daily maximum, minimum or mean
+        temperature data 2 meters(m) above the ground level at the
+        specified coordinates within the supplied date range.
 
         Params:
         - type: Specifies the type of daily temperature to be retrieved,
@@ -406,8 +403,9 @@ class Archive(BaseWeather):
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.DataFrame:
         r"""
-        Returns a pandas DataFrame of daily max apparent temperature data 2 meters(m) above
-        the ground level at the specified coordinates within the supplied date range.
+        Returns a pandas DataFrame of daily maximum, minimum or mean
+        apparent temperature data 2 meters(m) above the ground level
+        at the specified coordinates within the supplied date range.
 
         Params:
         - type: Specifies the type of daily apparent temperature to be retrieved,
