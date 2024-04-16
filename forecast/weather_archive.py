@@ -48,19 +48,20 @@ class Archive(BaseWeather):
         self.start_date = start_date
         self.end_date = end_date
 
-        self._params |= {"start_date": start_date, "end_date": end_date}
-
     @property
-    def start_date(self) -> str:
-        return self._start_date.strftime(r"%Y-%m-%d")
+    def start_date(self) -> date:
+        return self._start_date
 
     @start_date.setter
     def start_date(self, __value: str | date | datetime) -> None:
         self._start_date = self._resolve_date(__value, "start_date")
 
+        # Updaing the `_params` dictionary with the `start_date` attribute.
+        self._params["start_date"] = self._start_date.strftime(r"%Y-%m-%d")
+
     @property
-    def end_date(self) -> str:
-        return self._end_date.strftime(r"%Y-%m-%d")
+    def end_date(self) -> date:
+        return self._end_date
 
     @end_date.setter
     def end_date(self, __value: str | date | datetime) -> None:
@@ -71,6 +72,9 @@ class Archive(BaseWeather):
         )
 
         self._end_date = end_date
+
+        # Updaing the `_params` dictionary with the `end_date` attribute.
+        self._params["end_date"] = end_date.strftime(r"%Y-%m-%d")
 
     def __repr__(self) -> str:
         return (
