@@ -419,6 +419,28 @@ class Archive(BaseWeather):
             {"daily": f"apparent_temperature_{type_}", "temperature_unit": unit}
         )
 
+    def get_daily_max_wind_speed(
+        self, unit: constants.WIND_SPEED_UNITS = "kmh"
+    ) -> pd.DataFrame:
+        r"""
+        Returns the daily maximum wind speed 2 meters(m) above the ground
+        level at the specified coordinates within the supplied date range.
+
+        Params:
+        - unit (str): Wind speed unit, must be one of the following:
+            - 'kmh' (kilometers per hour)
+            - 'mph' (miles per hour)
+            - 'ms' (meter per second)
+            - 'kn' (knots)
+        """
+
+        if unit not in ("kmh", "mph", "ms", "kn"):
+            raise ValueError(
+                f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
+            )
+
+        return self.get_periodical_data({"daily": "wind_speed_10m_max"})
+
     def get_daily_dominant_wind_direction(self) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of daily dominant wind direction in degrees data 10 meters(m)
