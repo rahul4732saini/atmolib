@@ -126,8 +126,9 @@ class Archive(BaseWeather):
 
     def get_hourly_relative_humidity(self) -> pd.DataFrame:
         r"""
-        Returns a pandas DataFrame of hourly relative humidity percentage(%)
-        data at the specified coordinates within the date range.
+        Returns a pandas DataFrame of hourly relative humidity
+        percentage(%) data 2 meters(m) above the ground level at
+        the specified coordinates within the date range.
         """
         return self.get_periodical_data({"hourly": "relative_humidity_2m"})
 
@@ -140,7 +141,7 @@ class Archive(BaseWeather):
         - frequency: Frequency of the data distribution, must be 'daily' or 'hourly'.
 
         Columns:
-        - time: time of the forecast data in ISO 8601 format (YYYY-MM-DDTHH-MM).
+        - time: time of the forecast data in ISO 8601 format (YYYY-MM-DDTHH-MM) or (YYYY-MM-DD).
         - data: weather code at the corresponding hour.
         - description: description of the corresponding weather code.
         """
