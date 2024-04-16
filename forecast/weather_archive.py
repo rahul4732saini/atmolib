@@ -366,6 +366,24 @@ class Archive(BaseWeather):
             {"hourly": f"soil_temperature_{depth_range}cm", "temperature_unit": unit},
         )
 
+    def get_hourly_pressure(self, level: constants.PRESSURE_LEVELS) -> pd.DataFrame:
+        r"""
+        Returns the hourly atmospheric pressure data in Hectopascal (hPa) at
+        the specified coordinates within the supplied date range.
+
+        Params:
+        - level (str): Desired level of the atmospheric data, must be 'surface' or 'sealevel'.
+        """
+
+        pressure: str | None = constants.PRESSURE_LEVEL_MAPPING.get(level)
+
+        if pressure is None:
+            raise ValueError(
+                f"Expected `level` to be 'sealevel' or 'surface', got {level!r}."
+            )
+
+        return self.get_periodical_data({"hourly": pressure})
+
     def get_daily_temperature(
         self,
         type_: constants.DAILY_WEATHER_REQUEST_TYPES,
