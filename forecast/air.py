@@ -122,7 +122,7 @@ class AirQuality(BaseForecast):
         """
         return self.get_current_weather_data({"current": "pm10"})
 
-    def get_current_pollen_conc(self, plant: constants.PLANTS) -> int | float:
+    def get_current_pollen_conc(self, plant: constants.PLANTS) -> int | float | None:
         r"""
         Returns the current concentration(grains/m^3) of pollens of the specified
         plant. Only available for Europe as provided by CAMS European Air Quality
