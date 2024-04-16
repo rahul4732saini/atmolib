@@ -464,3 +464,10 @@ class Archive(BaseWeather):
         specified coordinates within the supplid date range.
         """
         return self.get_periodical_data({"daily": "daylight_duration"})
+
+    def get_daily_sunshine_duration(self) -> pd.DataFrame:
+        r"""
+        Returns the daily sunshine duration in seconds(s) at the
+        specified coordinates within the supplid date range.
+        """
+        return self.get_periodical_data({"daily": "sunshine_duration"})
