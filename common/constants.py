@@ -10,7 +10,7 @@ import json
 from pathlib import Path
 from typing import Literal
 
-# API endpoint URLs
+# API endpoint URLs.
 WEATHER_API = "https://api.open-meteo.com/v1/forecast"
 WEATHER_HISTORY_API = "https://archive-api.open-meteo.com/v1/archive"
 MARINE_API = "https://marine-api.open-meteo.com/v1/marine"
@@ -18,12 +18,15 @@ AIR_QUALITY_API = "https://air-quality-api.open-meteo.com/v1/air-quality"
 GEOCODING_API = "https://geocoding-api.open-meteo.com/v1/search"
 ELEVATION_API = "https://api.open-meteo.com/v1/elevation"
 
+# Weather code JSON file comprising weather codes mapped with corresponding
+# description of the same. `WEATHER_CODES` loads the JSON file into a dictionary.
 WEATHER_CODES_FILE = Path("weather_codes.json")
 WEATHER_CODES = json.load(WEATHER_CODES_FILE.open())
 
 # Available frequencies of periodical weather data.
 FREQUENCY = Literal["hourly", "daily"]
 
+# Units used as request parameters in different weather data extraction requests.
 TEMPERATURE_UNITS = Literal["celsius", "fahrenheit"]
 WIND_SPEED_UNITS = Literal["kmh", "mph", "ms", "kn"]
 PRECIPITATION_UNITS = Literal["mm", "inch"]
@@ -35,8 +38,8 @@ PRESSURE_LEVELS = {"sealevel": "pressure_msl", "surface": "surface_pressure"}
 TEMPERATURE_ALTITUDE = Literal[2, 80, 120, 180]
 WIND_ALTITUDE = Literal[10, 80, 120, 180]
 
-# Available depth in centimeters(cm) options for
-# historical soil temperature and moisture data.
+# Available depth options in centimeters(cm)  for
+# historical soil temperature data extraction.
 ARCHIVE_SOIL_DEPTH = {
     range(7): "0_to_7",
     range(7, 28): "7_to_28",
@@ -44,13 +47,13 @@ ARCHIVE_SOIL_DEPTH = {
     range(100, 255): "100_to_255",
 }
 
-# Available altitude in meters(m) options for historical wind data.
+# Available altitude options in meters(m) for historical wind data.
 ARCHIVE_WIND_ALTITUDES = Literal[10, 100]
 
 # Air Quality Index sources.
 AQI_SOURCES = Literal["european", "us"]
 
-# Description of Air Quality Index falling in different ranges.
+# Description of Air Quality Index falling within different ranges.
 AQI_LEVELS = {
     range(50): "Good",
     range(51, 101): "Moderate",
@@ -60,11 +63,15 @@ AQI_LEVELS = {
     range(301, 501): "Hazardous",
 }
 
+# Available atmospheric gases for gaseous concentration data extraction.
 GASES = Literal["ozone", "carbon_monoxide", "nitrogen_dioxide", "sulphur_dioxide"]
+
+# Available plant options for pollen grains concentration data extraction.
 PLANTS = Literal["alder", "birch", "grass", "mugwort", "olive", "ragweed"]
 
 DAILY_WEATHER_REQUEST_TYPES = Literal["max", "min", "mean"]
 
+# Available wave types for marine weather data extraction.
 WAVE_TYPES = Literal["composite", "wind", "swell"]
 
 # Dictionary of keys as accepted arguments by users mapped to values used
