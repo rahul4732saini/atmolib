@@ -97,7 +97,7 @@ class BaseForecast(BaseWeather):
     Base class for all weather forecast classes.
     """
 
-    # This attribute must be individually defined in
+    # This attribute must be explicitly defined in
     # the child classes as per their customs.
     _max_forecast_days: int
 
