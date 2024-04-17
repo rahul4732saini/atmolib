@@ -40,7 +40,7 @@ WIND_ALTITUDE = Literal[10, 80, 120, 180]
 
 # Available depth options in centimeters(cm)  for
 # historical soil temperature data extraction.
-ARCHIVE_SOIL_DEPTH = {
+ARCHIVE_SOIL_TEMP_DEPTH = {
     range(7): "0_to_7",
     range(7, 28): "7_to_28",
     range(28, 100): "28_to_100",
