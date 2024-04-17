@@ -238,6 +238,23 @@ class Weather(BaseForecast):
 
         return self.get_current_weather_data({"current": pressure})
 
+    def get_current_rainfall(
+        self, unit: constants.PRECIPITATION_UNITS = "mm"
+    ) -> int | float:
+        r"""
+        Returns the current rainfall in mm/inch at the supplied coordinates.
+
+        Params:
+        - unit: Precipitation unit, must be 'mm' or 'inch'.
+        """
+
+        if unit not in ("mm", "inch"):
+            raise ValueError(f"Expected `unit` to be 'mm' or 'inch'. Got {unit!r}.")
+
+        return self.get_current_weather_data(
+            {"current": "rain", "precipitation_unit": unit}
+        )
+
     def get_daily_temperature(
         self,
         type_: constants.DAILY_WEATHER_REQUEST_TYPES,
