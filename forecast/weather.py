@@ -255,6 +255,13 @@ class Weather(BaseForecast):
             {"current": "rain", "precipitation_unit": unit}
         )
 
+    def get_hourly_visibilty(self) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly visibility data
+        in meters(m) at the specified coordinates.
+        """
+        return self.get_periodical_data({"hourly": "visibility"})
+
     def get_daily_temperature(
         self,
         type_: constants.DAILY_WEATHER_REQUEST_TYPES,
