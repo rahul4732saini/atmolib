@@ -59,8 +59,9 @@ class MarineWeather(BaseForecast):
 
         super().__init__(lat, long, forecast_days)
 
-        # Verifies the availability of marine weather data at the
-        # supplied coordinates at object initialization.
+        # Verifies the availability of marine weather data at the supplied
+        # coordinates at object initialization. Raises `RequestError` if there
+        # is no data available for the specified coordinates.
         self._check_data_availability()
 
         self.wave_type = wave_type
