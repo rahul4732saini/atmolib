@@ -255,6 +255,22 @@ class Weather(BaseForecast):
             {"current": "rain", "precipitation_unit": unit}
         )
 
+    def get_hourly_rainfall(
+        self, unit: constants.PRECIPITATION_UNITS = "mm"
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly rainfall data
+        in mm/inch at the specified coordinates.
+
+        Params:
+        - unit: Precipitation unit, must be 'mm' or 'inch'.
+        """
+
+        if unit not in ("mm", "inch"):
+            raise ValueError(f"Expected `unit` to be 'mm' or 'inch'. Got {unit!r}.")
+
+        return self.get_periodical_data({"hourly": "rain", "precipitation_unit": unit})
+
     def get_hourly_visibilty(self) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly visibility data
