@@ -393,6 +393,22 @@ class WeatherArchive(BaseWeather):
 
         return self.get_periodical_data({"hourly": pressure})
 
+    def get_hourly_rainfall(
+        self, unit: constants.PRECIPITATION_UNITS = "mm"
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly rainfall data
+        in mm/inch at the specified coordinates within the supplied date range.
+
+        Params:
+        - unit: Precipitation unit, must be 'mm' or 'inch'.
+        """
+
+        if unit not in ("mm", "inch"):
+            raise ValueError(f"Expected `unit` to be 'mm' or 'inch'. Got {unit!r}.")
+
+        return self.get_periodical_data({"hourly": "rain", "precipitation_unit": unit})
+
     def get_daily_temperature(
         self,
         type_: constants.DAILY_WEATHER_REQUEST_TYPES,
