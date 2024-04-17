@@ -110,6 +110,7 @@ class BaseForecast(BaseWeather):
         Creates an instance of the {self.__class__.__name__} class.
 
         Params:
+        -------
         - lat (int | float): Latitudinal coordinates of the location.
         - long (int | float): Longitudinal coordinates of the location.
         - forecast_days (int): Number of days for which the forecast has to
