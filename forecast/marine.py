@@ -105,8 +105,8 @@ class MarineWeather(BaseForecast):
             # (`_lat`, `_long`) are altered post initialization by verifying
             # it with the `_params` dictionary.
             if (
-                self._params["latitude"] is not None
-                and self._params["longitude"] is not None
+                self._params.get("latitude") is not None
+                and self._params.get("longitude") is not None
             ):
                 self._check_data_availability()
 
