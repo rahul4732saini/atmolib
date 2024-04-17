@@ -18,4 +18,4 @@ __all__ = "Weather", "WeatherArchive", "MarineWeather", "AirQuality"
 from .air import AirQuality
 from .weather import Weather
 from .marine import MarineWeather
-from .weather_archive import WeatherArchive
+from .archive import WeatherArchive
