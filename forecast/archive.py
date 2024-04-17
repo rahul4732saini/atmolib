@@ -6,6 +6,7 @@ The WeatherArchive class allows users to extract various types of historical
 weather data and information ranging from the year 1940 till the present.
 """
 
+import atexit
 from datetime import date, datetime
 
 import requests
@@ -26,6 +27,9 @@ class WeatherArchive(BaseWeather):
 
     _session = requests.Session()
     _api = constants.WEATHER_HISTORY_API
+
+    # Closes the request session upon exit.
+    atexit.register(_session.close)
 
     def __init__(
         self,

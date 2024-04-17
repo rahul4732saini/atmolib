@@ -6,6 +6,8 @@ The AirQuality class allows users to extract various types of air quality inform
 current air quality index data and up to upcoming 7-days hourly air quality forecast data.
 """
 
+import atexit
+
 import requests
 import pandas as pd
 
@@ -25,6 +27,9 @@ class AirQuality(BaseForecast):
 
     # The maximum number of days for which forecast data can be requested.
     _max_forecast_days = 7
+
+    # Closes the request session upon exit.
+    atexit.register(_session.close)
 
     @staticmethod
     def _verify_atmospheric_gas(gas: constants.GASES) -> None:

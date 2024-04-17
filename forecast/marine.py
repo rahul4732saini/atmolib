@@ -6,6 +6,7 @@ The MarineWeather class allows users to extract various types of marine weather 
 current marine weather data and up to upcoming 8-days hourly and daily marine weather forecast data.
 """
 
+import atexit
 from typing import Any
 
 import requests
@@ -27,6 +28,9 @@ class MarineWeather(BaseForecast):
 
     _session = requests.Session()
     _api = constants.MARINE_API
+
+    # Closes the request session upon exit.
+    atexit.register(_session.close)
 
     # The maximum number of days for which forecast data can be requested.
     _max_forecast_days = 8

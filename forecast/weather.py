@@ -6,6 +6,8 @@ The Weather class allows users to extract various types of weather information, 
 current weather data and up to upcoming 16-days hourly and daily weather forecast data.
 """
 
+import atexit
+
 import requests
 import pandas as pd
 
@@ -27,6 +29,9 @@ class Weather(BaseForecast):
 
     # The maximum number of days for which forecast data can be requested.
     _max_forecast_days = 16
+
+    # Closes the request session upon exit.
+    atexit.register(_session.close)
 
     def get_current_temperature(
         self,
