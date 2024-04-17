@@ -20,15 +20,6 @@ class WeatherArchive(BaseWeather):
     WeatherArchive class to extract historical weather data based on latitude and longitude
     coordinates of the location within the specified date range. It interacts with the
     Open-Meteo Weather History API to fetch the weather data ranging from 1940 till the present.
-
-    Date parameters must be date or datetime objects or strings
-    formatted in the ISO-8601 date format (YYYY-MM-DD).
-
-    Params:
-    - lat (int | float): Latitudinal coordinates of the location.
-    - long (int | float): Longitudinal coordinates of the location.
-    - start_date (str | date | datetime): Initial date for the weather data.
-    - end_date(str | date | datetime): Final date for the weather data.
     """
 
     __slots__ = "_lat", "_long", "_start_date", "_end_date", "_params"
@@ -43,6 +34,20 @@ class WeatherArchive(BaseWeather):
         start_date: str | date | datetime,
         end_date: str | date | datetime,
     ) -> None:
+        r"""
+        Creates an instance of the WeatherArchive class.
+
+        Params:
+        -------
+        - lat (int | float): Latitudinal coordinates of the location.
+        - long (int | float): Longitudinal coordinates of the location.
+        - start_date (str | date | datetime): Initial date for the weather data.
+        - end_date(str | date | datetime): Final date for the weather data.
+
+        Date parameters must be date or datetime objects or strings
+        formatted in the ISO-8601 date format (YYYY-MM-DD).
+        """
+
         super().__init__(lat, long)
 
         self.start_date = start_date
