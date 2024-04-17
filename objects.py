@@ -11,7 +11,7 @@ import pandas as pd
 from common import tools
 
 
-class BaseWeather:
+class BaseMeteor:
     r"""
     Base class for all weather classes.
     """
@@ -92,7 +92,7 @@ class BaseWeather:
         return data
 
 
-class BaseForecast(BaseWeather):
+class BaseForecast(BaseMeteor):
     r"""
     Base class for all weather forecast classes.
     """
