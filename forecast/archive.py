@@ -26,7 +26,7 @@ class WeatherArchive(BaseWeather):
     __slots__ = "_lat", "_long", "_start_date", "_end_date", "_params"
 
     _session = requests.Session()
-    _api = constants.WEATHER_HISTORY_API
+    _api = constants.WEATHER_ARCHIVE_API
 
     # Closes the request session upon exit.
     atexit.register(_session.close)
