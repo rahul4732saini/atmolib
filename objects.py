@@ -106,6 +106,16 @@ class BaseForecast(BaseWeather):
     def __init__(
         self, lat: int | float, long: int | float, forecast_days: int = 7
     ) -> None:
+        rf"""
+        Creates an instance of the {self.__class__.__name__} class.
+
+        Params:
+        - lat (int | float): Latitudinal coordinates of the location.
+        - long (int | float): Longitudinal coordinates of the location.
+        - forecast_days (int): Number of days for which the forecast has to
+        be extracted, must be in the range of 1 and {self._max_forecast_days}.
+        """
+
         super().__init__(lat, long)
 
         self.forecast_days = forecast_days
