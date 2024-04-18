@@ -461,6 +461,23 @@ class BaseWeather(BaseMeteor):
             {"daily": "precipitation_sum", "precipitation_unit": unit}
         )
 
+    def get_daily_total_rainfall(
+        self, unit: constants.PRECIPITATION_UNITS = "mm"
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly rainfall data in mm/inch at the specified coordinates.
+
+        Params:
+        - unit: Precipitation unit, must be 'mm' or 'inch'.
+        """
+
+        if unit not in ("mm", "inch"):
+            raise ValueError(f"Expected `unit` to be 'mm' or 'inch', got {unit!r}.")
+
+        return self._get_periodical_data(
+            {"daily": "rain_sum", "precipitation_unit": unit}
+        )
+
     def get_daily_sunrise_time(self) -> pd.DataFrame:
         r"""
         Returns the daily sunrise time in the ISO-8601 datetime format (YYYY-MM-DDTHH:MM)
