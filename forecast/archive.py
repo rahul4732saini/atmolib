@@ -214,7 +214,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
                 f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
             )
 
-        for key, value in constants.ARCHIVE_SOIL_TEMP_DEPTH.items():
+        for key, value in constants.ARCHIVE_SOIL_DEPTH.items():
             if depth in key:
 
                 # The range is represented in a string format as being
