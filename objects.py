@@ -274,6 +274,28 @@ class BaseWeather(BaseMeteor):
         """
         return self._get_periodical_data({"daily": "wind_direction_10m_dominant"})
 
+    def get_daily_max_wind_gusts(
+        self, unit: constants.WIND_SPEED_UNITS = "kmh"
+    ) -> pd.DataFrame:
+        r"""
+        Returns the daily maximum wind gusts 2 meters(m) above the ground
+        level at the specified coordinates.
+
+        Params:
+        - unit (str): Wind speed unit, must be one of the following:
+            - 'kmh' (kilometers per hour)
+            - 'mph' (miles per hour)
+            - 'ms' (meter per second)
+            - 'kn' (knots)
+        """
+
+        if unit not in ("kmh", "mph", "ms", "kn"):
+            raise ValueError(
+                f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
+            )
+
+        return self._get_periodical_data({"daily": "wind_gusts_10m_max"})
+
     def get_daily_total_precipitation(
         self, unit: constants.PRECIPITATION_UNITS = "mm"
     ) -> pd.DataFrame:
