@@ -314,6 +314,24 @@ class BaseWeather(BaseMeteor):
 
         return self._get_periodical_data({"hourly": f"cloud_cover_{level}"})
 
+    def get_hourly_precipitation(
+        self, unit: constants.PRECIPITATION_UNITS = "mm"
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly precipitation (sum of rain, showers, and snowfall)
+        data at the specified coordinates within the supplied date range.
+
+        Params:
+        - unit: Precipitation unit, must be 'mm' or 'inch'.
+        """
+
+        if unit not in ("mm", "inch"):
+            raise ValueError(f"Expected `unit` to be 'mm' or 'inch', got {unit!r}.")
+
+        return self._get_periodical_data(
+            {"hourly": "precipitation", "precipitation_unit": unit}
+        )
+
     def get_daily_temperature(
         self,
         type_: constants.DAILY_WEATHER_REQUEST_TYPES,
