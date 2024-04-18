@@ -143,10 +143,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         if altitude not in (10, 100):
             raise ValueError(f"Expected `altitude` to be 10 or 100, got {altitude}.")
 
-        if unit not in ("kmh", "mph", "ms", "kn"):
-            raise ValueError(
-                f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
-            )
+        self._verify_wind_speed_unit(unit)
 
         return self._get_periodical_data(
             {"hourly": f"wind_speed_{altitude}m", "wind_speed_unit": unit}
@@ -184,11 +181,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
             - 'ms' (meter per second)
             - 'kn' (knots)
         """
-
-        if unit not in ("kmh", "mph", "ms", "kn"):
-            raise ValueError(
-                f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
-            )
+        self._verify_wind_speed_unit(unit)
 
         return self._get_periodical_data(
             {"hourly": f"wind_gusts_10m", "wind_speed_unit": unit}
@@ -208,11 +201,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         in the range of 0 and 255.
         - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
         """
-
-        if unit not in ("celsius", "fahrenheit"):
-            raise ValueError(
-                f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
-            )
+        self._verify_temperature_unit(unit)
 
         for key, value in constants.ARCHIVE_SOIL_DEPTH.items():
             if depth in key:
