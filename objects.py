@@ -192,6 +192,26 @@ class BaseWeather(BaseMeteor):
             {"hourly": "apparent_temperature", "temperature_unit": unit}
         )
 
+    def get_hourly_dew_point(
+        self, unit: constants.TEMPERATURE_UNITS = "celsius"
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly dew point data 2 meters(m) above the
+        ground level at the specified coordinates within the date range.
+
+        Params:
+        - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
+        """
+
+        if unit not in ("celsius", "fahrenheit"):
+            raise ValueError(
+                f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
+            )
+
+        return self._get_periodical_data(
+            {"hourly": "dew_point_2m", "temperature_unit": unit}
+        )
+
     def get_hourly_relative_humidity(self) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly relative humidity percentage(%) data
