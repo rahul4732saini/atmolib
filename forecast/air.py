@@ -156,27 +156,27 @@ class AirQuality(BaseForecast):
         Returns the hourly concentration(micro g/m^3) of dust in air 10 meters
         above ground level at the specified coordinates.
         """
-        return self.get_periodical_data({"hourly": "dust"})
+        return self._get_periodical_data({"hourly": "dust"})
 
     def get_hourly_uv_index(self) -> pd.DataFrame:
         r"""
         Returns the hourly Ultra-Violet radiation index value at the supplied coordinates.
         """
-        return self.get_periodical_data({"hourly": "uv_index"})
+        return self._get_periodical_data({"hourly": "uv_index"})
 
     def get_hourly_pm2_5_conc(self) -> pd.DataFrame:
         r"""
         Returns the hourly concentration(micro g/m^3) of particulate matter with diameter
         smaller than the 2.5 micro meter(m) in air 10 meters(m) above the ground level.
         """
-        return self.get_periodical_data({"hourly": "pm2_5"})
+        return self._get_periodical_data({"hourly": "pm2_5"})
 
     def get_hourly_pm10_conc(self) -> pd.DataFrame:
         r"""
         Returns the hourly concentration(micro g/m^3) of particulate matter with diameter
         smaller than the 10 micro meter(m) in air 10 meters(m) above the ground level.
         """
-        return self.get_periodical_data({"hourly": "pm10"})
+        return self._get_periodical_data({"hourly": "pm10"})
 
     def get_hourly_pollen_conc(self, plant: constants.PLANTS) -> pd.DataFrame:
         r"""
@@ -189,7 +189,7 @@ class AirQuality(BaseForecast):
         ('alder', 'birch', 'grass', 'mugwort', 'olive', 'ragweed').
         """
         self._verify_plant_species(plant)
-        return self.get_periodical_data({"hourly": f"{plant}_pollen"})
+        return self._get_periodical_data({"hourly": f"{plant}_pollen"})
 
     def get_hourly_aerosol_optical_depth(self) -> pd.DataFrame:
         r"""
@@ -200,7 +200,7 @@ class AirQuality(BaseForecast):
         aerosol particles in the atmosphere. It is commonly used as an indicator of haze or the
         presence of aerosols in the atmosphere.
         """
-        return self.get_periodical_data({"hourly": "aerosol_optical_depth"})
+        return self._get_periodical_data({"hourly": "aerosol_optical_depth"})
 
     def get_hourly_gaseous_conc(self, gas: constants.GASES = "ozone") -> pd.DataFrame:
         r"""
@@ -212,11 +212,11 @@ class AirQuality(BaseForecast):
         ('ozone', 'carbon_monoxide', 'nitrogen_dioxide', 'sulphur_dioxide').
         """
         self._verify_atmospheric_gas(gas)
-        return self.get_periodical_data({"hourly": gas})
+        return self._get_periodical_data({"hourly": gas})
 
     def get_hourly_ammonia_conc(self) -> pd.DataFrame:
         r"""
         Returns the hourly concentration(micro g/m^3) of ammonia(NH3) in air.
         Only available for Europe. Returns None for Non-European regions.
         """
-        return self.get_periodical_data({"hourly": "ammonia"})
+        return self._get_periodical_data({"hourly": "ammonia"})

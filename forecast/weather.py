@@ -265,14 +265,14 @@ class Weather(BaseForecast):
         if unit not in ("mm", "inch"):
             raise ValueError(f"Expected `unit` to be 'mm' or 'inch'. Got {unit!r}.")
 
-        return self.get_periodical_data({"hourly": "rain", "precipitation_unit": unit})
+        return self._get_periodical_data({"hourly": "rain", "precipitation_unit": unit})
 
     def get_hourly_visibilty(self) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly visibility data
         in meters(m) at the specified coordinates.
         """
-        return self.get_periodical_data({"hourly": "visibility"})
+        return self._get_periodical_data({"hourly": "visibility"})
 
     def get_hourly_pressure(self, level: constants.PRESSURE_LEVELS) -> pd.DataFrame:
         r"""
@@ -291,7 +291,7 @@ class Weather(BaseForecast):
                 f"Expected `level` to be 'sealevel' or 'surface', got {level!r}."
             )
 
-        return self.get_periodical_data({"hourly": pressure})
+        return self._get_periodical_data({"hourly": pressure})
 
     def get_daily_temperature(
         self,
@@ -319,7 +319,7 @@ class Weather(BaseForecast):
                 f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
             )
 
-        return self.get_periodical_data(
+        return self._get_periodical_data(
             {"daily": f"temperature_2m_{type}", "temperature_unit": unit}
         )
 
@@ -349,7 +349,7 @@ class Weather(BaseForecast):
                 f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
             )
 
-        return self.get_periodical_data(
+        return self._get_periodical_data(
             {"daily": f"apparent_temperature_{type_}", "temperature_unit": unit}
         )
 
@@ -358,7 +358,7 @@ class Weather(BaseForecast):
         Returns a pandas DataFrame of daily dominant wind direction in degrees data 10 meters(m)
         above the ground level at the specified coordinates.
         """
-        return self.get_periodical_data({"daily": "wind_direction_10m_dominant"})
+        return self._get_periodical_data({"daily": "wind_direction_10m_dominant"})
 
     def get_daily_total_precipitation(
         self, unit: constants.PRECIPITATION_UNITS = "mm"
@@ -374,6 +374,6 @@ class Weather(BaseForecast):
         if unit not in ("mm", "inch"):
             raise ValueError(f"Expected `unit` to be 'mm' or 'inch', got {unit!r}.")
 
-        return self.get_periodical_data(
+        return self._get_periodical_data(
             {"daily": "precipitation_sum", "precipitation_unit": unit}
         )

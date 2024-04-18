@@ -152,35 +152,35 @@ class MarineWeather(BaseForecast):
         Returns the hourly mean wave height in meters of the
         specified wave type at the supplied coordinates.
         """
-        return self.get_periodical_data({"hourly": f"{self._type}wave_height"})
+        return self._get_periodical_data({"hourly": f"{self._type}wave_height"})
 
     def get_hourly_wave_direction(self) -> pd.DataFrame:
         r"""
         Returns the hourly wave direction in degrees of the
         specified wave type at the supplied coordinates.
         """
-        return self.get_periodical_data({"hourly": f"{self._type}wave_direction"})
+        return self._get_periodical_data({"hourly": f"{self._type}wave_direction"})
 
     def get_hourly_wave_period(self) -> pd.DataFrame:
         r"""
         Returns the hourly wave period in seconds of the
         specified wave type at the supplied coordinates.
         """
-        return self.get_periodical_data({"hourly": f"{self._type}wave_period"})
+        return self._get_periodical_data({"hourly": f"{self._type}wave_period"})
 
     def get_daily_max_wave_height(self) -> pd.DataFrame:
         r"""
         Returns the daily maximum wave height in meters of the
         specified wave type at the supplied coordinates.
         """
-        return self.get_periodical_data({"daily": f"{self._type}wave_height_max"})
+        return self._get_periodical_data({"daily": f"{self._type}wave_height_max"})
 
     def get_daily_dominant_wave_direction(self) -> pd.DataFrame:
         r"""
         Returns the daily dominant wave direction in degrees of the
         specified wave type at the supplied coordinates.
         """
-        return self.get_periodical_data(
+        return self._get_periodical_data(
             {"daily": f"{self._type}wave_direction_dominant"}
         )
 
@@ -189,4 +189,4 @@ class MarineWeather(BaseForecast):
         Returns the daily maximum wave period in seconds of the
         specified wave type at the supplied coordinates.
         """
-        return self.get_periodical_data({"daily": f"{self._type}wave_period_max"})
+        return self._get_periodical_data({"daily": f"{self._type}wave_period_max"})

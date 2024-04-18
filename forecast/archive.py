@@ -138,7 +138,7 @@ class WeatherArchive(BaseMeteor):
                 f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
             )
 
-        return self.get_periodical_data(
+        return self._get_periodical_data(
             {"hourly": "temperature_2m", "temperature_unit": unit}
         )
 
@@ -148,7 +148,7 @@ class WeatherArchive(BaseMeteor):
         percentage(%) data 2 meters(m) above the ground level at
         the specified coordinates within the date range.
         """
-        return self.get_periodical_data({"hourly": "relative_humidity_2m"})
+        return self._get_periodical_data({"hourly": "relative_humidity_2m"})
 
     def get_periodic_weather_code(self, frequency: constants.FREQUENCY) -> pd.DataFrame:
         r"""
@@ -169,7 +169,7 @@ class WeatherArchive(BaseMeteor):
                 f"Expected `frequency` to be 'hourly' or 'daily', got {frequency!r}."
             )
 
-        data: pd.DataFrame = self.get_periodical_data({frequency: "weather_code"})
+        data: pd.DataFrame = self._get_periodical_data({frequency: "weather_code"})
 
         # Creating a new column 'description' mapped to the
         # description of the corresponding weather code.
@@ -184,7 +184,7 @@ class WeatherArchive(BaseMeteor):
         Returns a pandas DataFrame of hourly total cloud cover percentage(%) data
         at the specified coordinates within the supplied date range.
         """
-        return self.get_periodical_data({"hourly": "cloud_cover"})
+        return self._get_periodical_data({"hourly": "cloud_cover"})
 
     def get_hourly_cloud_cover(
         self, level: constants.CLOUD_COVER_LEVEL = "low"
@@ -206,7 +206,7 @@ class WeatherArchive(BaseMeteor):
                 f"Expected `level` to be 'low', 'mid' or 'high'. Got {level!r}."
             )
 
-        return self.get_periodical_data({"hourly": f"cloud_cover_{level}"})
+        return self._get_periodical_data({"hourly": f"cloud_cover_{level}"})
 
     def get_hourly_apparent_temperature(
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
@@ -224,7 +224,7 @@ class WeatherArchive(BaseMeteor):
                 f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
             )
 
-        return self.get_periodical_data(
+        return self._get_periodical_data(
             {"hourly": "apparent_temperature", "temperature_unit": unit}
         )
 
@@ -244,7 +244,7 @@ class WeatherArchive(BaseMeteor):
                 f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
             )
 
-        return self.get_periodical_data(
+        return self._get_periodical_data(
             {"hourly": "dew_point_2m", "temperature_unit": unit}
         )
 
@@ -262,7 +262,7 @@ class WeatherArchive(BaseMeteor):
         if unit not in ("mm", "inch"):
             raise ValueError(f"Expected `unit` to be 'mm' or 'inch', got {unit!r}.")
 
-        return self.get_periodical_data(
+        return self._get_periodical_data(
             {"hourly": "precipitation", "precipitation_unit": unit}
         )
 
@@ -292,7 +292,7 @@ class WeatherArchive(BaseMeteor):
                 f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
             )
 
-        return self.get_periodical_data(
+        return self._get_periodical_data(
             {"hourly": f"wind_speed_{altitude}m", "wind_speed_unit": unit}
         )
 
@@ -311,7 +311,7 @@ class WeatherArchive(BaseMeteor):
         if altitude not in (10, 100):
             raise ValueError(f"Expected `altitude` to be 10 or 100, got {altitude}.")
 
-        return self.get_periodical_data({"hourly": f"wind_direction_{altitude}"})
+        return self._get_periodical_data({"hourly": f"wind_direction_{altitude}"})
 
     def get_hourly_wind_gusts(
         self,
@@ -334,7 +334,7 @@ class WeatherArchive(BaseMeteor):
                 f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
             )
 
-        return self.get_periodical_data(
+        return self._get_periodical_data(
             {"hourly": f"wind_gusts_10m", "wind_speed_unit": unit}
         )
 
@@ -371,7 +371,7 @@ class WeatherArchive(BaseMeteor):
                 f"Expected `depth` to be in the range of 0 and 256, got {depth}."
             )
 
-        return self.get_periodical_data(
+        return self._get_periodical_data(
             {"hourly": f"soil_temperature_{depth_range}cm", "temperature_unit": unit},
         )
 
@@ -391,7 +391,7 @@ class WeatherArchive(BaseMeteor):
                 f"Expected `level` to be 'sealevel' or 'surface', got {level!r}."
             )
 
-        return self.get_periodical_data({"hourly": pressure})
+        return self._get_periodical_data({"hourly": pressure})
 
     def get_hourly_rainfall(
         self, unit: constants.PRECIPITATION_UNITS = "mm"
@@ -407,7 +407,7 @@ class WeatherArchive(BaseMeteor):
         if unit not in ("mm", "inch"):
             raise ValueError(f"Expected `unit` to be 'mm' or 'inch'. Got {unit!r}.")
 
-        return self.get_periodical_data({"hourly": "rain", "precipitation_unit": unit})
+        return self._get_periodical_data({"hourly": "rain", "precipitation_unit": unit})
 
     def get_daily_temperature(
         self,
@@ -436,7 +436,7 @@ class WeatherArchive(BaseMeteor):
                 f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
             )
 
-        return self.get_periodical_data(
+        return self._get_periodical_data(
             {"daily": f"temperature_2m_{type_}", "temperature_unit": unit}
         )
 
@@ -467,7 +467,7 @@ class WeatherArchive(BaseMeteor):
                 f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
             )
 
-        return self.get_periodical_data(
+        return self._get_periodical_data(
             {"daily": f"apparent_temperature_{type_}", "temperature_unit": unit}
         )
 
@@ -491,7 +491,7 @@ class WeatherArchive(BaseMeteor):
                 f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
             )
 
-        return self.get_periodical_data({"daily": "wind_speed_10m_max"})
+        return self._get_periodical_data({"daily": "wind_speed_10m_max"})
 
     def get_daily_max_wind_gusts(
         self, unit: constants.WIND_SPEED_UNITS = "kmh"
@@ -513,14 +513,14 @@ class WeatherArchive(BaseMeteor):
                 f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
             )
 
-        return self.get_periodical_data({"daily": "wind_gusts_10m_max"})
+        return self._get_periodical_data({"daily": "wind_gusts_10m_max"})
 
     def get_daily_dominant_wind_direction(self) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of daily dominant wind direction in degrees data 10 meters(m)
         above the ground level at the specified coordinates within the supplied date range.
         """
-        return self.get_periodical_data({"daily": "wind_direction_10m_dominant"})
+        return self._get_periodical_data({"daily": "wind_direction_10m_dominant"})
 
     def get_daily_total_precipitation(
         self, unit: constants.PRECIPITATION_UNITS
@@ -536,7 +536,7 @@ class WeatherArchive(BaseMeteor):
         if unit not in ("mm", "inch"):
             raise ValueError(f"Expected `unit` to be 'mm' or 'inch', got {unit!r}.")
 
-        return self.get_periodical_data(
+        return self._get_periodical_data(
             {"daily": "precipitation_sum", "precipitation_unit": unit}
         )
 
@@ -545,32 +545,32 @@ class WeatherArchive(BaseMeteor):
         Returns the daily sunrise time in the ISO-8601 datetime format (YYYY-MM-DDTHH:MM)
         at the specified coordinates within the supplied date range.
         """
-        return self.get_periodical_data({"daily": "sunrise"})
+        return self._get_periodical_data({"daily": "sunrise"})
 
     def get_daily_sunset_time(self) -> pd.DataFrame:
         r"""
         Returns the daily sunset time in the ISO-8601 datetime format (YYYY-MM-DDTHH:MM)
         at the specified coordinates within the supplied date range.
         """
-        return self.get_periodical_data({"daily": "sunset"})
+        return self._get_periodical_data({"daily": "sunset"})
 
     def get_daily_daylight_duration(self) -> pd.DataFrame:
         r"""
         Returns the daily daylight duration in seconds(s) at the
         specified coordinates within the supplied date range.
         """
-        return self.get_periodical_data({"daily": "daylight_duration"})
+        return self._get_periodical_data({"daily": "daylight_duration"})
 
     def get_daily_sunshine_duration(self) -> pd.DataFrame:
         r"""
         Returns the daily sunshine duration in seconds(s) at the
         specified coordinates within the supplied date range.
         """
-        return self.get_periodical_data({"daily": "sunshine_duration"})
+        return self._get_periodical_data({"daily": "sunshine_duration"})
 
     def get_daily_total_shortwave_radiation(self) -> pd.DataFrame:
         r"""
         Returns the daily sum of shortwave radiation in Mega Joules per square meter
         (MJ/m^2) sat the specified coordinates within the supplied date range.
         """
-        return self.get_periodical_data({"daily": "shortwave_radiation_sum"})
+        return self._get_periodical_data({"daily": "shortwave_radiation_sum"})
