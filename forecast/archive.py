@@ -208,11 +208,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         in the range of 0 and 255.
         - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
         """
-
-        if unit not in ("celsius", "fahrenheit"):
-            raise ValueError(
-                f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
-            )
+        self._verify_temperature_unit(unit)
 
         for key, value in constants.ARCHIVE_SOIL_DEPTH.items():
             if depth in key:
