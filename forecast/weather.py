@@ -135,10 +135,7 @@ class Weather(BaseForecast, BaseWeather):
                 f"Expected `altitude` to be 10, 80, 120 or 180, got {altitude}."
             )
 
-        if unit not in ("kmh", "mph", "ms", "kn"):
-            raise ValueError(
-                f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
-            )
+        self._verify_wind_speed_unit(unit)
 
         return self._get_current_data(
             {"current": f"wind_speed_{altitude}m", "wind_speed_unit": unit}
@@ -176,11 +173,7 @@ class Weather(BaseForecast, BaseWeather):
             - 'ms' (meter per second)
             - 'kn' (knots)
         """
-
-        if unit not in ("kmh", "mph", "ms", "kn"):
-            raise ValueError(
-                f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
-            )
+        self._verify_wind_speed_unit(unit)
 
         return self._get_current_data(
             {"current": "wind_gusts_10", "wind_speed_unit": unit}
