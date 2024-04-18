@@ -8,7 +8,7 @@ from typing import Any
 import requests
 import pandas as pd
 
-from common import tools
+from common import tools, constants
 
 
 class BaseMeteor:
@@ -145,3 +145,9 @@ class BaseForecast(BaseMeteor):
             f"{self.__class__.__name__}(lat={self._lat}, long={self._long}, "
             f"forecast_days={self._forecast_days})"
         )
+
+
+class BaseWeather(BaseMeteor):
+    r"""
+    Baseclass for all weather classes.
+    """
