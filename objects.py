@@ -36,7 +36,7 @@ class BaseMeteor:
     @lat.setter
     def lat(self, __value: int | float) -> None:
         assert -90 <= __value <= 90, ValueError(
-            f"`lat` must be in the range of -90 and 90, got {__value}."
+            f"`lat` must be in the range of -90 and 90; got {__value}."
         )
         self._lat = self._params["latitude"] = __value
 
@@ -47,17 +47,14 @@ class BaseMeteor:
     @long.setter
     def long(self, __value: int | float) -> None:
         assert -90 <= __value <= 90, ValueError(
-            f"`lat` must be in the range of -90 and 90, got {__value}."
+            f"`lat` must be in the range of -90 and 90; got {__value}."
         )
         self._long = self._params["longitude"] = __value
 
     def _get_current_data(self, params: dict[str, Any]) -> int | float:
         r"""
-        Uses the supplied parameters to request the supplied
+        Uses the specified parameters to request the specified
         Open-Meteo API and returns the current weather data.
-
-        This function is intended for internal use within the package and may not be called
-        directly by its users. It is exposed publicly for use by other modules within the package.
 
         Params:
         - params (dict[str, Any]): A dictionary all the necessary parameters except the
@@ -73,11 +70,8 @@ class BaseMeteor:
 
     def _get_periodical_data(self, params: dict[str, Any]) -> pd.DataFrame:
         r"""
-        Uses the supplied parameters to request the supplied
-        Open-Meteo API and returns the periodical weather data.
-
-        This function is intended for internal use within the package and may not be called
-        directly by its users. It is exposed publicly for use by other modules within the package.
+        Uses the specified parameters to request the specified Open-Meteo
+        API and returns the periodical weather data as a pandas DataFrame.
 
         Params:
         - params (dict[str, Any]): A dictionary all the necessary parameters except the
@@ -114,7 +108,7 @@ class BaseForecast(BaseMeteor):
         - lat (int | float): Latitudinal coordinates of the location.
         - long (int | float): Longitudinal coordinates of the location.
         - forecast_days (int): Number of days for which the forecast has to
-        be extracted, must be in the range of 1 and {self._max_forecast_days}.
+        be extracted; must be in the range of 1 and {self._max_forecast_days}.
         """
 
         super().__init__(lat, long)
@@ -128,11 +122,10 @@ class BaseForecast(BaseMeteor):
     @forecast_days.setter
     def forecast_days(self, __value: int) -> None:
 
-        # Asserts if the forecast days value is within the range
-        # of the maximum forecast days assigned by the child class
-        # with the `_max_forecast_days` class attribute.
+        # Asserts if the forecast days value is within the range of the maximum forecast
+        # days assigned by the child class with the `_max_forecast_days` class attribute.
         assert __value in range(1, self._max_forecast_days + 1), ValueError(
-            f"`forecast_days` must be in the range of 1 and {self._max_forecast_days}, got {__value!r}."
+            f"`forecast_days` must be in the range of 1 and {self._max_forecast_days}; got {__value!r}."
         )
         self._forecast_days = __value
 
@@ -161,7 +154,7 @@ class BaseWeather(BaseMeteor):
 
         if unit not in ("celsius", "fahrenheit"):
             raise ValueError(
-                f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
+                f"Expected `unit` to be 'celsius' or 'fahrenheit'; got {unit!r}."
             )
 
     @staticmethod
@@ -172,7 +165,7 @@ class BaseWeather(BaseMeteor):
         """
 
         if unit not in ("mm", "inch"):
-            raise ValueError(f"Expected `unit` to be 'mm' or 'inch', got {unit!r}.")
+            raise ValueError(f"Expected `unit` to be 'mm' or 'inch'; got {unit!r}.")
 
     @staticmethod
     def _verify_wind_speed_unit(unit: constants.WIND_SPEED_UNITS) -> None:
@@ -183,7 +176,7 @@ class BaseWeather(BaseMeteor):
 
         if unit not in ("kmh", "mph", "ms", "kn"):
             raise ValueError(
-                f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
+                f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn'; got {unit!r}."
             )
 
     def get_hourly_temperature(
@@ -194,7 +187,7 @@ class BaseWeather(BaseMeteor):
         level at the specified coordinates.
 
         Params:
-        - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
+        - unit: Temperature unit; must be 'celsius' or 'fahrenheit'.
         """
         self._verify_temperature_unit(unit)
 
@@ -210,7 +203,7 @@ class BaseWeather(BaseMeteor):
         the specified coordinates.
 
         Params:
-        - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
+        - unit: Temperature unit; must be 'celsius' or 'fahrenheit'.
         """
         self._verify_temperature_unit(unit)
 
@@ -226,7 +219,7 @@ class BaseWeather(BaseMeteor):
         ground level at the specified coordinates.
 
         Params:
-        - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
+        - unit: Temperature unit; must be 'celsius' or 'fahrenheit'.
         """
         self._verify_temperature_unit(unit)
 
@@ -249,17 +242,17 @@ class BaseWeather(BaseMeteor):
         description at the specified coordinates.
 
         Params:
-        - frequency: Frequency of the data distribution, must be 'daily' or 'hourly'.
+        - frequency: Frequency of the data distribution; must be 'daily' or 'hourly'.
 
         Columns:
-        - time: time of the forecast data in ISO 8601 format (YYYY-MM-DDTHH-MM) or (YYYY-MM-DD).
+        - time: time of the forecast data in ISO-8601 format (YYYY-MM-DDTHH-MM) or (YYYY-MM-DD).
         - data: weather code at the corresponding hour.
         - description: description of the corresponding weather code.
         """
 
         if frequency not in ("hourly", "daily"):
             raise ValueError(
-                f"Expected `frequency` to be 'hourly' or 'daily', got {frequency!r}."
+                f"Expected `frequency` to be 'hourly' or 'daily'; got {frequency!r}."
             )
 
         data: pd.DataFrame = self._get_periodical_data({frequency: "weather_code"})
@@ -280,7 +273,7 @@ class BaseWeather(BaseMeteor):
         in mm/inch at the specified coordinates.
 
         Params:
-        - unit: Precipitation unit, must be 'mm' or 'inch'.
+        - unit: Precipitation unit; must be 'mm' or 'inch'.
         """
         self._verify_precipitation_unit(unit)
         return self._get_periodical_data({"hourly": "rain", "precipitation_unit": unit})
@@ -291,7 +284,7 @@ class BaseWeather(BaseMeteor):
         in Hectopascal (hPa) at the specified coordinates.
 
         Params:
-        - level (str): Desired level of the atmospheric data, must be 'surface' or 'sealevel'.
+        - level (str): Desired level of the atmospheric data; must be 'surface' or 'sealevel'.
         """
 
         # Mapped value of the specified pressure level.
@@ -299,7 +292,7 @@ class BaseWeather(BaseMeteor):
 
         if pressure is None:
             raise ValueError(
-                f"Expected `level` to be 'sealevel' or 'surface', got {level!r}."
+                f"Expected `level` to be 'sealevel' or 'surface'; got {level!r}."
             )
 
         return self._get_periodical_data({"hourly": pressure})
@@ -319,7 +312,7 @@ class BaseWeather(BaseMeteor):
         at the specified level and coordinates.
 
         Params:
-        - level (str): Altitude level of the desired cloud coverage, must be
+        - level (str): Altitude level of the desired cloud coverage; must be
         one of the following:
             - 'low' (clouds and fog up to an altitude of 3 km.)
             - 'mid' (clouds at an altitude between 3 km and 8 km.)
@@ -328,7 +321,7 @@ class BaseWeather(BaseMeteor):
 
         if level not in ("low", "mid", "high"):
             raise ValueError(
-                f"Expected `level` to be 'low', 'mid' or 'high'. Got {level!r}."
+                f"Expected `level` to be 'low', 'mid' or 'high'; got {level!r}."
             )
 
         return self._get_periodical_data({"hourly": f"cloud_cover_{level}"})
@@ -341,7 +334,7 @@ class BaseWeather(BaseMeteor):
         data at the specified coordinates.
 
         Params:
-        - unit: Precipitation unit, must be 'mm' or 'inch'.
+        - unit: Precipitation unit; must be 'mm' or 'inch'.
         """
         self._verify_precipitation_unit(unit)
 
@@ -359,16 +352,15 @@ class BaseWeather(BaseMeteor):
         2 meters(m) above the ground level at the specified coordinates.
 
         Params:
-        - type: The type of daily temperature to be extracted,
-        must be 'min', 'max' or 'mean'.
+        - type: The type of daily temperature to be extracted; must be 'min', 'max' or 'mean'.
             - 'min': Daily minimum temperature.
             - 'max': Daily maximum temperature.
             - 'mean': Daily mean temperature.
-        - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
+        - unit: Temperature unit; must be 'celsius' or 'fahrenheit'.
         """
 
         if type_ not in ("max", "min", "mean"):
-            raise ValueError(f"Expected `type` to be 'min' or 'max', got {type_!r}.")
+            raise ValueError(f"Expected `type` to be 'min' or 'max'; got {type_!r}.")
 
         self._verify_temperature_unit(unit)
 
@@ -386,16 +378,16 @@ class BaseWeather(BaseMeteor):
         data 2 meters(m) above the ground level at the specified coordinates.
 
         Params:
-        - type: Specifies the type of daily apparent temperature to be retrieved,
-        must be 'min', 'max' or 'mean'.
+        - type: Specifies the type of daily apparent temperature to
+        be retrieved; must be 'min', 'max' or 'mean'.
             - 'min': Daily minimum apparent temperature.
             - 'max': Daily maximum apparent temperature.
             - 'mean': Daily mean apparent temperature.
-        - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
+        - unit: Temperature unit; must be 'celsius' or 'fahrenheit'.
         """
 
         if type_ not in ("max", "min", "mean"):
-            raise ValueError(f"Expected `type` to be 'min' or 'max', got {type_!r}.")
+            raise ValueError(f"Expected `type` to be 'min' or 'max'; got {type_!r}.")
 
         self._verify_temperature_unit(unit)
 
@@ -411,7 +403,7 @@ class BaseWeather(BaseMeteor):
         level at the specified coordinates.
 
         Params:
-        - unit (str): Wind speed unit, must be one of the following:
+        - unit (str): Wind speed unit; must be one of the following:
             - 'kmh' (kilometers per hour)
             - 'mph' (miles per hour)
             - 'ms' (meter per second)
@@ -435,7 +427,7 @@ class BaseWeather(BaseMeteor):
         level at the specified coordinates.
 
         Params:
-        - unit (str): Wind speed unit, must be one of the following:
+        - unit (str): Wind speed unit; must be one of the following:
             - 'kmh' (kilometers per hour)
             - 'mph' (miles per hour)
             - 'ms' (meter per second)
@@ -448,11 +440,11 @@ class BaseWeather(BaseMeteor):
         self, unit: constants.PRECIPITATION_UNITS = "mm"
     ) -> pd.DataFrame:
         r"""
-        Returns a pandas DataFrame of hourly precipitation (sum of rain, showers, and snowfall)
+        Returns a pandas DataFrame of daily precipitation (sum of rain, showers, and snowfall)
         data at the specified coordinates.
 
         Params:
-        - unit: Precipitation unit, must be 'mm' or 'inch'.
+        - unit: Precipitation unit; must be 'mm' or 'inch'.
         """
         self._verify_precipitation_unit(unit)
 
@@ -464,10 +456,10 @@ class BaseWeather(BaseMeteor):
         self, unit: constants.PRECIPITATION_UNITS = "mm"
     ) -> pd.DataFrame:
         r"""
-        Returns a pandas DataFrame of hourly rainfall data in mm/inch at the specified coordinates.
+        Returns a pandas DataFrame of daily rainfall data in mm/inch at the specified coordinates.
 
         Params:
-        - unit: Precipitation unit, must be 'mm' or 'inch'.
+        - unit: Precipitation unit; must be 'mm' or 'inch'.
         """
         self._verify_precipitation_unit(unit)
 
@@ -491,15 +483,13 @@ class BaseWeather(BaseMeteor):
 
     def get_daily_daylight_duration(self) -> pd.DataFrame:
         r"""
-        Returns the daily daylight duration in seconds(s) at the
-        specified coordinates.
+        Returns the daily daylight duration in seconds(s) at the specified coordinates.
         """
         return self._get_periodical_data({"daily": "daylight_duration"})
 
     def get_daily_sunshine_duration(self) -> pd.DataFrame:
         r"""
-        Returns the daily sunshine duration in seconds(s) at the
-        specified coordinates.
+        Returns the daily sunshine duration in seconds(s) at the specified coordinates.
         """
         return self._get_periodical_data({"daily": "sunshine_duration"})
 
