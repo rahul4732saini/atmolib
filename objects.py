@@ -152,6 +152,28 @@ class BaseWeather(BaseMeteor):
     Baseclass for all weather classes.
     """
 
+    @staticmethod
+    def _verify_temperature_unit(unit: constants.TEMPERATURE_UNITS) -> None:
+        r"""
+        Verifies the specified temperature unit. Raises a ValueError if the
+        argument provided is not a valid unit.
+        """
+
+        if unit not in ("celsius", "fahrenheit"):
+            raise ValueError(
+                f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
+            )
+
+    @staticmethod
+    def _verify_precipitation_unit(unit: constants.PRECIPITATION_UNITS) -> None:
+        r"""
+        Verifies the specified precipitation unit. Raises a ValueError if the
+        argument provided is not a valid unit.
+        """
+
+        if unit not in ("mm", "inch"):
+            raise ValueError(f"Expected `unit` to be 'mm' or 'inch', got {unit!r}.")
+
     def get_hourly_temperature(
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
     ) -> pd.DataFrame:
@@ -162,11 +184,7 @@ class BaseWeather(BaseMeteor):
         Params:
         - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
         """
-
-        if unit not in ("celsius", "fahrenheit"):
-            raise ValueError(
-                f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
-            )
+        self._verify_temperature_unit(unit)
 
         return self._get_periodical_data(
             {"hourly": "temperature_2m", "temperature_unit": unit}
@@ -182,11 +200,7 @@ class BaseWeather(BaseMeteor):
         Params:
         - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
         """
-
-        if unit not in ("celsius", "fahrenheit"):
-            raise ValueError(
-                f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
-            )
+        self._verify_temperature_unit(unit)
 
         return self._get_periodical_data(
             {"hourly": "apparent_temperature", "temperature_unit": unit}
@@ -202,11 +216,7 @@ class BaseWeather(BaseMeteor):
         Params:
         - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
         """
-
-        if unit not in ("celsius", "fahrenheit"):
-            raise ValueError(
-                f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
-            )
+        self._verify_temperature_unit(unit)
 
         return self._get_periodical_data(
             {"hourly": "dew_point_2m", "temperature_unit": unit}
@@ -260,9 +270,7 @@ class BaseWeather(BaseMeteor):
         Params:
         - unit: Precipitation unit, must be 'mm' or 'inch'.
         """
-
-        if unit not in ("mm", "inch"):
-            raise ValueError(f"Expected `unit` to be 'mm' or 'inch', got {unit!r}.")
+        self._verify_precipitation_unit(unit)
 
         return self._get_periodical_data({"hourly": "rain", "precipitation_unit": unit})
 
@@ -324,9 +332,7 @@ class BaseWeather(BaseMeteor):
         Params:
         - unit: Precipitation unit, must be 'mm' or 'inch'.
         """
-
-        if unit not in ("mm", "inch"):
-            raise ValueError(f"Expected `unit` to be 'mm' or 'inch', got {unit!r}.")
+        self._verify_precipitation_unit(unit)
 
         return self._get_periodical_data(
             {"hourly": "precipitation", "precipitation_unit": unit}
@@ -353,10 +359,7 @@ class BaseWeather(BaseMeteor):
         if type_ not in ("max", "min", "mean"):
             raise ValueError(f"Expected `type` to be 'min' or 'max', got {type_!r}.")
 
-        if unit not in ("celsius", "fahrenheit"):
-            raise ValueError(
-                f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
-            )
+        self._verify_temperature_unit(unit)
 
         return self._get_periodical_data(
             {"daily": f"temperature_2m_{type_}", "temperature_unit": unit}
@@ -383,10 +386,7 @@ class BaseWeather(BaseMeteor):
         if type_ not in ("max", "min", "mean"):
             raise ValueError(f"Expected `type` to be 'min' or 'max', got {type_!r}.")
 
-        if unit not in ("celsius", "fahrenheit"):
-            raise ValueError(
-                f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
-            )
+        self._verify_temperature_unit(unit)
 
         return self._get_periodical_data(
             {"daily": f"apparent_temperature_{type_}", "temperature_unit": unit}
@@ -453,12 +453,25 @@ class BaseWeather(BaseMeteor):
         Params:
         - unit: Precipitation unit, must be 'mm' or 'inch'.
         """
-
-        if unit not in ("mm", "inch"):
-            raise ValueError(f"Expected `unit` to be 'mm' or 'inch', got {unit!r}.")
+        self._verify_precipitation_unit(unit)
 
         return self._get_periodical_data(
             {"daily": "precipitation_sum", "precipitation_unit": unit}
+        )
+
+    def get_daily_total_rainfall(
+        self, unit: constants.PRECIPITATION_UNITS = "mm"
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly rainfall data in mm/inch at the specified coordinates.
+
+        Params:
+        - unit: Precipitation unit, must be 'mm' or 'inch'.
+        """
+        self._verify_precipitation_unit(unit)
+
+        return self._get_periodical_data(
+            {"daily": "rain_sum", "precipitation_unit": unit}
         )
 
     def get_daily_sunrise_time(self) -> pd.DataFrame:
