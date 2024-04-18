@@ -164,6 +164,16 @@ class BaseWeather(BaseMeteor):
                 f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
             )
 
+    @staticmethod
+    def _verify_precipitation_unit(unit: constants.PRECIPITATION_UNITS) -> None:
+        r"""
+        Verifies the specified precipitation unit. Raises a ValueError if the
+        argument provided is not a valid unit.
+        """
+
+        if unit not in ("mm", "inch"):
+            raise ValueError(f"Expected `unit` to be 'mm' or 'inch', got {unit!r}.")
+
     def get_hourly_temperature(
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
     ) -> pd.DataFrame:
@@ -260,9 +270,7 @@ class BaseWeather(BaseMeteor):
         Params:
         - unit: Precipitation unit, must be 'mm' or 'inch'.
         """
-
-        if unit not in ("mm", "inch"):
-            raise ValueError(f"Expected `unit` to be 'mm' or 'inch', got {unit!r}.")
+        self._verify_precipitation_unit(unit)
 
         return self._get_periodical_data({"hourly": "rain", "precipitation_unit": unit})
 
@@ -324,9 +332,7 @@ class BaseWeather(BaseMeteor):
         Params:
         - unit: Precipitation unit, must be 'mm' or 'inch'.
         """
-
-        if unit not in ("mm", "inch"):
-            raise ValueError(f"Expected `unit` to be 'mm' or 'inch', got {unit!r}.")
+        self._verify_precipitation_unit(unit)
 
         return self._get_periodical_data(
             {"hourly": "precipitation", "precipitation_unit": unit}
@@ -447,9 +453,7 @@ class BaseWeather(BaseMeteor):
         Params:
         - unit: Precipitation unit, must be 'mm' or 'inch'.
         """
-
-        if unit not in ("mm", "inch"):
-            raise ValueError(f"Expected `unit` to be 'mm' or 'inch', got {unit!r}.")
+        self._verify_precipitation_unit(unit)
 
         return self._get_periodical_data(
             {"daily": "precipitation_sum", "precipitation_unit": unit}
@@ -464,9 +468,7 @@ class BaseWeather(BaseMeteor):
         Params:
         - unit: Precipitation unit, must be 'mm' or 'inch'.
         """
-
-        if unit not in ("mm", "inch"):
-            raise ValueError(f"Expected `unit` to be 'mm' or 'inch', got {unit!r}.")
+        self._verify_precipitation_unit(unit)
 
         return self._get_periodical_data(
             {"daily": "rain_sum", "precipitation_unit": unit}
