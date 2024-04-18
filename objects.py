@@ -252,6 +252,28 @@ class BaseWeather(BaseMeteor):
         """
         return self._get_periodical_data({"hourly": "cloud_cover"})
 
+    def get_hourly_cloud_cover(
+        self, level: constants.CLOUD_COVER_LEVEL = "low"
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly cloud cover percentage(%) data
+        at the specified level and coordinates within the supplied date range.
+
+        Params:
+        - level (str): Altitude level of the desired cloud coverage, must be
+        one of the following:
+            - 'low' (clouds and fog up to an altitude of 3 km.)
+            - 'mid' (clouds at an altitude between 3 km and 8 km.)
+            - 'high' (clouds at an altitude higher than 8 km.)
+        """
+
+        if level not in ("low", "mid", "high"):
+            raise ValueError(
+                f"Expected `level` to be 'low', 'mid' or 'high'. Got {level!r}."
+            )
+
+        return self._get_periodical_data({"hourly": f"cloud_cover_{level}"})
+
     def get_daily_temperature(
         self,
         type_: constants.DAILY_WEATHER_REQUEST_TYPES,
