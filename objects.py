@@ -200,7 +200,7 @@ class BaseWeather(BaseMeteor):
         # Mapped value of the specified pressure level.
         pressure: str | None = constants.PRESSURE_LEVEL_MAPPING.get(level)
 
-        if not pressure:
+        if pressure is None:
             raise ValueError(
                 f"Expected `level` to be 'sealevel' or 'surface', got {level!r}."
             )
