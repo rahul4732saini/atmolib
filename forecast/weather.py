@@ -52,10 +52,7 @@ class Weather(BaseForecast, BaseWeather):
                 f"Expected `altitude` to be 2, 80, 120 or 180, got {altitude}."
             )
 
-        if unit not in ("celsius", "fahrenheit"):
-            raise ValueError(
-                f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
-            )
+        self._verify_temperature_unit(unit)
 
         return self._get_current_data(
             {"current": f"temperature_{altitude}m", "temperature_unit": unit}
@@ -110,11 +107,7 @@ class Weather(BaseForecast, BaseWeather):
         Params:
         - unit (str): Temperature unit must be 'celsius' or 'fahrenheit'.
         """
-
-        if unit not in ("celsius", "fahrenheit"):
-            raise ValueError(
-                f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
-            )
+        self._verify_temperature_unit(unit)
 
         return self._get_current_data(
             {"current": "apparent_temperature", "temperature_unit": unit}
@@ -210,9 +203,7 @@ class Weather(BaseForecast, BaseWeather):
         Params:
         - unit: Precipitation unit, must be 'mm' or 'inch'.
         """
-
-        if unit not in ("mm", "inch"):
-            raise ValueError(f"Expected `unit` to be 'mm' or 'inch'. Got {unit!r}.")
+        self._verify_precipitation_unit(unit)
 
         return self._get_current_data(
             {"current": "precipitation", "precipitation_unit": unit}
@@ -245,10 +236,7 @@ class Weather(BaseForecast, BaseWeather):
         Params:
         - unit: Precipitation unit, must be 'mm' or 'inch'.
         """
-
-        if unit not in ("mm", "inch"):
-            raise ValueError(f"Expected `unit` to be 'mm' or 'inch'. Got {unit!r}.")
-
+        self._verify_precipitation_unit(unit)
         return self._get_current_data({"current": "rain", "precipitation_unit": unit})
 
     def get_hourly_visibility(self) -> pd.DataFrame:
