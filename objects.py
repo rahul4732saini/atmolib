@@ -179,6 +179,37 @@ class BaseWeather(BaseMeteor):
         """
         return self._get_periodical_data({"hourly": "relative_humidity_2m"})
 
+    def get_periodical_weather_code(
+        self, frequency: constants.FREQUENCY
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly weather code data with its corresponding
+        description at the specified coordinates within the supplied date range.
+
+        Params:
+        - frequency: Frequency of the data distribution, must be 'daily' or 'hourly'.
+
+        Columns:
+        - time: time of the forecast data in ISO 8601 format (YYYY-MM-DDTHH-MM) or (YYYY-MM-DD).
+        - data: weather code at the corresponding hour.
+        - description: description of the corresponding weather code.
+        """
+
+        if frequency not in ("hourly", "daily"):
+            raise ValueError(
+                f"Expected `frequency` to be 'hourly' or 'daily', got {frequency!r}."
+            )
+
+        data: pd.DataFrame = self._get_periodical_data({frequency: "weather_code"})
+
+        # Creating a new column 'description' mapped to the
+        # description of the corresponding weather code.
+        data["description"] = data["data"].map(
+            lambda x: constants.WEATHER_CODES[str(x)]
+        )
+
+        return data
+
     def get_hourly_rainfall(
         self, unit: constants.PRECIPITATION_UNITS = "mm"
     ) -> pd.DataFrame:
