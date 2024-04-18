@@ -13,10 +13,10 @@ import requests
 import pandas as pd
 
 from common import constants
-from objects import BaseMeteor
+from objects import BaseMeteor, BaseWeather
 
 
-class WeatherArchive(BaseMeteor):
+class WeatherArchive(BaseWeather, BaseMeteor):
     r"""
     WeatherArchive class to extract historical weather data based on latitude and longitude
     coordinates of the location within the specified date range. It interacts with the
