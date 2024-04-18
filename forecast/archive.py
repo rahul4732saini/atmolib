@@ -122,14 +122,6 @@ class WeatherArchive(BaseWeather, BaseMeteor):
 
         return target
 
-    def get_hourly_relative_humidity(self) -> pd.DataFrame:
-        r"""
-        Returns a pandas DataFrame of hourly relative humidity
-        percentage(%) data 2 meters(m) above the ground level at
-        the specified coordinates within the date range.
-        """
-        return self._get_periodical_data({"hourly": "relative_humidity_2m"})
-
     def get_periodic_weather_code(self, frequency: constants.FREQUENCY) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly weather code data with its corresponding
@@ -355,67 +347,9 @@ class WeatherArchive(BaseWeather, BaseMeteor):
             {"hourly": f"soil_temperature_{depth_range}cm", "temperature_unit": unit},
         )
 
-    def get_daily_max_wind_speed(
-        self, unit: constants.WIND_SPEED_UNITS = "kmh"
-    ) -> pd.DataFrame:
-        r"""
-        Returns the daily maximum wind speed 2 meters(m) above the ground
-        level at the specified coordinates within the supplied date range.
-
-        Params:
-        - unit (str): Wind speed unit, must be one of the following:
-            - 'kmh' (kilometers per hour)
-            - 'mph' (miles per hour)
-            - 'ms' (meter per second)
-            - 'kn' (knots)
-        """
-
-        if unit not in ("kmh", "mph", "ms", "kn"):
-            raise ValueError(
-                f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
-            )
-
-        return self._get_periodical_data({"daily": "wind_speed_10m_max"})
-
-    def get_daily_max_wind_gusts(
-        self, unit: constants.WIND_SPEED_UNITS = "kmh"
-    ) -> pd.DataFrame:
-        r"""
-        Returns the daily maximum wind gusts 2 meters(m) above the ground
-        level at the specified coordinates within the supplied date range.
-
-        Params:
-        - unit (str): Wind speed unit, must be one of the following:
-            - 'kmh' (kilometers per hour)
-            - 'mph' (miles per hour)
-            - 'ms' (meter per second)
-            - 'kn' (knots)
-        """
-
-        if unit not in ("kmh", "mph", "ms", "kn"):
-            raise ValueError(
-                f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
-            )
-
-        return self._get_periodical_data({"daily": "wind_gusts_10m_max"})
-
     def get_daily_daylight_duration(self) -> pd.DataFrame:
         r"""
         Returns the daily daylight duration in seconds(s) at the
         specified coordinates within the supplied date range.
         """
         return self._get_periodical_data({"daily": "daylight_duration"})
-
-    def get_daily_sunshine_duration(self) -> pd.DataFrame:
-        r"""
-        Returns the daily sunshine duration in seconds(s) at the
-        specified coordinates within the supplied date range.
-        """
-        return self._get_periodical_data({"daily": "sunshine_duration"})
-
-    def get_daily_total_shortwave_radiation(self) -> pd.DataFrame:
-        r"""
-        Returns the daily sum of shortwave radiation in Mega Joules per square meter
-        (MJ/m^2) sat the specified coordinates within the supplied date range.
-        """
-        return self._get_periodical_data({"daily": "shortwave_radiation_sum"})
