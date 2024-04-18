@@ -172,6 +172,13 @@ class BaseWeather(BaseMeteor):
             {"hourly": "temperature_2m", "temperature_unit": unit}
         )
 
+    def get_hourly_relative_humidity(self) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly relative humidity percentage(%) data
+        2 meters(m) above the ground level at the specified coordinates.
+        """
+        return self._get_periodical_data({"hourly": "relative_humidity_2m"})
+
     def get_hourly_rainfall(
         self, unit: constants.PRECIPITATION_UNITS = "mm"
     ) -> pd.DataFrame:
