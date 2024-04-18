@@ -271,3 +271,10 @@ class BaseWeather(BaseMeteor):
         return self._get_periodical_data(
             {"daily": "precipitation_sum", "precipitation_unit": unit}
         )
+
+    def get_daily_sunrise_time(self) -> pd.DataFrame:
+        r"""
+        Returns the daily sunrise time in the ISO-8601 datetime format (YYYY-MM-DDTHH:MM)
+        at the specified coordinates.
+        """
+        return self._get_periodical_data({"daily": "sunrise"})
