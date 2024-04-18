@@ -57,7 +57,7 @@ class Weather(BaseForecast):
                 f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
             )
 
-        return self.get_current_weather_data(
+        return self._get_current_data(
             {"current": f"temperature_{altitude}m", "temperature_unit": unit}
         )
 
@@ -67,9 +67,7 @@ class Weather(BaseForecast):
         by a string description of the weather code.
         """
 
-        weather_code: int | float = self.get_current_weather_data(
-            {"current": "weather_code"}
-        )
+        weather_code: int | float = self._get_current_data({"current": "weather_code"})
         description: str = constants.WEATHER_CODES[str(weather_code)]
 
         return weather_code, description
@@ -78,7 +76,7 @@ class Weather(BaseForecast):
         r"""
         Returns the current total cloud cover in percentage(%) at the supplied coordinates.
         """
-        return self.get_current_weather_data({"current": "cloud_cover"})
+        return self._get_current_data({"current": "cloud_cover"})
 
     def get_current_cloud_cover(
         self, level: constants.CLOUD_COVER_LEVEL = "low"
@@ -98,7 +96,7 @@ class Weather(BaseForecast):
                 f"Expected `level` to be 'low', 'mid' or 'high', got {level!r}."
             )
 
-        return self.get_current_weather_data({"current": f"cloud_cover_{level}"})
+        return self._get_current_data({"current": f"cloud_cover_{level}"})
 
     def get_current_apparent_temperature(
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
@@ -118,7 +116,7 @@ class Weather(BaseForecast):
                 f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
             )
 
-        return self.get_current_weather_data(
+        return self._get_current_data(
             {"current": "apparent_temperature", "temperature_unit": unit}
         )
 
@@ -149,7 +147,7 @@ class Weather(BaseForecast):
                 f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
             )
 
-        return self.get_current_weather_data(
+        return self._get_current_data(
             {"current": f"wind_speed_{altitude}m", "wind_speed_unit": unit}
         )
 
@@ -170,7 +168,7 @@ class Weather(BaseForecast):
                 f"Expected `altitude` to be 10, 80, 120 or 180, got {altitude}."
             )
 
-        return self.get_current_weather_data({"current": f"wind_direction_{altitude}m"})
+        return self._get_current_data({"current": f"wind_direction_{altitude}m"})
 
     def get_current_wind_gusts(
         self, unit: constants.WIND_SPEED_UNITS = "kmh"
@@ -191,7 +189,7 @@ class Weather(BaseForecast):
                 f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
             )
 
-        return self.get_current_weather_data(
+        return self._get_current_data(
             {"current": "wind_gusts_10", "wind_speed_unit": unit}
         )
 
@@ -200,7 +198,7 @@ class Weather(BaseForecast):
         Returns the current relative humidity 2 meters(m) above the
         ground level in percentage(%) at the supplied coordinates.
         """
-        return self.get_current_weather_data({"current": "relative_humidity_2m"})
+        return self._get_current_data({"current": "relative_humidity_2m"})
 
     def get_current_precipitation(
         self, unit: constants.PRECIPITATION_UNITS = "mm"
@@ -216,7 +214,7 @@ class Weather(BaseForecast):
         if unit not in ("mm", "inch"):
             raise ValueError(f"Expected `unit` to be 'mm' or 'inch'. Got {unit!r}.")
 
-        return self.get_current_weather_data(
+        return self._get_current_data(
             {"current": "precipitation", "precipitation_unit": unit}
         )
 
@@ -236,7 +234,7 @@ class Weather(BaseForecast):
                 f"Expected `level` to be 'sealevel' or 'surface', got {level!r}."
             )
 
-        return self.get_current_weather_data({"current": pressure})
+        return self._get_current_data({"current": pressure})
 
     def get_current_rainfall(
         self, unit: constants.PRECIPITATION_UNITS = "mm"
@@ -251,9 +249,7 @@ class Weather(BaseForecast):
         if unit not in ("mm", "inch"):
             raise ValueError(f"Expected `unit` to be 'mm' or 'inch'. Got {unit!r}.")
 
-        return self.get_current_weather_data(
-            {"current": "rain", "precipitation_unit": unit}
-        )
+        return self._get_current_data({"current": "rain", "precipitation_unit": unit})
 
     def get_hourly_rainfall(
         self, unit: constants.PRECIPITATION_UNITS = "mm"
@@ -269,14 +265,14 @@ class Weather(BaseForecast):
         if unit not in ("mm", "inch"):
             raise ValueError(f"Expected `unit` to be 'mm' or 'inch'. Got {unit!r}.")
 
-        return self.get_periodical_data({"hourly": "rain", "precipitation_unit": unit})
+        return self._get_periodical_data({"hourly": "rain", "precipitation_unit": unit})
 
     def get_hourly_visibilty(self) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly visibility data
         in meters(m) at the specified coordinates.
         """
-        return self.get_periodical_data({"hourly": "visibility"})
+        return self._get_periodical_data({"hourly": "visibility"})
 
     def get_hourly_pressure(self, level: constants.PRESSURE_LEVELS) -> pd.DataFrame:
         r"""
@@ -295,14 +291,14 @@ class Weather(BaseForecast):
                 f"Expected `level` to be 'sealevel' or 'surface', got {level!r}."
             )
 
-        return self.get_periodical_data({"hourly": pressure})
+        return self._get_periodical_data({"hourly": pressure})
 
     def get_hourly_precipitation_probability(self) -> pd.DataFrame:
         r"""
         Retuns the probability of precipitation (rain/showers/snowfall) data
         in percentage(%) at the specified coordinates within the date range.
         """
-        return self.get_periodical_data({"hourly": "precipitation_probability"})
+        return self._get_periodical_data({"hourly": "precipitation_probability"})
 
     def get_daily_temperature(
         self,
@@ -330,7 +326,7 @@ class Weather(BaseForecast):
                 f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
             )
 
-        return self.get_periodical_data(
+        return self._get_periodical_data(
             {"daily": f"temperature_2m_{type}", "temperature_unit": unit}
         )
 
@@ -360,7 +356,7 @@ class Weather(BaseForecast):
                 f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
             )
 
-        return self.get_periodical_data(
+        return self._get_periodical_data(
             {"daily": f"apparent_temperature_{type_}", "temperature_unit": unit}
         )
 
@@ -369,7 +365,7 @@ class Weather(BaseForecast):
         Returns a pandas DataFrame of daily dominant wind direction in degrees data 10 meters(m)
         above the ground level at the specified coordinates.
         """
-        return self.get_periodical_data({"daily": "wind_direction_10m_dominant"})
+        return self._get_periodical_data({"daily": "wind_direction_10m_dominant"})
 
     def get_daily_total_precipitation(
         self, unit: constants.PRECIPITATION_UNITS = "mm"
@@ -385,6 +381,6 @@ class Weather(BaseForecast):
         if unit not in ("mm", "inch"):
             raise ValueError(f"Expected `unit` to be 'mm' or 'inch', got {unit!r}.")
 
-        return self.get_periodical_data(
+        return self._get_periodical_data(
             {"daily": "precipitation_sum", "precipitation_unit": unit}
         )
