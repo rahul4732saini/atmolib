@@ -245,6 +245,13 @@ class BaseWeather(BaseMeteor):
 
         return self._get_periodical_data({"hourly": pressure})
 
+    def get_hourly_total_cloud_cover(self) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly total cloud cover percentage(%) data
+        at the specified coordinates within the supplied date range.
+        """
+        return self._get_periodical_data({"hourly": "cloud_cover"})
+
     def get_daily_temperature(
         self,
         type_: constants.DAILY_WEATHER_REQUEST_TYPES,
