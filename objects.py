@@ -184,7 +184,7 @@ class BaseWeather(BaseMeteor):
         """
 
         if unit not in ("mm", "inch"):
-            raise ValueError(f"Expected `unit` to be 'mm' or 'inch'. Got {unit!r}.")
+            raise ValueError(f"Expected `unit` to be 'mm' or 'inch', got {unit!r}.")
 
         return self._get_periodical_data({"hourly": "rain", "precipitation_unit": unit})
 
@@ -217,7 +217,7 @@ class BaseWeather(BaseMeteor):
         2 meters(m) above the ground level at the specified coordinates.
 
         Params:
-        - type: Specifies the type of daily temperature to be retrieved,
+        - type: The type of daily temperature to be extracted,
         must be 'min', 'max' or 'mean'.
             - 'min': Daily minimum temperature.
             - 'max': Daily maximum temperature.
