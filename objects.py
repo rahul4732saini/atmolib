@@ -13,7 +13,7 @@ from common import tools
 
 class BaseMeteor:
     r"""
-    Base class for all weather classes.
+    Base class for all meteorology classes.
     """
 
     _session: requests.Session
