@@ -177,7 +177,7 @@ class BaseWeather(BaseMeteor):
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of apparent temperature data at
-        the specified coordinates within the supplied date range.
+        the specified coordinates.
 
         Params:
         - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
@@ -197,7 +197,7 @@ class BaseWeather(BaseMeteor):
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly dew point data 2 meters(m) above the
-        ground level at the specified coordinates within the date range.
+        ground level at the specified coordinates.
 
         Params:
         - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
@@ -224,7 +224,7 @@ class BaseWeather(BaseMeteor):
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly weather code data with its corresponding
-        description at the specified coordinates within the supplied date range.
+        description at the specified coordinates.
 
         Params:
         - frequency: Frequency of the data distribution, must be 'daily' or 'hourly'.
@@ -288,7 +288,7 @@ class BaseWeather(BaseMeteor):
     def get_hourly_total_cloud_cover(self) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly total cloud cover percentage(%) data
-        at the specified coordinates within the supplied date range.
+        at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": "cloud_cover"})
 
@@ -297,7 +297,7 @@ class BaseWeather(BaseMeteor):
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly cloud cover percentage(%) data
-        at the specified level and coordinates within the supplied date range.
+        at the specified level and coordinates.
 
         Params:
         - level (str): Altitude level of the desired cloud coverage, must be
@@ -319,7 +319,7 @@ class BaseWeather(BaseMeteor):
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly precipitation (sum of rain, showers, and snowfall)
-        data at the specified coordinates within the supplied date range.
+        data at the specified coordinates.
 
         Params:
         - unit: Precipitation unit, must be 'mm' or 'inch'.
@@ -397,7 +397,7 @@ class BaseWeather(BaseMeteor):
     ) -> pd.DataFrame:
         r"""
         Returns the daily maximum wind speed 2 meters(m) above the ground
-        level at the specified coordinates within the supplied date range.
+        level at the specified coordinates.
 
         Params:
         - unit (str): Wind speed unit, must be one of the following:
@@ -478,7 +478,7 @@ class BaseWeather(BaseMeteor):
     def get_daily_daylight_duration(self) -> pd.DataFrame:
         r"""
         Returns the daily daylight duration in seconds(s) at the
-        specified coordinates within the supplied date range.
+        specified coordinates.
         """
         return self._get_periodical_data({"daily": "daylight_duration"})
 
