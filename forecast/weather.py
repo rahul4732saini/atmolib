@@ -251,7 +251,7 @@ class Weather(BaseForecast, BaseWeather):
 
         return self._get_current_data({"current": "rain", "precipitation_unit": unit})
 
-    def get_hourly_visibilty(self) -> pd.DataFrame:
+    def get_hourly_visibility(self) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly visibility data
         in meters(m) at the specified coordinates.
