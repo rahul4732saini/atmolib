@@ -167,3 +167,22 @@ class BaseWeather(BaseMeteor):
             raise ValueError(f"Expected `unit` to be 'mm' or 'inch'. Got {unit!r}.")
 
         return self._get_periodical_data({"hourly": "rain", "precipitation_unit": unit})
+
+    def get_hourly_pressure(self, level: constants.PRESSURE_LEVELS) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of the hourly atmospheric pressure data
+        in Hectopascal (hPa) at the specified coordinates.
+
+        Params:
+        - level (str): Desired level of the atmospheric data, must be 'surface' or 'sealevel'.
+        """
+
+        # Mapped value of the specified pressure level.
+        pressure: str | None = constants.PRESSURE_LEVEL_MAPPING.get(level)
+
+        if not pressure:
+            raise ValueError(
+                f"Expected `level` to be 'sealevel' or 'surface', got {level!r}."
+            )
+
+        return self._get_periodical_data({"hourly": pressure})
