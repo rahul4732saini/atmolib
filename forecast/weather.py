@@ -12,10 +12,10 @@ import requests
 import pandas as pd
 
 from common import constants
-from objects import BaseForecast
+from objects import BaseForecast, BaseWeather
 
 
-class Weather(BaseForecast):
+class Weather(BaseForecast, BaseWeather):
     r"""
     Weather class to extract weather data based on latitude and longitude coordinates.
     It interacts with the Open-Meteo Weather API to fetch the current or upcoming 16-days
