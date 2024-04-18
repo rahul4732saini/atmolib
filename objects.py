@@ -13,7 +13,7 @@ from common import tools
 
 class BaseMeteor:
     r"""
-    Base class for all weather classes.
+    Base class for all meteorology classes.
     """
 
     _session: requests.Session
@@ -51,7 +51,7 @@ class BaseMeteor:
         )
         self._long = self._params["longitude"] = __value
 
-    def get_current_weather_data(self, params: dict[str, Any]) -> int | float:
+    def _get_current_data(self, params: dict[str, Any]) -> int | float:
         r"""
         Uses the supplied parameters to request the supplied
         Open-Meteo API and returns the current weather data.
@@ -71,7 +71,7 @@ class BaseMeteor:
 
         return data
 
-    def get_periodical_data(self, params: dict[str, Any]) -> pd.DataFrame:
+    def _get_periodical_data(self, params: dict[str, Any]) -> pd.DataFrame:
         r"""
         Uses the supplied parameters to request the supplied
         Open-Meteo API and returns the periodical weather data.
