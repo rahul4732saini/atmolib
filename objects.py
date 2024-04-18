@@ -357,6 +357,13 @@ class BaseWeather(BaseMeteor):
         """
         return self._get_periodical_data({"daily": "sunset"})
 
+    def get_daily_daylight_duration(self) -> pd.DataFrame:
+        r"""
+        Returns the daily daylight duration in seconds(s) at the
+        specified coordinates within the supplied date range.
+        """
+        return self._get_periodical_data({"daily": "daylight_duration"})
+
     def get_daily_sunshine_duration(self) -> pd.DataFrame:
         r"""
         Returns the daily sunshine duration in seconds(s) at the
