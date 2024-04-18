@@ -251,22 +251,6 @@ class Weather(BaseForecast, BaseWeather):
 
         return self._get_current_data({"current": "rain", "precipitation_unit": unit})
 
-    def get_hourly_rainfall(
-        self, unit: constants.PRECIPITATION_UNITS = "mm"
-    ) -> pd.DataFrame:
-        r"""
-        Returns a pandas DataFrame of hourly rainfall data
-        in mm/inch at the specified coordinates.
-
-        Params:
-        - unit: Precipitation unit, must be 'mm' or 'inch'.
-        """
-
-        if unit not in ("mm", "inch"):
-            raise ValueError(f"Expected `unit` to be 'mm' or 'inch'. Got {unit!r}.")
-
-        return self._get_periodical_data({"hourly": "rain", "precipitation_unit": unit})
-
     def get_hourly_visibilty(self) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly visibility data
@@ -274,113 +258,9 @@ class Weather(BaseForecast, BaseWeather):
         """
         return self._get_periodical_data({"hourly": "visibility"})
 
-    def get_hourly_pressure(self, level: constants.PRESSURE_LEVELS) -> pd.DataFrame:
-        r"""
-        Returns a pandas DataFrame of the hourly atmospheric pressure data
-        in Hectopascal (hPa) at the specified coordinates.
-
-        Params:
-        - level (str): Desired level of the atmospheric data, must be 'surface' or 'sealevel'.
-        """
-
-        # Mapped value of the specified pressure level.
-        pressure: str | None = constants.PRESSURE_LEVEL_MAPPING.get(level)
-
-        if not pressure:
-            raise ValueError(
-                f"Expected `level` to be 'sealevel' or 'surface', got {level!r}."
-            )
-
-        return self._get_periodical_data({"hourly": pressure})
-
     def get_hourly_precipitation_probability(self) -> pd.DataFrame:
         r"""
         Retuns the probability of precipitation (rain/showers/snowfall) data
         in percentage(%) at the specified coordinates within the date range.
         """
         return self._get_periodical_data({"hourly": "precipitation_probability"})
-
-    def get_daily_temperature(
-        self,
-        type_: constants.DAILY_WEATHER_REQUEST_TYPES,
-        unit: constants.TEMPERATURE_UNITS = "celsius",
-    ) -> pd.DataFrame:
-        r"""
-        Returns a pandas DataFrame of daily maximum, minimum or mean temperature data
-        2 meters(m) above the ground level at the specified coordinates.
-
-        Params:
-        - type: Specifies the type of daily temperature to be retrieved,
-        must be 'min', 'max' or 'mean'.
-            - 'min': Daily minimum temperature.
-            - 'max': Daily maximum temperature.
-            - 'mean': Daily mean temperature.
-        - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
-        """
-
-        if type_ not in ("max", "min", "mean"):
-            raise ValueError(f"Expected `type` to be 'min' or 'max', got {type_!r}.")
-
-        if unit not in ("celsius", "fahrenheit"):
-            raise ValueError(
-                f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
-            )
-
-        return self._get_periodical_data(
-            {"daily": f"temperature_2m_{type}", "temperature_unit": unit}
-        )
-
-    def get_daily_apparent_temperature(
-        self,
-        type_: constants.DAILY_WEATHER_REQUEST_TYPES,
-        unit: constants.TEMPERATURE_UNITS = "celsius",
-    ) -> pd.DataFrame:
-        r"""
-        Returns a pandas DataFrame of daily maximum, minimum or mean apparent temperature
-        data 2 meters(m) above the ground level at the specified coordinates.
-
-        Params:
-        - type: Specifies the type of daily apparent temperature to be retrieved,
-        must be 'min', 'max' or 'mean'.
-            - 'min': Daily minimum apparent temperature.
-            - 'max': Daily maximum apparent temperature.
-            - 'mean': Daily mean apparent temperature.
-        - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
-        """
-
-        if type_ not in ("max", "min", "mean"):
-            raise ValueError(f"Expected `type` to be 'min' or 'max', got {type_!r}.")
-
-        if unit not in ("celsius", "fahrenheit"):
-            raise ValueError(
-                f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
-            )
-
-        return self._get_periodical_data(
-            {"daily": f"apparent_temperature_{type_}", "temperature_unit": unit}
-        )
-
-    def get_daily_dominant_wind_direction(self) -> pd.DataFrame:
-        r"""
-        Returns a pandas DataFrame of daily dominant wind direction in degrees data 10 meters(m)
-        above the ground level at the specified coordinates.
-        """
-        return self._get_periodical_data({"daily": "wind_direction_10m_dominant"})
-
-    def get_daily_total_precipitation(
-        self, unit: constants.PRECIPITATION_UNITS = "mm"
-    ) -> pd.DataFrame:
-        r"""
-        Returns a pandas DataFrame of hourly precipitation (sum of rain, showers, and snowfall)
-        data at the specified coordinates.
-
-        Params:
-        - unit: Precipitation unit, must be 'mm' or 'inch'.
-        """
-
-        if unit not in ("mm", "inch"):
-            raise ValueError(f"Expected `unit` to be 'mm' or 'inch', got {unit!r}.")
-
-        return self._get_periodical_data(
-            {"daily": "precipitation_sum", "precipitation_unit": unit}
-        )
