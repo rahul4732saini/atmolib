@@ -130,14 +130,14 @@ class MarineWeather(BaseForecast):
         Returns the wave height in meters(m) of the
         specified wave type at the supplied coordinates.
         """
-        return self.get_current_weather_data({"current": f"{self._type}wave_height"})
+        return self._get_current_data({"current": f"{self._type}wave_height"})
 
     def get_current_wave_direction(self) -> int | float:
         r"""
         Returns the wave direction in degrees of the specified
         wave type at the supplied coordinates.
         """
-        return self.get_current_weather_data({"current": f"{self._type}wave_direction"})
+        return self._get_current_data({"current": f"{self._type}wave_direction"})
 
     def get_current_wave_period(self) -> int | float:
         r"""
@@ -145,7 +145,7 @@ class MarineWeather(BaseForecast):
         wave crests (or troughs) to pass a fixed point) in seconds of the
         specified wave type at the supplied coordinates.
         """
-        return self.get_current_weather_data({"current": f"{self._type}wave_period"})
+        return self._get_current_data({"current": f"{self._type}wave_period"})
 
     def get_hourly_wave_height(self) -> pd.DataFrame:
         r"""
