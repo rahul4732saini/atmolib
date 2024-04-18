@@ -172,6 +172,26 @@ class BaseWeather(BaseMeteor):
             {"hourly": "temperature_2m", "temperature_unit": unit}
         )
 
+    def get_hourly_apparent_temperature(
+        self, unit: constants.TEMPERATURE_UNITS = "celsius"
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of apparent temperature data at
+        the specified coordinates within the supplied date range.
+
+        Params:
+        - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
+        """
+
+        if unit not in ("celsius", "fahrenheit"):
+            raise ValueError(
+                f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
+            )
+
+        return self._get_periodical_data(
+            {"hourly": "apparent_temperature", "temperature_unit": unit}
+        )
+
     def get_hourly_relative_humidity(self) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly relative humidity percentage(%) data
