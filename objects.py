@@ -174,6 +174,18 @@ class BaseWeather(BaseMeteor):
         if unit not in ("mm", "inch"):
             raise ValueError(f"Expected `unit` to be 'mm' or 'inch', got {unit!r}.")
 
+    @staticmethod
+    def _verify_wind_speed_unit(unit: constants.WIND_SPEED_UNITS) -> None:
+        r"""
+        Verifies the specified wind speed unit. Raises a ValueError if the
+        argument provided is not a valid unit.
+        """
+
+        if unit not in ("kmh", "mph", "ms", "kn"):
+            raise ValueError(
+                f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
+            )
+
     def get_hourly_temperature(
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
     ) -> pd.DataFrame:
@@ -271,7 +283,6 @@ class BaseWeather(BaseMeteor):
         - unit: Precipitation unit, must be 'mm' or 'inch'.
         """
         self._verify_precipitation_unit(unit)
-
         return self._get_periodical_data({"hourly": "rain", "precipitation_unit": unit})
 
     def get_hourly_pressure(self, level: constants.PRESSURE_LEVELS) -> pd.DataFrame:
@@ -406,12 +417,7 @@ class BaseWeather(BaseMeteor):
             - 'ms' (meter per second)
             - 'kn' (knots)
         """
-
-        if unit not in ("kmh", "mph", "ms", "kn"):
-            raise ValueError(
-                f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
-            )
-
+        self._verify_wind_speed_unit(unit)
         return self._get_periodical_data({"daily": "wind_speed_10m_max"})
 
     def get_daily_dominant_wind_direction(self) -> pd.DataFrame:
@@ -435,12 +441,7 @@ class BaseWeather(BaseMeteor):
             - 'ms' (meter per second)
             - 'kn' (knots)
         """
-
-        if unit not in ("kmh", "mph", "ms", "kn"):
-            raise ValueError(
-                f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn', got {unit!r}."
-            )
-
+        self._verify_wind_speed_unit(unit)
         return self._get_periodical_data({"daily": "wind_gusts_10m_max"})
 
     def get_daily_total_precipitation(
