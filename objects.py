@@ -186,3 +186,33 @@ class BaseWeather(BaseMeteor):
             )
 
         return self._get_periodical_data({"hourly": pressure})
+
+    def get_daily_temperature(
+        self,
+        type_: constants.DAILY_WEATHER_REQUEST_TYPES,
+        unit: constants.TEMPERATURE_UNITS = "celsius",
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of daily maximum, minimum or mean temperature data
+        2 meters(m) above the ground level at the specified coordinates.
+
+        Params:
+        - type: Specifies the type of daily temperature to be retrieved,
+        must be 'min', 'max' or 'mean'.
+            - 'min': Daily minimum temperature.
+            - 'max': Daily maximum temperature.
+            - 'mean': Daily mean temperature.
+        - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
+        """
+
+        if type_ not in ("max", "min", "mean"):
+            raise ValueError(f"Expected `type` to be 'min' or 'max', got {type_!r}.")
+
+        if unit not in ("celsius", "fahrenheit"):
+            raise ValueError(
+                f"Expected `unit` to be 'celsius' or 'fahrenheit', got {unit!r}."
+            )
+
+        return self._get_periodical_data(
+            {"daily": f"temperature_2m_{type_}", "temperature_unit": unit}
+        )
