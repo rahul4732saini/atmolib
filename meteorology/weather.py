@@ -33,6 +33,18 @@ class Weather(BaseForecast, BaseWeather):
     # Closes the request session upon exit.
     atexit.register(_session.close)
 
+    @staticmethod
+    def _verify_wind_altitude(altitude: int) -> None:
+        r"""
+        Verifies the specified altitude for wind data extraction. Raises a ValueError if
+        the argument provided is not a valid altitude for requesting data from the API.
+        """
+
+        if altitude not in (10, 80, 120, 180):
+            raise ValueError(
+                f"Expected `altitude` to be 10, 80, 120 or 180; got {altitude}."
+            )
+
     def get_current_temperature(
         self,
         altitude: constants.TEMPERATURE_ALTITUDE = 2,
@@ -132,12 +144,7 @@ class Weather(BaseForecast, BaseWeather):
             - 'ms' (meter per second)
             - 'kn' (knots)
         """
-
-        if altitude not in (10, 80, 120, 180):
-            raise ValueError(
-                f"Expected `altitude` to be 10, 80, 120 or 180; got {altitude}."
-            )
-
+        self._verify_wind_altitude(altitude)
         self._verify_wind_speed_unit(unit)
 
         return self._get_current_data(
@@ -179,12 +186,7 @@ class Weather(BaseForecast, BaseWeather):
             - 'ms' (meter per second)
             - 'kn' (knots)
         """
-
-        if altitude not in (10, 80, 120, 180):
-            raise ValueError(
-                f"Expected `altitude` to be 10, 80, 120 or 180; got {altitude}."
-            )
-
+        self._verify_wind_altitude(altitude)
         self._verify_wind_speed_unit(unit)
 
         return self._get_current_data(
