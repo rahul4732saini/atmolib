@@ -313,7 +313,9 @@ class Weather(BaseForecast, BaseWeather):
         return self._get_periodical_data({"hourly": f"wind_direction_{altitude}m"})
 
     def get_hourly_soil_temperature(
-        self, depth: int, unit: constants.TEMPERATURE_UNITS = "celsius"
+        self,
+        depth: constants.SOIL_TEMP_DEPTH,
+        unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly soil temperature data at
@@ -333,6 +335,35 @@ class Weather(BaseForecast, BaseWeather):
         return self._get_periodical_data(
             {"hourly": f"soil_temperature_{depth}cm", "temperature_unit": unit}
         )
+
+    def get_hourly_soil_moisture(
+        self, depth: constants.SOIL_TEMP_DEPTH = 7
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of soil moisture (m^3/m^3)
+        data at the specified depth and coordinates.
+
+        Params:
+        - depth (int): Desired depth of the soild moisture data within the ground level in
+        centimeters(m). Moisture data is extracted as a part of a range of depth. Available
+        depth ranges are 0-1cm, 1-3cmd, 3-9cm, 9-27cm, 27-81cm. The supplied depth must fall
+        in the range of 0 and 81.
+        """
+
+        for key, value in constants.SOIL_MOISTURE_DEPTH.items():
+            if depth in key:
+
+                # The range is represented in a string format as being
+                # a supported type for requesting the API.
+                depth_range: str = value
+                break
+
+        else:
+            raise ValueError(
+                f"Expected `depth` to be in the range of 0 and 81; got {depth}."
+            )
+
+        return self._get_periodical_data({"hourly": f"soil_moisture_{depth_range}cm"})
 
     def get_daily_max_uv_index(self) -> pd.DataFrame:
         r"""
