@@ -123,6 +123,31 @@ class WeatherArchive(BaseWeather, BaseMeteor):
 
         return target
 
+    @staticmethod
+    def _get_soil_depth(depth: int) -> str:
+        r"""
+        [PRIVATE] Returns a string representation of the depth range
+        supported as a request parameter for the API request.
+
+        Params:
+        - depth (int): Desired depth for data extraction; must be an integer between 0 and 256.
+        """
+
+        for key, value in constants.ARCHIVE_SOIL_DEPTH.items():
+            if depth in key:
+
+                # The range is represented in a string format as being
+                # a supported type for requesting the API.
+                depth_range: str = value
+                break
+
+        else:
+            raise ValueError(
+                f"Expected `depth` to be in the range of 0 and 256; got {depth}."
+            )
+
+        return depth_range
+
     def get_hourly_wind_speed(
         self,
         altitude: constants.ARCHIVE_WIND_ALTITUDES = 10,
@@ -204,18 +229,8 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         """
         self._verify_temperature_unit(unit)
 
-        for key, value in constants.ARCHIVE_SOIL_DEPTH.items():
-            if depth in key:
-
-                # The range is represented in a string format as being
-                # a supported type for requesting the API.
-                depth_range: str = value
-                break
-
-        else:
-            raise ValueError(
-                f"Expected `depth` to be in the range of 0 and 256; got {depth}."
-            )
+        # Extracts the string representation of the depth range.
+        depth_range: str = self._get_soil_depth(depth)
 
         return self._get_periodical_data(
             {"hourly": f"soil_temperature_{depth_range}cm", "temperature_unit": unit},
@@ -233,17 +248,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         in the range of 0 and 255.
         """
 
-        for key, value in constants.ARCHIVE_SOIL_DEPTH.items():
-            if depth in key:
-
-                # The range is represented in a string format as being
-                # a supported type for requesting the API.
-                depth_range: str = value
-                break
-
-        else:
-            raise ValueError(
-                f"Expected `depth` to be in the range of 0 and 256, got {depth}."
-            )
+        # Extracts the string representation of the depth range.
+        depth_range: str = self._get_soil_depth(depth)
 
         return self._get_periodical_data({"hourly": f"soil_moisture_{depth_range}cm"})
