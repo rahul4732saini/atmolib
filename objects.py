@@ -278,6 +278,13 @@ class BaseWeather(BaseMeteor):
         self._verify_precipitation_unit(unit)
         return self._get_periodical_data({"hourly": "rain", "precipitation_unit": unit})
 
+    def get_hourly_snowfall(self) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly snowfall data
+        in centimeters(cm) at the specified coordinates.
+        """
+        return self._get_periodical_data({"hourly": "rain"})
+
     def get_hourly_pressure(self, level: constants.PRESSURE_LEVELS) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of the hourly atmospheric pressure data
