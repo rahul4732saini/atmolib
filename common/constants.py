@@ -94,3 +94,15 @@ WAVE_TYPES_MAP = {"composite": "", "wind": "wind_", "swell": "swell_"}
 
 # Available types of temperatures which can be extracted from the API.
 TEMPERATURE_TYPES = Literal["temperature_2m", "apparent_temperature"]
+
+# A list of weather data types extracted in the weather summary data extraction.
+WEATHER_SUMMARY_DATA_TYPES = [
+    "temperature_2m",
+    "relative_humidity_2m",
+    "precipitation",
+    "weather_code",
+    "cloud_cover",
+    "surface_pressure",
+    "wind_speed_10m",
+    "wind_direction_10m",
+]
