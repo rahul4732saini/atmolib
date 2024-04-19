@@ -275,6 +275,28 @@ class Weather(BaseForecast, BaseWeather):
         """
         return self._get_periodical_data({"hourly": "precipitation_probability"})
 
+    def get_hourly_wind_speed(
+        self, altitude: int = 10, unit: constants.WIND_SPEED_UNITS = "kmh"
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly wind speed data at the
+        specified coordinates and altitude in the specified unit.
+
+        Params:
+        - altitude (int): Altitude from the ground level; must be 10, 80, 120 or 180.
+        - unit (str): Wind speed unit; must be one of the following:
+            - 'kmh' (kilometers per hour)
+            - 'mph' (miles per hour)
+            - 'ms' (meter per second)
+            - 'kn' (knots)
+        """
+        self._verify_wind_altitude(altitude)
+        self._verify_wind_speed_unit(unit)
+
+        return self._get_periodical_data(
+            {"hourly": f"wind_speed_{altitude}m", "wind_speed_unit": unit}
+        )
+
     def get_daily_max_uv_index(self) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of daily maximum Ultra-Violet (UV)
