@@ -259,7 +259,7 @@ class Weather(BaseForecast, BaseWeather):
 
     def get_hourly_precipitation_probability(self) -> pd.DataFrame:
         r"""
-        Returns the probability of precipitation (rain/showers/snowfall) data
+        Returns the probability of precipitation (rain/showers/snowfall)
         in percentage(%) at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": "precipitation_probability"})
@@ -270,3 +270,10 @@ class Weather(BaseForecast, BaseWeather):
         index data at the specified coordinates.
         """
         return self._get_periodical_data({"daily": "uv_index_max"})
+
+    def get_daily_max_precipitation_probability(self) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of daily maximum precipitation probability
+        (rain/showers/snowfall) in percentage (%) at the specified coordinates.
+        """
+        return self._get_periodical_data({"daily": "precipitation_probability_max"})
