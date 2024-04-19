@@ -237,6 +237,13 @@ class Weather(BaseForecast, BaseWeather):
         self._verify_precipitation_unit(unit)
         return self._get_current_data({"current": "rain", "precipitation_unit": unit})
 
+    def is_day_or_night(self) -> int:
+        r"""
+        Returns whether it's day or night at the specified coordinates.
+        Returns integer `1` for daytime and `0` for night time.
+        """
+        return self._get_current_data({"current": "is_day"})
+
     def get_hourly_visibility(self) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly visibility data
