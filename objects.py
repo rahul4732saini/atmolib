@@ -467,6 +467,13 @@ class BaseWeather(BaseMeteor):
             {"daily": "rain_sum", "precipitation_unit": unit}
         )
 
+    def get_daily_total_snowfall(self) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of daily rainfall data in
+        centimeters(m) at the specified coordinates.
+        """
+        return self._get_periodical_data({"daily": "snowfall_sum"})
+
     def get_daily_sunrise_time(self) -> pd.DataFrame:
         r"""
         Returns the daily sunrise time in the ISO-8601 datetime format (YYYY-MM-DDTHH:MM)
