@@ -46,8 +46,8 @@ class BaseMeteor:
 
     @long.setter
     def long(self, __value: int | float) -> None:
-        assert -90 <= __value <= 90, ValueError(
-            f"`lat` must be in the range of -90 and 90; got {__value}."
+        assert -180 <= __value <= 180, ValueError(
+            f"`long` must be in the range of -90 and 90; got {__value}."
         )
         self._long = self._params["longitude"] = __value
 
