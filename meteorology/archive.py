@@ -1,6 +1,7 @@
 r"""
-This module defines the WeatherArchive class facilitating the retrieval of historical weather data from
-the Open-Meteo Weather History API based on latitudinal and longitudinal coordinates of the location.
+This module defines the WeatherArchive class facilitating the extraction
+of historical weather data from the Open-Meteo Weather History API based
+on the latitudinal and longitudinal coordinates of the location.
 
 The WeatherArchive class allows users to extract various types of historical 
 weather data and information ranging from the year 1940 till the present.
@@ -18,9 +19,9 @@ from objects import BaseMeteor, BaseWeather
 
 class WeatherArchive(BaseWeather, BaseMeteor):
     r"""
-    WeatherArchive class to extract historical weather data based on latitude and longitude
-    coordinates of the location within the specified date range. It interacts with the
-    Open-Meteo Weather History API to fetch the weather data ranging from 1940 till the present.
+    WeatherArchive class to extract historical weather data based on the latitude and longitude
+    coordinates of the location within the specified date range. It interacts with the Open-Meteo
+    Weather History API to fetch the weather data ranging from 1940 till the present.
     """
 
     __slots__ = "_lat", "_long", "_start_date", "_end_date", "_params"
@@ -46,7 +47,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         - lat (int | float): Latitudinal coordinates of the location.
         - long (int | float): Longitudinal coordinates of the location.
         - start_date (str | date | datetime): Initial date for the weather data.
-        - end_date(str | date | datetime): Final date for the weather data.
+        - end_date (str | date | datetime): Final date for the weather data.
 
         Date parameters must be date or datetime objects or strings
         formatted in the ISO-8601 date format (YYYY-MM-DD).
@@ -100,7 +101,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
     def _resolve_date(target: str | date | datetime, var: str) -> date:
         r"""
         [PRIVATE] Verifies the supplied date argument, resolves it into a
-        string formatted date object with ISO-8601 format (YYYY-MM-DD).
+        string formatted date object with the ISO-8601 format (YYYY-MM-DD).
 
         The `var` parameter has to be the name of the actual date parameter
         (`start_date` or `end_date`) for reference in custom error messages.
@@ -122,6 +123,31 @@ class WeatherArchive(BaseWeather, BaseMeteor):
 
         return target
 
+    @staticmethod
+    def _get_soil_depth(depth: int) -> str:
+        r"""
+        [PRIVATE] Returns a string representation of the depth range
+        supported as a request parameter for the API request.
+
+        Params:
+        - depth (int): Desired depth for data extraction; must be an integer between 0 and 256.
+        """
+
+        for key, value in constants.ARCHIVE_SOIL_DEPTH.items():
+            if depth in key:
+
+                # The range is represented in a string format as being
+                # a supported type for requesting the API.
+                depth_range: str = value
+                break
+
+        else:
+            raise ValueError(
+                f"Expected `depth` to be in the range of 0 and 256; got {depth}."
+            )
+
+        return depth_range
+
     def get_hourly_wind_speed(
         self,
         altitude: constants.ARCHIVE_WIND_ALTITUDES = 10,
@@ -132,8 +158,8 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         altitude and coordinates within the supplied date range.
 
         Params:
-        - altitude (int): Altitude from the ground level in meters(m), must be 10 or 100.
-        - unit (str): Wind speed unit, must be one of the following:
+        - altitude (int): Altitude from the ground level in meters(m); must be 10 or 100.
+        - unit (str): Wind speed unit; must be one of the following:
             - 'kmh' (kilometers per hour)
             - 'mph' (miles per hour)
             - 'ms' (meter per second)
@@ -141,7 +167,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         """
 
         if altitude not in (10, 100):
-            raise ValueError(f"Expected `altitude` to be 10 or 100, got {altitude}.")
+            raise ValueError(f"Expected `altitude` to be 10 or 100; got {altitude}.")
 
         self._verify_wind_speed_unit(unit)
 
@@ -158,11 +184,11 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         specified altitude and coordinates within the supplied date range.
 
         Params:
-        - altitude (int): Altitude from the ground level in meters(m), must be 10 or 100.
+        - altitude (int): Altitude from the ground level in meters(m); must be 10 or 100.
         """
 
         if altitude not in (10, 100):
-            raise ValueError(f"Expected `altitude` to be 10 or 100, got {altitude}.")
+            raise ValueError(f"Expected `altitude` to be 10 or 100; got {altitude}.")
 
         return self._get_periodical_data({"hourly": f"wind_direction_{altitude}"})
 
@@ -172,10 +198,10 @@ class WeatherArchive(BaseWeather, BaseMeteor):
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly wind gusts data 10 meters(m) above the
-        ground level and specified coordinates within the supplied date range.
+        ground level at the specified coordinates within the supplied date range.
 
         Params:
-        - unit (str): Wind speed unit, must be one of the following:
+        - unit (str): Wind speed unit; must be one of the following:
             - 'kmh' (kilometers per hour)
             - 'mph' (miles per hour)
             - 'ms' (meter per second)
@@ -199,22 +225,12 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         centimeters(m). Temperature is extracted as a part of a range of depth. Available
         depth ranges are 0-7cm, 7-28cm, 28-100cm, 100-255cm. The supplied depth must fall
         in the range of 0 and 255.
-        - unit: Temperature unit, must be 'celsius' or 'fahrenheit'.
+        - unit: Temperature unit; must be 'celsius' or 'fahrenheit'.
         """
         self._verify_temperature_unit(unit)
 
-        for key, value in constants.ARCHIVE_SOIL_DEPTH.items():
-            if depth in key:
-
-                # The range is represented in a string format as being
-                # a supported type for requesting the API.
-                depth_range: str = value
-                break
-
-        else:
-            raise ValueError(
-                f"Expected `depth` to be in the range of 0 and 256, got {depth}."
-            )
+        # Extracts the string representation of the depth range.
+        depth_range: str = self._get_soil_depth(depth)
 
         return self._get_periodical_data(
             {"hourly": f"soil_temperature_{depth_range}cm", "temperature_unit": unit},
@@ -232,17 +248,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         in the range of 0 and 255.
         """
 
-        for key, value in constants.ARCHIVE_SOIL_DEPTH.items():
-            if depth in key:
-
-                # The range is represented in a string format as being
-                # a supported type for requesting the API.
-                depth_range: str = value
-                break
-
-        else:
-            raise ValueError(
-                f"Expected `depth` to be in the range of 0 and 256, got {depth}."
-            )
+        # Extracts the string representation of the depth range.
+        depth_range: str = self._get_soil_depth(depth)
 
         return self._get_periodical_data({"hourly": f"soil_moisture_{depth_range}cm"})

@@ -237,6 +237,19 @@ class Weather(BaseForecast, BaseWeather):
         self._verify_precipitation_unit(unit)
         return self._get_current_data({"current": "rain", "precipitation_unit": unit})
 
+    def get_current_snowfall(self) -> int | float:
+        r"""
+        Returns the current snowfall in centimeters(cm) at the specified coordinates.
+        """
+        return self._get_current_data({"current": "snowfall"})
+
+    def is_day_or_night(self) -> int:
+        r"""
+        Returns whether it's day or night at the specified coordinates.
+        Returns integer `1` for daytime and `0` for night time.
+        """
+        return self._get_current_data({"current": "is_day"})
+
     def get_hourly_visibility(self) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly visibility data
@@ -246,7 +259,21 @@ class Weather(BaseForecast, BaseWeather):
 
     def get_hourly_precipitation_probability(self) -> pd.DataFrame:
         r"""
-        Returns the probability of precipitation (rain/showers/snowfall) data
+        Returns the probability of precipitation (rain/showers/snowfall)
         in percentage(%) at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": "precipitation_probability"})
+
+    def get_daily_max_uv_index(self) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of daily maximum Ultra-Violet (UV)
+        index data at the specified coordinates.
+        """
+        return self._get_periodical_data({"daily": "uv_index_max"})
+
+    def get_daily_max_precipitation_probability(self) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of daily maximum precipitation probability
+        (rain/showers/snowfall) in percentage (%) at the specified coordinates.
+        """
+        return self._get_periodical_data({"daily": "precipitation_probability_max"})
