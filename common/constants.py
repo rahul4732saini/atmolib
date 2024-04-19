@@ -51,6 +51,18 @@ ARCHIVE_SOIL_DEPTH = {
     range(100, 256): "100_to_255",
 }
 
+# Available depth options in centimeters(cm) for soil temperature data extraction.
+SOIL_TEMP_DEPTH = Literal[0, 6, 18, 54]
+
+# Available depth options in centimeters(cm) for soil moisture data extraction.
+SOIL_MOISTURE_DEPTH = {
+    range(1): "0_to_1",
+    range(1, 3): "1_to_3",
+    range(3, 9): "3_to_9",
+    range(9, 27): "9_to_27",
+    range(27, 81): "27_to_81",
+}
+
 # Available altitude options in meters(m) for historical wind data.
 ARCHIVE_WIND_ALTITUDES = Literal[10, 100]
 
