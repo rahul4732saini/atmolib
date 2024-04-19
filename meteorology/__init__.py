@@ -1,10 +1,10 @@
 r"""
-Weather Forecast Package
-------------------------
+Meteorology Package
+-------------------
 
-This package facilitates the extraction of weather data including
-atmospheric, marine, and air quality data. It provides a comprehensive
-set of tools for weather data extraction.
+This package facilitates the extraction of meteorology data including
+weather, historical weahter, marine, and air quality data. It provides
+a comprehensive set of objects and functions for the same.
 
 Classes Exported:
 - `Weather`: Extracts current or up to upcoming 16-days hourly and daily weather forecast data.
