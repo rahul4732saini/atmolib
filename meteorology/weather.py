@@ -263,3 +263,10 @@ class Weather(BaseForecast, BaseWeather):
         in percentage(%) at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": "precipitation_probability"})
+
+    def get_daily_max_uv_index(self) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of daily maximum Ultra-Violet (UV)
+        index data at the specified coordinates.
+        """
+        return self._get_periodical_data({"daily": "uv_index_max"})
