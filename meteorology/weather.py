@@ -312,6 +312,28 @@ class Weather(BaseForecast, BaseWeather):
         self._verify_wind_altitude(altitude)
         return self._get_periodical_data({"hourly": f"wind_direction_{altitude}m"})
 
+    def get_hourly_soil_temperature(
+        self, depth: int, unit: constants.TEMPERATURE_UNITS = "celsius"
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly soil temperature data at
+        the specified depth and coordinates in the specified unit.
+
+        Params:
+        - depth: Depth below the ground level at which soil temperature data is
+        desired to be extracted in centimeters(cm); must be 0, 6, 18 or 54.
+        - unit (str): Temperature unit; must be 'celsius' or 'fahrenheit'.
+        """
+
+        if depth not in (0, 6, 18, 54):
+            raise ValueError(f"Expected `depth` to be 0, 6, 18 or 54; got {depth}.")
+
+        self._verify_temperature_unit(unit)
+
+        return self._get_periodical_data(
+            {"hourly": f"soil_temperature_{depth}cm", "temperature_unit": unit}
+        )
+
     def get_daily_max_uv_index(self) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of daily maximum Ultra-Violet (UV)
