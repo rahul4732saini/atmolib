@@ -276,7 +276,9 @@ class Weather(BaseForecast, BaseWeather):
         return self._get_periodical_data({"hourly": "precipitation_probability"})
 
     def get_hourly_wind_speed(
-        self, altitude: int = 10, unit: constants.WIND_SPEED_UNITS = "kmh"
+        self,
+        altitude: constants.WIND_ALTITUDE = 10,
+        unit: constants.WIND_SPEED_UNITS = "kmh",
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly wind speed data at the
