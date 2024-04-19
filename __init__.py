@@ -7,7 +7,7 @@ the Open-Meteo APIs. It enables developers to extract weather, historical weathe
 and marine weather data effortlessly, empowering them to integrate accurate meteorological
 information seamlessly into their applications.
 
-Features:
+#### Features:
 - Weather data extraction: Retrieve current and forecast weather data for any location.
 - Historical weather data: Access past weather data for analysis and reporting.
 - Air quality information: Obtain real-time air quality data to monitor environmental conditions.
@@ -15,7 +15,7 @@ Features:
 
 Author: rahul4732saini
 Version: ---
-License: MIT License, see LICENSE for more details. (https://opensource.org/licenses/MIT)
+License: MIT, see LICENSE for more details. (https://opensource.org/licenses/MIT)
 """
 
 __all__ = (
