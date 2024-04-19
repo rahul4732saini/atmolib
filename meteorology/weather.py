@@ -164,18 +164,27 @@ class Weather(BaseForecast, BaseWeather):
         return self._get_current_data({"current": f"wind_direction_{altitude}m"})
 
     def get_current_wind_gusts(
-        self, unit: constants.WIND_SPEED_UNITS = "kmh"
+        self,
+        altitude: constants.WIND_ALTITUDE = 10,
+        unit: constants.WIND_SPEED_UNITS = "kmh",
     ) -> int | float:
         r"""
         Returns the current wind gusts above 10 meters(m) from ground level in the specified unit.
 
         Params:
+        - altitude (int): Altitude from the ground level; must be 10, 80, 120 or 180.
         - unit (str): Wind speed unit; must be one of the following:
             - 'kmh' (kilometers per hour)
             - 'mph' (miles per hour)
             - 'ms' (meter per second)
             - 'kn' (knots)
         """
+
+        if altitude not in (10, 80, 120, 180):
+            raise ValueError(
+                f"Expected `altitude` to be 10, 80, 120 or 180; got {altitude}."
+            )
+
         self._verify_wind_speed_unit(unit)
 
         return self._get_current_data(
