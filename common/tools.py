@@ -121,7 +121,7 @@ def get_periodical_data(
     - KeyError: If 'hourly' key is not found in the `params` dictionary.
     """
 
-    if not params.get("latitude") or not params.get("longitude"):
+    if params.get("latitude") is None or params.get("longitude") is None:
         raise KeyError(
             "'latitude' and 'longitude' keys not found in the `params` dictionary "
             "to indicate the coordinates of the location."
@@ -139,7 +139,7 @@ def get_periodical_data(
             "Expected 'daily' or 'hourly' parameter in the `params` dictionary, got none."
         )
 
-    if not params.get(frequency):
+    if params.get(frequency) is None:
         raise KeyError(
             f"'{frequency}' key not found in the `params` dictionary with the requested weather data type."
         )
