@@ -342,6 +342,27 @@ class BaseWeather(BaseMeteor):
             {"hourly": "precipitation", "precipitation_unit": unit}
         )
 
+    def get_hourly_wind_gusts(
+        self,
+        unit: constants.WIND_SPEED_UNITS = "kmh",
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly wind gusts data 10 meters(m) above the
+        ground level at the specified coordinates.
+
+        Params:
+        - unit (str): Wind speed unit; must be one of the following:
+            - 'kmh' (kilometers per hour)
+            - 'mph' (miles per hour)
+            - 'ms' (meter per second)
+            - 'kn' (knots)
+        """
+        self._verify_wind_speed_unit(unit)
+
+        return self._get_periodical_data(
+            {"hourly": f"wind_gusts_10m", "wind_speed_unit": unit}
+        )
+
     def get_daily_temperature(
         self,
         type_: constants.DAILY_WEATHER_REQUEST_TYPES,
@@ -466,6 +487,13 @@ class BaseWeather(BaseMeteor):
         return self._get_periodical_data(
             {"daily": "rain_sum", "precipitation_unit": unit}
         )
+
+    def get_daily_total_snowfall(self) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of daily rainfall data in
+        centimeters(m) at the specified coordinates.
+        """
+        return self._get_periodical_data({"daily": "snowfall_sum"})
 
     def get_daily_sunrise_time(self) -> pd.DataFrame:
         r"""

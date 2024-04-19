@@ -192,27 +192,6 @@ class WeatherArchive(BaseWeather, BaseMeteor):
 
         return self._get_periodical_data({"hourly": f"wind_direction_{altitude}"})
 
-    def get_hourly_wind_gusts(
-        self,
-        unit: constants.WIND_SPEED_UNITS = "kmh",
-    ) -> pd.DataFrame:
-        r"""
-        Returns a pandas DataFrame of hourly wind gusts data 10 meters(m) above the
-        ground level at the specified coordinates within the supplied date range.
-
-        Params:
-        - unit (str): Wind speed unit; must be one of the following:
-            - 'kmh' (kilometers per hour)
-            - 'mph' (miles per hour)
-            - 'ms' (meter per second)
-            - 'kn' (knots)
-        """
-        self._verify_wind_speed_unit(unit)
-
-        return self._get_periodical_data(
-            {"hourly": f"wind_gusts_10m", "wind_speed_unit": unit}
-        )
-
     def get_hourly_soil_temperature(
         self, depth: int, unit: constants.TEMPERATURE_UNITS = "celsius"
     ) -> pd.DataFrame:

@@ -33,6 +33,18 @@ class Weather(BaseForecast, BaseWeather):
     # Closes the request session upon exit.
     atexit.register(_session.close)
 
+    @staticmethod
+    def _verify_wind_altitude(altitude: int) -> None:
+        r"""
+        Verifies the specified altitude for wind data extraction. Raises a ValueError if
+        the argument provided is not a valid altitude for requesting data from the API.
+        """
+
+        if altitude not in (10, 80, 120, 180):
+            raise ValueError(
+                f"Expected `altitude` to be 10, 80, 120 or 180; got {altitude}."
+            )
+
     def get_current_temperature(
         self,
         altitude: constants.TEMPERATURE_ALTITUDE = 2,
@@ -132,12 +144,7 @@ class Weather(BaseForecast, BaseWeather):
             - 'ms' (meter per second)
             - 'kn' (knots)
         """
-
-        if altitude not in (2, 80, 120, 180):
-            raise ValueError(
-                f"Expected `altitude` to be 10, 80, 120 or 180; got {altitude}."
-            )
-
+        self._verify_wind_altitude(altitude)
         self._verify_wind_speed_unit(unit)
 
         return self._get_current_data(
@@ -156,7 +163,7 @@ class Weather(BaseForecast, BaseWeather):
         - altitude (int): Altitude from the ground level; must be 10, 80, 120 or 180.
         """
 
-        if altitude not in (2, 80, 120, 180):
+        if altitude not in (10, 80, 120, 180):
             raise ValueError(
                 f"Expected `altitude` to be 10, 80, 120 or 180; got {altitude}."
             )
@@ -164,18 +171,22 @@ class Weather(BaseForecast, BaseWeather):
         return self._get_current_data({"current": f"wind_direction_{altitude}m"})
 
     def get_current_wind_gusts(
-        self, unit: constants.WIND_SPEED_UNITS = "kmh"
+        self,
+        altitude: constants.WIND_ALTITUDE = 10,
+        unit: constants.WIND_SPEED_UNITS = "kmh",
     ) -> int | float:
         r"""
         Returns the current wind gusts above 10 meters(m) from ground level in the specified unit.
 
         Params:
+        - altitude (int): Altitude from the ground level; must be 10, 80, 120 or 180.
         - unit (str): Wind speed unit; must be one of the following:
             - 'kmh' (kilometers per hour)
             - 'mph' (miles per hour)
             - 'ms' (meter per second)
             - 'kn' (knots)
         """
+        self._verify_wind_altitude(altitude)
         self._verify_wind_speed_unit(unit)
 
         return self._get_current_data(
@@ -259,7 +270,58 @@ class Weather(BaseForecast, BaseWeather):
 
     def get_hourly_precipitation_probability(self) -> pd.DataFrame:
         r"""
-        Returns the probability of precipitation (rain/showers/snowfall) data
+        Returns the probability of precipitation (rain/showers/snowfall)
         in percentage(%) at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": "precipitation_probability"})
+
+    def get_hourly_wind_speed(
+        self,
+        altitude: constants.WIND_ALTITUDE = 10,
+        unit: constants.WIND_SPEED_UNITS = "kmh",
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly wind speed data at the
+        specified coordinates and altitude in the specified unit.
+
+        Params:
+        - altitude (int): Altitude from the ground level; must be 10, 80, 120 or 180.
+        - unit (str): Wind speed unit; must be one of the following:
+            - 'kmh' (kilometers per hour)
+            - 'mph' (miles per hour)
+            - 'ms' (meter per second)
+            - 'kn' (knots)
+        """
+        self._verify_wind_altitude(altitude)
+        self._verify_wind_speed_unit(unit)
+
+        return self._get_periodical_data(
+            {"hourly": f"wind_speed_{altitude}m", "wind_speed_unit": unit}
+        )
+
+    def get_hourly_wind_direction(
+        self, altitude: constants.WIND_ALTITUDE = 10
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly wind direction data in degrees at
+        the specified coordinates and altitude in the specified unit.
+
+        Params:
+        - altitude (int): Altitude from the ground level; must be 10, 80, 120 or 180.
+        """
+        self._verify_wind_altitude(altitude)
+        return self._get_periodical_data({"hourly": f"wind_direction_{altitude}m"})
+
+    def get_daily_max_uv_index(self) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of daily maximum Ultra-Violet (UV)
+        index data at the specified coordinates.
+        """
+        return self._get_periodical_data({"daily": "uv_index_max"})
+
+    def get_daily_max_precipitation_probability(self) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of daily maximum precipitation probability
+        (rain/showers/snowfall) in percentage (%) at the specified coordinates.
+        """
+        return self._get_periodical_data({"daily": "precipitation_probability_max"})
