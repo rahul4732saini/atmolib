@@ -237,6 +237,12 @@ class Weather(BaseForecast, BaseWeather):
         self._verify_precipitation_unit(unit)
         return self._get_current_data({"current": "rain", "precipitation_unit": unit})
 
+    def get_current_snowfall(self) -> int | float:
+        r"""
+        Returns the current snowfall in centimeters(cm) at the specified coordinates.
+        """
+        return self._get_current_data({"current": "snowfall"})
+
     def is_day_or_night(self) -> int:
         r"""
         Returns whether it's day or night at the specified coordinates.
