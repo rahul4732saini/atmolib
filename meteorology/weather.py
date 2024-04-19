@@ -297,6 +297,19 @@ class Weather(BaseForecast, BaseWeather):
             {"hourly": f"wind_speed_{altitude}m", "wind_speed_unit": unit}
         )
 
+    def get_hourly_wind_direction(
+        self, altitude: constants.WIND_ALTITUDE = 10
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly wind direction data in degrees at
+        the specified coordinates and altitude in the specified unit.
+
+        Params:
+        - altitude (int): Altitude from the ground level; must be 10, 80, 120 or 180.
+        """
+        self._verify_wind_altitude(altitude)
+        return self._get_periodical_data({"hourly": f"wind_direction_{altitude}m"})
+
     def get_daily_max_uv_index(self) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of daily maximum Ultra-Violet (UV)
