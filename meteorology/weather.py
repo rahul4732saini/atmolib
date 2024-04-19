@@ -133,7 +133,7 @@ class Weather(BaseForecast, BaseWeather):
             - 'kn' (knots)
         """
 
-        if altitude not in (2, 80, 120, 180):
+        if altitude not in (10, 80, 120, 180):
             raise ValueError(
                 f"Expected `altitude` to be 10, 80, 120 or 180; got {altitude}."
             )
