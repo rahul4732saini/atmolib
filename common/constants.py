@@ -183,3 +183,14 @@ DAILY_WEATHER_SUMMARY_DATA_TYPES = [
     "wind_speed_10m_mean",
     "wind_direction_10m_dominant",
 ]
+
+# List of column labels for the daily weather summary pandas DataFrame object.
+DAILY_WEATHER_SUMMARY_COLUMN_LABELS = [
+    "weather_code",
+    "temperature",
+    "daylight_duration",
+    "uv_index",
+    "precipitation",
+    "wind_speed",
+    "wind_direction",
+]
