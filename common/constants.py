@@ -159,6 +159,20 @@ HOURLY_WEATHER_SUMMARY_DATA_TYPES = [
     "soil_temperature_0cm",
 ]
 
+# List of column labels for the hourly weather summary pandas DataFrame object.
+HOURLY_WEATHER_SUMMARY_COLUMN_LABELS = [
+    "temperature",
+    "relative_humidity",
+    "dew_point",
+    "precipitation",
+    "weather_code",
+    "surface_pressure",
+    "cloud_cover",
+    "visibility",
+    "wind_speed",
+    "soil_temperature",
+]
+
 # List of weather data types extracted in the daily weather summary data extraction.
 DAILY_WEATHER_SUMMARY_DATA_TYPES = [
     "weather_code",
