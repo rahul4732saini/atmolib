@@ -165,11 +165,11 @@ def get_periodical_data(
     return dataframe
 
 
-def get_summary_data(
+def get_current_summary_data(
     session: requests.Session, api: str, params: dict[str, Any]
 ) -> pd.Series:
     r"""
-    Base function for meteorology summary data extraction from supplied API.
+    Base function for current meteorology summary data extraction from supplied API.
 
     This function is intended for internal use within the package and may not be called
     directly by its users. It is exposed publicly for use by other modules within the package.
@@ -181,8 +181,8 @@ def get_summary_data(
     coordinates of the location, requested data type, etc.
 
     #### Returns:
-    - pd.Series: Returns a pandas Series of the meteorology summary data, comprising of the
-    index labels being the string representations of the data types.
+    - pd.Series: Returns a pandas Series of the current meteorology summary data, comprising
+    of the index labels being the string representations of the data types.
     """
 
     if params.get("latitude") is None or params.get("longitude") is None:
@@ -191,23 +191,17 @@ def get_summary_data(
             "to indicate the coordinates of the location."
         )
 
-    # Iterates through the `params` dictionary searching for the key named after the
-    # frequency ('hourly', 'daily' or 'current') of the requested data and assigns the
-    # key to the `frequency` variable to be used ahead. Raises a KeyError if none is found.
-    for key in params:
-        if key in ("hourly", "daily", "current"):
-            frequency: str = key
-            break
-    else:
+    if params.get("current") is None:
         raise KeyError(
-            "Expected 'daily', 'hourly' or 'current' key in the `params` dictionary, got none."
+            "`current` key not found in the `params` dictionary "
+            "with the requested weather data types."
         )
 
     results: dict[str, Any] = _request_json(api, params, session)
 
-    # The key corresponding to the supplied `frequency` in the `results`
-    # dictionary holds all the summary data key-value pairs.
-    data: dict[str, Any] = results[frequency]
+    # The 'current' key in in the `results` dictionary holds
+    # all the current summary data key-value pairs.
+    data: dict[str, Any] = results["current"]
 
     # Removing unnecessary key-values pairs.
     del data["time"], data["interval"]
