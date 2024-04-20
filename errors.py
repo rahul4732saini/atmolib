@@ -1,8 +1,9 @@
 r"""
-Errors module for the pyweather package.
+Errors Module
+-------------
 
-This module defines the error classes used throughout the
-pyweather package to handle various exceptional scenarios.
+The module defined error class used throughout the pyweather
+package to handle various exceptional scenatios.
 """
 
 
