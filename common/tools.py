@@ -12,6 +12,7 @@ from types import ModuleType
 import requests
 import pandas as pd
 
+from . import constants
 from errors import RequestError
 
 
@@ -162,3 +163,55 @@ def get_periodical_data(
     )
 
     return dataframe
+
+
+def get_summary_data(
+    session: requests.Session, api: str, params: dict[str, Any]
+) -> pd.Series:
+    r"""
+    Base function for meteorology summary data extraction from supplied API.
+
+    This function is intended for internal use within the package and may not be called
+    directly by its users. It is exposed publicly for use by other modules within the package.
+
+    #### Params:
+    - session (requests.Session): A requests.Session object for making the API requests.
+    - api (str): Absolute URL of the API endpoint.
+    - params (dict[str, str | int]): Necessary parameters for the API request including the
+    coordinates of the location, requested data type, etc.
+
+    #### Returns:
+    - pd.Series: Returns a pandas Series of the meteorology summary data, comprising of the
+    index labels being the string representations of the data types.
+    """
+
+    if params.get("latitude") is None or params.get("longitude") is None:
+        raise KeyError(
+            "'latitude' and 'longitude' keys not found in the `params` dictionary "
+            "to indicate the coordinates of the location."
+        )
+
+    # Iterates through the `params` dictionary searching for the key named after the
+    # frequency ('hourly', 'daily' or 'current') of the requested data and assigns the
+    # key to the `frequency` variable to be used ahead. Raises a KeyError if none is found.
+    for key in params:
+        if key in ("hourly", "daily", "current"):
+            frequency: str = key
+            break
+    else:
+        raise KeyError(
+            "Expected 'daily', 'hourly' or 'current' key in the `params` dictionary, got none."
+        )
+
+    results: dict[str, Any] = _request_json(api, params, session)
+
+    # The key corresponding to the supplied `frequency` in the `results`
+    # dictionary holds all the summary data key-value pairs.
+    data: dict[str, Any] = results[frequency]
+
+    # Removing unnecessary key-values pairs.
+    del data["time"], data["interval"]
+
+    return pd.Series(
+        data.values(), index=constants.CURRENT_WEATHER_SUMMARY_INDEX_LABELS
+    )
