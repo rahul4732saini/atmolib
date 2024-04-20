@@ -79,7 +79,10 @@ class Weather(BaseForecast, BaseWeather):
         }
 
         return tools.get_current_summary_data(
-            self._session, self._api, self._params | params
+            self._session,
+            self._api,
+            self._params | params,
+            constants.CURRENT_WEATHER_SUMMARY_INDEX_LABELS,
         )
 
     def get_current_temperature(
