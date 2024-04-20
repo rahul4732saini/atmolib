@@ -165,7 +165,7 @@ def get_periodical_data(
     return dataframe
 
 
-def get_current_summary_data(
+def get_current_summary(
     session: requests.Session, api: str, params: dict[str, Any], labels: list[str]
 ) -> pd.Series:
     r"""
