@@ -46,7 +46,7 @@ class Weather(BaseForecast, BaseWeather):
                 f"Expected `altitude` to be 10, 80, 120 or 180; got {altitude}."
             )
 
-    def get_current_weather_summary(
+    def get_current_summary(
         self,
         temperature_unit: constants.TEMPERATURE_UNITS = "celsius",
         precipitation_unit: constants.PRECIPITATION_UNITS = "mm",
