@@ -78,7 +78,7 @@ class Weather(BaseForecast, BaseWeather):
             "wind_speed_unit": wind_speed_unit,
         }
 
-        return tools.get_current_summary_data(
+        return tools.get_current_summary(
             self._session,
             self._api,
             self._params | params,

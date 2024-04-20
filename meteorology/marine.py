@@ -145,7 +145,7 @@ class MarineWeather(BaseForecast):
             constants.CURRENT_MARINE_WEATHER_SUMMARY_DATA_TYPES
         )
 
-        return tools.get_current_summary_data(
+        return tools.get_current_summary(
             self._session,
             self._api,
             self._params | {"current": data_types},
