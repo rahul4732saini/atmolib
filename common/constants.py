@@ -95,8 +95,7 @@ WAVE_TYPES_MAP = {"composite": "", "wind": "wind_", "swell": "swell_"}
 # Available types of temperatures which can be extracted from the API.
 TEMPERATURE_TYPES = Literal["temperature_2m", "apparent_temperature"]
 
-# A list of weather data types extracted in
-# the current weather summary data extraction.
+# A list of weather data types extracted in the current weather summary data extraction.
 CURRENT_WEATHER_SUMMARY_DATA_TYPES = [
     "temperature_2m",
     "relative_humidity_2m",
@@ -106,4 +105,16 @@ CURRENT_WEATHER_SUMMARY_DATA_TYPES = [
     "surface_pressure",
     "wind_speed_10m",
     "wind_direction_10m",
+]
+
+# A list of index labels for the current weather summary pandas Series object.
+CURRENT_WEATHER_SUMMARY_INDEX_LABELS = [
+    "temperature",
+    "relative_humidity",
+    "precipitation",
+    "weather_code",
+    "cloud_cover",
+    "surface_pressure",
+    "wind_speed",
+    "wind_direction",
 ]
