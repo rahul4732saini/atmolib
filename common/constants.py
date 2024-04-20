@@ -145,7 +145,7 @@ CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES = [
     "ammonia",
 ]
 
-# A list of weather data types extracted in the hourly weather summary data extraction.
+# List of weather data types extracted in the hourly weather summary data extraction.
 HOURLY_WEATHER_SUMMARY_DATA_TYPES = [
     "temperature_2m",
     "relative_humidity_2m",
@@ -159,7 +159,21 @@ HOURLY_WEATHER_SUMMARY_DATA_TYPES = [
     "soil_temperature_0cm",
 ]
 
-# A list of weather data types extracted in the daily weather summary data extraction.
+# List of column labels for the hourly weather summary pandas DataFrame object.
+HOURLY_WEATHER_SUMMARY_COLUMN_LABELS = [
+    "temperature",
+    "relative_humidity",
+    "dew_point",
+    "precipitation",
+    "weather_code",
+    "surface_pressure",
+    "cloud_cover",
+    "visibility",
+    "wind_speed",
+    "soil_temperature",
+]
+
+# List of weather data types extracted in the daily weather summary data extraction.
 DAILY_WEATHER_SUMMARY_DATA_TYPES = [
     "weather_code",
     "temperature_2m_mean",
@@ -168,4 +182,15 @@ DAILY_WEATHER_SUMMARY_DATA_TYPES = [
     "precipitation_sum",
     "wind_speed_10m_mean",
     "wind_direction_10m_dominant",
+]
+
+# List of column labels for the daily weather summary pandas DataFrame object.
+DAILY_WEATHER_SUMMARY_COLUMN_LABELS = [
+    "weather_code",
+    "temperature",
+    "daylight_duration",
+    "uv_index",
+    "precipitation",
+    "wind_speed",
+    "wind_direction",
 ]

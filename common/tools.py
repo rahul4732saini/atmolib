@@ -139,11 +139,6 @@ def get_periodical_data(
             "Expected 'daily' or 'hourly' parameter in the `params` dictionary, got none."
         )
 
-    if params.get(frequency) is None:
-        raise KeyError(
-            f"'{frequency}' key not found in the `params` dictionary with the requested weather data type."
-        )
-
     results: dict[str, Any] = _request_json(api, params, session)
 
     # The key corresponding to the supplied `frequency` in the `results` dictionary
