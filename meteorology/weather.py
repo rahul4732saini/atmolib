@@ -7,11 +7,12 @@ weather data and up to upcoming 16-days hourly and daily weather forecast data.
 """
 
 import atexit
+from typing import Any
 
 import requests
 import pandas as pd
 
-from common import constants
+from common import constants, tools
 from objects import BaseForecast, BaseWeather
 
 
@@ -44,6 +45,42 @@ class Weather(BaseForecast, BaseWeather):
             raise ValueError(
                 f"Expected `altitude` to be 10, 80, 120 or 180; got {altitude}."
             )
+
+    def get_current_weather_summary(
+        self,
+        temperature_unit: constants.TEMPERATURE_UNITS = "celsius",
+        precipitation_unit: constants.PRECIPITATION_UNITS = "mm",
+        wind_speed_unit: constants.WIND_SPEED_UNITS = "kmh",
+    ) -> pd.Series:
+        r"""
+        Returns a pandas Series of current weather summary data
+        at the specified coordinates in the specified units.
+
+        #### The weather summary data includes the following data types:
+        - temperature (2m above the ground level)
+        - relative humidity (2m above the ground level)
+        - precipitation (sum of rain/showers/snowfall)
+        - weather code
+        - cloud cover percentage
+        - surface pressure in HPa (Hecto-pascal)
+        - wind speed (10m above the ground level)
+        - wind direction in degrees (10m above the ground level)
+        """
+
+        # A string representation of the weather summary data types
+        # seperated by commas as supported for requesting the Web API.
+        data_types: str = ",".join(constants.CURRENT_WEATHER_SUMMARY_DATA_TYPES)
+
+        params: dict[str, Any] = {
+            "current": data_types,
+            "temperature_unit": temperature_unit,
+            "precipitation_unit": precipitation_unit,
+            "wind_speed_unit": wind_speed_unit,
+        }
+
+        return tools.get_current_summary_data(
+            self._session, self._api, self._params | params
+        )
 
     def get_current_temperature(
         self,
