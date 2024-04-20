@@ -158,3 +158,14 @@ HOURLY_WEATHER_SUMMARY_DATA_TYPES = [
     "wind_speed_10m",
     "soil_temperature_0cm",
 ]
+
+# A list of weather data types extracted in the daily weather summary data extraction.
+DAILY_WEATHER_SUMMARY_DATA_TYPES = [
+    "weather_code",
+    "temperature_2m_mean",
+    "daylight_duration",
+    "uv_index_max",
+    "precipitation_sum",
+    "wind_speed_10m_mean",
+    "wind_direction_10m_dominant",
+]

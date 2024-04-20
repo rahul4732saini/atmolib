@@ -85,6 +85,85 @@ class Weather(BaseForecast, BaseWeather):
             constants.CURRENT_WEATHER_SUMMARY_INDEX_LABELS,
         )
 
+    def get_hourly_summary(
+        self,
+        temperature_unit: constants.TEMPERATURE_UNITS = "celsius",
+        precipitation_unit: constants.PRECIPITATION_UNITS = "mm",
+        wind_speed_unit: constants.WIND_SPEED_UNITS = "kmh",
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly weather summary data
+        at the specified coordinates in the specified units.
+
+        #### The weather summary data includes the following data types:
+        - temperature (2m above the ground level)
+        - relative humidity (2m above the ground level)
+        - dew point (2m above the ground level)
+        - precipitation (sum of rain/showers/snowfall)
+        - weather code
+        - visbility in meters(m)
+        - cloud cover percentage(%)
+        - surface pressure in HPa (Hecto-pascal)
+        - wind speed (10m above the ground level)
+        - surface soil temperature
+        """
+
+        # A string representation of the weather summary data types
+        # seperated by commas as supported for requesting the Web API.
+        data_types: str = ",".join(constants.HOURLY_WEATHER_SUMMARY_DATA_TYPES)
+
+        params: dict[str, Any] = {
+            "hourly": data_types,
+            "temperature_unit": temperature_unit,
+            "precipitation_unit": precipitation_unit,
+            "wind_speed_unit": wind_speed_unit,
+        }
+
+        return tools.get_periodical_summary(
+            self._session,
+            self._api,
+            self._params | params,
+            constants.HOURLY_WEATHER_SUMMARY_DATA_TYPES,
+        )
+
+    def get_daily_summary(
+        self,
+        temperature_unit: constants.TEMPERATURE_UNITS = "celsius",
+        precipitation_unit: constants.PRECIPITATION_UNITS = "mm",
+        wind_speed_unit: constants.WIND_SPEED_UNITS = "kmh",
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of daily weather summary data
+        at the specified coordinates in the specified units.
+
+        #### The weather summary data includes the following data types:
+        - mean temperature (2m above the ground level)
+        - total precipitation (sum of rain/showers/snowfall)
+        - weather code
+        - Daylight duration
+        - max Ultra-Violet (UV) index
+        - mean wind speed (10m above the ground level)
+        - dominant wind direction
+        """
+
+        # A string representation of the weather summary data types
+        # seperated by commas as supported for requesting the Web API.
+        data_types: str = ",".join(constants.DAILY_WEATHER_SUMMARY_DATA_TYPES)
+
+        params: dict[str, Any] = {
+            "daily": data_types,
+            "temperature_unit": temperature_unit,
+            "precipitation_unit": precipitation_unit,
+            "wind_speed_unit": wind_speed_unit,
+        }
+
+        return tools.get_periodical_summary(
+            self._session,
+            self._api,
+            self._params | params,
+            constants.DAILY_WEATHER_SUMMARY_DATA_TYPES,
+        )
+
     def get_current_temperature(
         self,
         altitude: constants.TEMPERATURE_ALTITUDE = 2,
