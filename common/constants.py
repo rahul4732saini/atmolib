@@ -144,3 +144,28 @@ CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES = [
     "european_aqi",
     "ammonia",
 ]
+
+# A list of weather data types extracted in the hourly weather summary data extraction.
+HOURLY_WEATHER_SUMMARY_DATA_TYPES = [
+    "temperature_2m",
+    "relative_humidity_2m",
+    "dew_point_2m",
+    "precipitation",
+    "weather_code",
+    "surface_pressure",
+    "cloud_cover",
+    "visibility",
+    "wind_speed_10m",
+    "soil_temperature_0cm",
+]
+
+# A list of weather data types extracted in the daily weather summary data extraction.
+DAILY_WEATHER_SUMMARY_DATA_TYPES = [
+    "weather_code",
+    "temperature_2m_mean",
+    "daylight_duration",
+    "uv_index_max",
+    "precipitation_sum",
+    "wind_speed_10m_mean",
+    "wind_direction_10m_dominant",
+]
