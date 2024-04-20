@@ -123,7 +123,7 @@ class Weather(BaseForecast, BaseWeather):
             self._session,
             self._api,
             self._params | params,
-            constants.HOURLY_WEATHER_SUMMARY_DATA_TYPES,
+            constants.HOURLY_WEATHER_SUMMARY_COLUMN_LABELS,
         )
 
     def get_daily_summary(
@@ -161,7 +161,7 @@ class Weather(BaseForecast, BaseWeather):
             self._session,
             self._api,
             self._params | params,
-            constants.DAILY_WEATHER_SUMMARY_DATA_TYPES,
+            constants.DAILY_WEATHER_SUMMARY_COLUMN_LABELS,
         )
 
     def get_current_temperature(
