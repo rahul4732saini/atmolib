@@ -12,9 +12,9 @@ from typing import Any
 import requests
 import pandas as pd
 
-from common import constants
 from errors import RequestError
 from objects import BaseForecast
+from common import constants, tools
 
 
 class MarineWeather(BaseForecast):
@@ -127,6 +127,30 @@ class MarineWeather(BaseForecast):
 
             if response.status_code != 200:
                 raise RequestError(response.status_code, data["reason"])
+
+    def get_current_summary(self) -> pd.Series:
+        r"""
+        Returns a pandas Series of current marine weather summary data
+        at the specified coordinaets of the specified wave type.
+
+        #### The marine weather summary data includes the following data types:
+        - wave_height
+        - wave_direction
+        - wave_period
+        """
+
+        # A string representation of the marine weather summary data types
+        # seperated by commas as supported for requesting the Web API.
+        data_types: str = self._type + f",{self._type}".join(
+            constants.CURRENT_MARINE_WEATHER_SUMMARY_DATA_TYPES
+        )
+
+        return tools.get_current_summary(
+            self._session,
+            self._api,
+            self._params | {"current": data_types},
+            constants.CURRENT_MARINE_WEATHER_SUMMARY_DATA_TYPES,
+        )
 
     def get_current_wave_height(self) -> int | float:
         r"""

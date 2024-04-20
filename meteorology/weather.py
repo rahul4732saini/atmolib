@@ -7,11 +7,12 @@ weather data and up to upcoming 16-days hourly and daily weather forecast data.
 """
 
 import atexit
+from typing import Any
 
 import requests
 import pandas as pd
 
-from common import constants
+from common import constants, tools
 from objects import BaseForecast, BaseWeather
 
 
@@ -32,6 +33,57 @@ class Weather(BaseForecast, BaseWeather):
 
     # Closes the request session upon exit.
     atexit.register(_session.close)
+
+    @staticmethod
+    def _verify_wind_altitude(altitude: int) -> None:
+        r"""
+        Verifies the specified altitude for wind data extraction. Raises a ValueError if
+        the argument provided is not a valid altitude for requesting data from the API.
+        """
+
+        if altitude not in (10, 80, 120, 180):
+            raise ValueError(
+                f"Expected `altitude` to be 10, 80, 120 or 180; got {altitude}."
+            )
+
+    def get_current_summary(
+        self,
+        temperature_unit: constants.TEMPERATURE_UNITS = "celsius",
+        precipitation_unit: constants.PRECIPITATION_UNITS = "mm",
+        wind_speed_unit: constants.WIND_SPEED_UNITS = "kmh",
+    ) -> pd.Series:
+        r"""
+        Returns a pandas Series of current weather summary data
+        at the specified coordinates in the specified units.
+
+        #### The weather summary data includes the following data types:
+        - temperature (2m above the ground level)
+        - relative humidity (2m above the ground level)
+        - precipitation (sum of rain/showers/snowfall)
+        - weather code
+        - cloud cover percentage
+        - surface pressure in HPa (Hecto-pascal)
+        - wind speed (10m above the ground level)
+        - wind direction in degrees (10m above the ground level)
+        """
+
+        # A string representation of the weather summary data types
+        # seperated by commas as supported for requesting the Web API.
+        data_types: str = ",".join(constants.CURRENT_WEATHER_SUMMARY_DATA_TYPES)
+
+        params: dict[str, Any] = {
+            "current": data_types,
+            "temperature_unit": temperature_unit,
+            "precipitation_unit": precipitation_unit,
+            "wind_speed_unit": wind_speed_unit,
+        }
+
+        return tools.get_current_summary(
+            self._session,
+            self._api,
+            self._params | params,
+            constants.CURRENT_WEATHER_SUMMARY_INDEX_LABELS,
+        )
 
     def get_current_temperature(
         self,
@@ -132,12 +184,7 @@ class Weather(BaseForecast, BaseWeather):
             - 'ms' (meter per second)
             - 'kn' (knots)
         """
-
-        if altitude not in (2, 80, 120, 180):
-            raise ValueError(
-                f"Expected `altitude` to be 10, 80, 120 or 180; got {altitude}."
-            )
-
+        self._verify_wind_altitude(altitude)
         self._verify_wind_speed_unit(unit)
 
         return self._get_current_data(
@@ -156,7 +203,7 @@ class Weather(BaseForecast, BaseWeather):
         - altitude (int): Altitude from the ground level; must be 10, 80, 120 or 180.
         """
 
-        if altitude not in (2, 80, 120, 180):
+        if altitude not in (10, 80, 120, 180):
             raise ValueError(
                 f"Expected `altitude` to be 10, 80, 120 or 180; got {altitude}."
             )
@@ -164,18 +211,22 @@ class Weather(BaseForecast, BaseWeather):
         return self._get_current_data({"current": f"wind_direction_{altitude}m"})
 
     def get_current_wind_gusts(
-        self, unit: constants.WIND_SPEED_UNITS = "kmh"
+        self,
+        altitude: constants.WIND_ALTITUDE = 10,
+        unit: constants.WIND_SPEED_UNITS = "kmh",
     ) -> int | float:
         r"""
         Returns the current wind gusts above 10 meters(m) from ground level in the specified unit.
 
         Params:
+        - altitude (int): Altitude from the ground level; must be 10, 80, 120 or 180.
         - unit (str): Wind speed unit; must be one of the following:
             - 'kmh' (kilometers per hour)
             - 'mph' (miles per hour)
             - 'ms' (meter per second)
             - 'kn' (knots)
         """
+        self._verify_wind_altitude(altitude)
         self._verify_wind_speed_unit(unit)
 
         return self._get_current_data(
@@ -263,6 +314,96 @@ class Weather(BaseForecast, BaseWeather):
         in percentage(%) at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": "precipitation_probability"})
+
+    def get_hourly_wind_speed(
+        self,
+        altitude: constants.WIND_ALTITUDE = 10,
+        unit: constants.WIND_SPEED_UNITS = "kmh",
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly wind speed data at the
+        specified coordinates and altitude in the specified unit.
+
+        Params:
+        - altitude (int): Altitude from the ground level; must be 10, 80, 120 or 180.
+        - unit (str): Wind speed unit; must be one of the following:
+            - 'kmh' (kilometers per hour)
+            - 'mph' (miles per hour)
+            - 'ms' (meter per second)
+            - 'kn' (knots)
+        """
+        self._verify_wind_altitude(altitude)
+        self._verify_wind_speed_unit(unit)
+
+        return self._get_periodical_data(
+            {"hourly": f"wind_speed_{altitude}m", "wind_speed_unit": unit}
+        )
+
+    def get_hourly_wind_direction(
+        self, altitude: constants.WIND_ALTITUDE = 10
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly wind direction data in degrees at
+        the specified coordinates and altitude in the specified unit.
+
+        Params:
+        - altitude (int): Altitude from the ground level; must be 10, 80, 120 or 180.
+        """
+        self._verify_wind_altitude(altitude)
+        return self._get_periodical_data({"hourly": f"wind_direction_{altitude}m"})
+
+    def get_hourly_soil_temperature(
+        self,
+        depth: constants.SOIL_TEMP_DEPTH,
+        unit: constants.TEMPERATURE_UNITS = "celsius",
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly soil temperature data at
+        the specified depth and coordinates in the specified unit.
+
+        Params:
+        - depth: Depth below the ground level at which soil temperature data is
+        desired to be extracted in centimeters(cm); must be 0, 6, 18 or 54.
+        - unit (str): Temperature unit; must be 'celsius' or 'fahrenheit'.
+        """
+
+        if depth not in (0, 6, 18, 54):
+            raise ValueError(f"Expected `depth` to be 0, 6, 18 or 54; got {depth}.")
+
+        self._verify_temperature_unit(unit)
+
+        return self._get_periodical_data(
+            {"hourly": f"soil_temperature_{depth}cm", "temperature_unit": unit}
+        )
+
+    def get_hourly_soil_moisture(
+        self, depth: constants.SOIL_TEMP_DEPTH = 7
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of soil moisture (m^3/m^3)
+        data at the specified depth and coordinates.
+
+        Params:
+        - depth (int): Desired depth of the soild moisture data within the ground level in
+        centimeters(m). Moisture data is extracted as a part of a range of depth. Available
+        depth ranges are 0-1cm, 1-3cmd, 3-9cm, 9-27cm, 27-81cm. The supplied depth must fall
+        in the range of 0 and 81.
+        """
+
+        for key, value in constants.SOIL_MOISTURE_DEPTH.items():
+            if depth in key:
+
+                # The range is represented in a string format as being
+                # a supported type for requesting the API.
+                depth_range: str = value
+                break
+
+        else:
+            raise ValueError(
+                f"Expected `depth` to be in the range of 0 and 81; got {depth}."
+            )
+
+        return self._get_periodical_data({"hourly": f"soil_moisture_{depth_range}cm"})
 
     def get_daily_max_uv_index(self) -> pd.DataFrame:
         r"""

@@ -1,9 +1,9 @@
 r"""
-Constants Module for the pyweather package
+Constants Module
+----------------
 
-This module comprises all the constants used throughout the
-pyweather package. These constants are designed to assist
-other functionalities present within the package.
+This module comprises all the constants used throughout the pyweather package.
+These constants are designed to assist other functionalities present within the package.
 """
 
 import json
@@ -18,7 +18,7 @@ AIR_QUALITY_API = "https://air-quality-api.open-meteo.com/v1/air-quality"
 GEOCODING_API = "https://geocoding-api.open-meteo.com/v1/search"
 ELEVATION_API = "https://api.open-meteo.com/v1/elevation"
 
-# Weather code JSON file comprising weather codes mapped with corresponding
+# Weather codes JSON file comprising weather codes mapped with the corresponding
 # description of the same. `WEATHER_CODES` loads the JSON file into a dictionary.
 WEATHER_CODES_FILE = Path("weather_codes.json")
 WEATHER_CODES = json.load(WEATHER_CODES_FILE.open())
@@ -38,11 +38,12 @@ PRESSURE_LEVELS = Literal["sealevel", "surface"]
 # as request parameter for extracting data from the Open-Meteo Weather API.
 PRESSURE_LEVEL_MAPPING = {"sealevel": "pressure_msl", "surface": "surface_pressure"}
 
-# Holds the altitude in meters(m) above the surface level.
+# Holds the altitude in meters(m) above the surface level for different request types.
 TEMPERATURE_ALTITUDE = Literal[2, 80, 120, 180]
 WIND_ALTITUDE = Literal[10, 80, 120, 180]
+ARCHIVE_WIND_ALTITUDES = Literal[10, 100]
 
-# Available depth options in centimeters(cm) for
+# Available depth-range options in centimeters(cm) for
 # historical soil temperature/moisture data extraction.
 ARCHIVE_SOIL_DEPTH = {
     range(7): "0_to_7",
@@ -51,8 +52,17 @@ ARCHIVE_SOIL_DEPTH = {
     range(100, 256): "100_to_255",
 }
 
-# Available altitude options in meters(m) for historical wind data.
-ARCHIVE_WIND_ALTITUDES = Literal[10, 100]
+# Available depth options in centimeters(cm) for soil temperature data extraction.
+SOIL_TEMP_DEPTH = Literal[0, 6, 18, 54]
+
+# Available depth-range options in centimeters(cm) for soil moisture data extraction.
+SOIL_MOISTURE_DEPTH = {
+    range(1): "0_to_1",
+    range(1, 3): "1_to_3",
+    range(3, 9): "3_to_9",
+    range(9, 27): "9_to_27",
+    range(27, 81): "27_to_81",
+}
 
 # Air Quality Index sources.
 AQI_SOURCES = Literal["european", "us"]
@@ -84,3 +94,53 @@ WAVE_TYPES_MAP = {"composite": "", "wind": "wind_", "swell": "swell_"}
 
 # Available types of temperatures which can be extracted from the API.
 TEMPERATURE_TYPES = Literal["temperature_2m", "apparent_temperature"]
+
+# A list of weather data types extracted in the current weather summary data extraction.
+CURRENT_WEATHER_SUMMARY_DATA_TYPES = [
+    "temperature_2m",
+    "relative_humidity_2m",
+    "precipitation",
+    "weather_code",
+    "cloud_cover",
+    "surface_pressure",
+    "wind_speed_10m",
+    "wind_direction_10m",
+]
+
+# A list of index labels for the current weather summary pandas Series object.
+CURRENT_WEATHER_SUMMARY_INDEX_LABELS = [
+    "temperature",
+    "relative_humidity",
+    "precipitation",
+    "weather_code",
+    "cloud_cover",
+    "surface_pressure",
+    "wind_speed",
+    "wind_direction",
+]
+
+# A list of marine weather data types extracted in the current marine
+# weather summary data extraction. The same are also used as the index
+# lables for the marine weather summary pandas Series object.
+CURRENT_MARINE_WEATHER_SUMMARY_DATA_TYPES = [
+    "wave_height",
+    "wave_direction",
+    "wave_period",
+]
+
+# A list of air quality data types extracted in the current
+# air quality summary data extraction. The same are also used
+# as the index lables for the air quality summary pandas Series object.
+CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES = [
+    "dust",
+    "pm10",
+    "ozone",
+    "pm2_5",
+    "us_aqi",
+    "uv_index",
+    "carbon_monoxide",
+    "nitrogen_dioxide",
+    "sulphur_dioxide",
+    "european_aqi",
+    "ammonia",
+]
