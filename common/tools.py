@@ -166,7 +166,7 @@ def get_periodical_data(
 
 
 def get_current_summary_data(
-    session: requests.Session, api: str, params: dict[str, Any]
+    session: requests.Session, api: str, params: dict[str, Any], labels: list[str]
 ) -> pd.Series:
     r"""
     Base function for current meteorology summary data extraction from supplied API.
@@ -179,6 +179,8 @@ def get_current_summary_data(
     - api (str): Absolute URL of the API endpoint.
     - params (dict[str, str | int]): Necessary parameters for the API request including the
     coordinates of the location, requested data type, etc.
+    - labels (list[str]): A list of strings used as index labels for
+    the summary data pandas Series object.
 
     #### Returns:
     - pd.Series: Returns a pandas Series of the current meteorology summary data, comprising
@@ -206,6 +208,4 @@ def get_current_summary_data(
     # Removing unnecessary key-values pairs.
     del data["time"], data["interval"]
 
-    return pd.Series(
-        data.values(), index=constants.CURRENT_WEATHER_SUMMARY_INDEX_LABELS
-    )
+    return pd.Series(data.values(), index=labels)
