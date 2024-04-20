@@ -42,8 +42,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         r"""
         Creates an instance of the WeatherArchive class.
 
-        Params:
-        -------
+        #### Params:
         - lat (int | float): Latitudinal coordinates of the location.
         - long (int | float): Longitudinal coordinates of the location.
         - start_date (str | date | datetime): Initial date for the weather data.
@@ -100,8 +99,8 @@ class WeatherArchive(BaseWeather, BaseMeteor):
     @staticmethod
     def _resolve_date(target: str | date | datetime, var: str) -> date:
         r"""
-        [PRIVATE] Verifies the supplied date argument, resolves it into a
-        string formatted date object with the ISO-8601 format (YYYY-MM-DD).
+        Verifies the supplied date argument, resolves it into a string
+        formatted date object with the ISO-8601 format (YYYY-MM-DD).
 
         The `var` parameter has to be the name of the actual date parameter
         (`start_date` or `end_date`) for reference in custom error messages.
@@ -126,10 +125,10 @@ class WeatherArchive(BaseWeather, BaseMeteor):
     @staticmethod
     def _get_soil_depth(depth: int) -> str:
         r"""
-        [PRIVATE] Returns a string representation of the depth range
+        Returns a string representation of the depth range
         supported as a request parameter for the API request.
 
-        Params:
+        #### Params:
         - depth (int): Desired depth for data extraction; must be an integer between 0 and 256.
         """
 
@@ -157,7 +156,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         Returns a pandas DataFrame of hourly wind speed data at the specified
         altitude and coordinates within the supplied date range.
 
-        Params:
+        #### Params:
         - altitude (int): Altitude from the ground level in meters(m); must be 10 or 100.
         - unit (str): Wind speed unit; must be one of the following:
             - 'kmh' (kilometers per hour)
@@ -183,7 +182,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         Returns a pandas DataFrame of hourly wind direction data at the
         specified altitude and coordinates within the supplied date range.
 
-        Params:
+        #### Params:
         - altitude (int): Altitude from the ground level in meters(m); must be 10 or 100.
         """
 
@@ -199,7 +198,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         Returns a pandas DataFrame of hourly soil temperature data at the specified
         depth and coordinates in the specified unit within the supplied date range.
 
-        Params:
+        #### Params:
         - depth (int): Desired depth of the temperature data within the ground level in
         centimeters(m). Temperature is extracted as a part of a range of depth. Available
         depth ranges are 0-7cm, 7-28cm, 28-100cm, 100-255cm. The supplied depth must fall
@@ -220,7 +219,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         Returns a pandas DataFrame of hourly soil moisture data at the specified
         depth and coordinates in the specified unit within the supplied date range.
 
-        Params:
+        #### Params:
         - depth (int): Desired depth of the moisture data within the ground level in
         centimeters(m). Moisture is extracted as a part of a range of depth. Available
         depth ranges are 0-7cm, 7-28cm, 28-100cm, 100-255cm. The supplied depth must fall

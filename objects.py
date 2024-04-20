@@ -1,6 +1,9 @@
 r"""
+Objects Module
+--------------
+
 This module comprises classes that serve as foundational components
-for various functionalities within the package.
+for various objects and functionalities within the pyweather package.
 """
 
 from typing import Any
@@ -56,7 +59,7 @@ class BaseMeteor:
         Uses the specified parameters to request the specified
         Open-Meteo API and returns the current weather data.
 
-        Params:
+        #### Params:
         - params (dict[str, Any]): A dictionary all the necessary parameters except the
         coordinate parameters to request the Open-Meteo Weather API.
         """
@@ -73,7 +76,7 @@ class BaseMeteor:
         Uses the specified parameters to request the specified Open-Meteo
         API and returns the periodical weather data as a pandas DataFrame.
 
-        Params:
+        #### Params:
         - params (dict[str, Any]): A dictionary all the necessary parameters except the
         coordinate parameters to request the Open-Meteo Weather API.
         """
@@ -103,7 +106,7 @@ class BaseForecast(BaseMeteor):
         rf"""
         Creates an instance of the {self.__class__.__name__} class.
 
-        Params:
+        #### Params:
         -------
         - lat (int | float): Latitudinal coordinates of the location.
         - long (int | float): Longitudinal coordinates of the location.
@@ -186,7 +189,7 @@ class BaseWeather(BaseMeteor):
         Returns a pandas DataFrame of temperature data 2 meters(m) above the ground
         level at the specified coordinates.
 
-        Params:
+        #### Params:
         - unit: Temperature unit; must be 'celsius' or 'fahrenheit'.
         """
         self._verify_temperature_unit(unit)
@@ -202,7 +205,7 @@ class BaseWeather(BaseMeteor):
         Returns a pandas DataFrame of apparent temperature data at
         the specified coordinates.
 
-        Params:
+        #### Params:
         - unit: Temperature unit; must be 'celsius' or 'fahrenheit'.
         """
         self._verify_temperature_unit(unit)
@@ -218,7 +221,7 @@ class BaseWeather(BaseMeteor):
         Returns a pandas DataFrame of hourly dew point data 2 meters(m) above the
         ground level at the specified coordinates.
 
-        Params:
+        #### Params:
         - unit: Temperature unit; must be 'celsius' or 'fahrenheit'.
         """
         self._verify_temperature_unit(unit)
@@ -241,10 +244,10 @@ class BaseWeather(BaseMeteor):
         Returns a pandas DataFrame of hourly weather code data with its corresponding
         description at the specified coordinates.
 
-        Params:
+        #### Params:
         - frequency: Frequency of the data distribution; must be 'daily' or 'hourly'.
 
-        Columns:
+        #### Columns:
         - time: time of the forecast data in ISO-8601 format (YYYY-MM-DDTHH-MM) or (YYYY-MM-DD).
         - data: weather code at the corresponding hour.
         - description: description of the corresponding weather code.
@@ -272,18 +275,25 @@ class BaseWeather(BaseMeteor):
         Returns a pandas DataFrame of hourly rainfall data
         in mm/inch at the specified coordinates.
 
-        Params:
+        #### Params:
         - unit: Precipitation unit; must be 'mm' or 'inch'.
         """
         self._verify_precipitation_unit(unit)
         return self._get_periodical_data({"hourly": "rain", "precipitation_unit": unit})
+
+    def get_hourly_snowfall(self) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of hourly snowfall data
+        in centimeters(cm) at the specified coordinates.
+        """
+        return self._get_periodical_data({"hourly": "rain"})
 
     def get_hourly_pressure(self, level: constants.PRESSURE_LEVELS) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of the hourly atmospheric pressure data
         in Hectopascal (hPa) at the specified coordinates.
 
-        Params:
+        #### Params:
         - level (str): Desired level of the atmospheric data; must be 'surface' or 'sealevel'.
         """
 
@@ -311,7 +321,7 @@ class BaseWeather(BaseMeteor):
         Returns a pandas DataFrame of hourly cloud cover percentage(%) data
         at the specified level and coordinates.
 
-        Params:
+        #### Params:
         - level (str): Altitude level of the desired cloud coverage; must be
         one of the following:
             - 'low' (clouds and fog up to an altitude of 3 km.)
@@ -333,7 +343,7 @@ class BaseWeather(BaseMeteor):
         Returns a pandas DataFrame of hourly precipitation (sum of rain, showers, and snowfall)
         data at the specified coordinates.
 
-        Params:
+        #### Params:
         - unit: Precipitation unit; must be 'mm' or 'inch'.
         """
         self._verify_precipitation_unit(unit)
@@ -350,7 +360,7 @@ class BaseWeather(BaseMeteor):
         Returns a pandas DataFrame of hourly wind gusts data 10 meters(m) above the
         ground level at the specified coordinates.
 
-        Params:
+        #### Params:
         - unit (str): Wind speed unit; must be one of the following:
             - 'kmh' (kilometers per hour)
             - 'mph' (miles per hour)
@@ -372,7 +382,7 @@ class BaseWeather(BaseMeteor):
         Returns a pandas DataFrame of daily maximum, minimum or mean temperature data
         2 meters(m) above the ground level at the specified coordinates.
 
-        Params:
+        #### Params:
         - type: The type of daily temperature to be extracted; must be 'min', 'max' or 'mean'.
             - 'min': Daily minimum temperature.
             - 'max': Daily maximum temperature.
@@ -398,7 +408,7 @@ class BaseWeather(BaseMeteor):
         Returns a pandas DataFrame of daily maximum, minimum or mean apparent temperature
         data 2 meters(m) above the ground level at the specified coordinates.
 
-        Params:
+        #### Params:
         - type: Specifies the type of daily apparent temperature to
         be retrieved; must be 'min', 'max' or 'mean'.
             - 'min': Daily minimum apparent temperature.
@@ -423,7 +433,7 @@ class BaseWeather(BaseMeteor):
         Returns the daily maximum wind speed 2 meters(m) above the ground
         level at the specified coordinates.
 
-        Params:
+        #### Params:
         - unit (str): Wind speed unit; must be one of the following:
             - 'kmh' (kilometers per hour)
             - 'mph' (miles per hour)
@@ -447,7 +457,7 @@ class BaseWeather(BaseMeteor):
         Returns the daily maximum wind gusts 2 meters(m) above the ground
         level at the specified coordinates.
 
-        Params:
+        #### Params:
         - unit (str): Wind speed unit; must be one of the following:
             - 'kmh' (kilometers per hour)
             - 'mph' (miles per hour)
@@ -464,7 +474,7 @@ class BaseWeather(BaseMeteor):
         Returns a pandas DataFrame of daily precipitation (sum of rain, showers, and snowfall)
         data at the specified coordinates.
 
-        Params:
+        #### Params:
         - unit: Precipitation unit; must be 'mm' or 'inch'.
         """
         self._verify_precipitation_unit(unit)
@@ -479,7 +489,7 @@ class BaseWeather(BaseMeteor):
         r"""
         Returns a pandas DataFrame of daily rainfall data in mm/inch at the specified coordinates.
 
-        Params:
+        #### Params:
         - unit: Precipitation unit; must be 'mm' or 'inch'.
         """
         self._verify_precipitation_unit(unit)

@@ -94,7 +94,7 @@ class Weather(BaseForecast, BaseWeather):
         Returns the current temperature in the specified temperature unit
         at the specified altitude in meters(m) from the ground level.
 
-        Params:
+        #### Params:
         - altitude (int): Altitude from the ground level; must be 2, 80, 120 or 180.
         - unit (str): Temperature unit; must be 'celsius' or 'fahrenheit'.
         """
@@ -135,7 +135,7 @@ class Weather(BaseForecast, BaseWeather):
         r"""
         Returns the current cloud cover in percentage(%) at the specified level and coordinates.
 
-        Params:
+        #### Params:
         - level (str): Altitude level of the desired cloud coverage; must be one of the following:
             - 'low' (clouds and fog up to an altitude of 3 km.)
             - 'mid' (clouds at an altitude between 3 km and 8 km.)
@@ -158,7 +158,7 @@ class Weather(BaseForecast, BaseWeather):
         Apparent temperature is the perceived feels-like temperature
         combining wind chill factor, relative humidity and solar radiation.
 
-        Params:
+        #### Params:
         - unit (str): Temperature unit; must be 'celsius' or 'fahrenheit'.
         """
         self._verify_temperature_unit(unit)
@@ -176,7 +176,7 @@ class Weather(BaseForecast, BaseWeather):
         Returns the current wind speed at the specified
         altitude and in the specified wind speed unit.
 
-        Params:
+        #### Params:
         - altitude (int): Altitude from the ground level; must be 10, 80, 120 or 180.
         - unit (str): Wind speed unit; must be one of the following:
             - 'kmh' (kilometers per hour)
@@ -199,7 +199,7 @@ class Weather(BaseForecast, BaseWeather):
         Returns the current wind direction in degrees at the
         specified altitude and in the specified unit.
 
-        Params:
+        #### Params:
         - altitude (int): Altitude from the ground level; must be 10, 80, 120 or 180.
         """
 
@@ -218,7 +218,7 @@ class Weather(BaseForecast, BaseWeather):
         r"""
         Returns the current wind gusts above 10 meters(m) from ground level in the specified unit.
 
-        Params:
+        #### Params:
         - altitude (int): Altitude from the ground level; must be 10, 80, 120 or 180.
         - unit (str): Wind speed unit; must be one of the following:
             - 'kmh' (kilometers per hour)
@@ -247,7 +247,7 @@ class Weather(BaseForecast, BaseWeather):
         Returns the current precipitation (sum of rain, showers, and snowfall)
         at the specified coordinates.
 
-        Params:
+        #### Params:
         - unit: Precipitation unit; must be 'mm' or 'inch'.
         """
         self._verify_precipitation_unit(unit)
@@ -261,7 +261,7 @@ class Weather(BaseForecast, BaseWeather):
         Returns the current atmospheric pressure in
         Hectopascal (hPa) at the specified coordinates.
 
-        Params:
+        #### Params:
         - level (str): Desired level of the atmospheric
         pressure data; must be 'surface' or 'sealevel'.
         """
@@ -282,7 +282,7 @@ class Weather(BaseForecast, BaseWeather):
         r"""
         Returns the current rainfall in mm/inch at the specified coordinates.
 
-        Params:
+        #### Params:
         - unit: Precipitation unit; must be 'mm' or 'inch'.
         """
         self._verify_precipitation_unit(unit)
@@ -324,7 +324,7 @@ class Weather(BaseForecast, BaseWeather):
         Returns a pandas DataFrame of hourly wind speed data at the
         specified coordinates and altitude in the specified unit.
 
-        Params:
+        #### Params:
         - altitude (int): Altitude from the ground level; must be 10, 80, 120 or 180.
         - unit (str): Wind speed unit; must be one of the following:
             - 'kmh' (kilometers per hour)
@@ -346,7 +346,7 @@ class Weather(BaseForecast, BaseWeather):
         Returns a pandas DataFrame of hourly wind direction data in degrees at
         the specified coordinates and altitude in the specified unit.
 
-        Params:
+        #### Params:
         - altitude (int): Altitude from the ground level; must be 10, 80, 120 or 180.
         """
         self._verify_wind_altitude(altitude)
@@ -361,7 +361,7 @@ class Weather(BaseForecast, BaseWeather):
         Returns a pandas DataFrame of hourly soil temperature data at
         the specified depth and coordinates in the specified unit.
 
-        Params:
+        #### Params:
         - depth: Depth below the ground level at which soil temperature data is
         desired to be extracted in centimeters(cm); must be 0, 6, 18 or 54.
         - unit (str): Temperature unit; must be 'celsius' or 'fahrenheit'.
@@ -383,7 +383,7 @@ class Weather(BaseForecast, BaseWeather):
         Returns a pandas DataFrame of soil moisture (m^3/m^3)
         data at the specified depth and coordinates.
 
-        Params:
+        #### Params:
         - depth (int): Desired depth of the soild moisture data within the ground level in
         centimeters(m). Moisture data is extracted as a part of a range of depth. Available
         depth ranges are 0-1cm, 1-3cmd, 3-9cm, 9-27cm, 27-81cm. The supplied depth must fall

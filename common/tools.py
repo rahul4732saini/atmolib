@@ -12,7 +12,6 @@ from types import ModuleType
 import requests
 import pandas as pd
 
-from . import constants
 from errors import RequestError
 
 
@@ -140,11 +139,6 @@ def get_periodical_data(
             "Expected 'daily' or 'hourly' parameter in the `params` dictionary, got none."
         )
 
-    if params.get(frequency) is None:
-        raise KeyError(
-            f"'{frequency}' key not found in the `params` dictionary with the requested weather data type."
-        )
-
     results: dict[str, Any] = _request_json(api, params, session)
 
     # The key corresponding to the supplied `frequency` in the `results` dictionary
@@ -209,3 +203,61 @@ def get_current_summary(
     del data["time"], data["interval"]
 
     return pd.Series(data.values(), index=labels)
+
+
+def get_periodical_summary(
+    session: requests.Session, api: str, params: dict[str, Any], labels: list[str]
+) -> pd.DataFrame:
+    r"""
+    Base function for periodical meteorology summary data extraction from supplied API.
+
+    This function is intended for internal use within the package and may not be called
+    directly by its users. It is exposed publicly for use by other modules within the package.
+
+    #### Params:
+    - session (requests.Session): A requests.Session object for making the API requests.
+    - api (str): Absolute URL of the API endpoint.
+    - params (dict[str, str | int]): Necessary parameters for the API request including the
+    coordinates of the location, requested data type, etc.
+    - labels (list[str]): A list of strings used as index labels for
+    the summary data pandas Series object.
+
+    #### Returns:
+    - pd.Series: Returns a pandas Series of the periodical meteorology summary data, comprising
+    of the index labels being the string representations of the data types.
+    """
+
+    if params.get("latitude") is None or params.get("longitude") is None:
+        raise KeyError(
+            "'latitude' and 'longitude' keys not found in the `params` dictionary "
+            "to indicate the coordinates of the location."
+        )
+
+    # Iterates through the `params` dictionary searching for the key named after
+    # the frequency ('hourly' or 'daily') of the requested data and assigns the key
+    # to the `frequency` variable to be used ahead. Raises a KeyError if none is found.
+    for key in params:
+        if key in ("hourly", "daily"):
+            frequency: str = key
+            break
+    else:
+        raise KeyError(
+            "Expected 'daily' or 'hourly' parameter in the `params` dictionary, got none."
+        )
+
+    results: dict[str, Any] = _request_json(api, params, session)
+
+    # The key corresponding to the supplied `frequency` in the `results`
+    # dictionary holds all the current summary data key-value pairs.
+    data: dict[str, Any] = results[frequency]
+
+    # Removed the 'time' key-value pair containing the timeline of the summary
+    # data to be used as index labels in the summary pandas DataFrame.
+    timeline: list[str] = data.pop("time")
+
+    # Creates a dataframe of the request summary data and modifies the
+    # column labels with the supplied column labels in the `labels` list.
+    dataframe: pd.DataFrame = pd.DataFrame(data, index=timeline)
+    dataframe.columns = labels
+
+    return dataframe

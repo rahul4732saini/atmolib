@@ -11,8 +11,8 @@ import atexit
 import requests
 import pandas as pd
 
-from common import constants
 from objects import BaseForecast
+from common import constants, tools
 
 
 class AirQuality(BaseForecast):
@@ -62,6 +62,36 @@ class AirQuality(BaseForecast):
                 f"'olive' or 'ragweed'; got {plant!r}."
             )
 
+    def get_current_summary(self) -> pd.Series:
+        r"""
+        Returns a pandas Series of current air quality summary
+        data at the specified coordinates in the specified units.
+
+        #### The air quality summary data includes the following data types:
+        - European AQI
+        - United States AQI
+        - Particulate Matter PM 10
+        - Particulate Matter PM 2.5
+        - Carbon Monoxide[CO] Concentration
+        - Nitrogen Dioxide[NO2] Concentration
+        - Sulphur Dioxide[SO2] Concentration
+        - Ozone[O3] Concentration
+        - Dust Concentration
+        - UV Index
+        - Ammonia[NH3] Concentration (Only available for Europe)
+        """
+
+        # A string representation of the marine weather summary data types
+        # seperated by commas as supported for requesting the Web API.
+        data_types: str = f",".join(constants.CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES)
+
+        return tools.get_current_summary(
+            self._session,
+            self._api,
+            self._params | {"current": data_types},
+            constants.CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES,
+        )
+
     def get_current_aqi(
         self, source: constants.AQI_SOURCES = "european"
     ) -> int | float:
@@ -69,7 +99,7 @@ class AirQuality(BaseForecast):
         Returns the current American/European Air Quality
         Index value at the specified coordinates.
 
-        Params:
+        #### Params:
         - source: Source of the Air Quality Index; must be one of the following:
             - 'european' (Extracts the European Air Quality Index)
             - 'us' (Extracts the USA Air Quality Index)
@@ -101,7 +131,7 @@ class AirQuality(BaseForecast):
         Returns the current concentration(miro g/m^3) of the specified atmospheric
         gas in air 10 meters(m) above the ground level at the specified coordinates.
 
-        Params:
+        #### Params:
         - gas (str): Gas whose concentration needs to be extracted; must be one of the following:
         ('ozone', 'carbon_monoxide', 'nitrogen_dioxide', 'sulphur_dioxide').
         """
@@ -128,7 +158,7 @@ class AirQuality(BaseForecast):
         plant. Only available for Europe as provided by CAMS European Air Quality
         forecast. Returns None for Non-European regions.
 
-        Params:
+        #### Params:
         - plant (str): Plant whose pollen concentration can be extracted; must be one of
         ('alder', 'birch', 'grass', 'mugwort', 'olive', 'ragweed').
         """
@@ -188,7 +218,7 @@ class AirQuality(BaseForecast):
         of the specified plant. Only available for Europe as provided by CAMS European
         Air Quality forecast. Returns None for Non-European regions.
 
-        Params:
+        #### Params:
         - plant (str): Plant whose pollen concentration can be retrieved, must be one of
         ('alder', 'birch', 'grass', 'mugwort', 'olive', 'ragweed').
         """
@@ -212,7 +242,7 @@ class AirQuality(BaseForecast):
         Returns a pandas DataFrame of hourly concentration(miro g/m^3) data of
         the specified atmospheric gas in air 10 meters(m) above ground level.
 
-        Params:
+        #### Params:
         - gas (str): Gas whose concentration needs to be extracted, must be one of the following:
         ('ozone', 'carbon_monoxide', 'nitrogen_dioxide', 'sulphur_dioxide').
         """
