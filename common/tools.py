@@ -12,7 +12,6 @@ from types import ModuleType
 import requests
 import pandas as pd
 
-from . import constants
 from errors import RequestError
 
 
