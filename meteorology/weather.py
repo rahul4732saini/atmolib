@@ -455,9 +455,7 @@ class Weather(BaseForecast, BaseWeather):
             {"hourly": f"soil_temperature_{depth}cm", "temperature_unit": unit}
         )
 
-    def get_hourly_soil_moisture(
-        self, depth: constants.SOIL_TEMP_DEPTH = 7
-    ) -> pd.DataFrame:
+    def get_hourly_soil_moisture(self, depth: int = 7) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of soil moisture (m^3/m^3)
         data at the specified depth and coordinates.
