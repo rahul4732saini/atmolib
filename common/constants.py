@@ -132,14 +132,15 @@ CURRENT_MARINE_WEATHER_SUMMARY_DATA_TYPES = [
 # air quality summary data extraction. The same are also used
 # as the index lables for the air quality summary pandas Series object.
 CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES = [
+    "dust",
     "pm10",
+    "ozone",
     "pm2_5",
     "us_aqi",
-    "ozone,dust",
+    "uv_index",
     "carbon_monoxide",
     "nitrogen_dioxide",
     "sulphur_dioxide",
     "european_aqi",
-    "uv_index",
     "ammonia",
 ]
