@@ -11,8 +11,8 @@ import atexit
 import requests
 import pandas as pd
 
-from common import constants
 from objects import BaseForecast
+from common import constants, tools
 
 
 class AirQuality(BaseForecast):
@@ -61,6 +61,36 @@ class AirQuality(BaseForecast):
                 "Expected `plant` to be one of 'alder', 'birch', 'grass', 'mugwort',"
                 f"'olive' or 'ragweed'; got {plant!r}."
             )
+
+    def get_current_summary(self) -> pd.Series:
+        r"""
+        Returns a pandas Series of current air quality summary
+        data at the specified coordinates in the specified units.
+
+        #### The air quality summary data includes the following data types:
+        - European AQI
+        - United States AQI
+        - Particulate Matter PM 10
+        - Particulate Matter PM 2.5
+        - Carbon Monoxide[CO] Concentration
+        - Nitrogen Dioxide[NO2] Concentration
+        - Sulphur Dioxide[SO2] Concentration
+        - Ozone[O3] Concentration
+        - Dust Concentration
+        - UV Index
+        - Ammonia[NH3] Concentration (Only available for Europe)
+        """
+
+        # A string representation of the marine weather summary data types
+        # seperated by commas as supported for requesting the Web API.
+        data_types: str = f",".join(constants.CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES)
+
+        return tools.get_current_summary(
+            self._session,
+            self._api,
+            self._params | {"current": data_types},
+            constants.CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES,
+        )
 
     def get_current_aqi(
         self, source: constants.AQI_SOURCES = "european"
