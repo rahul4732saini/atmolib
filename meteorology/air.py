@@ -99,7 +99,7 @@ class AirQuality(BaseForecast):
         Returns the current American/European Air Quality
         Index value at the specified coordinates.
 
-        Params:
+        #### Params:
         - source: Source of the Air Quality Index; must be one of the following:
             - 'european' (Extracts the European Air Quality Index)
             - 'us' (Extracts the USA Air Quality Index)
@@ -131,7 +131,7 @@ class AirQuality(BaseForecast):
         Returns the current concentration(miro g/m^3) of the specified atmospheric
         gas in air 10 meters(m) above the ground level at the specified coordinates.
 
-        Params:
+        #### Params:
         - gas (str): Gas whose concentration needs to be extracted; must be one of the following:
         ('ozone', 'carbon_monoxide', 'nitrogen_dioxide', 'sulphur_dioxide').
         """
@@ -158,7 +158,7 @@ class AirQuality(BaseForecast):
         plant. Only available for Europe as provided by CAMS European Air Quality
         forecast. Returns None for Non-European regions.
 
-        Params:
+        #### Params:
         - plant (str): Plant whose pollen concentration can be extracted; must be one of
         ('alder', 'birch', 'grass', 'mugwort', 'olive', 'ragweed').
         """
@@ -218,7 +218,7 @@ class AirQuality(BaseForecast):
         of the specified plant. Only available for Europe as provided by CAMS European
         Air Quality forecast. Returns None for Non-European regions.
 
-        Params:
+        #### Params:
         - plant (str): Plant whose pollen concentration can be retrieved, must be one of
         ('alder', 'birch', 'grass', 'mugwort', 'olive', 'ragweed').
         """
@@ -242,7 +242,7 @@ class AirQuality(BaseForecast):
         Returns a pandas DataFrame of hourly concentration(miro g/m^3) data of
         the specified atmospheric gas in air 10 meters(m) above ground level.
 
-        Params:
+        #### Params:
         - gas (str): Gas whose concentration needs to be extracted, must be one of the following:
         ('ozone', 'carbon_monoxide', 'nitrogen_dioxide', 'sulphur_dioxide').
         """

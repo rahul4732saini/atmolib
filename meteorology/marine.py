@@ -45,8 +45,7 @@ class MarineWeather(BaseForecast):
         r"""
         Creates an instance of the MarineWeather class.
 
-        Params:
-        -------
+        #### Params:
         - lat (int | float): Latitudinal coordinates of the location.
         - long (int | float): Longitudinal coordinates of the location.
         - wave_type (str): Type of ocean wave; must be one of the following:
@@ -56,8 +55,7 @@ class MarineWeather(BaseForecast):
         - forecast_days (int): Number of days for which the forecast has to
         be extracted; must be in the range of 1 and 8.
 
-        Raises:
-        -------
+        #### Raises:
         - RequestError: If no marine data is available at the specified coordinates.
         """
 
