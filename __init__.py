@@ -29,8 +29,8 @@ __all__ = (
 
 from typing import Any
 
-from common import tools, constants
-from meteorology import Weather, WeatherArchive, AirQuality, MarineWeather
+from .common import tools, constants
+from .meteorology import Weather, WeatherArchive, AirQuality, MarineWeather
 
 
 def get_elevation(lat: int | float, long: int | float) -> float:

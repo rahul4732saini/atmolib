@@ -1,4 +1,7 @@
 r"""
+Air Quality Module
+------------------
+
 This module defines the AirQuality class facilitating the extraction of air quality data from
 the Open-Meteo Air Quality API based on the latitudinal and longitudinal coordinates of the location.
 
@@ -11,8 +14,8 @@ import atexit
 import requests
 import pandas as pd
 
-from objects import BaseForecast
-from common import constants, tools
+from ..objects import BaseForecast
+from ..common import constants, tools
 
 
 class AirQuality(BaseForecast):
@@ -82,7 +85,7 @@ class AirQuality(BaseForecast):
         """
 
         # A string representation of the marine weather summary data types
-        # seperated by commas as supported for requesting the Web API.
+        # separated by commas as supported for requesting the Web API.
         data_types: str = f",".join(constants.CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES)
 
         return tools.get_current_summary(
@@ -92,7 +95,7 @@ class AirQuality(BaseForecast):
             constants.CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES,
         )
 
-    def get_hourly_summary(self) -> pd.Series:
+    def get_hourly_summary(self) -> pd.DataFrame:
         r"""
         Returns a pandas Series of hourly air quality summary
         data at the specified coordinates in the specified units.
@@ -110,7 +113,7 @@ class AirQuality(BaseForecast):
         """
 
         # A string representation of the marine weather summary data types
-        # seperated by commas as supported for requesting the Web API.
+        # separated by commas as supported for requesting the Web API.
         data_types: str = f",".join(constants.HOURLY_AIR_QUALITY_SUMMARY_DATA_TYPES)
 
         return tools.get_periodical_summary(
@@ -219,7 +222,7 @@ class AirQuality(BaseForecast):
 
     def get_hourly_uv_index(self) -> pd.DataFrame:
         r"""
-        Returns a pandas DataFrmae of hourly Ultra-Violet
+        Returns a pandas DataFrame of hourly Ultra-Violet
         radiation index data at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": "uv_index"})
