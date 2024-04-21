@@ -18,9 +18,11 @@ AIR_QUALITY_API = "https://air-quality-api.open-meteo.com/v1/air-quality"
 GEOCODING_API = "https://geocoding-api.open-meteo.com/v1/search"
 ELEVATION_API = "https://api.open-meteo.com/v1/elevation"
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 # Weather codes JSON file comprising weather codes mapped with the corresponding
 # description of the same. `WEATHER_CODES` loads the JSON file into a dictionary.
-WEATHER_CODES_FILE = Path("weather_codes.json")
+WEATHER_CODES_FILE = BASE_DIR / "weather_codes.json"
 WEATHER_CODES = json.load(WEATHER_CODES_FILE.open())
 
 # Available frequencies of periodical weather data.
