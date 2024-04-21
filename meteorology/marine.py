@@ -140,14 +140,14 @@ class MarineWeather(BaseForecast):
         # A string representation of the marine weather summary data types
         # seperated by commas as supported for requesting the Web API.
         data_types: str = self._type + f",{self._type}".join(
-            constants.CURRENT_MARINE_WEATHER_SUMMARY_DATA_TYPES
+            constants.MARINE_WEATHER_SUMMARY_DATA_TYPES
         )
 
         return tools.get_current_summary(
             self._session,
             self._api,
             self._params | {"current": data_types},
-            constants.CURRENT_MARINE_WEATHER_SUMMARY_DATA_TYPES,
+            constants.MARINE_WEATHER_SUMMARY_DATA_TYPES,
         )
 
     def get_current_wave_height(self) -> int | float:
