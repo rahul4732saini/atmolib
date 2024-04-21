@@ -119,10 +119,10 @@ CURRENT_WEATHER_SUMMARY_INDEX_LABELS = [
     "wind_direction",
 ]
 
-# List of marine weather data types extracted in the current marine
-# weather summary data extraction. The same are also used as the index
+# List of marine weather data types extracted in the marine weather
+# summary data extraction. The same are also used as the index
 # lables for the marine weather summary pandas Series object.
-CURRENT_MARINE_WEATHER_SUMMARY_DATA_TYPES = [
+MARINE_WEATHER_SUMMARY_DATA_TYPES = [
     "wave_height",
     "wave_direction",
     "wave_period",
