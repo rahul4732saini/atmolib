@@ -3,7 +3,7 @@ Errors Module
 -------------
 
 The module defined error class used throughout the pyweather
-package to handle various exceptional scenatios.
+package to handle various exceptional scenarios.
 """
 
 
