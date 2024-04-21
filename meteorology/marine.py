@@ -132,9 +132,9 @@ class MarineWeather(BaseForecast):
         at the specified coordinaets of the specified wave type.
 
         #### The marine weather summary data includes the following data types:
-        - wave_height
-        - wave_direction
-        - wave_period
+        - Wave height
+        - Wave direction
+        - Wave period
         """
 
         # A string representation of the marine weather summary data types
