@@ -219,3 +219,13 @@ HOURLY_ARCHIVE_SUMMARY_DATA_TYPES = [
     "wind_speed_10m",
     "soil_temperature_0_to_7cm",
 ]
+
+# List of data types for the daily historical weather summary pandas DataFrame object.
+DAILY_ARCHIVE_SUMMARY_DATA_TYPES = [
+    "weather_code",
+    "temperature_2m_mean",
+    "daylight_duration",
+    "precipitation_sum",
+    "wind_speed_10m_mean",
+    "wind_direction_10m_dominant",
+]
