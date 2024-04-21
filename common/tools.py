@@ -178,7 +178,7 @@ def get_current_summary(
 
     #### Returns:
     - pd.Series: Returns a pandas Series of the current meteorology summary data, comprising
-    of the index labels being the string representations of the data types.
+    the index labels being the string representations of the data types.
     """
 
     if params.get("latitude") is None or params.get("longitude") is None:
@@ -195,7 +195,7 @@ def get_current_summary(
 
     results: dict[str, Any] = _request_json(api, params, session)
 
-    # The 'current' key in in the `results` dictionary holds
+    # The 'current' key in the `results` dictionary holds
     # all the current summary data key-value pairs.
     data: dict[str, Any] = results["current"]
 
@@ -224,7 +224,7 @@ def get_periodical_summary(
 
     #### Returns:
     - pd.Series: Returns a pandas Series of the periodical meteorology summary data, comprising
-    of the index labels being the string representations of the data types.
+    the index labels being the string representations of the data types.
     """
 
     if params.get("latitude") is None or params.get("longitude") is None:

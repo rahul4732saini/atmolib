@@ -132,7 +132,7 @@ class MarineWeather(BaseForecast):
     def get_current_summary(self) -> pd.Series:
         r"""
         Returns a pandas Series of current marine weather summary data
-        at the specified coordinaets of the specified wave type.
+        at the specified coordinates of the specified wave type.
 
         #### The marine weather summary data includes the following data types:
         - Wave height
@@ -141,7 +141,7 @@ class MarineWeather(BaseForecast):
         """
 
         # A string representation of the marine weather summary data types
-        # seperated by commas as supported for requesting the Web API.
+        # separated by commas as supported for requesting the Web API.
         data_types: str = self._type + f",{self._type}".join(
             constants.MARINE_WEATHER_SUMMARY_DATA_TYPES
         )
@@ -156,7 +156,7 @@ class MarineWeather(BaseForecast):
     def get_hourly_summary(self) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly marine weather summary data
-        at the specified coordinaets of the specified wave type.
+        at the specified coordinates of the specified wave type.
 
         #### The marine weather summary data includes the following data types:
         - Wave height
@@ -165,7 +165,7 @@ class MarineWeather(BaseForecast):
         """
 
         # A string representation of the marine weather summary data types
-        # seperated by commas as supported for requesting the Web API.
+        # separated by commas as supported for requesting the Web API.
         data_types: str = self._type + f",{self._type}".join(
             constants.MARINE_WEATHER_SUMMARY_DATA_TYPES
         )
@@ -180,16 +180,16 @@ class MarineWeather(BaseForecast):
     def get_daily_summary(self) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of daily marine weather summary data
-        at the specified coordinaets of the specified wave type.
+        at the specified coordinates of the specified wave type.
 
         #### The marine weather summary data includes the following data types:
         - Max wave height
-        - Dominan wave direction
+        - Dominant wave direction
         - Max wave period
         """
 
         # A string representation of the marine weather summary data types
-        # seperated by commas as supported for requesting the Web API.
+        # separated by commas as supported for requesting the Web API.
         data_types: str = self._type + f",{self._type}".join(
             (
                 "wave_height_max",
