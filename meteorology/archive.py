@@ -190,6 +190,43 @@ class WeatherArchive(BaseWeather, BaseMeteor):
             constants.HOURLY_ARCHIVE_SUMMARY_COLUMN_LABELS,
         )
 
+    def get_daily_summary(
+        self,
+        temperature_unit: constants.TEMPERATURE_UNITS = "celsius",
+        precipitation_unit: constants.PRECIPITATION_UNITS = "mm",
+        wind_speed_unit: constants.WIND_SPEED_UNITS = "kmh",
+    ) -> pd.DataFrame:
+        r"""
+        Returns a pandas DataFrame of daily historical weather summary data at the
+        specified coordinates in the specified units within the specified date range.
+
+        #### The weather summary data includes the following data types:
+        - Mean temperature (2m above the ground level)
+        - precipitation (sum of rain/showers/snowfall)
+        - Daylight duration in seconds
+        - surface pressure in HPa (Hecto-pascal)
+        - Mean wind speed (10m above the ground level)
+        - weather code
+        """
+
+        # A string representation of the weather summary data types
+        # seperated by commas as supported for requesting the Web API.
+        data_types: str = ",".join(constants.DAILY_ARCHIVE_SUMMARY_DATA_TYPES)
+
+        params: dict[str, Any] = {
+            "daily": data_types,
+            "temperature_unit": temperature_unit,
+            "precipitation_unit": precipitation_unit,
+            "wind_speed_unit": wind_speed_unit,
+        }
+
+        return tools.get_periodical_summary(
+            self._session,
+            self._api,
+            self._params | params,
+            constants.DAILY_ARCHIVE_SUMMARY_COLUMN_LABELS,
+        )
+
     def get_hourly_wind_speed(
         self,
         altitude: constants.ARCHIVE_WIND_ALTITUDES = 10,
