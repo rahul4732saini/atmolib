@@ -173,7 +173,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         """
 
         # A string representation of the weather summary data types
-        # seperated by commas as supported for requesting the Web API.
+        # separated by commas as supported for requesting the Web API.
         data_types: str = ",".join(constants.HOURLY_ARCHIVE_SUMMARY_DATA_TYPES)
 
         params: dict[str, Any] = {
@@ -210,7 +210,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         """
 
         # A string representation of the weather summary data types
-        # seperated by commas as supported for requesting the Web API.
+        # separated by commas as supported for requesting the Web API.
         data_types: str = ",".join(constants.DAILY_ARCHIVE_SUMMARY_DATA_TYPES)
 
         params: dict[str, Any] = {

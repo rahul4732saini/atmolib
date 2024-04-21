@@ -71,7 +71,7 @@ class Weather(BaseForecast, BaseWeather):
         """
 
         # A string representation of the weather summary data types
-        # seperated by commas as supported for requesting the Web API.
+        # separated by commas as supported for requesting the Web API.
         data_types: str = ",".join(constants.CURRENT_WEATHER_SUMMARY_DATA_TYPES)
 
         params: dict[str, Any] = {
@@ -104,7 +104,7 @@ class Weather(BaseForecast, BaseWeather):
         - dew point (2m above the ground level)
         - precipitation (sum of rain/showers/snowfall)
         - weather code
-        - visbility in meters(m)
+        - visibility in meters(m)
         - cloud cover percentage(%)
         - surface pressure in HPa (Hecto-pascal)
         - wind speed (10m above the ground level)
@@ -112,7 +112,7 @@ class Weather(BaseForecast, BaseWeather):
         """
 
         # A string representation of the weather summary data types
-        # seperated by commas as supported for requesting the Web API.
+        # separated by commas as supported for requesting the Web API.
         data_types: str = ",".join(constants.HOURLY_WEATHER_SUMMARY_DATA_TYPES)
 
         params: dict[str, Any] = {
@@ -150,7 +150,7 @@ class Weather(BaseForecast, BaseWeather):
         """
 
         # A string representation of the weather summary data types
-        # seperated by commas as supported for requesting the Web API.
+        # separated by commas as supported for requesting the Web API.
         data_types: str = ",".join(constants.DAILY_WEATHER_SUMMARY_DATA_TYPES)
 
         params: dict[str, Any] = {
@@ -379,7 +379,7 @@ class Weather(BaseForecast, BaseWeather):
     def is_day_or_night(self) -> int:
         r"""
         Returns whether it's day or night at the specified coordinates.
-        Returns integer `1` for daytime and `0` for night time.
+        Returns integer `1` for daytime and `0` for nighttime.
         """
         return self._get_current_data({"current": "is_day"})
 
@@ -464,7 +464,7 @@ class Weather(BaseForecast, BaseWeather):
         data at the specified depth and coordinates.
 
         #### Params:
-        - depth (int): Desired depth of the soild moisture data within the ground level in
+        - depth (int): Desired depth of the soil moisture data within the ground level in
         centimeters(m). Moisture data is extracted as a part of a range of depth. Available
         depth ranges are 0-1cm, 1-3cmd, 3-9cm, 9-27cm, 27-81cm. The supplied depth must fall
         in the range of 0 and 81.
