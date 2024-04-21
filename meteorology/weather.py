@@ -123,7 +123,7 @@ class Weather(BaseForecast, BaseWeather):
             self._session,
             self._api,
             self._params | params,
-            constants.HOURLY_WEATHER_SUMMARY_DATA_TYPES,
+            constants.HOURLY_WEATHER_SUMMARY_COLUMN_LABELS,
         )
 
     def get_daily_summary(
@@ -161,7 +161,7 @@ class Weather(BaseForecast, BaseWeather):
             self._session,
             self._api,
             self._params | params,
-            constants.DAILY_WEATHER_SUMMARY_DATA_TYPES,
+            constants.DAILY_WEATHER_SUMMARY_COLUMN_LABELS,
         )
 
     def get_current_temperature(
@@ -455,9 +455,7 @@ class Weather(BaseForecast, BaseWeather):
             {"hourly": f"soil_temperature_{depth}cm", "temperature_unit": unit}
         )
 
-    def get_hourly_soil_moisture(
-        self, depth: constants.SOIL_TEMP_DEPTH = 7
-    ) -> pd.DataFrame:
+    def get_hourly_soil_moisture(self, depth: int = 7) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of soil moisture (m^3/m^3)
         data at the specified depth and coordinates.
