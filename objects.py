@@ -11,7 +11,7 @@ from typing import Any
 import requests
 import pandas as pd
 
-from common import tools, constants
+from .common import tools, constants
 
 
 class BaseMeteor:
