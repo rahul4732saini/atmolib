@@ -18,9 +18,11 @@ AIR_QUALITY_API = "https://air-quality-api.open-meteo.com/v1/air-quality"
 GEOCODING_API = "https://geocoding-api.open-meteo.com/v1/search"
 ELEVATION_API = "https://api.open-meteo.com/v1/elevation"
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 # Weather codes JSON file comprising weather codes mapped with the corresponding
 # description of the same. `WEATHER_CODES` loads the JSON file into a dictionary.
-WEATHER_CODES_FILE = Path("weather_codes.json")
+WEATHER_CODES_FILE = BASE_DIR / "weather_codes.json"
 WEATHER_CODES = json.load(WEATHER_CODES_FILE.open())
 
 # Available frequencies of periodical weather data.
@@ -61,7 +63,7 @@ SOIL_MOISTURE_DEPTH = {
     range(1, 3): "1_to_3",
     range(3, 9): "3_to_9",
     range(9, 27): "9_to_27",
-    range(27, 81): "27_to_81",
+    range(27, 82): "27_to_81",
 }
 
 # Air Quality Index sources.
@@ -95,7 +97,6 @@ WAVE_TYPES_MAP = {"composite": "", "wind": "wind_", "swell": "swell_"}
 # Available types of temperatures which can be extracted from the API.
 TEMPERATURE_TYPES = Literal["temperature_2m", "apparent_temperature"]
 
-# A list of weather data types extracted in the current weather summary data extraction.
 CURRENT_WEATHER_SUMMARY_DATA_TYPES = [
     "temperature_2m",
     "relative_humidity_2m",
@@ -107,7 +108,6 @@ CURRENT_WEATHER_SUMMARY_DATA_TYPES = [
     "wind_direction_10m",
 ]
 
-# A list of index labels for the current weather summary pandas Series object.
 CURRENT_WEATHER_SUMMARY_INDEX_LABELS = [
     "temperature",
     "relative_humidity",
@@ -119,18 +119,18 @@ CURRENT_WEATHER_SUMMARY_INDEX_LABELS = [
     "wind_direction",
 ]
 
-# A list of marine weather data types extracted in the current marine
-# weather summary data extraction. The same are also used as the index
-# lables for the marine weather summary pandas Series object.
-CURRENT_MARINE_WEATHER_SUMMARY_DATA_TYPES = [
+# List of marine weather data types extracted in the marine weather
+# summary data extraction. The same are also used as the index
+# labels for the marine weather summary pandas Series object.
+MARINE_WEATHER_SUMMARY_DATA_TYPES = [
     "wave_height",
     "wave_direction",
     "wave_period",
 ]
 
-# A list of air quality data types extracted in the current
+# List of air quality data types extracted in the current
 # air quality summary data extraction. The same are also used
-# as the index lables for the air quality summary pandas Series object.
+# as the index labels for the air quality summary pandas Series object.
 CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES = [
     "dust",
     "pm10",
@@ -145,7 +145,6 @@ CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES = [
     "ammonia",
 ]
 
-# A list of weather data types extracted in the hourly weather summary data extraction.
 HOURLY_WEATHER_SUMMARY_DATA_TYPES = [
     "temperature_2m",
     "relative_humidity_2m",
@@ -157,4 +156,89 @@ HOURLY_WEATHER_SUMMARY_DATA_TYPES = [
     "visibility",
     "wind_speed_10m",
     "soil_temperature_0cm",
+]
+
+HOURLY_WEATHER_SUMMARY_COLUMN_LABELS = [
+    "temperature",
+    "relative_humidity",
+    "dew_point",
+    "precipitation",
+    "weather_code",
+    "surface_pressure",
+    "cloud_cover",
+    "visibility",
+    "wind_speed",
+    "soil_temperature",
+]
+
+DAILY_WEATHER_SUMMARY_DATA_TYPES = [
+    "weather_code",
+    "temperature_2m_mean",
+    "daylight_duration",
+    "uv_index_max",
+    "precipitation_sum",
+    "wind_speed_10m_mean",
+    "wind_direction_10m_dominant",
+]
+
+DAILY_WEATHER_SUMMARY_COLUMN_LABELS = [
+    "weather_code",
+    "temperature",
+    "daylight_duration",
+    "uv_index",
+    "precipitation",
+    "wind_speed",
+    "wind_direction",
+]
+
+HOURLY_AIR_QUALITY_SUMMARY_DATA_TYPES = [
+    "pm10",
+    "pm2_5",
+    "carbon_monoxide",
+    "nitrogen_dioxide",
+    "sulphur_dioxide",
+    "ozone",
+    "dust",
+    "uv_index",
+    "ammonia",
+]
+
+HOURLY_ARCHIVE_SUMMARY_DATA_TYPES = [
+    "temperature_2m",
+    "relative_humidity_2m",
+    "dew_point_2m",
+    "precipitation",
+    "weather_code",
+    "surface_pressure",
+    "wind_speed_10m",
+    "soil_temperature_0_to_7cm",
+]
+
+HOURLY_ARCHIVE_SUMMARY_COLUMN_LABELS = [
+    "temperature",
+    "relative_humidity",
+    "dew_point",
+    "precipitation",
+    "weather_code",
+    "surface_pressure",
+    "wind_speed",
+    "soil_temperature",
+]
+
+DAILY_ARCHIVE_SUMMARY_DATA_TYPES = [
+    "weather_code",
+    "temperature_2m_mean",
+    "daylight_duration",
+    "precipitation_sum",
+    "wind_speed_10m_mean",
+    "wind_direction_10m_dominant",
+]
+
+DAILY_ARCHIVE_SUMMARY_COLUMN_LABELS = [
+    "weather_code",
+    "temperature",
+    "daylight_duration",
+    "precipitation",
+    "wind_speed",
+    "wind_direction",
 ]

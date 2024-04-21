@@ -92,6 +92,34 @@ class AirQuality(BaseForecast):
             constants.CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES,
         )
 
+    def get_hourly_summary(self) -> pd.Series:
+        r"""
+        Returns a pandas Series of hourly air quality summary
+        data at the specified coordinates in the specified units.
+
+        #### The air quality summary data includes the following data types:
+        - Particulate Matter PM 10
+        - Particulate Matter PM 2.5
+        - Carbon Monoxide[CO] Concentration
+        - Nitrogen Dioxide[NO2] Concentration
+        - Sulphur Dioxide[SO2] Concentration
+        - Ozone[O3] Concentration
+        - Dust Concentration
+        - UV Index
+        - Ammonia[NH3] Concentration (Only available for Europe)
+        """
+
+        # A string representation of the marine weather summary data types
+        # seperated by commas as supported for requesting the Web API.
+        data_types: str = f",".join(constants.HOURLY_AIR_QUALITY_SUMMARY_DATA_TYPES)
+
+        return tools.get_periodical_summary(
+            self._session,
+            self._api,
+            self._params | {"hourly": data_types},
+            constants.HOURLY_AIR_QUALITY_SUMMARY_DATA_TYPES,
+        )
+
     def get_current_aqi(
         self, source: constants.AQI_SOURCES = "european"
     ) -> int | float:
