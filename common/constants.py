@@ -194,3 +194,16 @@ DAILY_WEATHER_SUMMARY_COLUMN_LABELS = [
     "wind_speed",
     "wind_direction",
 ]
+
+# List of column labels for the hourly air quality summary pandas DataFrame object.
+HOURLY_AIR_QUALITY_SUMMARY_DATA_TYPES = [
+    "pm10",
+    "pm2_5",
+    "carbon_monoxide",
+    "nitrogen_dioxide",
+    "sulphur_dioxide",
+    "ozone",
+    "dust",
+    "uv_index",
+    "ammonia",
+]
