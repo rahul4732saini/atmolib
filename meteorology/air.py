@@ -1,4 +1,7 @@
 r"""
+Air Quality Module
+------------------
+
 This module defines the AirQuality class facilitating the extraction of air quality data from
 the Open-Meteo Air Quality API based on the latitudinal and longitudinal coordinates of the location.
 

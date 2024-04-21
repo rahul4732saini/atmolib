@@ -1,4 +1,7 @@
 r"""
+Weather Module
+--------------
+
 This module defines the Weather class facilitating the extraction of weather data from the
 Open-Meteo Weather API based on the latitudinal and longitudinal coordinates of the location.
 
