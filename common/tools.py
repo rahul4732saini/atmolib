@@ -12,7 +12,7 @@ from types import ModuleType
 import requests
 import pandas as pd
 
-from errors import RequestError
+from ..errors import RequestError
 
 
 def _request_json(
