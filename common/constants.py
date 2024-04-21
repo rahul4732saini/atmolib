@@ -207,3 +207,15 @@ HOURLY_AIR_QUALITY_SUMMARY_DATA_TYPES = [
     "uv_index",
     "ammonia",
 ]
+
+# List of data types for the hourly historical weather summary pandas DataFrame object.
+HOURLY_ARCHIVE_SUMMARY_DATA_TYPES = [
+    "temperature_2m",
+    "relative_humidity_2m",
+    "dew_point_2m",
+    "precipitation",
+    "weather_code",
+    "surface_pressure",
+    "wind_speed_10m",
+    "soil_temperature_0_to_7cm",
+]
