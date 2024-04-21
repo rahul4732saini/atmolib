@@ -14,8 +14,8 @@ import atexit
 import requests
 import pandas as pd
 
-from objects import BaseForecast
-from common import constants, tools
+from ..objects import BaseForecast
+from ..common import constants, tools
 
 
 class AirQuality(BaseForecast):

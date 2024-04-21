@@ -15,8 +15,8 @@ from typing import Any
 import requests
 import pandas as pd
 
-from common import constants, tools
-from objects import BaseForecast, BaseWeather
+from ..common import constants, tools
+from ..objects import BaseForecast, BaseWeather
 
 
 class Weather(BaseForecast, BaseWeather):

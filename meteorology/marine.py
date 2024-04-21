@@ -15,9 +15,9 @@ from typing import Any
 import requests
 import pandas as pd
 
-from errors import RequestError
-from objects import BaseForecast
-from common import constants, tools
+from ..errors import RequestError
+from ..objects import BaseForecast
+from ..common import constants, tools
 
 
 class MarineWeather(BaseForecast):
