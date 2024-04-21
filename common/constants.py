@@ -61,7 +61,7 @@ SOIL_MOISTURE_DEPTH = {
     range(1, 3): "1_to_3",
     range(3, 9): "3_to_9",
     range(9, 27): "9_to_27",
-    range(27, 81): "27_to_81",
+    range(27, 82): "27_to_81",
 }
 
 # Air Quality Index sources.
