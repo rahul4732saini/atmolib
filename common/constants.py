@@ -61,7 +61,7 @@ SOIL_MOISTURE_DEPTH = {
     range(1, 3): "1_to_3",
     range(3, 9): "3_to_9",
     range(9, 27): "9_to_27",
-    range(27, 81): "27_to_81",
+    range(27, 82): "27_to_81",
 }
 
 # Air Quality Index sources.
@@ -95,7 +95,6 @@ WAVE_TYPES_MAP = {"composite": "", "wind": "wind_", "swell": "swell_"}
 # Available types of temperatures which can be extracted from the API.
 TEMPERATURE_TYPES = Literal["temperature_2m", "apparent_temperature"]
 
-# List of weather data types extracted in the current weather summary data extraction.
 CURRENT_WEATHER_SUMMARY_DATA_TYPES = [
     "temperature_2m",
     "relative_humidity_2m",
@@ -107,7 +106,6 @@ CURRENT_WEATHER_SUMMARY_DATA_TYPES = [
     "wind_direction_10m",
 ]
 
-# List of index labels for the current weather summary pandas Series object.
 CURRENT_WEATHER_SUMMARY_INDEX_LABELS = [
     "temperature",
     "relative_humidity",
@@ -145,7 +143,6 @@ CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES = [
     "ammonia",
 ]
 
-# List of weather data types extracted in the hourly weather summary data extraction.
 HOURLY_WEATHER_SUMMARY_DATA_TYPES = [
     "temperature_2m",
     "relative_humidity_2m",
@@ -159,7 +156,6 @@ HOURLY_WEATHER_SUMMARY_DATA_TYPES = [
     "soil_temperature_0cm",
 ]
 
-# List of column labels for the hourly weather summary pandas DataFrame object.
 HOURLY_WEATHER_SUMMARY_COLUMN_LABELS = [
     "temperature",
     "relative_humidity",
@@ -173,7 +169,6 @@ HOURLY_WEATHER_SUMMARY_COLUMN_LABELS = [
     "soil_temperature",
 ]
 
-# List of weather data types extracted in the daily weather summary data extraction.
 DAILY_WEATHER_SUMMARY_DATA_TYPES = [
     "weather_code",
     "temperature_2m_mean",
@@ -184,7 +179,6 @@ DAILY_WEATHER_SUMMARY_DATA_TYPES = [
     "wind_direction_10m_dominant",
 ]
 
-# List of column labels for the daily weather summary pandas DataFrame object.
 DAILY_WEATHER_SUMMARY_COLUMN_LABELS = [
     "weather_code",
     "temperature",
@@ -195,7 +189,6 @@ DAILY_WEATHER_SUMMARY_COLUMN_LABELS = [
     "wind_direction",
 ]
 
-# List of column labels for the hourly air quality summary pandas DataFrame object.
 HOURLY_AIR_QUALITY_SUMMARY_DATA_TYPES = [
     "pm10",
     "pm2_5",
@@ -206,4 +199,44 @@ HOURLY_AIR_QUALITY_SUMMARY_DATA_TYPES = [
     "dust",
     "uv_index",
     "ammonia",
+]
+
+HOURLY_ARCHIVE_SUMMARY_DATA_TYPES = [
+    "temperature_2m",
+    "relative_humidity_2m",
+    "dew_point_2m",
+    "precipitation",
+    "weather_code",
+    "surface_pressure",
+    "wind_speed_10m",
+    "soil_temperature_0_to_7cm",
+]
+
+HOURLY_ARCHIVE_SUMMARY_COLUMN_LABELS = [
+    "temperature",
+    "relative_humidity",
+    "dew_point",
+    "precipitation",
+    "weather_code",
+    "surface_pressure",
+    "wind_speed",
+    "soil_temperature",
+]
+
+DAILY_ARCHIVE_SUMMARY_DATA_TYPES = [
+    "weather_code",
+    "temperature_2m_mean",
+    "daylight_duration",
+    "precipitation_sum",
+    "wind_speed_10m_mean",
+    "wind_direction_10m_dominant",
+]
+
+DAILY_ARCHIVE_SUMMARY_COLUMN_LABELS = [
+    "weather_code",
+    "temperature",
+    "daylight_duration",
+    "precipitation",
+    "wind_speed",
+    "wind_direction",
 ]
