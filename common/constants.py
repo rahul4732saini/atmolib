@@ -121,7 +121,7 @@ CURRENT_WEATHER_SUMMARY_INDEX_LABELS = [
 
 # List of marine weather data types extracted in the marine weather
 # summary data extraction. The same are also used as the index
-# lables for the marine weather summary pandas Series object.
+# labels for the marine weather summary pandas Series object.
 MARINE_WEATHER_SUMMARY_DATA_TYPES = [
     "wave_height",
     "wave_direction",
@@ -130,7 +130,7 @@ MARINE_WEATHER_SUMMARY_DATA_TYPES = [
 
 # List of air quality data types extracted in the current
 # air quality summary data extraction. The same are also used
-# as the index lables for the air quality summary pandas Series object.
+# as the index labels for the air quality summary pandas Series object.
 CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES = [
     "dust",
     "pm10",
