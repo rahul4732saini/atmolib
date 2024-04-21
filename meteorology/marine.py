@@ -1,4 +1,7 @@
 r"""
+Marine Module
+-------------
+
 This module defines the MarineWeather class facilitating the extraction of marine weather data from
 the Open-Meteo Marine Weather API based on the latitudinal and longitudinal coordinates of the location.
 
