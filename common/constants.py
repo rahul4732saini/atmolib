@@ -212,6 +212,17 @@ HOURLY_ARCHIVE_SUMMARY_DATA_TYPES = [
     "soil_temperature_0_to_7cm",
 ]
 
+HOURLY_ARCHIVE_SUMMARY_COLUMN_LABELS = [
+    "temperature",
+    "relative_humidity",
+    "dew_point",
+    "precipitation",
+    "weather_code",
+    "surface_pressure",
+    "wind_speed",
+    "soil_temperature",
+]
+
 DAILY_ARCHIVE_SUMMARY_DATA_TYPES = [
     "weather_code",
     "temperature_2m_mean",
