@@ -229,3 +229,12 @@ DAILY_ARCHIVE_SUMMARY_DATA_TYPES = [
     "wind_speed_10m_mean",
     "wind_direction_10m_dominant",
 ]
+
+DAILY_ARCHIVE_SUMMARY_COLUMN_LABELS = [
+    "weather_code",
+    "temperature",
+    "daylight_duration",
+    "precipitation",
+    "wind_speed",
+    "wind_direction",
+]
