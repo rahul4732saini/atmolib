@@ -2,7 +2,7 @@
 <img src="https://raw.githubusercontent.com/rahul4732saini/pyweather/dev/pyweather/assets/pyweather.png?raw=true" width=500>
 </h1>
 
-<h3 align=center>Import Legal Disclamer</h3>
+<h3 align=center>Import Legal Disclaimer</h3>
 
 <b>pyweather</b> is not affiliated, endorsed, or vetted by <b>Open-Meteo</b>. It's an open-source tool that uses Open-Meteo's publicly available APIs, and is intended for <b>research and educational purposes only</b>.
 
@@ -66,7 +66,7 @@ weather.get_daily_summary()
 # Extracts the current weather conditions.
 weather.get_current_temperature()
 weather.get_current_weather_code()
-weather.get_current_clout_cover()
+weather.get_current_cloud_cover()
 weather.get_current_wind_speed()
 weather.get_current_pressure()
 weather.get_current_precipitation()
@@ -90,7 +90,7 @@ weather.get_daily_sunshine_duration()
 
 - `WeatherArchive` provides the same methods as `Weather` class as a part of a data range with slight modifications in some methods.
 
-- `MarineWeather` class uage:
+- `MarineWeather` class usage:
 
 ```python
 import pyweather as pyw
@@ -117,9 +117,9 @@ marine.get_hourly_wave_direction()
 marine.get_hourly_wave_period()
 
 # Extracts the daily weather forecast data.
-marine.get_daily_wave_height()
-marine.get_daily_wave_direction()
-marine.get_daily_wave_period()
+marine.get_daily_max_wave_height()
+marine.get_daily_dominant_wave_direction()
+marine.get_daily_max_wave_period()
 ```
 
 - `AirQuality` class usage:
