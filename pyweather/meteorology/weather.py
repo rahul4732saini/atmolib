@@ -21,9 +21,9 @@ from ..objects import BaseForecast, BaseWeather
 
 class Weather(BaseForecast, BaseWeather):
     r"""
-    Weather class to extract weather data based on the latitude and longitude coordinates.
-    It interacts with the Open-Meteo Weather API to fetch the current or upcoming 16-days
-    hourly and daily weather forecast data.
+    Weather class to extract weather data based on the latitudinal and longitudinal
+    coordinates of the location. It interacts with the Open-Meteo Weather API to fetch
+    the current or upcoming 16-days hourly and daily weather forecast data.
     """
 
     __slots__ = "_lat", "_long", "_params", "_forecast_days"
@@ -70,6 +70,11 @@ class Weather(BaseForecast, BaseWeather):
         - wind direction in degrees (10m above the ground level)
         """
 
+        # Verifies the specified units.
+        self._verify_temperature_unit(temperature_unit)
+        self._verify_precipitation_unit(precipitation_unit)
+        self._verify_wind_speed_unit(wind_speed_unit)
+
         # A string representation of the weather summary data types
         # separated by commas as supported for requesting the Web API.
         data_types: str = ",".join(constants.CURRENT_WEATHER_SUMMARY_DATA_TYPES)
@@ -111,6 +116,11 @@ class Weather(BaseForecast, BaseWeather):
         - surface soil temperature
         """
 
+        # Verifies the specified units.
+        self._verify_temperature_unit(temperature_unit)
+        self._verify_precipitation_unit(precipitation_unit)
+        self._verify_wind_speed_unit(wind_speed_unit)
+
         # A string representation of the weather summary data types
         # separated by commas as supported for requesting the Web API.
         data_types: str = ",".join(constants.HOURLY_WEATHER_SUMMARY_DATA_TYPES)
@@ -148,6 +158,11 @@ class Weather(BaseForecast, BaseWeather):
         - mean wind speed (10m above the ground level)
         - dominant wind direction
         """
+
+        # Verifies the specified units.
+        self._verify_temperature_unit(temperature_unit)
+        self._verify_precipitation_unit(precipitation_unit)
+        self._verify_wind_speed_unit(wind_speed_unit)
 
         # A string representation of the weather summary data types
         # separated by commas as supported for requesting the Web API.
