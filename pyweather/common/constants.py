@@ -37,7 +37,7 @@ CLOUD_COVER_LEVEL = Literal["low", "mid", "high"]
 PRESSURE_LEVELS = Literal["sealevel", "surface"]
 
 # Dictionary of keys as accepted arguments by users mapped to values used
-# as request parameter for extracting data from the Open-Meteo Weather API.
+# as request parameter for extracting data from the API Endpoints.
 PRESSURE_LEVEL_MAPPING = {"sealevel": "pressure_msl", "surface": "surface_pressure"}
 
 # Holds the altitude in meters(m) above the surface level for different request types.
@@ -69,7 +69,7 @@ SOIL_MOISTURE_DEPTH = {
 # Air Quality Index sources.
 AQI_SOURCES = Literal["european", "us"]
 
-# Description of Air Quality Index falling within different ranges.
+# Mapping of AQI descriptions falling within different ranges of AQI.
 AQI_LEVELS = {
     range(50): "Good",
     range(51, 101): "Moderate",
