@@ -2,7 +2,7 @@
 <img src="https://raw.githubusercontent.com/rahul4732saini/pyweather/dev/pyweather/assets/pyweather.png?raw=true" width=500>
 </h1>
 
-<h3 align=center>Import Legal Disclaimer</h3>
+<h3 align=center>Important Legal Disclaimer</h3>
 
 <b>pyweather</b> is not affiliated, endorsed, or vetted by <b>Open-Meteo</b>. It's an open-source tool that uses Open-Meteo's publicly available APIs, and is intended for <b>research and educational purposes only</b>.
 
