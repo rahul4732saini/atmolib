@@ -23,9 +23,10 @@ from ..objects import BaseMeteor, BaseWeather
 
 class WeatherArchive(BaseWeather, BaseMeteor):
     r"""
-    WeatherArchive class to extract historical weather data based on the latitude and longitude
-    coordinates of the location within the specified date range. It interacts with the Open-Meteo
-    Weather History API to fetch the weather data ranging from 1940 till the present.
+    WeatherArchive class to extract historical weather data based on the
+    latitudinal and longitudinal coordinates of the location within the
+    specified date range. It interacts with the Open-Meteo Weather History
+    API to fetch the weather data ranging from 1940 till the present.
     """
 
     __slots__ = "_lat", "_long", "_start_date", "_end_date", "_params"
@@ -103,8 +104,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
     @staticmethod
     def _resolve_date(target: str | date | datetime, var: str) -> date:
         r"""
-        Verifies the supplied date argument, resolves it into a string
-        formatted date object with the ISO-8601 format (YYYY-MM-DD).
+        Verifies the supplied date argument, and resolves it into a datetime.date object.
 
         The `var` parameter has to be the name of the actual date parameter
         (`start_date` or `end_date`) for reference in custom error messages.
@@ -283,7 +283,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         centimeters(m). Temperature is extracted as a part of a range of depth. Available
         depth ranges are 0-7cm, 7-28cm, 28-100cm, 100-255cm. The supplied depth must fall
         in the range of 0 and 255.
-        - unit: Temperature unit; must be 'celsius' or 'fahrenheit'.
+        - unit (str): Temperature unit; must be 'celsius' or 'fahrenheit'.
         """
         self._verify_temperature_unit(unit)
 
