@@ -306,10 +306,10 @@ def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
 
     #### Params:
         - name (str): The name of the city to retrieve details for.
-        - count (int): The number of results to be shown.
+        - count (int): The number of results to be shown; must be an integer between 1 and 20.
 
     #### Returns:
-        - List[Dict[str, Any]] | None: Returns a list of dictionaries containing details of the city.
+        - list[dict[str, Any]] | None: Returns a list of dictionaries containing details of the city.
         Each dictionary represents a result, containing various information about the city. None is
         returned if no cities corresponding to the supplied name are found in the database.
 
@@ -317,8 +317,8 @@ def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
         - ValueError: If `count` is not a positive integer.
     """
 
-    if not isinstance(count, int) or count <= 0:
-        raise ValueError("`count` must be a positive integer.")
+    if not isinstance(count, int) or count not in range(1, 20):
+        raise ValueError("`count` must be an integer between 1 and 20.")
 
     params: dict[str, str | int] = {"name": name, "count": count}
     results: dict[str, Any] = _request_json(constants.GEOCODING_API, params)
