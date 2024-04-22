@@ -21,9 +21,9 @@ from ..objects import BaseForecast, BaseWeather
 
 class Weather(BaseForecast, BaseWeather):
     r"""
-    Weather class to extract weather data based on the latitude and longitude coordinates.
-    It interacts with the Open-Meteo Weather API to fetch the current or upcoming 16-days
-    hourly and daily weather forecast data.
+    Weather class to extract weather data based on the latitudinal and longitudinal
+    coordinates of the location. It interacts with the Open-Meteo Weather API to fetch
+    the current or upcoming 16-days hourly and daily weather forecast data.
     """
 
     __slots__ = "_lat", "_long", "_params", "_forecast_days"
