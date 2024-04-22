@@ -172,6 +172,11 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         - weather code
         """
 
+        # Verifies the specified units.
+        self._verify_temperature_unit(temperature_unit)
+        self._verify_precipitation_unit(precipitation_unit)
+        self._verify_wind_speed_unit(wind_speed_unit)
+
         # A string representation of the weather summary data types
         # separated by commas as supported for requesting the Web API.
         data_types: str = ",".join(constants.HOURLY_ARCHIVE_SUMMARY_DATA_TYPES)
@@ -208,6 +213,11 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         - Mean wind speed (10m above the ground level)
         - weather code
         """
+
+        # Verifies the specified units.
+        self._verify_temperature_unit(temperature_unit)
+        self._verify_precipitation_unit(precipitation_unit)
+        self._verify_wind_speed_unit(wind_speed_unit)
 
         # A string representation of the weather summary data types
         # separated by commas as supported for requesting the Web API.
