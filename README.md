@@ -2,11 +2,13 @@
 <img src="https://raw.githubusercontent.com/rahul4732saini/pyweather/dev/pyweather/assets/pyweather.png?raw=true" width=500>
 </h1>
 
-<b>pyweather</b> is a weather package that offers its users an easy and flexible way to access and parse weather data in a pythonic way. The package uses the Open-Meteo Web APIs to fetch the weather data in its backend.
-
-### Important Legal Disclamer
+<h3 align=center>Import Legal Disclamer</h3>
 
 <b>pyweather</b> is not affiliated, endorsed, or vetted by <b>Open-Meteo</b>. It's an open-source tool that uses Open-Meteo's publicly available APIs, and is intended for <b>research and educational purposes only</b>.
+
+<h3 align=center>Package Description</h3>
+
+<b>pyweather</b> is a weather package that offers its users an easy and flexible way to access and parse weather data in a pythonic way. The package uses the Open-Meteo Web APIs to fetch the weather data in its backend.
 
 ## Installation
 
