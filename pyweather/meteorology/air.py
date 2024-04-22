@@ -20,9 +20,9 @@ from ..common import constants, tools
 
 class AirQuality(BaseForecast):
     r"""
-    AirQuality class to extract air quality data based on the latitude and longitude coordinates.
-    It interacts with the Open-Meteo Air Quality API to fetch the current or up to upcoming 7-days
-    hourly air quality forecast data.
+    AirQuality class to extract air quality data based on the latitudinal and longitudinal
+    coordinates of the location. It interacts with the Open-Meteo Air Quality API to fetch
+    the current or up to upcoming 7-days hourly air quality forecast data.
     """
 
     _session = requests.Session()
@@ -84,7 +84,7 @@ class AirQuality(BaseForecast):
         - Ammonia[NH3] Concentration (Only available for Europe)
         """
 
-        # A string representation of the marine weather summary data types
+        # A string representation of the air quality summary data types
         # separated by commas as supported for requesting the Web API.
         data_types: str = f",".join(constants.CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES)
 
@@ -112,7 +112,7 @@ class AirQuality(BaseForecast):
         - Ammonia[NH3] Concentration (Only available for Europe)
         """
 
-        # A string representation of the marine weather summary data types
+        # A string representation of the air quality summary data types
         # separated by commas as supported for requesting the Web API.
         data_types: str = f",".join(constants.HOURLY_AIR_QUALITY_SUMMARY_DATA_TYPES)
 
@@ -127,7 +127,7 @@ class AirQuality(BaseForecast):
         self, source: constants.AQI_SOURCES = "european"
     ) -> int | float:
         r"""
-        Returns the current American/European Air Quality
+        Returns the current US/European Air Quality
         Index value at the specified coordinates.
 
         #### Params:
