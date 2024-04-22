@@ -70,6 +70,11 @@ class Weather(BaseForecast, BaseWeather):
         - wind direction in degrees (10m above the ground level)
         """
 
+        # Verifies the specified units.
+        self._verify_temperature_unit(temperature_unit)
+        self._verify_precipitation_unit(precipitation_unit)
+        self._verify_wind_speed_unit(wind_speed_unit)
+
         # A string representation of the weather summary data types
         # separated by commas as supported for requesting the Web API.
         data_types: str = ",".join(constants.CURRENT_WEATHER_SUMMARY_DATA_TYPES)
@@ -111,6 +116,11 @@ class Weather(BaseForecast, BaseWeather):
         - surface soil temperature
         """
 
+        # Verifies the specified units.
+        self._verify_temperature_unit(temperature_unit)
+        self._verify_precipitation_unit(precipitation_unit)
+        self._verify_wind_speed_unit(wind_speed_unit)
+
         # A string representation of the weather summary data types
         # separated by commas as supported for requesting the Web API.
         data_types: str = ",".join(constants.HOURLY_WEATHER_SUMMARY_DATA_TYPES)
@@ -148,6 +158,11 @@ class Weather(BaseForecast, BaseWeather):
         - mean wind speed (10m above the ground level)
         - dominant wind direction
         """
+
+        # Verifies the specified units.
+        self._verify_temperature_unit(temperature_unit)
+        self._verify_precipitation_unit(precipitation_unit)
+        self._verify_wind_speed_unit(wind_speed_unit)
 
         # A string representation of the weather summary data types
         # separated by commas as supported for requesting the Web API.
