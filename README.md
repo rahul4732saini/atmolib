@@ -51,7 +51,7 @@ arguments already being specified in all of them.
 
 - `Weather` class usage:
 
-```
+```python
 import pyweather as pyw
 
 # 'forecast_days' is an optional argument and specifies the number
@@ -92,7 +92,7 @@ weather.get_daily_sunshine_duration()
 
 - `MarineWeather` class uage:
 
-```
+```python
 import pyweather as pyw
 
 # 'forecast_days' is an optional argument and specifies the number
@@ -124,7 +124,7 @@ marine.get_daily_wave_period()
 
 - `AirQuality` class usage:
 
-```
+```python
 import pyweather as pyw
 
 air = pyw.AirQuality(lat=26.91, long=75.54, forecast_days=7)
