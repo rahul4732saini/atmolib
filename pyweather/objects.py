@@ -26,7 +26,7 @@ class BaseMeteor:
 
     def __init__(self, lat: int | float, long: int | float) -> None:
 
-        # params dictionary to be used to store request parameters for API requests.
+        # `params`` dictionary to be used to store request parameters for API requests.
         self._params: dict[str, Any] = {}
 
         self.lat = lat
@@ -66,7 +66,7 @@ class BaseMeteor:
 
         params |= self._params
 
-        # _session and _api class attributes must be defined by the child class.
+        # `_session` and `_api` class attributes must be defined by the child class.
         data: int | float = tools.get_current_data(self._session, self._api, params)
 
         return data
@@ -83,7 +83,7 @@ class BaseMeteor:
 
         params |= self._params
 
-        # _session and _api class attributes must be defined by the child class.
+        # `_session` and `_api` class attributes must be defined by the child class.
         data: pd.DataFrame = tools.get_periodical_data(self._session, self._api, params)
 
         return data
@@ -107,7 +107,6 @@ class BaseForecast(BaseMeteor):
         Creates an instance of the {self.__class__.__name__} class.
 
         #### Params:
-        -------
         - lat (int | float): Latitudinal coordinates of the location.
         - long (int | float): Longitudinal coordinates of the location.
         - forecast_days (int): Number of days for which the forecast has to
@@ -115,7 +114,6 @@ class BaseForecast(BaseMeteor):
         """
 
         super().__init__(lat, long)
-
         self.forecast_days = forecast_days
 
     @property
@@ -133,7 +131,7 @@ class BaseForecast(BaseMeteor):
         self._forecast_days = __value
 
         # Updating the `_params` dictionary with the 'forecast_days' key-value
-        # pair to be used as a parameter in requesting the API.
+        # pair to be used as a parameter for requesting the Web API.
         self._params["forecast_days"] = __value
 
     def __repr__(self) -> str:
@@ -186,11 +184,11 @@ class BaseWeather(BaseMeteor):
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
     ) -> pd.DataFrame:
         r"""
-        Returns a pandas DataFrame of temperature data 2 meters(m) above the ground
-        level at the specified coordinates.
+        Returns a pandas DataFrame of temperature data 2 meters(m) above
+        the ground level at the specified coordinates.
 
         #### Params:
-        - unit: Temperature unit; must be 'celsius' or 'fahrenheit'.
+        - unit (str): Temperature unit; must be 'celsius' or 'fahrenheit'.
         """
         self._verify_temperature_unit(unit)
 
@@ -202,11 +200,11 @@ class BaseWeather(BaseMeteor):
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
     ) -> pd.DataFrame:
         r"""
-        Returns a pandas DataFrame of apparent temperature data at
-        the specified coordinates.
+        Returns a pandas DataFrame of apparent temperature 2 meters(m) above
+        the ground level data at the specified coordinates.
 
         #### Params:
-        - unit: Temperature unit; must be 'celsius' or 'fahrenheit'.
+        - unit (str): Temperature unit; must be 'celsius' or 'fahrenheit'.
         """
         self._verify_temperature_unit(unit)
 
@@ -222,7 +220,7 @@ class BaseWeather(BaseMeteor):
         ground level at the specified coordinates.
 
         #### Params:
-        - unit: Temperature unit; must be 'celsius' or 'fahrenheit'.
+        - unit (str): Temperature unit; must be 'celsius' or 'fahrenheit'.
         """
         self._verify_temperature_unit(unit)
 
@@ -245,7 +243,7 @@ class BaseWeather(BaseMeteor):
         description at the specified coordinates.
 
         #### Params:
-        - frequency: Frequency of the data distribution; must be 'daily' or 'hourly'.
+        - frequency (str): Frequency of the data distribution; must be 'daily' or 'hourly'.
 
         #### Columns:
         - time: time of the forecast data in ISO-8601 format (YYYY-MM-DDTHH-MM) or (YYYY-MM-DD).
@@ -276,7 +274,7 @@ class BaseWeather(BaseMeteor):
         in mm/inch at the specified coordinates.
 
         #### Params:
-        - unit: Precipitation unit; must be 'mm' or 'inch'.
+        - unit (str): Precipitation unit; must be 'mm' or 'inch'.
         """
         self._verify_precipitation_unit(unit)
         return self._get_periodical_data({"hourly": "rain", "precipitation_unit": unit})
@@ -344,7 +342,7 @@ class BaseWeather(BaseMeteor):
         data at the specified coordinates.
 
         #### Params:
-        - unit: Precipitation unit; must be 'mm' or 'inch'.
+        - unit (str): Precipitation unit; must be 'mm' or 'inch'.
         """
         self._verify_precipitation_unit(unit)
 
@@ -383,7 +381,7 @@ class BaseWeather(BaseMeteor):
         2 meters(m) above the ground level at the specified coordinates.
 
         #### Params:
-        - type: The type of daily temperature to be extracted; must be 'min', 'max' or 'mean'.
+        - type (str): The type of daily temperature to be extracted; must be 'min', 'max' or 'mean'.
             - 'min': Daily minimum temperature.
             - 'max': Daily maximum temperature.
             - 'mean': Daily mean temperature.
@@ -409,7 +407,7 @@ class BaseWeather(BaseMeteor):
         data 2 meters(m) above the ground level at the specified coordinates.
 
         #### Params:
-        - type: Specifies the type of daily apparent temperature to
+        - type (str): Specifies the type of daily apparent temperature to
         be retrieved; must be 'min', 'max' or 'mean'.
             - 'min': Daily minimum apparent temperature.
             - 'max': Daily maximum apparent temperature.
@@ -475,7 +473,7 @@ class BaseWeather(BaseMeteor):
         data at the specified coordinates.
 
         #### Params:
-        - unit: Precipitation unit; must be 'mm' or 'inch'.
+        - unit (str): Precipitation unit; must be 'mm' or 'inch'.
         """
         self._verify_precipitation_unit(unit)
 
@@ -490,7 +488,7 @@ class BaseWeather(BaseMeteor):
         Returns a pandas DataFrame of daily rainfall data in mm/inch at the specified coordinates.
 
         #### Params:
-        - unit: Precipitation unit; must be 'mm' or 'inch'.
+        - unit (str): Precipitation unit; must be 'mm' or 'inch'.
         """
         self._verify_precipitation_unit(unit)
 
