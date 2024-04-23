@@ -367,7 +367,9 @@ class Weather(BaseForecast, BaseWeather):
             {"current": "precipitation", "precipitation_unit": unit}
         )
 
-    def get_current_pressure(self, level: constants.PRESSURE_LEVELS) -> int | float:
+    def get_current_pressure(
+        self, level: constants.PRESSURE_LEVELS = "surface"
+    ) -> int | float:
         r"""
         Returns the current atmospheric pressure in
         Hectopascal (hPa) at the specified coordinates.
@@ -465,7 +467,7 @@ class Weather(BaseForecast, BaseWeather):
 
     def get_hourly_soil_temperature(
         self,
-        depth: constants.SOIL_TEMP_DEPTH,
+        depth: constants.SOIL_TEMP_DEPTH = 0,
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.DataFrame:
         r"""
