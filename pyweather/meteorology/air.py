@@ -34,7 +34,9 @@ class AirQuality(BaseForecast):
     # Closes the request session upon exit.
     atexit.register(_session.close)
 
-    def __init__(lat: int | float, long: int | float, forecast_days: int = 7) -> None:
+    def __init__(
+        self, lat: int | float, long: int | float, forecast_days: int = 7
+    ) -> None:
         r"""
         Creates an instance of the AirQuality class.
 
