@@ -170,6 +170,20 @@ class BaseWeather(BaseMeteor):
                 f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn'; got {unit!r}."
             )
 
+    def _verify_units(
+        self,
+        temperature_unit: constants.TEMPERATURE_UNITS,
+        precipitation_unit: constants.PRECIPITATION_UNITS,
+        wind_speed_unit: constants.WIND_SPEED_UNITS,
+    ) -> None:
+        r"""
+        Verifies the specified temperature, precipitation and wind speed units.
+        """
+
+        self._verify_temperature_unit(temperature_unit)
+        self._verify_precipitation_unit(precipitation_unit)
+        self._verify_wind_speed_unit(wind_speed_unit)
+
     def get_hourly_temperature(
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
     ) -> pd.DataFrame:
