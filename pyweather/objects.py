@@ -226,7 +226,7 @@ class BaseWeather(BaseMeteor):
         return self._get_periodical_data({"hourly": "relative_humidity_2m"})
 
     def get_periodical_weather_code(
-        self, frequency: constants.FREQUENCY
+        self, frequency: constants.FREQUENCY = "daily"
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly weather code data with its corresponding
@@ -276,7 +276,9 @@ class BaseWeather(BaseMeteor):
         """
         return self._get_periodical_data({"hourly": "rain"})
 
-    def get_hourly_pressure(self, level: constants.PRESSURE_LEVELS) -> pd.DataFrame:
+    def get_hourly_pressure(
+        self, level: constants.PRESSURE_LEVELS = "surface"
+    ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of the hourly atmospheric pressure data
         in Hectopascal (hPa) at the specified coordinates.
@@ -341,8 +343,7 @@ class BaseWeather(BaseMeteor):
         )
 
     def get_hourly_wind_gusts(
-        self,
-        unit: constants.WIND_SPEED_UNITS = "kmh",
+        self, unit: constants.WIND_SPEED_UNITS = "kmh"
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly wind gusts data 10 meters(m) above the
@@ -363,7 +364,7 @@ class BaseWeather(BaseMeteor):
 
     def get_daily_temperature(
         self,
-        type_: constants.DAILY_WEATHER_REQUEST_TYPES,
+        type_: constants.DAILY_WEATHER_REQUEST_TYPES = "mean",
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.DataFrame:
         r"""
@@ -389,7 +390,7 @@ class BaseWeather(BaseMeteor):
 
     def get_daily_apparent_temperature(
         self,
-        type_: constants.DAILY_WEATHER_REQUEST_TYPES,
+        type_: constants.DAILY_WEATHER_REQUEST_TYPES = "mean",
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.DataFrame:
         r"""
