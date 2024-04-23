@@ -3,8 +3,14 @@
 </h1>
 
 <a href="https://www.codefactor.io/repository/github/rahul4732saini/pyweather"><img src="https://www.codefactor.io/repository/github/rahul4732saini/pyweather/badge" alt="CodeFactor" /></a>
+<a href="https://codecov.io/gh/rahul4732saini/pyweather" >
+<img src="https://codecov.io/gh/rahul4732saini/pyweather/graph/badge.svg?token=BMZIPO0QXC"/>
+</a>
+
 <a href="https://www.github.com/rahul4732saini/pyweather"><img src="https://img.shields.io/badge/status-beta-yellow" alt="projectStatus"></a>
 <a href="https://www.github.com/rahul4732saini/pyweather"><img src="https://img.shields.io/badge/python-3.10+-blue" alt="pythonVersion"></a>
+<a href="https://www.github.com/rahul4732saini/pyweather"><img src="https://img.shields.io/badge/License-MIT-green" alt="pythonVersion"></a>
+
 <a href="https://www.github.com/rahul4732saini/pyweather"><img src="https://img.shields.io/badge/github-star-white" alt="StarProject"></a>
 
 <table border=1 cellpadding=10><tr><td>
