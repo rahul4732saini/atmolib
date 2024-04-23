@@ -7,9 +7,15 @@
 <a href="https://www.github.com/rahul4732saini/pyweather"><img src="https://img.shields.io/badge/python-3.10+-blue" alt="pythonVersion"></a>
 <a href="https://www.github.com/rahul4732saini/pyweather"><img src="https://img.shields.io/badge/github-star-white" alt="StarProject"></a>
 
-<h3 align=center>Important Legal Disclaimer</h3>
+<table border=1 cellpadding=10><tr><td>
+
+<h3 align=center>*** Important Legal Disclaimer ***</h3>
+
+---
 
 <b>pyweather</b> is not affiliated, endorsed, or vetted by <b>Open-Meteo</b>. It's an open-source tool that uses Open-Meteo's publicly available APIs, and is intended for <b>research and educational purposes only</b>.
+
+</td></tr></table>
 
 <h3 align=center>Package Description</h3>
 
