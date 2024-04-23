@@ -37,6 +37,18 @@ class Weather(BaseForecast, BaseWeather):
     # Closes the request session upon exit.
     atexit.register(_session.close)
 
+    def __init__(lat: int | float, long: int | float, forecast_days: int = 7) -> None:
+        r"""
+        Creates an instance of the Weather class.
+
+        #### Params:
+        - lat (int | float): Latitudinal coordinates of the location.
+        - long (int | float): Longitudinal coordinates of the location.
+        - forecast_days (int): Number of days for which the forecast has to
+        be extracted; must be in the range of 1 and 16.
+        """
+        super().__init__(lat, long, forecast_days)
+
     @staticmethod
     def _verify_wind_altitude(altitude: int) -> None:
         r"""
