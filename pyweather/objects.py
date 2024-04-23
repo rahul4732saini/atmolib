@@ -64,10 +64,10 @@ class BaseMeteor:
         coordinate parameters to request the Open-Meteo Weather API.
         """
 
-        params |= self._params
-
         # `_session` and `_api` class attributes must be defined by the child class.
-        data: int | float = tools.get_current_data(self._session, self._api, params)
+        data: int | float = tools.get_current_data(
+            self._session, self._api, params | self._params
+        )
 
         return data
 
@@ -81,10 +81,10 @@ class BaseMeteor:
         coordinate parameters to request the Open-Meteo Weather API.
         """
 
-        params |= self._params
-
         # `_session` and `_api` class attributes must be defined by the child class.
-        data: pd.DataFrame = tools.get_periodical_data(self._session, self._api, params)
+        data: pd.DataFrame = tools.get_periodical_data(
+            self._session, self._api, params | self._params
+        )
 
         return data
 
@@ -170,6 +170,20 @@ class BaseWeather(BaseMeteor):
                 f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn'; got {unit!r}."
             )
 
+    def _verify_units(
+        self,
+        temperature_unit: constants.TEMPERATURE_UNITS,
+        precipitation_unit: constants.PRECIPITATION_UNITS,
+        wind_speed_unit: constants.WIND_SPEED_UNITS,
+    ) -> None:
+        r"""
+        Verifies the specified temperature, precipitation and wind speed units.
+        """
+
+        self._verify_temperature_unit(temperature_unit)
+        self._verify_precipitation_unit(precipitation_unit)
+        self._verify_wind_speed_unit(wind_speed_unit)
+
     def get_hourly_temperature(
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
     ) -> pd.DataFrame:
@@ -226,7 +240,7 @@ class BaseWeather(BaseMeteor):
         return self._get_periodical_data({"hourly": "relative_humidity_2m"})
 
     def get_periodical_weather_code(
-        self, frequency: constants.FREQUENCY
+        self, frequency: constants.FREQUENCY = "daily"
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly weather code data with its corresponding
@@ -276,7 +290,9 @@ class BaseWeather(BaseMeteor):
         """
         return self._get_periodical_data({"hourly": "rain"})
 
-    def get_hourly_pressure(self, level: constants.PRESSURE_LEVELS) -> pd.DataFrame:
+    def get_hourly_pressure(
+        self, level: constants.PRESSURE_LEVELS = "surface"
+    ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of the hourly atmospheric pressure data
         in Hectopascal (hPa) at the specified coordinates.
@@ -341,8 +357,7 @@ class BaseWeather(BaseMeteor):
         )
 
     def get_hourly_wind_gusts(
-        self,
-        unit: constants.WIND_SPEED_UNITS = "kmh",
+        self, unit: constants.WIND_SPEED_UNITS = "kmh"
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly wind gusts data 10 meters(m) above the
@@ -363,7 +378,7 @@ class BaseWeather(BaseMeteor):
 
     def get_daily_temperature(
         self,
-        type_: constants.DAILY_WEATHER_REQUEST_TYPES,
+        type_: constants.DAILY_WEATHER_REQUEST_TYPES = "mean",
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.DataFrame:
         r"""
@@ -389,7 +404,7 @@ class BaseWeather(BaseMeteor):
 
     def get_daily_apparent_temperature(
         self,
-        type_: constants.DAILY_WEATHER_REQUEST_TYPES,
+        type_: constants.DAILY_WEATHER_REQUEST_TYPES = "mean",
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.DataFrame:
         r"""
