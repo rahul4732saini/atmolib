@@ -266,7 +266,7 @@ class AirQuality(BaseForecast):
         Air Quality forecast. Returns None for Non-European regions.
 
         #### Params:
-        - plant (str): Plant whose pollen concentration can be retrieved, must be one of
+        - plant (str): Plant whose pollen concentration can be retrieved; must be one of
         ('alder', 'birch', 'grass', 'mugwort', 'olive', 'ragweed').
         """
         self._verify_plant_species(plant)
@@ -290,7 +290,7 @@ class AirQuality(BaseForecast):
         the specified atmospheric gas in air 10 meters(m) above ground level.
 
         #### Params:
-        - gas (str): Gas whose concentration needs to be extracted, must be one of the following:
+        - gas (str): Gas whose concentration needs to be extracted; must be one of the following:
         ('ozone', 'carbon_monoxide', 'nitrogen_dioxide', 'sulphur_dioxide').
         """
         self._verify_atmospheric_gas(gas)
