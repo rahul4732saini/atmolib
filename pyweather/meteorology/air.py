@@ -197,7 +197,9 @@ class AirQuality(BaseForecast):
         """
         return self._get_current_data({"current": "pm10"})
 
-    def get_current_pollen_conc(self, plant: constants.PLANTS) -> int | float | None:
+    def get_current_pollen_conc(
+        self, plant: constants.PLANTS = "grass"
+    ) -> int | float | None:
         r"""
         Returns the current concentration(grains/m^3) of pollens of the specified
         plant. Only available for Europe as provided by CAMS European Air Quality
@@ -257,7 +259,7 @@ class AirQuality(BaseForecast):
         """
         return self._get_periodical_data({"hourly": "pm10"})
 
-    def get_hourly_pollen_conc(self, plant: constants.PLANTS) -> pd.DataFrame:
+    def get_hourly_pollen_conc(self, plant: constants.PLANTS = "grass") -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly concentration(grains/m^3) data of pollens
         of the specified plant. Only available for Europe as provided by CAMS European
