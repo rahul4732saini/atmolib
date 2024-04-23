@@ -171,11 +171,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         - surface soil temperature
         - weather code
         """
-
-        # Verifies the specified units.
-        self._verify_temperature_unit(temperature_unit)
-        self._verify_precipitation_unit(precipitation_unit)
-        self._verify_wind_speed_unit(wind_speed_unit)
+        self._verify_units(temperature_unit, precipitation_unit, wind_speed_unit)
 
         # A string representation of the weather summary data types
         # separated by commas as supported for requesting the Web API.
@@ -213,11 +209,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         - Mean wind speed (10m above the ground level)
         - weather code
         """
-
-        # Verifies the specified units.
-        self._verify_temperature_unit(temperature_unit)
-        self._verify_precipitation_unit(precipitation_unit)
-        self._verify_wind_speed_unit(wind_speed_unit)
+        self._verify_units(temperature_unit, precipitation_unit, wind_speed_unit)
 
         # A string representation of the weather summary data types
         # separated by commas as supported for requesting the Web API.
