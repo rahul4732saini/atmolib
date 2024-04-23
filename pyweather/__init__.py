@@ -14,7 +14,6 @@ information seamlessly into their applications.
 - Marine weather data: Retrieve marine weather forecasts for maritime activities.
 
 Author: rahul4732saini
-Version: ---
 License: MIT, see LICENSE for more details. (https://opensource.org/licenses/MIT)
 """
 
@@ -29,6 +28,9 @@ __all__ = (
     "constants",
 )
 
+from .version import version
 from .common import tools, constants
 from .common.tools import get_city_details, get_elevation
 from .meteorology import Weather, WeatherArchive, AirQuality, MarineWeather
+
+__version__ = version
