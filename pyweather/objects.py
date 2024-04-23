@@ -64,10 +64,10 @@ class BaseMeteor:
         coordinate parameters to request the Open-Meteo Weather API.
         """
 
-        params |= self._params
-
         # `_session` and `_api` class attributes must be defined by the child class.
-        data: int | float = tools.get_current_data(self._session, self._api, params)
+        data: int | float = tools.get_current_data(
+            self._session, self._api, params | self._params
+        )
 
         return data
 
@@ -81,10 +81,10 @@ class BaseMeteor:
         coordinate parameters to request the Open-Meteo Weather API.
         """
 
-        params |= self._params
-
         # `_session` and `_api` class attributes must be defined by the child class.
-        data: pd.DataFrame = tools.get_periodical_data(self._session, self._api, params)
+        data: pd.DataFrame = tools.get_periodical_data(
+            self._session, self._api, params | self._params
+        )
 
         return data
 
