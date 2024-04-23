@@ -274,7 +274,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         return self._get_periodical_data({"hourly": f"wind_direction_{altitude}"})
 
     def get_hourly_soil_temperature(
-        self, depth: int, unit: constants.TEMPERATURE_UNITS = "celsius"
+        self, depth: int = 0, unit: constants.TEMPERATURE_UNITS = "celsius"
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly soil temperature data at the specified
@@ -296,7 +296,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
             {"hourly": f"soil_temperature_{depth_range}cm", "temperature_unit": unit},
         )
 
-    def get_hourly_soil_moisture(self, depth: int) -> pd.DataFrame:
+    def get_hourly_soil_moisture(self, depth: int = 0) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly soil moisture data at the specified
         depth and coordinates in the specified unit within the supplied date range.
