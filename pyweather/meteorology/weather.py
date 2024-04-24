@@ -13,6 +13,7 @@ import atexit
 from typing import Any
 
 import requests
+import numpy as np
 import pandas as pd
 
 from ..common import constants, tools
@@ -407,7 +408,7 @@ class Weather(BaseForecast, BaseWeather):
         Returns a pandas Series of hourly visibility data
         in meters(m) at the specified coordinates.
         """
-        return self._get_periodical_data({"hourly": "visibility"})
+        return self._get_periodical_data({"hourly": "visibility"}, dtype=np.int32)
 
     def get_hourly_precipitation_probability(self) -> pd.Series:
         r"""
