@@ -329,7 +329,7 @@ class Weather(BaseForecast, BaseWeather):
         self._verify_wind_speed_unit(unit)
 
         return self._get_current_data(
-            {"current": "wind_gusts_10", "wind_speed_unit": unit}
+            {"current": "wind_gusts_10m", "wind_speed_unit": unit}
         )
 
     def get_current_relative_humidity(self) -> int | float:
