@@ -402,14 +402,14 @@ class Weather(BaseForecast, BaseWeather):
         """
         return self._get_current_data({"current": "is_day"})
 
-    def get_hourly_visibility(self) -> pd.DataFrame:
+    def get_hourly_visibility(self) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly visibility data
+        Returns a pandas Series of hourly visibility data
         in meters(m) at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": "visibility"})
 
-    def get_hourly_precipitation_probability(self) -> pd.DataFrame:
+    def get_hourly_precipitation_probability(self) -> pd.Series:
         r"""
         Returns the probability of precipitation (rain/showers/snowfall)
         in percentage(%) at the specified coordinates.
@@ -420,9 +420,9 @@ class Weather(BaseForecast, BaseWeather):
         self,
         altitude: constants.WIND_ALTITUDE = 10,
         unit: constants.WIND_SPEED_UNITS = "kmh",
-    ) -> pd.DataFrame:
+    ) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly wind speed data at the
+        Returns a pandas Series of hourly wind speed data at the
         specified coordinates and altitude in the specified unit.
 
         #### Params:
@@ -442,9 +442,9 @@ class Weather(BaseForecast, BaseWeather):
 
     def get_hourly_wind_direction(
         self, altitude: constants.WIND_ALTITUDE = 10
-    ) -> pd.DataFrame:
+    ) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly wind direction data in degrees at
+        Returns a pandas Series of hourly wind direction data in degrees at
         the specified coordinates and altitude in the specified unit.
 
         #### Params:
@@ -457,9 +457,9 @@ class Weather(BaseForecast, BaseWeather):
         self,
         depth: constants.SOIL_TEMP_DEPTH = 0,
         unit: constants.TEMPERATURE_UNITS = "celsius",
-    ) -> pd.DataFrame:
+    ) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly soil temperature data at
+        Returns a pandas Series of hourly soil temperature data at
         the specified depth and coordinates in the specified unit.
 
         #### Params:
@@ -477,9 +477,9 @@ class Weather(BaseForecast, BaseWeather):
             {"hourly": f"soil_temperature_{depth}cm", "temperature_unit": unit}
         )
 
-    def get_hourly_soil_moisture(self, depth: int = 7) -> pd.DataFrame:
+    def get_hourly_soil_moisture(self, depth: int = 7) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of soil moisture (m^3/m^3)
+        Returns a pandas Series of soil moisture (m^3/m^3)
         data at the specified depth and coordinates.
 
         #### Params:
@@ -504,16 +504,16 @@ class Weather(BaseForecast, BaseWeather):
 
         return self._get_periodical_data({"hourly": f"soil_moisture_{depth_range}cm"})
 
-    def get_daily_max_uv_index(self) -> pd.DataFrame:
+    def get_daily_max_uv_index(self) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of daily maximum Ultra-Violet (UV)
+        Returns a pandas Series of daily maximum Ultra-Violet (UV)
         index data at the specified coordinates.
         """
         return self._get_periodical_data({"daily": "uv_index_max"})
 
-    def get_daily_max_precipitation_probability(self) -> pd.DataFrame:
+    def get_daily_max_precipitation_probability(self) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of daily maximum precipitation probability
+        Returns a pandas Series of daily maximum precipitation probability
         (rain/showers/snowfall) in percentage (%) at the specified coordinates.
         """
         return self._get_periodical_data({"daily": "precipitation_probability_max"})
