@@ -233,9 +233,9 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         self,
         altitude: constants.ARCHIVE_WIND_ALTITUDES = 10,
         unit: constants.WIND_SPEED_UNITS = "kmh",
-    ) -> pd.DataFrame:
+    ) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly wind speed data at the specified
+        Returns a pandas Series of hourly wind speed data at the specified
         altitude and coordinates within the supplied date range.
 
         #### Params:
@@ -259,9 +259,9 @@ class WeatherArchive(BaseWeather, BaseMeteor):
     def get_hourly_wind_direction(
         self,
         altitude: constants.ARCHIVE_WIND_ALTITUDES = 10,
-    ) -> pd.DataFrame:
+    ) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly wind direction data at the
+        Returns a pandas Series of hourly wind direction data at the
         specified altitude and coordinates within the supplied date range.
 
         #### Params:
@@ -275,9 +275,9 @@ class WeatherArchive(BaseWeather, BaseMeteor):
 
     def get_hourly_soil_temperature(
         self, depth: int = 0, unit: constants.TEMPERATURE_UNITS = "celsius"
-    ) -> pd.DataFrame:
+    ) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly soil temperature data at the specified
+        Returns a pandas Series of hourly soil temperature data at the specified
         depth and coordinates in the specified unit within the supplied date range.
 
         #### Params:
@@ -296,9 +296,9 @@ class WeatherArchive(BaseWeather, BaseMeteor):
             {"hourly": f"soil_temperature_{depth_range}cm", "temperature_unit": unit},
         )
 
-    def get_hourly_soil_moisture(self, depth: int = 0) -> pd.DataFrame:
+    def get_hourly_soil_moisture(self, depth: int = 0) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly soil moisture data at the specified
+        Returns a pandas Series of hourly soil moisture data at the specified
         depth and coordinates in the specified unit within the supplied date range.
 
         #### Params:
