@@ -324,7 +324,7 @@ def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
         - ValueError: If `count` is not a positive integer.
     """
 
-    if count not in range(1, 20):
+    if count not in range(1, 21):
         raise ValueError("`count` must be an integer between 1 and 20.")
 
     params: dict[str, str | int] = {"name": name, "count": count}
