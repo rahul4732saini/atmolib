@@ -98,7 +98,7 @@ def get_current_data(
 
 
 def get_periodical_data(
-    session: requests.Session, api: str, params: dict[str, Any]
+    session: requests.Session, api: str, params: dict[str, Any], dtype=np.float16
 ) -> pd.Series:
     r"""
     Base function for the periodical (daily/hourly) meteorology data extraction from supplied API.
@@ -112,6 +112,7 @@ def get_periodical_data(
     - frequency (str): Frequency of the meteorology data; 'hourly' or 'daily'.
     - params (dict[str, Any]): Necessary parameters for the API request including the
     coordinates of the location, requested data type, etc.
+    - dtype: numpy datatype for storing the requested data in a pandas Series efficiently.
 
     #### Returns:
     - pd.Series: Returns a pandas Series comprising the datetime and periodical meteorology
@@ -150,7 +151,7 @@ def get_periodical_data(
     # pandas Series comprising datetime and periodical meteorology data. The data is retrived
     # from the key-value pair named after the requested data type (e.g. temperature_2m,
     # meteorology_code, etc.) in the `data` dictionary.
-    series = pd.DataFrame(data[params[frequency]], index=data["time"], dtype=np.float16)
+    series = pd.DataFrame(data[params[frequency]], index=data["time"], dtype=dtype)
     series.index.name = "Date" if frequency == "daily" else "Datetime"
 
     return series
