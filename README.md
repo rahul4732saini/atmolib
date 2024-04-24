@@ -9,6 +9,7 @@
 <a href="https://www.github.com/rahul4732saini/pyweather"><img src="https://img.shields.io/badge/License-MIT-green" alt="pythonVersion"></a>
 
 <a href="https://www.github.com/rahul4732saini/pyweather"><img src="https://img.shields.io/github/stars/rahul4732saini/pyweather.svg?style=social&label=Star&maxAge=60" alt="StarProject"></a>
+<a href="https://www.twitter.com/rahulsaini4732"><img src="https://img.shields.io/twitter/follow/rahulsaini4732?style=social&label=Follow&maxAge=60"></a>
 
 <table border=1 cellpadding=10><tr><td>
 
