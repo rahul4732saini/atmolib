@@ -227,46 +227,46 @@ class MarineWeather(BaseForecast):
         """
         return self._get_current_data({"current": f"{self._type}wave_period"})
 
-    def get_hourly_wave_height(self) -> pd.DataFrame:
+    def get_hourly_wave_height(self) -> pd.Series:
         r"""
-        Returns the hourly mean wave height in meters(m) of the
+        Returns a pandas Series of hourly mean wave height in meters(m) of the
         specified wave type at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": f"{self._type}wave_height"})
 
-    def get_hourly_wave_direction(self) -> pd.DataFrame:
+    def get_hourly_wave_direction(self) -> pd.Series:
         r"""
-        Returns the hourly wave direction in degrees of the
+        Returns a pandas Series of hourly wave direction in degrees of the
         specified wave type at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": f"{self._type}wave_direction"})
 
-    def get_hourly_wave_period(self) -> pd.DataFrame:
+    def get_hourly_wave_period(self) -> pd.Series:
         r"""
-        Returns the hourly wave period in seconds(s) of the
+        Returns a pandas Series of hourly wave period in seconds(s) of the
         specified wave type at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": f"{self._type}wave_period"})
 
-    def get_daily_max_wave_height(self) -> pd.DataFrame:
+    def get_daily_max_wave_height(self) -> pd.Series:
         r"""
-        Returns the daily maximum wave height in meters(m) of the
+        Returns a pandas Series of daily maximum wave height in meters(m) of the
         specified wave type at the specified coordinates.
         """
         return self._get_periodical_data({"daily": f"{self._type}wave_height_max"})
 
-    def get_daily_dominant_wave_direction(self) -> pd.DataFrame:
+    def get_daily_dominant_wave_direction(self) -> pd.Series:
         r"""
-        Returns the daily dominant wave direction in degrees of the
+        Returns a pandas Series of daily dominant wave direction in degrees of the
         specified wave type at the specified coordinates.
         """
         return self._get_periodical_data(
             {"daily": f"{self._type}wave_direction_dominant"}
         )
 
-    def get_daily_max_wave_period(self) -> pd.DataFrame:
+    def get_daily_max_wave_period(self) -> pd.Series:
         r"""
-        Returns the daily maximum wave period in seconds of the
+        Returns a pandas Series of daily maximum wave period in seconds of the
         specified wave type at the specified coordinates.
         """
         return self._get_periodical_data({"daily": f"{self._type}wave_period_max"})
