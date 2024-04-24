@@ -9,6 +9,7 @@ for various objects and functionalities within the pyweather package.
 from typing import Any
 
 import requests
+import numpy as np
 import pandas as pd
 
 from .common import tools, constants
@@ -71,10 +72,10 @@ class BaseMeteor:
 
         return data
 
-    def _get_periodical_data(self, params: dict[str, Any]) -> pd.DataFrame:
+    def _get_periodical_data(self, params: dict[str, Any]) -> pd.Series:
         r"""
         Uses the specified parameters to request the specified Open-Meteo
-        API and returns the periodical weather data as a pandas DataFrame.
+        API and returns the periodical weather data as a pandas Series.
 
         #### Params:
         - params (dict[str, Any]): A dictionary all the necessary parameters except the
@@ -82,7 +83,7 @@ class BaseMeteor:
         """
 
         # `_session` and `_api` class attributes must be defined by the child class.
-        data: pd.DataFrame = tools.get_periodical_data(
+        data: pd.Series = tools.get_periodical_data(
             self._session, self._api, params | self._params
         )
 
