@@ -151,7 +151,7 @@ def get_periodical_data(
     # pandas Series comprising datetime and periodical meteorology data. The data is retrived
     # from the key-value pair named after the requested data type (e.g. temperature_2m,
     # meteorology_code, etc.) in the `data` dictionary.
-    series = pd.DataFrame(data[params[frequency]], index=data["time"], dtype=dtype)
+    series = pd.Series(data[params[frequency]], index=data["time"], dtype=dtype)
     series.index.name = "Date" if frequency == "daily" else "Datetime"
 
     return series
