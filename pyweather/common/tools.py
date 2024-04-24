@@ -10,6 +10,7 @@ from typing import Any
 from types import ModuleType
 
 import requests
+import numpy as np
 import pandas as pd
 
 from . import constants
@@ -98,7 +99,7 @@ def get_current_data(
 
 def get_periodical_data(
     session: requests.Session, api: str, params: dict[str, Any]
-) -> pd.DataFrame:
+) -> pd.Series:
     r"""
     Base function for the periodical (daily/hourly) meteorology data extraction from supplied API.
 
@@ -113,11 +114,9 @@ def get_periodical_data(
     coordinates of the location, requested data type, etc.
 
     #### Returns:
-    - pd.DataFrame: Returns a pandas DataFrame of periodical meteorology data comprising two
-    columns namely 'time' and 'data' where 'time' column indicates the time of the
-    meteorology data in ISO 8601 format (YYYY-MM-DDTHH:MM) or the date of the meteorology data
-    as (YYYY-MM-DD) depending upon the frequency supplied and 'data' column comprises the
-    meteorology data.
+    - pd.Series: Returns a pandas Series comprising the datetime and periodical meteorology
+    data. The index comprises the datetime/date of the corresponding data depening upon the
+    frequency in ISO-8601 format (YYYY-MM-DDTHH:MM) or (YYYY-MM-DD).
 
     #### Raises:
     - ValueError: If `frequency` is assigned to an object other than 'hourly' or 'daily'.
@@ -148,18 +147,13 @@ def get_periodical_data(
     # holds all the periodical meteorology data key-value pairs.
     data: dict[str, Any] = results[frequency]
 
-    # pandas DataFrame containing time and periodical meteorology data. The object
-    # comprises two columns namely 'time' and 'data'. 'data' column data is retrieved
+    # pandas Series comprising datetime and periodical meteorology data. The data is retrived
     # from the key-value pair named after the requested data type (e.g. temperature_2m,
     # meteorology_code, etc.) in the `data` dictionary.
-    dataframe = pd.DataFrame(
-        {
-            "time": data["time"],
-            "data": data[params[frequency]],
-        }
-    )
+    series = pd.DataFrame(data[params[frequency]], index=data["time"], dtype=np.float16)
+    series.index.name = "Date" if frequency == "daily" else "Datetime"
 
-    return dataframe
+    return series
 
 
 def get_current_summary(
