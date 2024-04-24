@@ -72,7 +72,9 @@ class BaseMeteor:
 
         return data
 
-    def _get_periodical_data(self, params: dict[str, Any]) -> pd.Series:
+    def _get_periodical_data(
+        self, params: dict[str, Any], dtype=np.float16
+    ) -> pd.Series:
         r"""
         Uses the specified parameters to request the specified Open-Meteo
         API and returns the periodical weather data as a pandas Series.
@@ -80,11 +82,12 @@ class BaseMeteor:
         #### Params:
         - params (dict[str, Any]): A dictionary all the necessary parameters except the
         coordinate parameters to request the Open-Meteo Weather API.
+        - dtype: Desired numpy dtype of the request meteorology data.
         """
 
         # `_session` and `_api` class attributes must be defined by the child class.
         data: pd.Series = tools.get_periodical_data(
-            self._session, self._api, params | self._params
+            self._session, self._api, params | self._params, dtype
         )
 
         return data
