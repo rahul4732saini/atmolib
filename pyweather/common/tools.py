@@ -287,8 +287,15 @@ def get_elevation(lat: int | float, long: int | float) -> float:
         300.0  # Example elevation value in meters
     """
 
-    if not isinstance(lat, int | float) or not isinstance(long, int | float):
-        raise ValueError("`lat` and `long` must be integers or floating point numbers.")
+    if lat not in range(-90, 90):
+        raise ValueError(
+            "`lat` must be an integer or floating point number between -90 and 90."
+        )
+
+    if long not in range(-90, 90):
+        raise ValueError(
+            "`long` must be an integer or floating point number between -180 and 180."
+        )
 
     params: dict[str, int | float] = {"latitude": lat, "longitude": long}
     results: dict[str, Any] = _request_json(constants.ELEVATION_API, params)
