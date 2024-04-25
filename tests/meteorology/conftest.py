@@ -8,6 +8,11 @@ def weather() -> pyweather.Weather:
 
 
 @pytest.fixture
+def weather_archive() -> pyweather.WeatherArchive:
+    return pyweather.WeatherArchive(0, 0, "2020-01-01", "2020-01-10")
+
+
+@pytest.fixture
 def air_quality() -> pyweather.AirQuality:
     return pyweather.AirQuality(0, 0, forecast_days=2)
 
