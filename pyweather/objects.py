@@ -264,7 +264,7 @@ class BaseWeather(BaseMeteor):
             )
 
         data: pd.Series = self._get_periodical_data(
-            {frequency: "weather_code"},
+            {frequency: "weather_code"}, dtype=np.uint8
         )
 
         # Converting the Series into a pandas.DataFrame to
