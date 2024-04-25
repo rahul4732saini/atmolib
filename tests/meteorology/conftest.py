@@ -4,7 +4,7 @@ import pyweather
 
 @pytest.fixture
 def air_quality() -> pyweather.AirQuality:
-    return pyweather.AirQuality(0, 0)
+    return pyweather.AirQuality(0, 0, forecast_days=2)
 
 
 @pytest.fixture
