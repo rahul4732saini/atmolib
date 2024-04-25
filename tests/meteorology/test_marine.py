@@ -84,9 +84,13 @@ class TestMarineWeather:
         direction = marine_weather.get_current_wave_direction()
         period = marine_weather.get_current_wave_period()
 
-        assert isinstance(height, int | float)
-        assert isinstance(direction, int | float)
-        assert isinstance(period, int | float)
+        assert all(
+            [
+                isinstance(height, int | float),
+                isinstance(direction, int | float),
+                isinstance(period, int | float),
+            ]
+        )
 
         assert all([height >= 0, direction in range(360), period >= 0])
 
@@ -102,13 +106,17 @@ class TestMarineWeather:
         direction = marine_weather.get_hourly_wave_direction()
         period = marine_weather.get_hourly_wave_period()
 
-        assert isinstance(height, pd.Series)
-        assert isinstance(direction, pd.Series)
-        assert isinstance(period, pd.Series)
+        assert all(
+            [
+                isinstance(height, pd.Series),
+                isinstance(direction, pd.Series),
+                isinstance(period, pd.Series),
+            ]
+        )
 
-        assert all(height >= 0)
-        assert all((direction >= 0) & (direction < 360))
-        assert all(period >= 0)
+        assert all(
+            (height >= 0) & ((direction >= 0) & (direction < 360)) & (period >= 0)
+        )
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
     def test_daily_marine_weather_extraction_methods(self, wave_type: str) -> None:
@@ -122,10 +130,14 @@ class TestMarineWeather:
         direction = marine_weather.get_daily_dominant_wave_direction()
         period = marine_weather.get_daily_max_wave_period()
 
-        assert isinstance(height, pd.Series)
-        assert isinstance(direction, pd.Series)
-        assert isinstance(period, pd.Series)
+        assert all(
+            [
+                isinstance(height, pd.Series),
+                isinstance(direction, pd.Series),
+                isinstance(period, pd.Series),
+            ]
+        )
 
-        assert all(height >= 0)
-        assert all((direction >= 0) & (direction < 360))
-        assert all(period >= 0)
+        assert all(
+            (height >= 0) & ((direction >= 0) & (direction < 360)) & (period >= 0)
+        )
