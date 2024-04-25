@@ -1,4 +1,10 @@
 import pytest
+import pyweather
+
+
+@pytest.fixture
+def air_quality() -> pyweather.AirQuality:
+    return pyweather.AirQuality(0, 0)
 
 
 @pytest.fixture
