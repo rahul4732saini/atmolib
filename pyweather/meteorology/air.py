@@ -137,9 +137,7 @@ class AirQuality(BaseForecast):
             constants.HOURLY_AIR_QUALITY_SUMMARY_DATA_TYPES,
         )
 
-    def get_current_aqi(
-        self, source: constants.AQI_SOURCES = "european"
-    ) -> int | float:
+    def get_current_aqi(self, source: constants.AQI_SOURCES = "european") -> int:
         r"""
         Returns the current US/European Air Quality
         Index value at the specified coordinates.
@@ -155,7 +153,7 @@ class AirQuality(BaseForecast):
                 f"Expected `source` to be 'european' or 'us'; got {source!r}."
             )
 
-        return self._get_current_data({"current": "european_aqi"})
+        return int(self._get_current_data({"current": "european_aqi"}))
 
     def get_current_ammonia_conc(self) -> int | float | None:
         r"""
