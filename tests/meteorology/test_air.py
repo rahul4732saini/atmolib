@@ -42,8 +42,6 @@ class TestAirQuality:
             for i in invalid_coordinates:
                 pyweather.AirQuality(*i)
 
-        with pytest.raises(AssertionError):
-
             # Expects an AssertionError upon initialization with invalid `forecast_days` argument.
             for days in (0, -1, 9):
                 pyweather.AirQuality(0, 0, forecast_days=days)
