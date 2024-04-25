@@ -58,6 +58,20 @@ class TestMarineWeather:
         hourly = marine_weather.get_hourly_summary()
         daily = marine_weather.get_daily_summary()
 
+        assert (
+            isinstance(current, pd.Series)
+            and isinstance(hourly, pd.DataFrame)
+            and isinstance(daily, pd.DataFrame)
+        )
+
+        # Verifies the index/columns of the resultant pandas.Series/DataFrame.
+        assert (
+            current.index.tolist()
+            == hourly.columns.tolist()
+            == daily.columns.tolist()
+            == pyweather.constants.MARINE_WEATHER_SUMMARY_DATA_TYPES
+        )
+
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
     def test_current_marine_weather_extraction_methods(self, wave_type: str) -> None:
         r"""
