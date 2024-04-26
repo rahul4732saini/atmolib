@@ -552,11 +552,15 @@ class BaseWeather(BaseMeteor):
         Returns a pandas Series of daily sunshine duration
         in seconds(s) at the specified coordinates.
         """
-        return self._get_periodical_data({"daily": "sunshine_duration"})
+        return self._get_periodical_data(
+            {"daily": "sunshine_duration"}, dtype=np.object_
+        )
 
     def get_daily_total_shortwave_radiation(self) -> pd.Series:
         r"""
         Returns a pandas Series of daily sum of shortwave radiation in Mega
         Joules per square meter (MJ/m^2) sat the specified coordinates.
         """
-        return self._get_periodical_data({"daily": "shortwave_radiation_sum"})
+        return self._get_periodical_data(
+            {"daily": "shortwave_radiation_sum"}, dtype=np.object_
+        )
