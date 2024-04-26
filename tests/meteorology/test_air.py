@@ -46,7 +46,7 @@ class TestAirQuality:
             for days in (0, -1, 9):
                 pyweather.AirQuality(0, 0, forecast_days=days)
 
-    def test_air_quality_summary_extraction_methods(
+    def test_air_quality_summary_methods(
         self,
         air_quality: pyweather.AirQuality,
     ) -> None:
@@ -68,7 +68,7 @@ class TestAirQuality:
         )
 
     @pytest.mark.parametrize("source", ("european", "us"))
-    def test_current_aqi_extraction_method(
+    def test_current_aqi_method(
         self, air_quality: pyweather.AirQuality, source: str
     ) -> None:
         r"""
@@ -83,7 +83,7 @@ class TestAirQuality:
     @pytest.mark.parametrize(
         "gas", ("ozone", "carbon_monoxide", "nitrogen_dioxide", "sulphur_dioxide")
     )
-    def test_gaseous_conc_extraction_methods(
+    def test_gaseous_conc_methods(
         self, air_quality: pyweather.AirQuality, gas: str
     ) -> None:
         r"""
@@ -100,7 +100,7 @@ class TestAirQuality:
     @pytest.mark.parametrize(
         "plant", ("alder", "birch", "grass", "mugwort", "olive", "ragweed")
     )
-    def test_pollen_conc_extraction_methods(
+    def test_pollen_conc_methods(
         self, air_quality: pyweather.AirQuality, plant: str
     ) -> None:
         r"""
