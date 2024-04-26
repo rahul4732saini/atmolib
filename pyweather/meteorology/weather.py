@@ -401,7 +401,7 @@ class Weather(BaseForecast, BaseWeather):
         Returns whether it's day or night at the specified coordinates.
         Returns integer `1` for daytime and `0` for nighttime.
         """
-        return self._get_current_data({"current": "is_day"})
+        return int(self._get_current_data({"current": "is_day"}))
 
     def get_hourly_visibility(self) -> pd.Series:
         r"""
