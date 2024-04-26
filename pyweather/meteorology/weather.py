@@ -400,7 +400,7 @@ class Weather(BaseForecast, BaseWeather):
         r"""
         Returns the current visibility in meters(m) at the specified coordinates.
         """
-        return self._get_current_data({"current": "visibility"}, dtype=np.int32)
+        return self._get_current_data({"current": "visibility"})
 
     def is_day_or_night(self) -> int:
         r"""
