@@ -116,91 +116,124 @@ class TestAirQuality:
         assert current is None or current >= 0
         assert all((hourly >= 0) | hourly.isna())
 
-    def test_current_air_quality_extraction_methods(
+    def test_current_aqi_method_with_default_parameters(
         self, air_quality: pyweather.AirQuality
     ) -> None:
         r"""
-        Tests the current air quality extraction methods.
+        Tests the `AirQuality.get_current_aqi` method with default parameters.
         """
 
-        # Retesting the tested methods with no specified arguments.
         aqi = air_quality.get_current_aqi()
+
+        assert isinstance(aqi, int)
+        assert 0 <= aqi <= 500
+
+    def test_current_gas_and_pollen_conc_methods_with_default_parameters(
+        self, air_quality: pyweather.AirQuality
+    ) -> None:
+        r"""
+        Tests the `AirQuality.get_current_gaseous_conc` and
+        `AirQuality.get_current_pollen_conc` methods with default parameters.
+        """
+
         gas_conc = air_quality.get_current_gaseous_conc()
         pollen_conc = air_quality.get_current_pollen_conc()
 
-        ammonia_conc = air_quality.get_current_ammonia_conc()
-        dust_conc = air_quality.get_current_dust_conc()
-        pm2_5_conc = air_quality.get_current_pm2_5_conc()
-        pm10_conc = air_quality.get_current_pm10_conc()
-        uv_index = air_quality.get_current_uv_index()
-        optical_depth = air_quality.get_current_aerosol_optical_depth()
-
-        assert all(
-            [
-                isinstance(aqi, int),
-                isinstance(gas_conc, int | float),
-                isinstance(pollen_conc, int | float | NoneType),
-                isinstance(uv_index, int | float),
-                isinstance(optical_depth, int | float),
-                isinstance(pm10_conc, int | float),
-                isinstance(ammonia_conc, int | float | NoneType),
-                isinstance(dust_conc, int | float),
-                isinstance(pm2_5_conc, int | float),
-            ]
+        assert isinstance(gas_conc, int | float) and isinstance(
+            pollen_conc, int | float | NoneType
         )
+        assert gas_conc >= 0 and (pollen_conc is None or pollen_conc >= 0)
 
-        assert all(
-            [
-                aqi in range(501),
-                gas_conc >= 0,
-                uv_index >= 0,
-                optical_depth >= 0,
-                pm10_conc >= 0,
-                (pollen_conc is None or pollen_conc >= 0),
-                (ammonia_conc is None or ammonia_conc >= 0),
-                pm2_5_conc >= 0,
-                dust_conc >= 0,
-            ]
-        )
-
-    def test_hourly_air_quality_extraction_methods(
+    def test_current_ammonia_and_dust_conc_methods(
         self, air_quality: pyweather.AirQuality
     ) -> None:
         r"""
-        Test the hourly air quality extraction methods.
+        Tests the current ammonia and dust concentration extraction methods.
         """
 
-        # Retesting the tested methods with no specified arguments.
+        ammonia_conc = air_quality.get_current_ammonia_conc()
+        dust_conc = air_quality.get_current_dust_conc()
+
+        assert isinstance(dust_conc, int | float) and isinstance(
+            ammonia_conc, int | float | NoneType
+        )
+        assert (ammonia_conc is None or ammonia_conc >= 0) and dust_conc >= 0
+
+    def test_current_particulate_matter_methods(
+        self, air_quality: pyweather.AirQuality
+    ) -> None:
+        r"""
+        Tests the current particulate matter 2.5 & 10 extraction methods.
+        """
+
+        pm2_5_conc = air_quality.get_current_pm2_5_conc()
+        pm10_conc = air_quality.get_current_pm10_conc()
+
+        assert isinstance(pm2_5_conc, int | float) and isinstance(
+            pm10_conc, int | float
+        )
+        assert pm2_5_conc >= 0 and pm10_conc >= 0
+
+    def test_current_optical_methods(self, air_quality: pyweather.AirQuality) -> None:
+        r"""
+        Tests the current optical related extraction methods.
+        """
+
+        uv_index = air_quality.get_current_uv_index()
+        optical_depth = air_quality.get_current_aerosol_optical_depth()
+
+        assert isinstance(uv_index, int | float) and isinstance(
+            optical_depth, int | float
+        )
+        assert uv_index >= 0 and optical_depth >= 0
+
+    def test_hourly_gas_and_pollen_conc_methods_with_default_parameters(
+        self, air_quality: pyweather.AirQuality
+    ) -> None:
+        r"""
+        Tests the `AirQuality.get_hourly_gaseous_conc` and
+        `AirQuality.get_hourly_pollen_conc` methods with default parameters.
+        """
+
         gas_conc = air_quality.get_hourly_gaseous_conc()
         pollen_conc = air_quality.get_hourly_pollen_conc()
 
+        assert isinstance(gas_conc, pd.Series) and isinstance(pollen_conc, pd.Series)
+        assert all(gas_conc >= 0) and all((pollen_conc >= 0) | pollen_conc.isna())
+
+    def test_hourly_ammonia_and_dust_conc_methods(
+        self, air_quality: pyweather.AirQuality
+    ) -> None:
+        r"""
+        Tests the hourly ammonia and dust concentration extraction methods.
+        """
+
         ammonia_conc = air_quality.get_hourly_ammonia_conc()
         dust_conc = air_quality.get_hourly_dust_conc()
+
+        assert isinstance(dust_conc, pd.Series) and isinstance(ammonia_conc, pd.Series)
+        assert all(dust_conc >= 0) and all((ammonia_conc >= 0) | ammonia_conc.isna())
+
+    def test_hourly_particulate_matter_methods(
+        self, air_quality: pyweather.AirQuality
+    ) -> None:
+        r"""
+        Tests the hourly particulate matter 2.5 & 10 extraction methods.
+        """
+
         pm2_5_conc = air_quality.get_hourly_pm2_5_conc()
         pm10_conc = air_quality.get_hourly_pm10_conc()
+
+        assert isinstance(pm2_5_conc, pd.Series) and isinstance(pm10_conc, pd.Series)
+        assert all(pm2_5_conc >= 0) and all(pm10_conc >= 0)
+
+    def test_hourly_optical_methods(self, air_quality: pyweather.AirQuality) -> None:
+        r"""
+        Tests the hourly optical related extraction methods.
+        """
+
         uv_index = air_quality.get_hourly_uv_index()
         optical_depth = air_quality.get_hourly_aerosol_optical_depth()
 
-        assert all(
-            [
-                isinstance(gas_conc, pd.Series),
-                isinstance(pollen_conc, pd.Series),
-                isinstance(uv_index, pd.Series),
-                isinstance(optical_depth, pd.Series),
-                isinstance(pm10_conc, pd.Series),
-                isinstance(ammonia_conc, pd.Series),
-                isinstance(dust_conc, pd.Series),
-                isinstance(pm2_5_conc, pd.Series),
-            ]
-        )
-
-        assert all(
-            (gas_conc >= 0)
-            & (uv_index >= 0)
-            & (optical_depth >= 0)
-            & (pm10_conc >= 0)
-            & ((pollen_conc >= 0) | pollen_conc.isna())
-            & ((ammonia_conc >= 0) | ammonia_conc.isna())
-            & (pm2_5_conc >= 0)
-            & (dust_conc >= 0)
-        )
+        assert isinstance(uv_index, pd.Series) and isinstance(optical_depth, pd.Series)
+        assert all(uv_index >= 0) and all(optical_depth >= 0)
