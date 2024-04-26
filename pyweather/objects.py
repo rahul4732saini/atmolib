@@ -277,13 +277,15 @@ class BaseWeather(BaseMeteor):
 
         # Converting the Series into a pandas.DataFrame to
         # add a new column for weather code description.
-        data = data.to_frame("data")
+        dataframe = data.to_frame("data")
 
         # Creating a new column 'description' mapped to the
         # description of the corresponding weather code.
-        data["description"] = data.data.map(lambda x: constants.WEATHER_CODES[str(x)])
+        dataframe["description"] = dataframe.data.map(
+            lambda x: constants.WEATHER_CODES[str(x)]
+        )
 
-        return data
+        return dataframe
 
     def get_hourly_rainfall(
         self, unit: constants.PRECIPITATION_UNITS = "mm"
