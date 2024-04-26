@@ -84,15 +84,12 @@ class TestMarineWeather:
         direction = marine_weather.get_current_wave_direction()
         period = marine_weather.get_current_wave_period()
 
-        assert all(
-            [
-                isinstance(height, int | float),
-                isinstance(direction, int | float),
-                isinstance(period, int | float),
-            ]
+        assert (
+            isinstance(height, int | float)
+            and isinstance(direction, int | float)
+            and isinstance(period, int | float)
         )
-
-        assert all([height >= 0, direction in range(360), period >= 0])
+        assert height >= 0 and direction in range(360) and period >= 0
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
     def test_hourly_marine_weather_extraction_methods(self, wave_type: str) -> None:
@@ -106,16 +103,15 @@ class TestMarineWeather:
         direction = marine_weather.get_hourly_wave_direction()
         period = marine_weather.get_hourly_wave_period()
 
-        assert all(
-            [
-                isinstance(height, pd.Series),
-                isinstance(direction, pd.Series),
-                isinstance(period, pd.Series),
-            ]
+        assert (
+            isinstance(height, pd.Series)
+            and isinstance(direction, pd.Series)
+            and isinstance(period, pd.Series)
         )
-
-        assert all(
-            (height >= 0) & ((direction >= 0) & (direction < 360)) & (period >= 0)
+        assert (
+            all(height >= 0)
+            and all((direction >= 0) & (direction < 360))
+            and all(period >= 0)
         )
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
@@ -130,14 +126,13 @@ class TestMarineWeather:
         direction = marine_weather.get_daily_dominant_wave_direction()
         period = marine_weather.get_daily_max_wave_period()
 
-        assert all(
-            [
-                isinstance(height, pd.Series),
-                isinstance(direction, pd.Series),
-                isinstance(period, pd.Series),
-            ]
+        assert (
+            isinstance(height, pd.Series)
+            and isinstance(direction, pd.Series)
+            and isinstance(period, pd.Series)
         )
-
-        assert all(
-            (height >= 0) & ((direction >= 0) & (direction < 360)) & (period >= 0)
+        assert (
+            all(height >= 0)
+            and all((direction >= 0) & (direction < 360))
+            and all(period >= 0)
         )
