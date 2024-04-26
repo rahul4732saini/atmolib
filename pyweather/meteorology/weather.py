@@ -189,7 +189,7 @@ class Weather(BaseForecast, BaseWeather):
         self,
         altitude: constants.TEMPERATURE_ALTITUDE = 2,
         unit: constants.TEMPERATURE_UNITS = "celsius",
-    ) -> float:
+    ) -> int | float:
         r"""
         Returns the current temperature in the specified temperature unit
         at the specified altitude in meters(m) from the ground level.
