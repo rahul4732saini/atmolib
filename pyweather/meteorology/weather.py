@@ -396,6 +396,12 @@ class Weather(BaseForecast, BaseWeather):
         """
         return self._get_current_data({"current": "snowfall"})
 
+    def get_current_visibility(self) -> int | float:
+        r"""
+        Returns the current visibility in meters(m) at the specified coordinates.
+        """
+        return self._get_current_data({"current": "visibility"}, dtype=np.int32)
+
     def is_day_or_night(self) -> int:
         r"""
         Returns whether it's day or night at the specified coordinates.
