@@ -189,19 +189,27 @@ class BaseWeather(BaseMeteor):
         self._verify_wind_speed_unit(wind_speed_unit)
 
     def get_hourly_temperature(
-        self, unit: constants.TEMPERATURE_UNITS = "celsius"
+        self,
+        altitude: constants.TEMPERATURE_ALTITUDE,
+        unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.Series:
         r"""
         Returns a pandas Series of temperature data 2 meters(m) above
         the ground level at the specified coordinates.
 
         #### Params:
+        - altitude (int): Altitude from the ground level; must be 2, 80, 120 or 180.
         - unit (str): Temperature unit; must be 'celsius' or 'fahrenheit'.
         """
         self._verify_temperature_unit(unit)
 
+        if altitude not in (2, 80, 120, 180):
+            raise ValueError(
+                f"Expected `altitude` to be 2, 80, 120 or 180; got {altitude}."
+            )
+
         return self._get_periodical_data(
-            {"hourly": "temperature_2m", "temperature_unit": unit}
+            {"hourly": f"temperature_{altitude}m", "temperature_unit": unit}
         )
 
     def get_hourly_apparent_temperature(
