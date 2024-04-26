@@ -190,7 +190,7 @@ class BaseWeather(BaseMeteor):
 
     def get_hourly_temperature(
         self,
-        altitude: constants.TEMPERATURE_ALTITUDE,
+        altitude: constants.TEMPERATURE_ALTITUDE = 2,
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.Series:
         r"""
