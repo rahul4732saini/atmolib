@@ -531,14 +531,14 @@ class BaseWeather(BaseMeteor):
         Returns a pandas Series of daily sunrise time in the ISO-8601 datetime
         format (YYYY-MM-DDTHH:MM) at the specified coordinates.
         """
-        return self._get_periodical_data({"daily": "sunrise"})
+        return self._get_periodical_data({"daily": "sunrise"}, dtype=np.object_)
 
     def get_daily_sunset_time(self) -> pd.Series:
         r"""
         Returns a pandas Series of daily sunset time in the ISO-8601 datetime
         format (YYYY-MM-DDTHH:MM) at the specified coordinates.
         """
-        return self._get_periodical_data({"daily": "sunset"})
+        return self._get_periodical_data({"daily": "sunset"}, dtype=np.object_)
 
     def get_daily_daylight_duration(self) -> pd.Series:
         r"""
@@ -552,15 +552,11 @@ class BaseWeather(BaseMeteor):
         Returns a pandas Series of daily sunshine duration
         in seconds(s) at the specified coordinates.
         """
-        return self._get_periodical_data(
-            {"daily": "sunshine_duration"}, dtype=np.object_
-        )
+        return self._get_periodical_data({"daily": "sunshine_duration"})
 
     def get_daily_total_shortwave_radiation(self) -> pd.Series:
         r"""
         Returns a pandas Series of daily sum of shortwave radiation in Mega
         Joules per square meter (MJ/m^2) sat the specified coordinates.
         """
-        return self._get_periodical_data(
-            {"daily": "shortwave_radiation_sum"}, dtype=np.object_
-        )
+        return self._get_periodical_data({"daily": "shortwave_radiation_sum"})
