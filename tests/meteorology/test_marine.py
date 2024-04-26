@@ -47,7 +47,7 @@ class TestMarineWeather:
                 pyweather.MarineWeather(0, 0, forecast_days=i)
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
-    def test_marine_weather_summary_extraction_methods(self, wave_type: str) -> None:
+    def test_marine_weather_summary_methods(self, wave_type: str) -> None:
         r"""
         Test the marine weather summary extraction methods.
         """
@@ -73,7 +73,7 @@ class TestMarineWeather:
         )
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
-    def test_current_marine_weather_extraction_methods(self, wave_type: str) -> None:
+    def test_current_marine_weather_methods(self, wave_type: str) -> None:
         r"""
         Test the marine weather summary extraction methods.
         """
@@ -84,18 +84,15 @@ class TestMarineWeather:
         direction = marine_weather.get_current_wave_direction()
         period = marine_weather.get_current_wave_period()
 
-        assert all(
-            [
-                isinstance(height, int | float),
-                isinstance(direction, int | float),
-                isinstance(period, int | float),
-            ]
+        assert (
+            isinstance(height, int | float)
+            and isinstance(direction, int | float)
+            and isinstance(period, int | float)
         )
-
-        assert all([height >= 0, direction in range(360), period >= 0])
+        assert height >= 0 and direction in range(360) and period >= 0
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
-    def test_hourly_marine_weather_extraction_methods(self, wave_type: str) -> None:
+    def test_hourly_marine_weather_methods(self, wave_type: str) -> None:
         r"""
         Test the marine weather summary extraction methods.
         """
@@ -106,20 +103,19 @@ class TestMarineWeather:
         direction = marine_weather.get_hourly_wave_direction()
         period = marine_weather.get_hourly_wave_period()
 
-        assert all(
-            [
-                isinstance(height, pd.Series),
-                isinstance(direction, pd.Series),
-                isinstance(period, pd.Series),
-            ]
+        assert (
+            isinstance(height, pd.Series)
+            and isinstance(direction, pd.Series)
+            and isinstance(period, pd.Series)
         )
-
-        assert all(
-            (height >= 0) & ((direction >= 0) & (direction < 360)) & (period >= 0)
+        assert (
+            all(height >= 0)
+            and all((direction >= 0) & (direction < 360))
+            and all(period >= 0)
         )
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
-    def test_daily_marine_weather_extraction_methods(self, wave_type: str) -> None:
+    def test_daily_marine_weather_methods(self, wave_type: str) -> None:
         r"""
         Test the marine weather summary extraction methods.
         """
@@ -130,14 +126,13 @@ class TestMarineWeather:
         direction = marine_weather.get_daily_dominant_wave_direction()
         period = marine_weather.get_daily_max_wave_period()
 
-        assert all(
-            [
-                isinstance(height, pd.Series),
-                isinstance(direction, pd.Series),
-                isinstance(period, pd.Series),
-            ]
+        assert (
+            isinstance(height, pd.Series)
+            and isinstance(direction, pd.Series)
+            and isinstance(period, pd.Series)
         )
-
-        assert all(
-            (height >= 0) & ((direction >= 0) & (direction < 360)) & (period >= 0)
+        assert (
+            all(height >= 0)
+            and all((direction >= 0) & (direction < 360))
+            and all(period >= 0)
         )
