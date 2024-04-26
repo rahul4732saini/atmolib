@@ -210,13 +210,13 @@ class Weather(BaseForecast, BaseWeather):
             {"current": f"temperature_{altitude}m", "temperature_unit": unit}
         )
 
-    def get_current_weather_code(self) -> tuple[int | float, str]:
+    def get_current_weather_code(self) -> tuple[int, str]:
         r"""
         Returns a tuple comprising the current weather code followed
         by a string description of the weather code.
         """
 
-        weather_code: int | float = self._get_current_data({"current": "weather_code"})
+        weather_code: int = int(self._get_current_data({"current": "weather_code"}))
 
         # Weather code description is looked up in the `WEATHER_CODES` dictionary.
         description: str = constants.WEATHER_CODES[str(weather_code)]
@@ -401,7 +401,7 @@ class Weather(BaseForecast, BaseWeather):
         Returns whether it's day or night at the specified coordinates.
         Returns integer `1` for daytime and `0` for nighttime.
         """
-        return self._get_current_data({"current": "is_day"})
+        return int(self._get_current_data({"current": "is_day"}))
 
     def get_hourly_visibility(self) -> pd.Series:
         r"""
