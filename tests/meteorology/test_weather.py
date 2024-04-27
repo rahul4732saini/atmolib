@@ -29,7 +29,7 @@ class TestWeather:
         for i in (1, 10, 16):
             pyweather.Weather(0, 0, forecast_days=i)
 
-    def test_object_initialization_with_invalid_paramters(
+    def test_object_initialization_with_invalid_parameters(
         self, invalid_coordinates: tuple[tuple[int, int]]
     ) -> None:
         r"""
@@ -46,8 +46,9 @@ class TestWeather:
             for i in (0, -1, 17):
                 pyweather.Weather(0, 0, forecast_days=i)
 
+    @staticmethod
     def _verify_summary_methods(
-        self, current: pd.Series, hourly: pd.DataFrame, daily: pd.DataFrame
+        current: pd.Series, hourly: pd.DataFrame, daily: pd.DataFrame
     ) -> None:
         r"""
         Verifies the execution of summary extraction methods.
@@ -74,8 +75,9 @@ class TestWeather:
             )
         )
 
+    @staticmethod
     def _verify_temp_and_apparent_temp_methods(
-        self, temp: pd.Series, apparent_temp: pd.Series
+        temp: pd.Series, apparent_temp: pd.Series
     ) -> None:
         r"""
         Verifies the `Weather.get_hourly_temperature` and
@@ -87,9 +89,8 @@ class TestWeather:
             apparent_temp.dtype.type, np.integer | np.floating
         )
 
-    def _verify_cloud_cover_methods(
-        self, current: int | float, hourly: pd.Series
-    ) -> None:
+    @staticmethod
+    def _verify_cloud_cover_methods(current: int | float, hourly: pd.Series) -> None:
         r"""
         Verifies the cloud cover extraction methods.
         """
@@ -104,65 +105,53 @@ class TestWeather:
         (("celsius", "mm"), ("fahrenheit", "inch")),
     )
     def test_summary_methods_with_temperature_and_precipitation_unit_parameters(
-        self, weather: pyweather.Weather, temp_unit: str, precipitation_unit: str
+        self,
+        weather: pyweather.Weather,
+        temp_unit: pyweather.constants.TEMPERATURE_UNITS,
+        precipitation_unit: pyweather.constants.PRECIPITATION_UNITS,
     ) -> None:
         r"""
         Tests the current, hourly and daily summary extraction methods with
         different `temperature_unit` and `precipitation_unit` parameters.
         """
-
-        current = weather.get_current_summary(
-            temperature_unit=temp_unit, precipitation_unit=precipitation_unit
+        self._verify_summary_methods(
+            weather.get_current_summary(
+                temperature_unit=temp_unit, precipitation_unit=precipitation_unit
+            ),
+            weather.get_hourly_summary(
+                temperature_unit=temp_unit, precipitation_unit=precipitation_unit
+            ),
+            weather.get_daily_summary(
+                temperature_unit=temp_unit, precipitation_unit=precipitation_unit
+            ),
         )
-        hourly = weather.get_hourly_summary(
-            temperature_unit=temp_unit, precipitation_unit=precipitation_unit
-        )
-        daily = weather.get_daily_summary(
-            temperature_unit=temp_unit, precipitation_unit=precipitation_unit
-        )
-
-        self._verify_summary_methods(current, hourly, daily)
 
     @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
     def test_summary_methods_with_wind_speed_unit_parameters(
-        self, weather: pyweather.Weather, unit: str
+        self, weather: pyweather.Weather, unit: pyweather.constants.WIND_SPEED_UNITS
     ) -> None:
         r"""
         Tests the current, hourly and daily summary extraction
         methods with different `wind_speed` unit arguments.
         """
-
-        current = weather.get_current_summary(wind_speed_unit=unit)
-        hourly = weather.get_hourly_summary(wind_speed_unit=unit)
-        daily = weather.get_daily_summary(wind_speed_unit=unit)
-
-        assert (
-            isinstance(current, pd.Series)
-            and isinstance(hourly, pd.DataFrame)
-            and isinstance(daily, pd.DataFrame)
+        self._verify_summary_methods(
+            weather.get_current_summary(wind_speed_unit=unit),
+            weather.get_hourly_summary(wind_speed_unit=unit),
+            weather.get_daily_summary(wind_speed_unit=unit),
         )
-
-        self._verify_summary_methods(current, hourly, daily)
 
     def test_summary_methods_with_default_parameters(
         self, weather: pyweather.Weather
     ) -> None:
         r"""
         Tests the current, hourly and daily summary
-        extraction methods with defualt parameters.
+        extraction methods with default parameters.
         """
-
-        current = weather.get_current_summary()
-        hourly = weather.get_hourly_summary()
-        daily = weather.get_daily_summary()
-
-        assert (
-            isinstance(current, pd.Series)
-            and isinstance(hourly, pd.DataFrame)
-            and isinstance(daily, pd.DataFrame)
+        self._verify_summary_methods(
+            weather.get_current_summary(),
+            weather.get_hourly_summary(),
+            weather.get_daily_summary(),
         )
-
-        self._verify_summary_methods(current, hourly, daily)
 
     # The following block tests methods related to temperature extraction methods.
 
@@ -183,10 +172,10 @@ class TestWeather:
 
     @pytest.mark.parametrize("unit", ("celsius", "fahrenheit"))
     def test_current_temperature_methods_unit_parameter(
-        self, weather: pyweather.Weather, unit: str
+        self, weather: pyweather.Weather, unit: pyweather.constants.TEMPERATURE_UNITS
     ) -> None:
         r"""
-        Tests the current tempeature extraction
+        Tests the current temperature extraction
         methods with different `unit` arguments.
         """
 
@@ -197,7 +186,7 @@ class TestWeather:
 
     @pytest.mark.parametrize("unit", ("celsius", "fahrenheit"))
     def test_hourly_temperature_methods_unit_parameter(
-        self, weather: pyweather.Weather, unit: str
+        self, weather: pyweather.Weather, unit: pyweather.constants.TEMPERATURE_UNITS
     ) -> None:
         r"""
         Tests the hourly temperature methods with different `unit` parameters.
@@ -212,7 +201,6 @@ class TestWeather:
             and isinstance(apparent_temp, pd.Series)
             and isinstance(soil_temp, pd.Series)
         )
-
         assert (
             issubclass(temp.dtype.type, np.integer | np.floating)
             and issubclass(apparent_temp.dtype.type, np.integer | np.floating)
@@ -226,7 +214,6 @@ class TestWeather:
         r"""
         Tests the `Weather.get_hourly_soil_temperature` with different `depth` arguments.
         """
-
         temp = weather.get_hourly_soil_temperature(depth=depth)
 
         assert isinstance(temp, pd.Series)
@@ -239,24 +226,23 @@ class TestWeather:
         r"""
         Tests the daily temperature extraction methods with different `unit` arguments.
         """
-
-        temp = weather.get_daily_temperature()
-        apparent_temp = weather.get_daily_apparent_temperature()
-
-        self._verify_temp_and_apparent_temp_methods(temp, apparent_temp)
+        self._verify_temp_and_apparent_temp_methods(
+            weather.get_daily_temperature(), weather.get_daily_apparent_temperature()
+        )
 
     @pytest.mark.parametrize("type_", ("mean", "max", "min"))
     def test_daily_temperature_methods_type_parameter(
-        self, weather: pyweather.Weather, type_: str
+        self,
+        weather: pyweather.Weather,
+        type_: pyweather.constants.DAILY_WEATHER_REQUEST_TYPES,
     ) -> None:
         r"""
         Tests the daily temperature extraction methods with different `type_` arguments.
         """
-
-        temp = weather.get_daily_temperature(type_=type_)
-        apparent_temp = weather.get_daily_apparent_temperature(type_=type_)
-
-        self._verify_temp_and_apparent_temp_methods(temp, apparent_temp)
+        self._verify_temp_and_apparent_temp_methods(
+            weather.get_daily_temperature(type_=type_),
+            weather.get_daily_apparent_temperature(type_=type_),
+        )
 
     def test_current_temperature_methods_with_default_parameters(
         self, weather: pyweather.Weather
@@ -264,7 +250,6 @@ class TestWeather:
         r"""
         Tests the current temperature extraction methods with default parameters.
         """
-
         temp = weather.get_current_temperature()
         apparent_temp = weather.get_current_apparent_temperature()
 
@@ -299,17 +284,15 @@ class TestWeather:
         r"""
         Tests the daily temperature extraction methods with default parameters.
         """
-
-        temp = weather.get_daily_temperature()
-        apparent_temp = weather.get_daily_apparent_temperature()
-
-        self._verify_temp_and_apparent_temp_methods(temp, apparent_temp)
+        self._verify_temp_and_apparent_temp_methods(
+            weather.get_daily_temperature(), weather.get_daily_apparent_temperature()
+        )
 
     # The following block tests precipitation extraction related methods.
 
     @pytest.mark.parametrize("unit", ("mm", "inch"))
     def test_current_precipitation_methods_unit_parameter(
-        self, weather: pyweather.Weather, unit: str
+        self, weather: pyweather.Weather, unit: pyweather.constants.PRECIPITATION_UNITS
     ) -> None:
         r"""
         Tests the current precipitation extraction
@@ -326,7 +309,7 @@ class TestWeather:
 
     @pytest.mark.parametrize("unit", ("mm", "inch"))
     def test_periodical_precipitation_methods_unit_parameter(
-        self, weather: pyweather.Weather, unit: str
+        self, weather: pyweather.Weather, unit: pyweather.constants.PRECIPITATION_UNITS
     ) -> None:
         r"""
         Tests the hourly and daily precipitation extraction
@@ -351,7 +334,7 @@ class TestWeather:
         )
         assert all(daily_precipitation >= 0) and all(daily_rainfall >= 0)
 
-    def test_current_percipitation_methods_with_default_parameters(
+    def test_current_precipitation_methods_with_default_parameters(
         self, weather: pyweather.Weather
     ) -> None:
         r"""
@@ -379,7 +362,7 @@ class TestWeather:
 
         hourly_precipitation = weather.get_hourly_precipitation()
         hourly_rainfall = weather.get_hourly_rainfall()
-        hourly_snofall = weather.get_hourly_snowfall()
+        hourly_snowfall = weather.get_hourly_snowfall()
 
         daily_precipitation = weather.get_daily_total_precipitation()
         daily_rainfall = weather.get_daily_total_rainfall()
@@ -388,12 +371,12 @@ class TestWeather:
         assert (
             isinstance(hourly_precipitation, pd.Series)
             and isinstance(hourly_rainfall, pd.Series)
-            and isinstance(hourly_snofall, pd.Series)
+            and isinstance(hourly_snowfall, pd.Series)
         )
         assert (
             all(hourly_precipitation >= 0)
             and all(hourly_rainfall >= 0)
-            and all(hourly_snofall >= 0)
+            and all(hourly_snowfall >= 0)
         )
 
         # Tests the daily precipitation methods.
@@ -418,8 +401,8 @@ class TestWeather:
         )
 
     @pytest.mark.parametrize("level", ("surface", "sealevel"))
-    def test_atmospheric_pressure_extraction_methods(
-        self, weather: pyweather.Weather, level: str
+    def test_atmospheric_pressure_methods(
+        self, weather: pyweather.Weather, level: pyweather.constants.PRESSURE_LEVELS
     ) -> None:
         r"""
         Tests the current and hourly atmospheric pressure
@@ -436,17 +419,16 @@ class TestWeather:
 
     @pytest.mark.parametrize("level", ("low", "mid", "high"))
     def test_cloud_cover_methods_level_parameter(
-        self, weather: pyweather.Weather, level: str
+        self, weather: pyweather.Weather, level: pyweather.constants.CLOUD_COVER_LEVEL
     ) -> None:
         r"""
         Tests the current and hourly cloud cover extraction
         methods with different `level` arguments.
         """
-
-        current = weather.get_current_cloud_cover(level=level)
-        hourly = weather.get_hourly_cloud_cover(level=level)
-
-        self._verify_cloud_cover_methods(current, hourly)
+        self._verify_cloud_cover_methods(
+            weather.get_current_cloud_cover(level=level),
+            weather.get_hourly_cloud_cover(level=level),
+        )
 
     def test_cloud_cover_methods_with_default_parameters(
         self, weather: pyweather.Weather
@@ -455,27 +437,25 @@ class TestWeather:
         Tests the current and hourly cloud cover
         extraction methods with default parameters.
         """
-
-        current = weather.get_current_cloud_cover()
-        hourly = weather.get_hourly_cloud_cover()
-
-        self._verify_cloud_cover_methods(current, hourly)
+        self._verify_cloud_cover_methods(
+            weather.get_current_cloud_cover(),
+            weather.get_hourly_cloud_cover(),
+        )
 
     def test_total_cloud_cover_methods(self, weather: pyweather.Weather) -> None:
         r"""
         Tests the current and hourly total cloud cover extraction methods.
         """
-
-        current = weather.get_current_total_cloud_cover()
-        hourly = weather.get_hourly_total_cloud_cover()
-
-        self._verify_cloud_cover_methods(current, hourly)
+        self._verify_cloud_cover_methods(
+            weather.get_current_total_cloud_cover(),
+            weather.get_hourly_total_cloud_cover(),
+        )
 
     # The following block tests wind related extraction methods.
 
     @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
     def test_current_wind_methods_unit_parameter(
-        self, weather: pyweather.Weather, unit: str
+        self, weather: pyweather.Weather, unit: pyweather.constants.WIND_SPEED_UNITS
     ) -> None:
         r"""
         Tests the current wind speed/gusts extraction
@@ -526,7 +506,7 @@ class TestWeather:
 
     @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
     def test_hourly_wind_methods_unit_parameter(
-        self, weather: pyweather.Weather, unit: str
+        self, weather: pyweather.Weather, unit: pyweather.constants.WIND_SPEED_UNITS
     ) -> None:
         r"""
         Tests the hourly wind related extraction
@@ -541,7 +521,7 @@ class TestWeather:
 
     @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
     def test_daily_wind_methods_unit_parameter(
-        self, weather: pyweather.Weather, unit: str
+        self, weather: pyweather.Weather, unit: pyweather.constants.WIND_SPEED_UNITS
     ) -> None:
         r"""
         Tests the daily wind related extraction
@@ -623,7 +603,7 @@ class TestWeather:
 
     @pytest.mark.parametrize("frequency", ("hourly", "daily"))
     def test_periodical_weather_code_method(
-        self, weather: pyweather.Weather, frequency: str
+        self, weather: pyweather.Weather, frequency: pyweather.constants.FREQUENCY
     ) -> None:
         r"""
         Tests the `Weather.get_periodical_weather_code` method with different `frequency` arguments.
@@ -663,27 +643,20 @@ class TestWeather:
         r"""
         Tests the hourly soil moisture extractions methods.
         """
-
         moisture = weather.get_hourly_soil_moisture(depth=depth)
-
-        assert isinstance(moisture, pd.Series)
-        assert all(moisture >= 0)
+        assert isinstance(moisture, pd.Series) and all(moisture >= 0)
 
     def test_daily_max_uv_index_method(self, weather: pyweather.Weather) -> None:
         r"""
         Tests the `pyweather.get_daily_max_uv_index` method.
         """
-
         daily = weather.get_daily_max_uv_index()
-
-        assert isinstance(daily, pd.Series)
-        assert all(daily >= 0)
+        assert isinstance(daily, pd.Series) and all(daily >= 0)
 
     def test_is_day_or_night_method(self, weather: pyweather.Weather) -> None:
         r"""
         Tests the `pyweather.is_day_or_night` method.
         """
-
         is_day_or_night = weather.is_day_or_night()
         assert is_day_or_night in (1, 0)
 
