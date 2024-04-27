@@ -26,7 +26,7 @@ class TestWeatherArchive:
         """
 
         for i in valid_coordinates:
-            pyweather.WeatherArchive(*i, "2020-01-01", "2020-01-10")
+            pyweather.WeatherArchive(*i, start_date="2020-01-01", end_date="2020-01-10")
 
         for i in valid_archive_dates:
             pyweather.WeatherArchive(0, 0, *i)
@@ -44,7 +44,9 @@ class TestWeatherArchive:
 
             # Expects an AssertionError upon initialization with invalid coordinates.
             for i in invalid_coordinates:
-                pyweather.WeatherArchive(*i, "2020-01-01", "2020-01-10")
+                pyweather.WeatherArchive(
+                    *i, start_date="2020-01-01", end_date="2020-01-10"
+                )
 
             # Expects an AssertionError upon initialization with
             # invalid `start_date` and `end_date` argument.
