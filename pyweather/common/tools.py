@@ -10,6 +10,7 @@ from typing import Any
 from types import ModuleType
 
 import requests
+import numpy as np
 import pandas as pd
 
 from . import constants
@@ -97,8 +98,8 @@ def get_current_data(
 
 
 def get_periodical_data(
-    session: requests.Session, api: str, params: dict[str, Any]
-) -> pd.DataFrame:
+    session: requests.Session, api: str, params: dict[str, Any], dtype=np.float16
+) -> pd.Series:
     r"""
     Base function for the periodical (daily/hourly) meteorology data extraction from supplied API.
 
@@ -111,13 +112,12 @@ def get_periodical_data(
     - frequency (str): Frequency of the meteorology data; 'hourly' or 'daily'.
     - params (dict[str, Any]): Necessary parameters for the API request including the
     coordinates of the location, requested data type, etc.
+    - dtype: numpy datatype for storing the requested data in a pandas Series efficiently.
 
     #### Returns:
-    - pd.DataFrame: Returns a pandas DataFrame of periodical meteorology data comprising two
-    columns namely 'time' and 'data' where 'time' column indicates the time of the
-    meteorology data in ISO 8601 format (YYYY-MM-DDTHH:MM) or the date of the meteorology data
-    as (YYYY-MM-DD) depending upon the frequency supplied and 'data' column comprises the
-    meteorology data.
+    - pd.Series: Returns a pandas Series comprising the datetime and periodical meteorology
+    data. The index comprises the datetime/date of the corresponding data depening upon the
+    frequency in ISO-8601 format (YYYY-MM-DDTHH:MM) or (YYYY-MM-DD).
 
     #### Raises:
     - ValueError: If `frequency` is assigned to an object other than 'hourly' or 'daily'.
@@ -148,18 +148,13 @@ def get_periodical_data(
     # holds all the periodical meteorology data key-value pairs.
     data: dict[str, Any] = results[frequency]
 
-    # pandas DataFrame containing time and periodical meteorology data. The object
-    # comprises two columns namely 'time' and 'data'. 'data' column data is retrieved
+    # pandas Series comprising datetime and periodical meteorology data. The data is retrived
     # from the key-value pair named after the requested data type (e.g. temperature_2m,
     # meteorology_code, etc.) in the `data` dictionary.
-    dataframe = pd.DataFrame(
-        {
-            "time": data["time"],
-            "data": data[params[frequency]],
-        }
-    )
+    series = pd.Series(data[params[frequency]], index=data["time"], dtype=dtype)
+    series.index.name = "Date" if frequency == "daily" else "Datetime"
 
-    return dataframe
+    return series
 
 
 def get_current_summary(
@@ -261,7 +256,7 @@ def get_periodical_summary(
     # Creates a dataframe of the request summary data and modifies the
     # column labels with the supplied column labels in the `labels` list.
     dataframe: pd.DataFrame = pd.DataFrame(data, index=timeline)
-    dataframe.columns = labels
+    dataframe.columns = pd.Index(labels)
 
     return dataframe
 
@@ -287,8 +282,15 @@ def get_elevation(lat: int | float, long: int | float) -> float:
         300.0  # Example elevation value in meters
     """
 
-    if not isinstance(lat, int | float) or not isinstance(long, int | float):
-        raise ValueError("`lat` and `long` must be integers or floating point numbers.")
+    if not -90 <= lat <= 90:
+        raise ValueError(
+            "`lat` must be an integer or floating point number between -90 and 90."
+        )
+
+    if not -180 <= long <= 180:
+        raise ValueError(
+            "`long` must be an integer or floating point number between -180 and 180."
+        )
 
     params: dict[str, int | float] = {"latitude": lat, "longitude": long}
     results: dict[str, Any] = _request_json(constants.ELEVATION_API, params)
@@ -317,7 +319,7 @@ def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
         - ValueError: If `count` is not a positive integer.
     """
 
-    if not isinstance(count, int) or count not in range(1, 20):
+    if count not in range(1, 21):
         raise ValueError("`count` must be an integer between 1 and 20.")
 
     params: dict[str, str | int] = {"name": name, "count": count}
