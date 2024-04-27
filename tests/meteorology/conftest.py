@@ -1,3 +1,5 @@
+from datetime import date, timedelta
+
 import pytest
 import pyweather
 
@@ -32,6 +34,15 @@ def valid_archive_dates() -> tuple[tuple[str, str]]:
     return (
         ("1940-01-01", "1940-02-01"),
         ("2022-09-15", "2022-10-02"),
-        ("2003-06-13", "2003-07-01"),
+        ("2003-12-13", "2003-12-31"),
         ("2001-04-24", "2001-04-25"),
+    )
+
+
+@pytest.fixture
+def invalid_archive_dates() -> tuple[tuple[str, str]]:
+    return (
+        (date.today(), date.today() + timedelta(days=2)),
+        ("1939-01-01", "1939-01-10"),
+        ("1939-12-21", "1993-12-31"),
     )
