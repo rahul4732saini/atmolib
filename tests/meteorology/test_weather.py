@@ -29,7 +29,7 @@ class TestWeather:
         for i in (1, 10, 16):
             pyweather.Weather(0, 0, forecast_days=i)
 
-    def test_object_initialization_with_invalid_paramters(
+    def test_object_initialization_with_invalid_parameters(
         self, invalid_coordinates: tuple[tuple[int, int]]
     ) -> None:
         r"""
@@ -152,7 +152,7 @@ class TestWeather:
     ) -> None:
         r"""
         Tests the current, hourly and daily summary
-        extraction methods with defualt parameters.
+        extraction methods with default parameters.
         """
 
         current = weather.get_current_summary()
@@ -189,7 +189,7 @@ class TestWeather:
         self, weather: pyweather.Weather, unit: pyweather.constants.TEMPERATURE_UNITS
     ) -> None:
         r"""
-        Tests the current tempeature extraction
+        Tests the current temperature extraction
         methods with different `unit` arguments.
         """
 
@@ -356,7 +356,7 @@ class TestWeather:
         )
         assert all(daily_precipitation >= 0) and all(daily_rainfall >= 0)
 
-    def test_current_percipitation_methods_with_default_parameters(
+    def test_current_precipitation_methods_with_default_parameters(
         self, weather: pyweather.Weather
     ) -> None:
         r"""
@@ -384,7 +384,7 @@ class TestWeather:
 
         hourly_precipitation = weather.get_hourly_precipitation()
         hourly_rainfall = weather.get_hourly_rainfall()
-        hourly_snofall = weather.get_hourly_snowfall()
+        hourly_snowfall = weather.get_hourly_snowfall()
 
         daily_precipitation = weather.get_daily_total_precipitation()
         daily_rainfall = weather.get_daily_total_rainfall()
@@ -393,12 +393,12 @@ class TestWeather:
         assert (
             isinstance(hourly_precipitation, pd.Series)
             and isinstance(hourly_rainfall, pd.Series)
-            and isinstance(hourly_snofall, pd.Series)
+            and isinstance(hourly_snowfall, pd.Series)
         )
         assert (
             all(hourly_precipitation >= 0)
             and all(hourly_rainfall >= 0)
-            and all(hourly_snofall >= 0)
+            and all(hourly_snowfall >= 0)
         )
 
         # Tests the daily precipitation methods.
