@@ -401,7 +401,7 @@ class TestWeather:
         )
 
     @pytest.mark.parametrize("level", ("surface", "sealevel"))
-    def test_atmospheric_pressure_extraction_methods(
+    def test_atmospheric_pressure_methods(
         self, weather: pyweather.Weather, level: pyweather.constants.PRESSURE_LEVELS
     ) -> None:
         r"""
