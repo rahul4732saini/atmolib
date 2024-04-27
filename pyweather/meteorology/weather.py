@@ -346,7 +346,6 @@ class Weather(BaseForecast, BaseWeather):
         - unit: Precipitation unit; must be 'mm' or 'inch'.
         """
         self._verify_precipitation_unit(unit)
-
         return self._get_current_data(
             {"current": "precipitation", "precipitation_unit": unit}
         )
@@ -355,8 +354,8 @@ class Weather(BaseForecast, BaseWeather):
         self, level: constants.PRESSURE_LEVELS = "surface"
     ) -> int | float:
         r"""
-        Returns the current atmospheric pressure in
-        Hectopascal (hPa) at the specified coordinates.
+        Returns the current atmospheric pressure in Hectopascal (hPa)
+        at the specified level and coordinates.
 
         #### Params:
         - level (str): Desired level of the atmospheric
