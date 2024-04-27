@@ -31,7 +31,7 @@ class TestWeatherArchive:
         for i in valid_archive_dates:
             pyweather.WeatherArchive(0, 0, *i)
 
-    def test_object_initialization_with_invalid_paramters(
+    def test_object_initialization_with_invalid_parameters(
         self,
         invalid_coordinates: tuple[tuple[int, int]],
         invalid_archive_dates: tuple[tuple[str, str]],
@@ -148,7 +148,7 @@ class TestWeatherArchive:
     ) -> None:
         r"""
         Tests the hourly and daily summary
-        extraction methods with defualt parameters.
+        extraction methods with default parameters.
         """
         self._verify_summary_methods(
             archive.get_hourly_summary(), archive.get_daily_summary()
@@ -291,7 +291,7 @@ class TestWeatherArchive:
 
         hourly_precipitation = archive.get_hourly_precipitation()
         hourly_rainfall = archive.get_hourly_rainfall()
-        hourly_snofall = archive.get_hourly_snowfall()
+        hourly_snowfall = archive.get_hourly_snowfall()
 
         daily_precipitation = archive.get_daily_total_precipitation()
         daily_rainfall = archive.get_daily_total_rainfall()
@@ -300,12 +300,12 @@ class TestWeatherArchive:
         assert (
             isinstance(hourly_precipitation, pd.Series)
             and isinstance(hourly_rainfall, pd.Series)
-            and isinstance(hourly_snofall, pd.Series)
+            and isinstance(hourly_snowfall, pd.Series)
         )
         assert (
             all(hourly_precipitation >= 0)
             and all(hourly_rainfall >= 0)
-            and all(hourly_snofall >= 0)
+            and all(hourly_snowfall >= 0)
         )
 
         # Tests the daily precipitation methods.
