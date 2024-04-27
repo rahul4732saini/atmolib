@@ -10,7 +10,7 @@ def weather() -> pyweather.Weather:
 
 
 @pytest.fixture
-def weather_archive() -> pyweather.WeatherArchive:
+def archive() -> pyweather.WeatherArchive:
     return pyweather.WeatherArchive(0, 0, "2020-01-01", "2020-01-10")
 
 
