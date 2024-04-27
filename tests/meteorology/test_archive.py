@@ -112,7 +112,10 @@ class TestWeatherArchive:
         (("celsius", "mm"), ("fahrenheit", "inch")),
     )
     def test_summary_methods_with_temperature_and_precipitation_unit_parameters(
-        self, archive: pyweather.WeatherArchive, temp_unit: str, precipitation_unit: str
+        self,
+        archive: pyweather.WeatherArchive,
+        temp_unit: pyweather.constants.TEMPERATURE_UNITS,
+        precipitation_unit: pyweather.constants.PRECIPITATION_UNITS,
     ) -> None:
         r"""
         Tests the hourly and daily summary extraction methods with
@@ -125,7 +128,7 @@ class TestWeatherArchive:
 
     @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
     def test_summary_methods_with_wind_speed_unit_parameters(
-        self, archive: pyweather.WeatherArchive, unit: str
+        self, archive: pyweather.WeatherArchive, unit: pyweather.constants.WIND_SPEED_UNITS
     ) -> None:
         r"""
         Tests the hourly and daily summary extraction
@@ -165,7 +168,7 @@ class TestWeatherArchive:
 
     @pytest.mark.parametrize("unit", ("celsius", "fahrenheit"))
     def test_hourly_temperature_methods_unit_parameter(
-        self, archive: pyweather.WeatherArchive, unit: str
+        self, archive: pyweather.WeatherArchive, unit: pyweather.constants.TEMPERATURE_UNITS
     ) -> None:
         r"""
         Tests the hourly temperature extraction methods with different `unit` parameters.
@@ -193,7 +196,7 @@ class TestWeatherArchive:
 
     @pytest.mark.parametrize("unit", ("celsius", "fahrenheit"))
     def test_daily_temperature_methods_unit_parameter(
-        self, archive: pyweather.WeatherArchive, unit: str
+        self, archive: pyweather.WeatherArchive, unit: pyweather.constants.TEMPERATURE_UNITS
     ) -> None:
         r"""
         Tests the daily temperature extraction methods with different `unit` arguments.
@@ -205,7 +208,7 @@ class TestWeatherArchive:
 
     @pytest.mark.parametrize("type_", ("mean", "max", "min"))
     def test_daily_temperature_methods_type_parameter(
-        self, archive: pyweather.WeatherArchive, type_: str
+        self, archive: pyweather.WeatherArchive, type_: pyweather.constants.DAILY_WEATHER_REQUEST_TYPES
     ) -> None:
         r"""
         Tests the daily temperature extraction methods with different `type_` arguments.
@@ -242,7 +245,7 @@ class TestWeatherArchive:
 
     @pytest.mark.parametrize("unit", ("mm", "inch"))
     def test_periodical_precipitation_methods_unit_parameter(
-        self, archive: pyweather.WeatherArchive, unit: str
+        self, archive: pyweather.WeatherArchive, unit: pyweather.constants.PRECIPITATION_UNITS
     ) -> None:
         r"""
         Tests the hourly and daily precipitation extraction
@@ -301,7 +304,7 @@ class TestWeatherArchive:
 
     @pytest.mark.parametrize("level", ("surface", "sealevel"))
     def test_hourly_atmospheric_pressure_method(
-        self, archive: pyweather.WeatherArchive, level: str
+        self, archive: pyweather.WeatherArchive, level: pyweather.constants.PRESSURE_LEVELS
     ) -> None:
         r"""
         Tests the `WeatherArchive.get_hourly_pressure` with different `level` arguments.
@@ -313,7 +316,7 @@ class TestWeatherArchive:
 
     @pytest.mark.parametrize("level", ("low", "mid", "high"))
     def test_cloud_cover_methods_level_parameter(
-        self, weather: pyweather.Weather, level: str
+        self, weather: pyweather.Weather, level: pyweather.constants.CLOUD_COVER_LEVEL
     ) -> None:
         r"""
         Tests the `WeatherArchive.get_hourly_cloud_cover`
@@ -349,7 +352,7 @@ class TestWeatherArchive:
 
     @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
     def test_hourly_wind_methods_unit_parameter(
-        self, archive: pyweather.WeatherArchive, unit: str
+        self, archive: pyweather.WeatherArchive, unit: pyweather.constants.WIND_SPEED_UNITS
     ) -> None:
         r"""
         Tests the hourly wind related extraction
@@ -364,7 +367,7 @@ class TestWeatherArchive:
 
     @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
     def test_daily_wind_methods_unit_parameter(
-        self, archive: pyweather.WeatherArchive, unit: str
+        self, archive: pyweather.WeatherArchive, unit: pyweather.constants.WIND_SPEED_UNITS
     ) -> None:
         r"""
         Tests the daily wind related extraction
@@ -425,7 +428,7 @@ class TestWeatherArchive:
 
     @pytest.mark.parametrize("frequency", ("hourly", "daily"))
     def test_periodical_weather_code_method(
-        self, archive: pyweather.WeatherArchive, frequency: str
+        self, archive: pyweather.WeatherArchive, frequency: pyweather.constants.FREQUENCY
     ) -> None:
         r"""
         Tests the `WeatherArchive.get_periodical_weather_code`
