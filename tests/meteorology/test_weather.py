@@ -46,8 +46,9 @@ class TestWeather:
             for i in (0, -1, 17):
                 pyweather.Weather(0, 0, forecast_days=i)
 
+    @staticmethod
     def _verify_summary_methods(
-        self, current: pd.Series, hourly: pd.DataFrame, daily: pd.DataFrame
+        current: pd.Series, hourly: pd.DataFrame, daily: pd.DataFrame
     ) -> None:
         r"""
         Verifies the execution of summary extraction methods.
@@ -74,8 +75,9 @@ class TestWeather:
             )
         )
 
+    @staticmethod
     def _verify_temp_and_apparent_temp_methods(
-        self, temp: pd.Series, apparent_temp: pd.Series
+        temp: pd.Series, apparent_temp: pd.Series
     ) -> None:
         r"""
         Verifies the `Weather.get_hourly_temperature` and
@@ -87,9 +89,8 @@ class TestWeather:
             apparent_temp.dtype.type, np.integer | np.floating
         )
 
-    def _verify_cloud_cover_methods(
-        self, current: int | float, hourly: pd.Series
-    ) -> None:
+    @staticmethod
+    def _verify_cloud_cover_methods(current: int | float, hourly: pd.Series) -> None:
         r"""
         Verifies the cloud cover extraction methods.
         """
