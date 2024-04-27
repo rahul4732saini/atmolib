@@ -116,7 +116,7 @@ def get_periodical_data(
 
     #### Returns:
     - pd.Series: Returns a pandas Series comprising the datetime and periodical meteorology
-    data. The index comprises the datetime/date of the corresponding data depening upon the
+    data. The index comprises the datetime/date of the corresponding data depending upon the
     frequency in ISO-8601 format (YYYY-MM-DDTHH:MM) or (YYYY-MM-DD).
 
     #### Raises:
@@ -148,7 +148,7 @@ def get_periodical_data(
     # holds all the periodical meteorology data key-value pairs.
     data: dict[str, Any] = results[frequency]
 
-    # pandas Series comprising datetime and periodical meteorology data. The data is retrived
+    # pandas Series comprising datetime and periodical meteorology data. The data is retrieved
     # from the key-value pair named after the requested data type (e.g. temperature_2m,
     # meteorology_code, etc.) in the `data` dictionary.
     series = pd.Series(data[params[frequency]], index=data["time"], dtype=dtype)
