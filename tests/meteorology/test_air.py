@@ -69,7 +69,7 @@ class TestAirQuality:
 
     @pytest.mark.parametrize("source", ("european", "us"))
     def test_current_aqi_method(
-        self, air_quality: pyweather.AirQuality, source: str
+        self, air_quality: pyweather.AirQuality, source: pyweather.constants.AQI_SOURCES
     ) -> None:
         r"""
         Tests the `AirQuality.get_current_aqi` method with different sources.
@@ -84,7 +84,7 @@ class TestAirQuality:
         "gas", ("ozone", "carbon_monoxide", "nitrogen_dioxide", "sulphur_dioxide")
     )
     def test_gaseous_conc_methods(
-        self, air_quality: pyweather.AirQuality, gas: str
+        self, air_quality: pyweather.AirQuality, gas: pyweather.constants.GASES
     ) -> None:
         r"""
         Test the current and hourly gaseous concentration extraction methods.
@@ -101,7 +101,7 @@ class TestAirQuality:
         "plant", ("alder", "birch", "grass", "mugwort", "olive", "ragweed")
     )
     def test_pollen_conc_methods(
-        self, air_quality: pyweather.AirQuality, plant: str
+        self, air_quality: pyweather.AirQuality, plant: pyweather.constants.PLANTS
     ) -> None:
         r"""
         Tests the current and hourly pollen grains concentration extraction methods.
