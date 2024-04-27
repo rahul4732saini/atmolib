@@ -412,8 +412,8 @@ class Weather(BaseForecast, BaseWeather):
 
     def get_hourly_precipitation_probability(self) -> pd.Series:
         r"""
-        Returns the probability of precipitation (rain/showers/snowfall)
-        in percentage(%) at the specified coordinates.
+        Returns a pandas Series of precipitation (rain/showers/snowfall)
+        probability in percentage(%) at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": "precipitation_probability"})
 
