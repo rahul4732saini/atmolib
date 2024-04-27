@@ -210,13 +210,13 @@ class Weather(BaseForecast, BaseWeather):
             {"current": f"temperature_{altitude}m", "temperature_unit": unit}
         )
 
-    def get_current_weather_code(self) -> tuple[int | float, str]:
+    def get_current_weather_code(self) -> tuple[int, str]:
         r"""
         Returns a tuple comprising the current weather code followed
         by a string description of the weather code.
         """
 
-        weather_code: int | float = self._get_current_data({"current": "weather_code"})
+        weather_code: int = int(self._get_current_data({"current": "weather_code"}))
 
         # Weather code description is looked up in the `WEATHER_CODES` dictionary.
         description: str = constants.WEATHER_CODES[str(weather_code)]
@@ -302,12 +302,7 @@ class Weather(BaseForecast, BaseWeather):
         #### Params:
         - altitude (int): Altitude from the ground level; must be 10, 80, 120 or 180.
         """
-
-        if altitude not in (10, 80, 120, 180):
-            raise ValueError(
-                f"Expected `altitude` to be 10, 80, 120 or 180; got {altitude}."
-            )
-
+        self._verify_wind_altitude(altitude)
         return self._get_current_data({"current": f"wind_direction_{altitude}m"})
 
     def get_current_wind_gusts(
@@ -351,7 +346,6 @@ class Weather(BaseForecast, BaseWeather):
         - unit: Precipitation unit; must be 'mm' or 'inch'.
         """
         self._verify_precipitation_unit(unit)
-
         return self._get_current_data(
             {"current": "precipitation", "precipitation_unit": unit}
         )
@@ -360,8 +354,8 @@ class Weather(BaseForecast, BaseWeather):
         self, level: constants.PRESSURE_LEVELS = "surface"
     ) -> int | float:
         r"""
-        Returns the current atmospheric pressure in
-        Hectopascal (hPa) at the specified coordinates.
+        Returns the current atmospheric pressure in Hectopascal (hPa)
+        at the specified level and coordinates.
 
         #### Params:
         - level (str): Desired level of the atmospheric
@@ -396,12 +390,18 @@ class Weather(BaseForecast, BaseWeather):
         """
         return self._get_current_data({"current": "snowfall"})
 
+    def get_current_visibility(self) -> int | float:
+        r"""
+        Returns the current visibility in meters(m) at the specified coordinates.
+        """
+        return self._get_current_data({"current": "visibility"})
+
     def is_day_or_night(self) -> int:
         r"""
         Returns whether it's day or night at the specified coordinates.
         Returns integer `1` for daytime and `0` for nighttime.
         """
-        return self._get_current_data({"current": "is_day"})
+        return int(self._get_current_data({"current": "is_day"}))
 
     def get_hourly_visibility(self) -> pd.Series:
         r"""
@@ -412,8 +412,8 @@ class Weather(BaseForecast, BaseWeather):
 
     def get_hourly_precipitation_probability(self) -> pd.Series:
         r"""
-        Returns the probability of precipitation (rain/showers/snowfall)
-        in percentage(%) at the specified coordinates.
+        Returns a pandas Series of precipitation (rain/showers/snowfall)
+        probability in percentage(%) at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": "precipitation_probability"})
 

@@ -8,21 +8,21 @@ import pyweather
 
 def test_get_elevation_function(valid_coordinates) -> None:
     r"""
-    Tests the `pyweather.tools.get_elevation` function with valid coorindates.
+    Tests the `pyweather.tools.get_elevation` function with valid coordinates.
     """
 
     for i in valid_coordinates:
         assert isinstance(pyweather.get_elevation(*i), float)
 
 
-def test_get_elevation_function_with_invalid_coordinats(invalid_coordinates) -> None:
+def test_get_elevation_function_with_invalid_coordinates(invalid_coordinates) -> None:
     r"""
     Tests the `pyweather.tools.get_elevation` function with invalid coordinates.
     """
 
     with pytest.raises(ValueError):
 
-        # Expects a ValueError with invalid coorindates.
+        # Expects a ValueError with invalid coordinates.
         for i in invalid_coordinates:
             pyweather.get_elevation(*i)
 

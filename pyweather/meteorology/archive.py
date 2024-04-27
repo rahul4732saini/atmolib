@@ -271,7 +271,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         if altitude not in (10, 100):
             raise ValueError(f"Expected `altitude` to be 10 or 100; got {altitude}.")
 
-        return self._get_periodical_data({"hourly": f"wind_direction_{altitude}"})
+        return self._get_periodical_data({"hourly": f"wind_direction_{altitude}m"})
 
     def get_hourly_soil_temperature(
         self, depth: int = 0, unit: constants.TEMPERATURE_UNITS = "celsius"
