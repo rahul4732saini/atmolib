@@ -25,3 +25,13 @@ def valid_marine_coordinates() -> tuple[tuple[int, int]]:
 @pytest.fixture
 def invalid_marine_coordinates() -> tuple[tuple[int, int]]:
     return ((26.91, 75.54), (68.46, 118.64), (-2.93, -61.77), (-24.89, 144.93))
+
+
+@pytest.fixture
+def valid_archive_dates() -> tuple[tuple[str, str]]:
+    return (
+        ("1940-01-01", "1940-02-01"),
+        ("2022-09-15", "2022-10-02"),
+        ("2003-06-13", "2003-07-01"),
+        ("2001-04-24", "2001-04-25"),
+    )
