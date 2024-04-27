@@ -104,7 +104,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
     @staticmethod
     def _resolve_date(target: str | date | datetime, var: str) -> date:
         r"""
-        Verifies the supplied date argument, and resolves it into a datetime.date object.
+        Verifies the supplied date argument, and resolves it into a `datetime.date` object.
 
         The `var` parameter has to be the name of the actual date parameter
         (`start_date` or `end_date`) for reference in custom error messages.
