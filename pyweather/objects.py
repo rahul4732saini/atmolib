@@ -189,19 +189,27 @@ class BaseWeather(BaseMeteor):
         self._verify_wind_speed_unit(wind_speed_unit)
 
     def get_hourly_temperature(
-        self, unit: constants.TEMPERATURE_UNITS = "celsius"
+        self,
+        altitude: constants.TEMPERATURE_ALTITUDE = 2,
+        unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.Series:
         r"""
         Returns a pandas Series of temperature data 2 meters(m) above
         the ground level at the specified coordinates.
 
         #### Params:
+        - altitude (int): Altitude from the ground level; must be 2, 80, 120 or 180.
         - unit (str): Temperature unit; must be 'celsius' or 'fahrenheit'.
         """
         self._verify_temperature_unit(unit)
 
+        if altitude not in (2, 80, 120, 180):
+            raise ValueError(
+                f"Expected `altitude` to be 2, 80, 120 or 180; got {altitude}."
+            )
+
         return self._get_periodical_data(
-            {"hourly": "temperature_2m", "temperature_unit": unit}
+            {"hourly": f"temperature_{altitude}m", "temperature_unit": unit}
         )
 
     def get_hourly_apparent_temperature(
@@ -269,13 +277,15 @@ class BaseWeather(BaseMeteor):
 
         # Converting the Series into a pandas.DataFrame to
         # add a new column for weather code description.
-        data = data.to_frame("data")
+        dataframe = data.to_frame("data")
 
         # Creating a new column 'description' mapped to the
         # description of the corresponding weather code.
-        data["description"] = data.data.map(lambda x: constants.WEATHER_CODES[str(x)])
+        dataframe["description"] = dataframe.data.map(
+            lambda x: constants.WEATHER_CODES[str(x)]
+        )
 
-        return data
+        return dataframe
 
     def get_hourly_rainfall(
         self, unit: constants.PRECIPITATION_UNITS = "mm"
@@ -521,14 +531,14 @@ class BaseWeather(BaseMeteor):
         Returns a pandas Series of daily sunrise time in the ISO-8601 datetime
         format (YYYY-MM-DDTHH:MM) at the specified coordinates.
         """
-        return self._get_periodical_data({"daily": "sunrise"})
+        return self._get_periodical_data({"daily": "sunrise"}, dtype=np.object_)
 
     def get_daily_sunset_time(self) -> pd.Series:
         r"""
         Returns a pandas Series of daily sunset time in the ISO-8601 datetime
         format (YYYY-MM-DDTHH:MM) at the specified coordinates.
         """
-        return self._get_periodical_data({"daily": "sunset"})
+        return self._get_periodical_data({"daily": "sunset"}, dtype=np.object_)
 
     def get_daily_daylight_duration(self) -> pd.Series:
         r"""

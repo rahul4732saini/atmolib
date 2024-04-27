@@ -256,7 +256,7 @@ def get_periodical_summary(
     # Creates a dataframe of the request summary data and modifies the
     # column labels with the supplied column labels in the `labels` list.
     dataframe: pd.DataFrame = pd.DataFrame(data, index=timeline)
-    dataframe.columns = labels
+    dataframe.columns = pd.Index(labels)
 
     return dataframe
 
