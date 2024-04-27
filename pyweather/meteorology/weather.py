@@ -13,6 +13,7 @@ import atexit
 from typing import Any
 
 import requests
+import numpy as np
 import pandas as pd
 
 from ..common import constants, tools
@@ -21,9 +22,9 @@ from ..objects import BaseForecast, BaseWeather
 
 class Weather(BaseForecast, BaseWeather):
     r"""
-    Weather class to extract weather data based on the latitude and longitude coordinates.
-    It interacts with the Open-Meteo Weather API to fetch the current or upcoming 16-days
-    hourly and daily weather forecast data.
+    Weather class to extract weather data based on the latitudinal and longitudinal
+    coordinates of the location. It interacts with the Open-Meteo Weather API to fetch
+    the current or upcoming 16-days hourly and daily weather forecast data.
     """
 
     __slots__ = "_lat", "_long", "_params", "_forecast_days"
@@ -36,6 +37,20 @@ class Weather(BaseForecast, BaseWeather):
 
     # Closes the request session upon exit.
     atexit.register(_session.close)
+
+    def __init__(
+        self, lat: int | float, long: int | float, forecast_days: int = 7
+    ) -> None:
+        r"""
+        Creates an instance of the Weather class.
+
+        #### Params:
+        - lat (int | float): Latitudinal coordinates of the location.
+        - long (int | float): Longitudinal coordinates of the location.
+        - forecast_days (int): Number of days for which the forecast has to
+        be extracted; must be in the range of 1 and 16.
+        """
+        super().__init__(lat, long, forecast_days)
 
     @staticmethod
     def _verify_wind_altitude(altitude: int) -> None:
@@ -69,6 +84,7 @@ class Weather(BaseForecast, BaseWeather):
         - wind speed (10m above the ground level)
         - wind direction in degrees (10m above the ground level)
         """
+        self._verify_units(temperature_unit, precipitation_unit, wind_speed_unit)
 
         # A string representation of the weather summary data types
         # separated by commas as supported for requesting the Web API.
@@ -110,6 +126,7 @@ class Weather(BaseForecast, BaseWeather):
         - wind speed (10m above the ground level)
         - surface soil temperature
         """
+        self._verify_units(temperature_unit, precipitation_unit, wind_speed_unit)
 
         # A string representation of the weather summary data types
         # separated by commas as supported for requesting the Web API.
@@ -148,6 +165,7 @@ class Weather(BaseForecast, BaseWeather):
         - mean wind speed (10m above the ground level)
         - dominant wind direction
         """
+        self._verify_units(temperature_unit, precipitation_unit, wind_speed_unit)
 
         # A string representation of the weather summary data types
         # separated by commas as supported for requesting the Web API.
@@ -171,7 +189,7 @@ class Weather(BaseForecast, BaseWeather):
         self,
         altitude: constants.TEMPERATURE_ALTITUDE = 2,
         unit: constants.TEMPERATURE_UNITS = "celsius",
-    ) -> float:
+    ) -> int | float:
         r"""
         Returns the current temperature in the specified temperature unit
         at the specified altitude in meters(m) from the ground level.
@@ -192,13 +210,13 @@ class Weather(BaseForecast, BaseWeather):
             {"current": f"temperature_{altitude}m", "temperature_unit": unit}
         )
 
-    def get_current_weather_code(self) -> tuple[int | float, str]:
+    def get_current_weather_code(self) -> tuple[int, str]:
         r"""
         Returns a tuple comprising the current weather code followed
         by a string description of the weather code.
         """
 
-        weather_code: int | float = self._get_current_data({"current": "weather_code"})
+        weather_code: int = int(self._get_current_data({"current": "weather_code"}))
 
         # Weather code description is looked up in the `WEATHER_CODES` dictionary.
         description: str = constants.WEATHER_CODES[str(weather_code)]
@@ -284,12 +302,7 @@ class Weather(BaseForecast, BaseWeather):
         #### Params:
         - altitude (int): Altitude from the ground level; must be 10, 80, 120 or 180.
         """
-
-        if altitude not in (10, 80, 120, 180):
-            raise ValueError(
-                f"Expected `altitude` to be 10, 80, 120 or 180; got {altitude}."
-            )
-
+        self._verify_wind_altitude(altitude)
         return self._get_current_data({"current": f"wind_direction_{altitude}m"})
 
     def get_current_wind_gusts(
@@ -312,7 +325,7 @@ class Weather(BaseForecast, BaseWeather):
         self._verify_wind_speed_unit(unit)
 
         return self._get_current_data(
-            {"current": "wind_gusts_10", "wind_speed_unit": unit}
+            {"current": "wind_gusts_10m", "wind_speed_unit": unit}
         )
 
     def get_current_relative_humidity(self) -> int | float:
@@ -333,15 +346,16 @@ class Weather(BaseForecast, BaseWeather):
         - unit: Precipitation unit; must be 'mm' or 'inch'.
         """
         self._verify_precipitation_unit(unit)
-
         return self._get_current_data(
             {"current": "precipitation", "precipitation_unit": unit}
         )
 
-    def get_current_pressure(self, level: constants.PRESSURE_LEVELS) -> int | float:
+    def get_current_pressure(
+        self, level: constants.PRESSURE_LEVELS = "surface"
+    ) -> int | float:
         r"""
-        Returns the current atmospheric pressure in
-        Hectopascal (hPa) at the specified coordinates.
+        Returns the current atmospheric pressure in Hectopascal (hPa)
+        at the specified level and coordinates.
 
         #### Params:
         - level (str): Desired level of the atmospheric
@@ -376,24 +390,30 @@ class Weather(BaseForecast, BaseWeather):
         """
         return self._get_current_data({"current": "snowfall"})
 
+    def get_current_visibility(self) -> int | float:
+        r"""
+        Returns the current visibility in meters(m) at the specified coordinates.
+        """
+        return self._get_current_data({"current": "visibility"})
+
     def is_day_or_night(self) -> int:
         r"""
         Returns whether it's day or night at the specified coordinates.
         Returns integer `1` for daytime and `0` for nighttime.
         """
-        return self._get_current_data({"current": "is_day"})
+        return int(self._get_current_data({"current": "is_day"}))
 
-    def get_hourly_visibility(self) -> pd.DataFrame:
+    def get_hourly_visibility(self) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly visibility data
+        Returns a pandas Series of hourly visibility data
         in meters(m) at the specified coordinates.
         """
-        return self._get_periodical_data({"hourly": "visibility"})
+        return self._get_periodical_data({"hourly": "visibility"}, dtype=np.int32)
 
-    def get_hourly_precipitation_probability(self) -> pd.DataFrame:
+    def get_hourly_precipitation_probability(self) -> pd.Series:
         r"""
-        Returns the probability of precipitation (rain/showers/snowfall)
-        in percentage(%) at the specified coordinates.
+        Returns a pandas Series of precipitation (rain/showers/snowfall)
+        probability in percentage(%) at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": "precipitation_probability"})
 
@@ -401,9 +421,9 @@ class Weather(BaseForecast, BaseWeather):
         self,
         altitude: constants.WIND_ALTITUDE = 10,
         unit: constants.WIND_SPEED_UNITS = "kmh",
-    ) -> pd.DataFrame:
+    ) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly wind speed data at the
+        Returns a pandas Series of hourly wind speed data at the
         specified coordinates and altitude in the specified unit.
 
         #### Params:
@@ -423,9 +443,9 @@ class Weather(BaseForecast, BaseWeather):
 
     def get_hourly_wind_direction(
         self, altitude: constants.WIND_ALTITUDE = 10
-    ) -> pd.DataFrame:
+    ) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly wind direction data in degrees at
+        Returns a pandas Series of hourly wind direction data in degrees at
         the specified coordinates and altitude in the specified unit.
 
         #### Params:
@@ -436,11 +456,11 @@ class Weather(BaseForecast, BaseWeather):
 
     def get_hourly_soil_temperature(
         self,
-        depth: constants.SOIL_TEMP_DEPTH,
+        depth: constants.SOIL_TEMP_DEPTH = 0,
         unit: constants.TEMPERATURE_UNITS = "celsius",
-    ) -> pd.DataFrame:
+    ) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly soil temperature data at
+        Returns a pandas Series of hourly soil temperature data at
         the specified depth and coordinates in the specified unit.
 
         #### Params:
@@ -458,9 +478,9 @@ class Weather(BaseForecast, BaseWeather):
             {"hourly": f"soil_temperature_{depth}cm", "temperature_unit": unit}
         )
 
-    def get_hourly_soil_moisture(self, depth: int = 7) -> pd.DataFrame:
+    def get_hourly_soil_moisture(self, depth: int = 7) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of soil moisture (m^3/m^3)
+        Returns a pandas Series of soil moisture (m^3/m^3)
         data at the specified depth and coordinates.
 
         #### Params:
@@ -485,16 +505,16 @@ class Weather(BaseForecast, BaseWeather):
 
         return self._get_periodical_data({"hourly": f"soil_moisture_{depth_range}cm"})
 
-    def get_daily_max_uv_index(self) -> pd.DataFrame:
+    def get_daily_max_uv_index(self) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of daily maximum Ultra-Violet (UV)
+        Returns a pandas Series of daily maximum Ultra-Violet (UV)
         index data at the specified coordinates.
         """
         return self._get_periodical_data({"daily": "uv_index_max"})
 
-    def get_daily_max_precipitation_probability(self) -> pd.DataFrame:
+    def get_daily_max_precipitation_probability(self) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of daily maximum precipitation probability
+        Returns a pandas Series of daily maximum precipitation probability
         (rain/showers/snowfall) in percentage (%) at the specified coordinates.
         """
         return self._get_periodical_data({"daily": "precipitation_probability_max"})

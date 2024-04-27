@@ -20,9 +20,9 @@ from ..common import constants, tools
 
 class AirQuality(BaseForecast):
     r"""
-    AirQuality class to extract air quality data based on the latitude and longitude coordinates.
-    It interacts with the Open-Meteo Air Quality API to fetch the current or up to upcoming 7-days
-    hourly air quality forecast data.
+    AirQuality class to extract air quality data based on the latitudinal and longitudinal
+    coordinates of the location. It interacts with the Open-Meteo Air Quality API to fetch
+    the current or up to upcoming 7-days hourly air quality forecast data.
     """
 
     _session = requests.Session()
@@ -33,6 +33,20 @@ class AirQuality(BaseForecast):
 
     # Closes the request session upon exit.
     atexit.register(_session.close)
+
+    def __init__(
+        self, lat: int | float, long: int | float, forecast_days: int = 7
+    ) -> None:
+        r"""
+        Creates an instance of the AirQuality class.
+
+        #### Params:
+        - lat (int | float): Latitudinal coordinates of the location.
+        - long (int | float): Longitudinal coordinates of the location.
+        - forecast_days (int): Number of days for which the forecast has to
+        be extracted; must be in the range of 1 and 7.
+        """
+        super().__init__(lat, long, forecast_days)
 
     @staticmethod
     def _verify_atmospheric_gas(gas: constants.GASES) -> None:
@@ -84,7 +98,7 @@ class AirQuality(BaseForecast):
         - Ammonia[NH3] Concentration (Only available for Europe)
         """
 
-        # A string representation of the marine weather summary data types
+        # A string representation of the air quality summary data types
         # separated by commas as supported for requesting the Web API.
         data_types: str = f",".join(constants.CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES)
 
@@ -112,7 +126,7 @@ class AirQuality(BaseForecast):
         - Ammonia[NH3] Concentration (Only available for Europe)
         """
 
-        # A string representation of the marine weather summary data types
+        # A string representation of the air quality summary data types
         # separated by commas as supported for requesting the Web API.
         data_types: str = f",".join(constants.HOURLY_AIR_QUALITY_SUMMARY_DATA_TYPES)
 
@@ -123,11 +137,9 @@ class AirQuality(BaseForecast):
             constants.HOURLY_AIR_QUALITY_SUMMARY_DATA_TYPES,
         )
 
-    def get_current_aqi(
-        self, source: constants.AQI_SOURCES = "european"
-    ) -> int | float:
+    def get_current_aqi(self, source: constants.AQI_SOURCES = "european") -> int:
         r"""
-        Returns the current American/European Air Quality
+        Returns the current US/European Air Quality
         Index value at the specified coordinates.
 
         #### Params:
@@ -141,7 +153,7 @@ class AirQuality(BaseForecast):
                 f"Expected `source` to be 'european' or 'us'; got {source!r}."
             )
 
-        return self._get_current_data({"current": "european_aqi"})
+        return int(self._get_current_data({"current": "european_aqi"}))
 
     def get_current_ammonia_conc(self) -> int | float | None:
         r"""
@@ -183,7 +195,9 @@ class AirQuality(BaseForecast):
         """
         return self._get_current_data({"current": "pm10"})
 
-    def get_current_pollen_conc(self, plant: constants.PLANTS) -> int | float | None:
+    def get_current_pollen_conc(
+        self, plant: constants.PLANTS = "grass"
+    ) -> int | float | None:
         r"""
         Returns the current concentration(grains/m^3) of pollens of the specified
         plant. Only available for Europe as provided by CAMS European Air Quality
@@ -213,52 +227,52 @@ class AirQuality(BaseForecast):
         """
         return self._get_current_data({"current": "aerosol_optical_depth"})
 
-    def get_hourly_dust_conc(self) -> pd.DataFrame:
+    def get_hourly_dust_conc(self) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly concentration(micro g/m^3) data of dust
+        Returns a pandas Series of hourly concentration(micro g/m^3) data of dust
         in air 10 meters(m) above ground level at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": "dust"})
 
-    def get_hourly_uv_index(self) -> pd.DataFrame:
+    def get_hourly_uv_index(self) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly Ultra-Violet
+        Returns a pandas Series of hourly Ultra-Violet
         radiation index data at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": "uv_index"})
 
-    def get_hourly_pm2_5_conc(self) -> pd.DataFrame:
+    def get_hourly_pm2_5_conc(self) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly concentration(micro g/m^3) data
+        Returns a pandas Series of hourly concentration(micro g/m^3) data
         of particulate matter with diameter smaller than the 2.5 micro meter(m)
         in air 10 meters(m) above the ground level.
         """
         return self._get_periodical_data({"hourly": "pm2_5"})
 
-    def get_hourly_pm10_conc(self) -> pd.DataFrame:
+    def get_hourly_pm10_conc(self) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly concentration(micro g/m^3)
+        Returns a pandas Series of hourly concentration(micro g/m^3)
         data of particulate matter with diameter smaller than the 10 micro
         meter(m) in air 10 meters(m) above the ground level.
         """
         return self._get_periodical_data({"hourly": "pm10"})
 
-    def get_hourly_pollen_conc(self, plant: constants.PLANTS) -> pd.DataFrame:
+    def get_hourly_pollen_conc(self, plant: constants.PLANTS = "grass") -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly concentration(grains/m^3) data of pollens
+        Returns a pandas Series of hourly concentration(grains/m^3) data of pollens
         of the specified plant. Only available for Europe as provided by CAMS European
         Air Quality forecast. Returns None for Non-European regions.
 
         #### Params:
-        - plant (str): Plant whose pollen concentration can be retrieved, must be one of
+        - plant (str): Plant whose pollen concentration can be retrieved; must be one of
         ('alder', 'birch', 'grass', 'mugwort', 'olive', 'ragweed').
         """
         self._verify_plant_species(plant)
         return self._get_periodical_data({"hourly": f"{plant}_pollen"})
 
-    def get_hourly_aerosol_optical_depth(self) -> pd.DataFrame:
+    def get_hourly_aerosol_optical_depth(self) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly aerosol optical
+        Returns a pandas Series of hourly aerosol optical
         depth data at 550 nm at the specified coordinates.
 
         Aerosol optical depth (AOD) at 550 nm is a measure of the extinction of solar radiation
@@ -268,21 +282,21 @@ class AirQuality(BaseForecast):
         """
         return self._get_periodical_data({"hourly": "aerosol_optical_depth"})
 
-    def get_hourly_gaseous_conc(self, gas: constants.GASES = "ozone") -> pd.DataFrame:
+    def get_hourly_gaseous_conc(self, gas: constants.GASES = "ozone") -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly concentration(miro g/m^3) data of
+        Returns a pandas Series of hourly concentration(miro g/m^3) data of
         the specified atmospheric gas in air 10 meters(m) above ground level.
 
         #### Params:
-        - gas (str): Gas whose concentration needs to be extracted, must be one of the following:
+        - gas (str): Gas whose concentration needs to be extracted; must be one of the following:
         ('ozone', 'carbon_monoxide', 'nitrogen_dioxide', 'sulphur_dioxide').
         """
         self._verify_atmospheric_gas(gas)
         return self._get_periodical_data({"hourly": gas})
 
-    def get_hourly_ammonia_conc(self) -> pd.DataFrame:
+    def get_hourly_ammonia_conc(self) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly concentration(micro g/m^3) data of ammonia(NH3)
+        Returns a pandas Series of hourly concentration(micro g/m^3) data of ammonia(NH3)
         in air. Only available for Europe. Returns None for Non-European regions.
         """
         return self._get_periodical_data({"hourly": "ammonia"})

@@ -9,6 +9,7 @@ for various objects and functionalities within the pyweather package.
 from typing import Any
 
 import requests
+import numpy as np
 import pandas as pd
 
 from .common import tools, constants
@@ -26,7 +27,7 @@ class BaseMeteor:
 
     def __init__(self, lat: int | float, long: int | float) -> None:
 
-        # params dictionary to be used to store request parameters for API requests.
+        # `params`` dictionary to be used to store request parameters for API requests.
         self._params: dict[str, Any] = {}
 
         self.lat = lat
@@ -64,27 +65,30 @@ class BaseMeteor:
         coordinate parameters to request the Open-Meteo Weather API.
         """
 
-        params |= self._params
-
-        # _session and _api class attributes must be defined by the child class.
-        data: int | float = tools.get_current_data(self._session, self._api, params)
+        # `_session` and `_api` class attributes must be defined by the child class.
+        data: int | float = tools.get_current_data(
+            self._session, self._api, params | self._params
+        )
 
         return data
 
-    def _get_periodical_data(self, params: dict[str, Any]) -> pd.DataFrame:
+    def _get_periodical_data(
+        self, params: dict[str, Any], dtype=np.float16
+    ) -> pd.Series:
         r"""
         Uses the specified parameters to request the specified Open-Meteo
-        API and returns the periodical weather data as a pandas DataFrame.
+        API and returns the periodical weather data as a pandas Series.
 
         #### Params:
         - params (dict[str, Any]): A dictionary all the necessary parameters except the
         coordinate parameters to request the Open-Meteo Weather API.
+        - dtype: Desired numpy dtype of the request meteorology data.
         """
 
-        params |= self._params
-
-        # _session and _api class attributes must be defined by the child class.
-        data: pd.DataFrame = tools.get_periodical_data(self._session, self._api, params)
+        # `_session` and `_api` class attributes must be defined by the child class.
+        data: pd.Series = tools.get_periodical_data(
+            self._session, self._api, params | self._params, dtype
+        )
 
         return data
 
@@ -103,19 +107,7 @@ class BaseForecast(BaseMeteor):
     def __init__(
         self, lat: int | float, long: int | float, forecast_days: int = 7
     ) -> None:
-        rf"""
-        Creates an instance of the {self.__class__.__name__} class.
-
-        #### Params:
-        -------
-        - lat (int | float): Latitudinal coordinates of the location.
-        - long (int | float): Longitudinal coordinates of the location.
-        - forecast_days (int): Number of days for which the forecast has to
-        be extracted; must be in the range of 1 and {self._max_forecast_days}.
-        """
-
         super().__init__(lat, long)
-
         self.forecast_days = forecast_days
 
     @property
@@ -133,7 +125,7 @@ class BaseForecast(BaseMeteor):
         self._forecast_days = __value
 
         # Updating the `_params` dictionary with the 'forecast_days' key-value
-        # pair to be used as a parameter in requesting the API.
+        # pair to be used as a parameter for requesting the Web API.
         self._params["forecast_days"] = __value
 
     def __repr__(self) -> str:
@@ -182,31 +174,53 @@ class BaseWeather(BaseMeteor):
                 f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn'; got {unit!r}."
             )
 
-    def get_hourly_temperature(
-        self, unit: constants.TEMPERATURE_UNITS = "celsius"
-    ) -> pd.DataFrame:
+    def _verify_units(
+        self,
+        temperature_unit: constants.TEMPERATURE_UNITS,
+        precipitation_unit: constants.PRECIPITATION_UNITS,
+        wind_speed_unit: constants.WIND_SPEED_UNITS,
+    ) -> None:
         r"""
-        Returns a pandas DataFrame of temperature data 2 meters(m) above the ground
-        level at the specified coordinates.
+        Verifies the specified temperature, precipitation and wind speed units.
+        """
+
+        self._verify_temperature_unit(temperature_unit)
+        self._verify_precipitation_unit(precipitation_unit)
+        self._verify_wind_speed_unit(wind_speed_unit)
+
+    def get_hourly_temperature(
+        self,
+        altitude: constants.TEMPERATURE_ALTITUDE = 2,
+        unit: constants.TEMPERATURE_UNITS = "celsius",
+    ) -> pd.Series:
+        r"""
+        Returns a pandas Series of temperature data 2 meters(m) above
+        the ground level at the specified coordinates.
 
         #### Params:
-        - unit: Temperature unit; must be 'celsius' or 'fahrenheit'.
+        - altitude (int): Altitude from the ground level; must be 2, 80, 120 or 180.
+        - unit (str): Temperature unit; must be 'celsius' or 'fahrenheit'.
         """
         self._verify_temperature_unit(unit)
 
+        if altitude not in (2, 80, 120, 180):
+            raise ValueError(
+                f"Expected `altitude` to be 2, 80, 120 or 180; got {altitude}."
+            )
+
         return self._get_periodical_data(
-            {"hourly": "temperature_2m", "temperature_unit": unit}
+            {"hourly": f"temperature_{altitude}m", "temperature_unit": unit}
         )
 
     def get_hourly_apparent_temperature(
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
-    ) -> pd.DataFrame:
+    ) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of apparent temperature data at
-        the specified coordinates.
+        Returns a pandas Series of apparent temperature 2 meters(m) above
+        the ground level data at the specified coordinates.
 
         #### Params:
-        - unit: Temperature unit; must be 'celsius' or 'fahrenheit'.
+        - unit (str): Temperature unit; must be 'celsius' or 'fahrenheit'.
         """
         self._verify_temperature_unit(unit)
 
@@ -216,13 +230,13 @@ class BaseWeather(BaseMeteor):
 
     def get_hourly_dew_point(
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
-    ) -> pd.DataFrame:
+    ) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly dew point data 2 meters(m) above the
+        Returns a pandas Series of hourly dew point data 2 meters(m) above the
         ground level at the specified coordinates.
 
         #### Params:
-        - unit: Temperature unit; must be 'celsius' or 'fahrenheit'.
+        - unit (str): Temperature unit; must be 'celsius' or 'fahrenheit'.
         """
         self._verify_temperature_unit(unit)
 
@@ -230,26 +244,25 @@ class BaseWeather(BaseMeteor):
             {"hourly": "dew_point_2m", "temperature_unit": unit}
         )
 
-    def get_hourly_relative_humidity(self) -> pd.DataFrame:
+    def get_hourly_relative_humidity(self) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly relative humidity percentage(%) data
+        Returns a pandas Series of hourly relative humidity percentage(%) data
         2 meters(m) above the ground level at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": "relative_humidity_2m"})
 
     def get_periodical_weather_code(
-        self, frequency: constants.FREQUENCY
+        self, frequency: constants.FREQUENCY = "daily"
     ) -> pd.DataFrame:
         r"""
         Returns a pandas DataFrame of hourly weather code data with its corresponding
         description at the specified coordinates.
 
         #### Params:
-        - frequency: Frequency of the data distribution; must be 'daily' or 'hourly'.
+        - frequency (str): Frequency of the data distribution; must be 'daily' or 'hourly'.
 
         #### Columns:
-        - time: time of the forecast data in ISO-8601 format (YYYY-MM-DDTHH-MM) or (YYYY-MM-DD).
-        - data: weather code at the corresponding hour.
+        - data: weather code at the corresponding hour (timeine as a part of the index).
         - description: description of the corresponding weather code.
         """
 
@@ -258,39 +271,47 @@ class BaseWeather(BaseMeteor):
                 f"Expected `frequency` to be 'hourly' or 'daily'; got {frequency!r}."
             )
 
-        data: pd.DataFrame = self._get_periodical_data({frequency: "weather_code"})
+        data: pd.Series = self._get_periodical_data(
+            {frequency: "weather_code"}, dtype=np.uint8
+        )
+
+        # Converting the Series into a pandas.DataFrame to
+        # add a new column for weather code description.
+        dataframe = data.to_frame("data")
 
         # Creating a new column 'description' mapped to the
         # description of the corresponding weather code.
-        data["description"] = data["data"].map(
+        dataframe["description"] = dataframe.data.map(
             lambda x: constants.WEATHER_CODES[str(x)]
         )
 
-        return data
+        return dataframe
 
     def get_hourly_rainfall(
         self, unit: constants.PRECIPITATION_UNITS = "mm"
-    ) -> pd.DataFrame:
+    ) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly rainfall data
+        Returns a pandas Series of hourly rainfall data
         in mm/inch at the specified coordinates.
 
         #### Params:
-        - unit: Precipitation unit; must be 'mm' or 'inch'.
+        - unit (str): Precipitation unit; must be 'mm' or 'inch'.
         """
         self._verify_precipitation_unit(unit)
         return self._get_periodical_data({"hourly": "rain", "precipitation_unit": unit})
 
-    def get_hourly_snowfall(self) -> pd.DataFrame:
+    def get_hourly_snowfall(self) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly snowfall data
+        Returns a pandas Series of hourly snowfall data
         in centimeters(cm) at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": "rain"})
 
-    def get_hourly_pressure(self, level: constants.PRESSURE_LEVELS) -> pd.DataFrame:
+    def get_hourly_pressure(
+        self, level: constants.PRESSURE_LEVELS = "surface"
+    ) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of the hourly atmospheric pressure data
+        Returns a pandas Series of the hourly atmospheric pressure data
         in Hectopascal (hPa) at the specified coordinates.
 
         #### Params:
@@ -307,18 +328,18 @@ class BaseWeather(BaseMeteor):
 
         return self._get_periodical_data({"hourly": pressure})
 
-    def get_hourly_total_cloud_cover(self) -> pd.DataFrame:
+    def get_hourly_total_cloud_cover(self) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly total cloud cover percentage(%) data
+        Returns a pandas Series of hourly total cloud cover percentage(%) data
         at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": "cloud_cover"})
 
     def get_hourly_cloud_cover(
         self, level: constants.CLOUD_COVER_LEVEL = "low"
-    ) -> pd.DataFrame:
+    ) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly cloud cover percentage(%) data
+        Returns a pandas Series of hourly cloud cover percentage(%) data
         at the specified level and coordinates.
 
         #### Params:
@@ -338,13 +359,13 @@ class BaseWeather(BaseMeteor):
 
     def get_hourly_precipitation(
         self, unit: constants.PRECIPITATION_UNITS = "mm"
-    ) -> pd.DataFrame:
+    ) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly precipitation (sum of rain, showers, and snowfall)
+        Returns a pandas Series of hourly precipitation (sum of rain, showers, and snowfall)
         data at the specified coordinates.
 
         #### Params:
-        - unit: Precipitation unit; must be 'mm' or 'inch'.
+        - unit (str): Precipitation unit; must be 'mm' or 'inch'.
         """
         self._verify_precipitation_unit(unit)
 
@@ -353,11 +374,10 @@ class BaseWeather(BaseMeteor):
         )
 
     def get_hourly_wind_gusts(
-        self,
-        unit: constants.WIND_SPEED_UNITS = "kmh",
-    ) -> pd.DataFrame:
+        self, unit: constants.WIND_SPEED_UNITS = "kmh"
+    ) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of hourly wind gusts data 10 meters(m) above the
+        Returns a pandas Series of hourly wind gusts data 10 meters(m) above the
         ground level at the specified coordinates.
 
         #### Params:
@@ -375,15 +395,15 @@ class BaseWeather(BaseMeteor):
 
     def get_daily_temperature(
         self,
-        type_: constants.DAILY_WEATHER_REQUEST_TYPES,
+        type_: constants.DAILY_WEATHER_REQUEST_TYPES = "mean",
         unit: constants.TEMPERATURE_UNITS = "celsius",
-    ) -> pd.DataFrame:
+    ) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of daily maximum, minimum or mean temperature data
+        Returns a pandas Series of daily maximum, minimum or mean temperature data
         2 meters(m) above the ground level at the specified coordinates.
 
         #### Params:
-        - type: The type of daily temperature to be extracted; must be 'min', 'max' or 'mean'.
+        - type (str): The type of daily temperature to be extracted; must be 'min', 'max' or 'mean'.
             - 'min': Daily minimum temperature.
             - 'max': Daily maximum temperature.
             - 'mean': Daily mean temperature.
@@ -401,15 +421,15 @@ class BaseWeather(BaseMeteor):
 
     def get_daily_apparent_temperature(
         self,
-        type_: constants.DAILY_WEATHER_REQUEST_TYPES,
+        type_: constants.DAILY_WEATHER_REQUEST_TYPES = "mean",
         unit: constants.TEMPERATURE_UNITS = "celsius",
-    ) -> pd.DataFrame:
+    ) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of daily maximum, minimum or mean apparent temperature
+        Returns a pandas Series of daily maximum, minimum or mean apparent temperature
         data 2 meters(m) above the ground level at the specified coordinates.
 
         #### Params:
-        - type: Specifies the type of daily apparent temperature to
+        - type (str): Specifies the type of daily apparent temperature to
         be retrieved; must be 'min', 'max' or 'mean'.
             - 'min': Daily minimum apparent temperature.
             - 'max': Daily maximum apparent temperature.
@@ -428,10 +448,10 @@ class BaseWeather(BaseMeteor):
 
     def get_daily_max_wind_speed(
         self, unit: constants.WIND_SPEED_UNITS = "kmh"
-    ) -> pd.DataFrame:
+    ) -> pd.Series:
         r"""
-        Returns the daily maximum wind speed 2 meters(m) above the ground
-        level at the specified coordinates.
+        Returns a pandas Series of daily maximum wind speed 2 meters(m)
+        above the ground level at the specified coordinates.
 
         #### Params:
         - unit (str): Wind speed unit; must be one of the following:
@@ -443,19 +463,19 @@ class BaseWeather(BaseMeteor):
         self._verify_wind_speed_unit(unit)
         return self._get_periodical_data({"daily": "wind_speed_10m_max"})
 
-    def get_daily_dominant_wind_direction(self) -> pd.DataFrame:
+    def get_daily_dominant_wind_direction(self) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of daily dominant wind direction in degrees data 10 meters(m)
-        above the ground level at the specified coordinates.
+        Returns a pandas Series of daily dominant wind direction in degrees data
+        10 meters(m) above the ground level at the specified coordinates.
         """
         return self._get_periodical_data({"daily": "wind_direction_10m_dominant"})
 
     def get_daily_max_wind_gusts(
         self, unit: constants.WIND_SPEED_UNITS = "kmh"
-    ) -> pd.DataFrame:
+    ) -> pd.Series:
         r"""
-        Returns the daily maximum wind gusts 2 meters(m) above the ground
-        level at the specified coordinates.
+        Returns a pandas Series daily maximum wind gusts 2 meters(m)
+        above the ground level at the specified coordinates.
 
         #### Params:
         - unit (str): Wind speed unit; must be one of the following:
@@ -469,13 +489,13 @@ class BaseWeather(BaseMeteor):
 
     def get_daily_total_precipitation(
         self, unit: constants.PRECIPITATION_UNITS = "mm"
-    ) -> pd.DataFrame:
+    ) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of daily precipitation (sum of rain, showers, and snowfall)
+        Returns a pandas Series of daily precipitation (sum of rain, showers, and snowfall)
         data at the specified coordinates.
 
         #### Params:
-        - unit: Precipitation unit; must be 'mm' or 'inch'.
+        - unit (str): Precipitation unit; must be 'mm' or 'inch'.
         """
         self._verify_precipitation_unit(unit)
 
@@ -485,12 +505,13 @@ class BaseWeather(BaseMeteor):
 
     def get_daily_total_rainfall(
         self, unit: constants.PRECIPITATION_UNITS = "mm"
-    ) -> pd.DataFrame:
+    ) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of daily rainfall data in mm/inch at the specified coordinates.
+        Returns a pandas Series of daily rainfall data
+        in mm/inch at the specified coordinates.
 
         #### Params:
-        - unit: Precipitation unit; must be 'mm' or 'inch'.
+        - unit (str): Precipitation unit; must be 'mm' or 'inch'.
         """
         self._verify_precipitation_unit(unit)
 
@@ -498,42 +519,44 @@ class BaseWeather(BaseMeteor):
             {"daily": "rain_sum", "precipitation_unit": unit}
         )
 
-    def get_daily_total_snowfall(self) -> pd.DataFrame:
+    def get_daily_total_snowfall(self) -> pd.Series:
         r"""
-        Returns a pandas DataFrame of daily rainfall data in
+        Returns a pandas Series of daily rainfall data in
         centimeters(m) at the specified coordinates.
         """
         return self._get_periodical_data({"daily": "snowfall_sum"})
 
-    def get_daily_sunrise_time(self) -> pd.DataFrame:
+    def get_daily_sunrise_time(self) -> pd.Series:
         r"""
-        Returns the daily sunrise time in the ISO-8601 datetime format (YYYY-MM-DDTHH:MM)
-        at the specified coordinates.
+        Returns a pandas Series of daily sunrise time in the ISO-8601 datetime
+        format (YYYY-MM-DDTHH:MM) at the specified coordinates.
         """
-        return self._get_periodical_data({"daily": "sunrise"})
+        return self._get_periodical_data({"daily": "sunrise"}, dtype=np.object_)
 
-    def get_daily_sunset_time(self) -> pd.DataFrame:
+    def get_daily_sunset_time(self) -> pd.Series:
         r"""
-        Returns the daily sunset time in the ISO-8601 datetime format (YYYY-MM-DDTHH:MM)
-        at the specified coordinates.
+        Returns a pandas Series of daily sunset time in the ISO-8601 datetime
+        format (YYYY-MM-DDTHH:MM) at the specified coordinates.
         """
-        return self._get_periodical_data({"daily": "sunset"})
+        return self._get_periodical_data({"daily": "sunset"}, dtype=np.object_)
 
-    def get_daily_daylight_duration(self) -> pd.DataFrame:
+    def get_daily_daylight_duration(self) -> pd.Series:
         r"""
-        Returns the daily daylight duration in seconds(s) at the specified coordinates.
+        Returns a pandas Series of daily daylight duration
+        in seconds(s) at the specified coordinates.
         """
         return self._get_periodical_data({"daily": "daylight_duration"})
 
-    def get_daily_sunshine_duration(self) -> pd.DataFrame:
+    def get_daily_sunshine_duration(self) -> pd.Series:
         r"""
-        Returns the daily sunshine duration in seconds(s) at the specified coordinates.
+        Returns a pandas Series of daily sunshine duration
+        in seconds(s) at the specified coordinates.
         """
         return self._get_periodical_data({"daily": "sunshine_duration"})
 
-    def get_daily_total_shortwave_radiation(self) -> pd.DataFrame:
+    def get_daily_total_shortwave_radiation(self) -> pd.Series:
         r"""
-        Returns the daily sum of shortwave radiation in Mega Joules
-        per square meter (MJ/m^2) sat the specified coordinates.
+        Returns a pandas Series of daily sum of shortwave radiation in Mega
+        Joules per square meter (MJ/m^2) sat the specified coordinates.
         """
         return self._get_periodical_data({"daily": "shortwave_radiation_sum"})
