@@ -78,7 +78,7 @@ class TestAirQuality:
         aqi = air_quality.get_current_aqi(source)
 
         assert isinstance(aqi, int)
-        assert aqi in range(501)
+        assert 0 <= aqi <= 500
 
     @pytest.mark.parametrize(
         "gas", ("ozone", "carbon_monoxide", "nitrogen_dioxide", "sulphur_dioxide")
