@@ -26,8 +26,8 @@ class TestWeather:
         for i in valid_coordinates:
             pyweather.Weather(*i)
 
-        for i in (1, 10, 16):
-            pyweather.Weather(0, 0, forecast_days=i)
+        for days in (1, 10, 16):
+            pyweather.Weather(0, 0, forecast_days=days)
 
     def test_object_initialization_with_invalid_parameters(
         self, invalid_coordinates: tuple[tuple[float, float], ...]
@@ -43,8 +43,8 @@ class TestWeather:
                 pyweather.Weather(*i)
 
             # Expects an AssertionError upon initialization with invalid `forecast_days` argument.
-            for i in (0, -1, 17):
-                pyweather.Weather(0, 0, forecast_days=i)
+            for days in (0, -1, 17):
+                pyweather.Weather(0, 0, forecast_days=days)
 
     @staticmethod
     def _verify_summary_methods(
@@ -96,7 +96,9 @@ class TestWeather:
         """
 
         assert isinstance(current, int | float) and isinstance(hourly, pd.Series)
-        assert 0 <= current <= 100 and all((hourly >= 0) & (hourly <= 100))
+        assert 0 <= current <= 100 and all(
+            (hourly.to_numpy() >= 0) & (hourly.to_numpy() <= 100)
+        )
 
     # The following block tests methods related to summary extraction methods.
 
@@ -157,7 +159,9 @@ class TestWeather:
 
     @pytest.mark.parametrize("altitude", (2, 80, 120, 180))
     def test_temperature_methods_altitude_parameter(
-        self, weather: pyweather.Weather, altitude: int
+        self,
+        weather: pyweather.Weather,
+        altitude: pyweather.constants.TEMPERATURE_ALTITUDE,
     ) -> None:
         r"""
         Tests the current and hourly temperature extraction
@@ -209,7 +213,7 @@ class TestWeather:
 
     @pytest.mark.parametrize("depth", (0, 6, 18, 54))
     def test_hourly_soil_temperature_method_depth_parameter(
-        self, weather: pyweather.Weather, depth: int
+        self, weather: pyweather.Weather, depth: pyweather.constants.SOIL_TEMP_DEPTH
     ) -> None:
         r"""
         Tests the `Weather.get_hourly_soil_temperature` with different `depth` arguments.
@@ -326,13 +330,17 @@ class TestWeather:
         assert isinstance(hourly_precipitation, pd.Series) and isinstance(
             hourly_rainfall, pd.Series
         )
-        assert all(hourly_precipitation >= 0) and all(hourly_rainfall >= 0)
+        assert all(hourly_precipitation.to_numpy() >= 0) and all(
+            hourly_rainfall.to_numpy() >= 0
+        )
 
         # Tests the daily precipitation methods.
         assert isinstance(daily_precipitation, pd.Series) and isinstance(
             daily_rainfall, pd.Series
         )
-        assert all(daily_precipitation >= 0) and all(daily_rainfall >= 0)
+        assert all(daily_precipitation.to_numpy() >= 0) and all(
+            daily_rainfall.to_numpy() >= 0
+        )
 
     def test_current_precipitation_methods_with_default_parameters(
         self, weather: pyweather.Weather
@@ -374,16 +382,18 @@ class TestWeather:
             and isinstance(hourly_snowfall, pd.Series)
         )
         assert (
-            all(hourly_precipitation >= 0)
-            and all(hourly_rainfall >= 0)
-            and all(hourly_snowfall >= 0)
+            all(hourly_precipitation.to_numpy() >= 0)
+            and all(hourly_rainfall.to_numpy() >= 0)
+            and all(hourly_snowfall.to_numpy() >= 0)
         )
 
         # Tests the daily precipitation methods.
         assert isinstance(daily_precipitation, pd.Series) and isinstance(
             daily_rainfall, pd.Series
         )
-        assert all(daily_precipitation >= 0) and all(daily_rainfall >= 0)
+        assert all(daily_precipitation.to_numpy() >= 0) and all(
+            daily_rainfall.to_numpy() >= 0
+        )
 
     def test_precipitation_probability_methods(
         self, weather: pyweather.Weather
@@ -396,8 +406,8 @@ class TestWeather:
         daily = weather.get_daily_max_precipitation_probability()
 
         assert isinstance(hourly, pd.Series) and isinstance(daily, pd.Series)
-        assert all((hourly >= 0) & (hourly <= 100)) and all(
-            (daily >= 0) & (daily <= 100)
+        assert all((hourly.to_numpy() >= 0) & (hourly.to_numpy() <= 100)) and all(
+            (daily.to_numpy() >= 0) & (daily.to_numpy() <= 100)
         )
 
     @pytest.mark.parametrize("level", ("surface", "sealevel"))
@@ -413,7 +423,7 @@ class TestWeather:
         hourly = weather.get_hourly_pressure(level=level)
 
         assert isinstance(current, int | float) and isinstance(hourly, pd.Series)
-        assert current >= 0 and all(hourly >= 0)
+        assert current >= 0 and all(hourly.to_numpy() >= 0)
 
     # The following block tests cloud coverage extraction related methods.
 
@@ -470,7 +480,7 @@ class TestWeather:
 
     @pytest.mark.parametrize("altitude", (10, 80, 120, 180))
     def test_current_wind_methods_altitude_parameter(
-        self, weather: pyweather.Weather, altitude: int
+        self, weather: pyweather.Weather, altitude: pyweather.constants.WIND_ALTITUDE
     ) -> None:
         r"""
         Test the current wind related extraction
@@ -491,7 +501,7 @@ class TestWeather:
 
     @pytest.mark.parametrize("altitude", (10, 80, 120, 180))
     def test_hourly_wind_methods_altitude_parameter(
-        self, weather: pyweather.Weather, altitude: int
+        self, weather: pyweather.Weather, altitude: pyweather.constants.WIND_ALTITUDE
     ) -> None:
         r"""
         Tests the hourly wind related extraction
@@ -502,7 +512,9 @@ class TestWeather:
         direction = weather.get_hourly_wind_direction(altitude=altitude)
 
         assert isinstance(speed, pd.Series) and isinstance(direction, pd.Series)
-        assert all(speed >= 0) and all((direction >= 0) & (direction < 360))
+        assert all(speed.to_numpy() >= 0) and all(
+            (direction.to_numpy() >= 0) & (direction.to_numpy() < 360)
+        )
 
     @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
     def test_hourly_wind_methods_unit_parameter(
@@ -517,7 +529,7 @@ class TestWeather:
         gusts = weather.get_hourly_wind_gusts(unit=unit)
 
         assert isinstance(speed, pd.Series) and isinstance(gusts, pd.Series)
-        assert all(speed >= 0) and all(gusts >= 0)
+        assert all(speed.to_numpy() >= 0) and all(gusts.to_numpy() >= 0)
 
     @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
     def test_daily_wind_methods_unit_parameter(
@@ -532,7 +544,7 @@ class TestWeather:
         gusts = weather.get_daily_max_wind_gusts(unit=unit)
 
         assert isinstance(speed, pd.Series) and isinstance(gusts, pd.Series)
-        assert all(speed >= 0) and all(gusts >= 0)
+        assert all(speed.to_numpy() >= 0) and all(gusts.to_numpy() >= 0)
 
     def test_current_wind_methods_with_default_parameters(
         self, weather: pyweather.Weather
@@ -564,7 +576,9 @@ class TestWeather:
         direction = weather.get_hourly_wind_direction()
 
         assert isinstance(speed, pd.Series) and isinstance(direction, pd.Series)
-        assert all(speed >= 0) and all((direction >= 0) & (direction < 360))
+        assert all(speed.to_numpy() >= 0) and all(
+            (direction.to_numpy() >= 0) & (direction.to_numpy() < 360)
+        )
 
     def test_daily_wind_methods_with_default_parameters(
         self, weather: pyweather.Weather
@@ -583,9 +597,9 @@ class TestWeather:
             and isinstance(gusts, pd.Series)
         )
         assert (
-            all(speed >= 0)
-            and all((direction >= 0) & (direction < 360))
-            and all(gusts >= 0)
+            all(speed.to_numpy() >= 0)
+            and all((direction.to_numpy() >= 0) & (direction.to_numpy() < 360))
+            and all(gusts.to_numpy() >= 0)
         )
 
     # The following block tests weather code extraction methods.
@@ -634,7 +648,9 @@ class TestWeather:
         hourly = weather.get_hourly_relative_humidity()
 
         assert isinstance(current, int | float) and isinstance(hourly, pd.Series)
-        assert 0 <= current <= 100 and all((hourly >= 0) & (hourly <= 100))
+        assert 0 <= current <= 100 and all(
+            (hourly.to_numpy() >= 0) & (hourly.to_numpy() <= 100)
+        )
 
     @pytest.mark.parametrize("depth", (0, 2, 8, 26, 57, 81))
     def test_hourly_soil_moisture_method(
@@ -644,14 +660,14 @@ class TestWeather:
         Tests the hourly soil moisture extractions methods.
         """
         moisture = weather.get_hourly_soil_moisture(depth=depth)
-        assert isinstance(moisture, pd.Series) and all(moisture >= 0)
+        assert isinstance(moisture, pd.Series) and all(moisture.to_numpy() >= 0)
 
     def test_daily_max_uv_index_method(self, weather: pyweather.Weather) -> None:
         r"""
         Tests the `pyweather.get_daily_max_uv_index` method.
         """
         daily = weather.get_daily_max_uv_index()
-        assert isinstance(daily, pd.Series) and all(daily >= 0)
+        assert isinstance(daily, pd.Series) and all(daily.to_numpy() >= 0)
 
     def test_is_day_or_night_method(self, weather: pyweather.Weather) -> None:
         r"""
@@ -669,7 +685,7 @@ class TestWeather:
         hourly = weather.get_hourly_visibility()
 
         assert isinstance(current, int | float) and isinstance(hourly, pd.Series)
-        assert current >= 0 and all(hourly >= 0)
+        assert current >= 0 and all(hourly.to_numpy() >= 0)
 
     def test_daylight_and_sunlight_duration_methods(
         self, weather: pyweather.Weather
@@ -683,9 +699,9 @@ class TestWeather:
         sunshine = weather.get_daily_sunshine_duration()
 
         assert isinstance(daylight, pd.Series) and isinstance(sunshine, pd.Series)
-        assert all((daylight >= 0) & (daylight <= 86_400)) and all(
-            (sunshine >= 0) & (sunshine <= 86_400)
-        )
+        assert all(
+            (daylight.to_numpy() >= 0) & (daylight.to_numpy() <= 86_400)
+        ) and all((sunshine.to_numpy() >= 0) & (sunshine.to_numpy() <= 86_400))
 
     def test_sunrise_and_sunset_time_methods(self, weather: pyweather.Weather) -> None:
         r"""
