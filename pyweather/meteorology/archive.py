@@ -29,7 +29,15 @@ class WeatherArchive(BaseWeather, BaseMeteor):
     API to fetch the weather data ranging from 1940 till the present.
     """
 
-    __slots__ = "_lat", "_long", "_start_date", "_end_date", "_params"
+    __slots__ = (
+        "_lat",
+        "_long",
+        "_start_date",
+        "_end_date",
+        "_initial_date",
+        "_final_date",
+        "_params",
+    )
 
     _session = requests.Session()
     _api = constants.WEATHER_ARCHIVE_API
@@ -63,12 +71,12 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         self.end_date = end_date
 
     @property
-    def start_date(self) -> date:
-        return self._start_date
+    def start_date(self) -> str | date | datetime:
+        return self._initial_date
 
     @start_date.setter
     def start_date(self, __value: str | date | datetime) -> None:
-        self._start_date = self._resolve_date(__value, "start_date")
+        start_date: date = self._resolve_date(__value, "start_date")
 
         if hasattr(self, "_end_date"):
             assert self._end_date >= self._start_date, ValueError(
@@ -76,11 +84,14 @@ class WeatherArchive(BaseWeather, BaseMeteor):
             )
 
         # Updating the `_params` dictionary with the `start_date` attribute.
-        self._params["start_date"] = self._start_date.strftime(r"%Y-%m-%d")
+        self._params["start_date"] = start_date.strftime(r"%Y-%m-%d")
+
+        self._start_date: date = start_date
+        self._initial_date: str | date | datetime = __value
 
     @property
-    def end_date(self) -> date:
-        return self._end_date
+    def end_date(self) -> str | date | datetime:
+        return self._final_date
 
     @end_date.setter
     def end_date(self, __value: str | date | datetime) -> None:
@@ -90,10 +101,11 @@ class WeatherArchive(BaseWeather, BaseMeteor):
             "`end_date` must be greater or equal to `start_date`."
         )
 
-        self._end_date = end_date
-
         # Updating the `_params` dictionary with the `end_date` attribute.
         self._params["end_date"] = end_date.strftime(r"%Y-%m-%d")
+
+        self._end_date: date = end_date
+        self._final_date: str | date | datetime = __value
 
     def __repr__(self) -> str:
         return (
@@ -104,7 +116,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
     @staticmethod
     def _resolve_date(target: str | date | datetime, var: str) -> date:
         r"""
-        Verifies the supplied date argument, and resolves it into a datetime.date object.
+        Verifies the supplied date argument, and resolves it into a `datetime.date` object.
 
         The `var` parameter has to be the name of the actual date parameter
         (`start_date` or `end_date`) for reference in custom error messages.
