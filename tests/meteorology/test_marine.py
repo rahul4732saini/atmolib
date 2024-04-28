@@ -43,8 +43,8 @@ class TestMarineWeather:
         with pytest.raises(AssertionError):
 
             # Expects a ValueError upon initialization with invalid `wave_type` argument.
-            for i in (0, -1, 9):
-                pyweather.MarineWeather(0, 0, forecast_days=i)
+            for days in (0, -1, 9):
+                pyweather.MarineWeather(0, 0, forecast_days=days)
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
     def test_marine_weather_summary_methods(
@@ -121,9 +121,9 @@ class TestMarineWeather:
             and isinstance(period, pd.Series)
         )
         assert (
-            all(height >= 0)
-            and all((direction >= 0) & (direction < 360))
-            and all(period >= 0)
+            all(height.to_numpy() >= 0)
+            and all((direction.to_numpy() >= 0) & (direction.to_numpy() < 360))
+            and all(period.to_numpy() >= 0)
         )
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
@@ -148,7 +148,7 @@ class TestMarineWeather:
             and isinstance(period, pd.Series)
         )
         assert (
-            all(height >= 0)
-            and all((direction >= 0) & (direction < 360))
-            and all(period >= 0)
+            all(height.to_numpy() >= 0)
+            and all((direction.to_numpy() >= 0) & (direction.to_numpy() < 360))
+            and all(period.to_numpy() >= 0)
         )
