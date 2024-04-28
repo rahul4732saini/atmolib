@@ -28,8 +28,8 @@ class TestWeatherArchive:
         for i in valid_coordinates:
             pyweather.WeatherArchive(*i, start_date="2020-01-01", end_date="2020-01-10")
 
-        for i in valid_archive_dates:
-            pyweather.WeatherArchive(0, 0, *i)
+        for dates in valid_archive_dates:
+            pyweather.WeatherArchive(0, 0, *dates)
 
     def test_object_initialization_with_invalid_parameters(
         self,
@@ -50,8 +50,8 @@ class TestWeatherArchive:
 
             # Expects an AssertionError upon initialization with
             # invalid `start_date` and `end_date` argument.
-            for i in invalid_archive_dates:
-                pyweather.WeatherArchive(0, 0, *i)
+            for dates in invalid_archive_dates:
+                pyweather.WeatherArchive(0, 0, *dates)
 
     @staticmethod
     def _verify_summary_methods(hourly: pd.DataFrame, daily: pd.DataFrame) -> None:
@@ -359,7 +359,9 @@ class TestWeatherArchive:
 
     @pytest.mark.parametrize("altitude", (10, 100))
     def test_hourly_wind_methods_altitude_parameter(
-        self, archive: pyweather.WeatherArchive, altitude: int
+        self,
+        archive: pyweather.WeatherArchive,
+        altitude: pyweather.constants.ARCHIVE_WIND_ALTITUDES,
     ) -> None:
         r"""
         Tests the hourly wind related extraction
