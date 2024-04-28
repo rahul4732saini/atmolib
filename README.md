@@ -67,11 +67,11 @@ arguments already being specified in all of them.
 - `Weather` class usage:
 
 ```python
-import atmolib as pyw
+import atmolib as atmo
 
 # 'forecast_days' is an optional argument and specifies the number
 # of days for which forecast data is desired to be extracted.
-weather = pyw.Weather(lat=26.91, long=75.54, forecast_days=10)
+weather = atmo.Weather(lat=26.91, long=75.54, forecast_days=10)
 
 # Extracts a summary of weather forecast data.
 weather.get_current_summary()
@@ -108,13 +108,13 @@ weather.get_daily_sunshine_duration()
 - `MarineWeather` class usage:
 
 ```python
-import atmolib as pyw
+import atmolib as atmo
 
 # 'forecast_days' is an optional argument and specifies the number
 # of days for which forecast data is desired to be extracted.
 # 'wave_type' refers to the type of waves for which marine
 # weather data is desired to be extracted.
-marine = pyw.MarineWeather(lat=0, long=0, wave_type='wind', forecast_days=7)
+marine = atmo.MarineWeather(lat=0, long=0, wave_type='wind', forecast_days=7)
 
 # Extracts a summary of marine weather forecast data.
 marine.get_current_summary()
@@ -140,9 +140,9 @@ marine.get_daily_max_wave_period()
 - `AirQuality` class usage:
 
 ```python
-import atmolib as pyw
+import atmolib as atmo
 
-air = pyw.AirQuality(lat=26.91, long=75.54, forecast_days=7)
+air = atmo.AirQuality(lat=26.91, long=75.54, forecast_days=7)
 
 # Extracts a summary of air quality forecast data.
 air.get_current_summary()
