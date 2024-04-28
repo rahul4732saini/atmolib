@@ -6,7 +6,9 @@ import pytest
 import pyweather
 
 
-def test_get_elevation_function(valid_coordinates) -> None:
+def test_get_elevation_function(
+    valid_coordinates: tuple[tuple[float, float], ...]
+) -> None:
     r"""
     Tests the `pyweather.tools.get_elevation` function with valid coordinates.
     """
@@ -15,7 +17,9 @@ def test_get_elevation_function(valid_coordinates) -> None:
         assert isinstance(pyweather.get_elevation(*i), float)
 
 
-def test_get_elevation_function_with_invalid_coordinates(invalid_coordinates) -> None:
+def test_get_elevation_function_with_invalid_coordinates(
+    invalid_coordinates: tuple[tuple[float, float], ...]
+) -> None:
     r"""
     Tests the `pyweather.tools.get_elevation` function with invalid coordinates.
     """

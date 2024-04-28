@@ -3,7 +3,7 @@ Meteorology Package
 -------------------
 
 This package facilitates the extraction of meteorology data including
-weather, historical weahter, marine, and air quality data. It provides
+weather, historical weather, marine, and air quality data. It provides
 a comprehensive set of objects and functions for the same.
 
 Classes Exported:

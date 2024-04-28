@@ -262,7 +262,7 @@ class BaseWeather(BaseMeteor):
         - frequency (str): Frequency of the data distribution; must be 'daily' or 'hourly'.
 
         #### Columns:
-        - data: weather code at the corresponding hour (timeine as a part of the index).
+        - data: weather code at the corresponding hour (timeline as a part of the index).
         - description: description of the corresponding weather code.
         """
 
