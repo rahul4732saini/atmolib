@@ -18,8 +18,8 @@ class TestWeatherArchive:
 
     def test_object_initialization(
         self,
-        valid_coordinates: tuple[tuple[int, int]],
-        valid_archive_dates: tuple[tuple[str, str]],
+        valid_coordinates: tuple[tuple[float, float], ...],
+        valid_archive_dates: tuple[tuple[str, str], ...],
     ) -> None:
         r"""
         Test the `pyweather.WeatherArchive` object initialization with valid parameters.
@@ -33,8 +33,8 @@ class TestWeatherArchive:
 
     def test_object_initialization_with_invalid_parameters(
         self,
-        invalid_coordinates: tuple[tuple[int, int]],
-        invalid_archive_dates: tuple[tuple[str, str]],
+        invalid_coordinates: tuple[tuple[float, float], ...],
+        invalid_archive_dates: tuple[tuple[str, str], ...],
     ) -> None:
         r"""
         Tests the `pyweather.WeatherArchive` object initialization with invalid parameters.

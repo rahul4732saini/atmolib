@@ -17,7 +17,7 @@ class TestWeather:
     """
 
     def test_object_initialization(
-        self, valid_coordinates: tuple[tuple[int, int]]
+        self, valid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
         r"""
         Test the `pyweather.Weather` object initialization with valid parameters.
@@ -30,7 +30,7 @@ class TestWeather:
             pyweather.Weather(0, 0, forecast_days=i)
 
     def test_object_initialization_with_invalid_parameters(
-        self, invalid_coordinates: tuple[tuple[int, int]]
+        self, invalid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
         r"""
         Tests the `pyweather.Weather` object initialization with invalid parameters.
