@@ -24,8 +24,18 @@ class TestMarineWeather:
             pyweather.MarineWeather(*i)
 
         # Tests the initialization with different `wave_type` and `forecast_days` arguments.
-        for type_, days in zip(("composite", "wind", "swell"), (1, 5, 8)):
-            pyweather.MarineWeather(0, 0, wave_type=type_, forecast_days=days)
+        for days in (1, 5, 8):
+            pyweather.MarineWeather(0, 0, forecast_days=days)
+
+    @pytest.mark.parametrize("type_", ("composite", "wind", "swell"))
+    def test_object_intialization_wave_type_parameter(
+        self, type_: pyweather.constants.WAVE_TYPES
+    ) -> None:
+        r"""
+        Tests the `pyweather.MarineWeather` object initialization
+        with different `wave_type` arguments.
+        """
+        pyweather.MarineWeather(0, 0, wave_type=type_)
 
     def test_object_initialization_with_invalid_parameters(
         self, invalid_marine_coordinates: tuple[tuple[float, float], ...]
