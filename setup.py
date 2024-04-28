@@ -5,20 +5,20 @@ from setuptools import setup, find_packages
 DESCRIPTION_FILE = Path("./README.md").absolute()
 DESCRIPTION = DESCRIPTION_FILE.read_text()
 
-# Extracts the version from the pyweather/version.py file.
-VERSION_FILE = Path("./pyweather/version.py").absolute()
+# Extracts the version from the atmolib/version.py file.
+VERSION_FILE = Path("./atmolib/version.py").absolute()
 VERSION = VERSION_FILE.read_text().strip().replace("version = ", "").replace('"', "")
 
 setup(
-    name="pyweather",
+    name="atmolib",
     version=VERSION,
     author="rahul4732saini",
     license="MIT",
     description="Versatile weather package for effortless meteorology data extraction.",
     long_description=DESCRIPTION,
     long_description_content_type="text/markdown",
-    url="https://www.github.com/rahul4732saini/pyweather",
-    keywords="pyweather, weather, pandas, open-meteo",
+    url="https://www.github.com/rahul4732saini/atmolib",
+    keywords="atmolib, weather, pandas, open-meteo",
     classifiers=[
         "License :: OSI Approved :: Apache Software License",
         "Intended Audience :: Developers",
