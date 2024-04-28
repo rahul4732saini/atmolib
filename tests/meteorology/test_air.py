@@ -95,7 +95,7 @@ class TestAirQuality:
 
         assert isinstance(current, int | float) and isinstance(hourly, pd.Series)
         assert current >= 0
-        assert all((hourly >= 0) | hourly.isna())
+        assert all((hourly.to_numpy() >= 0) | hourly.isna())
 
     @pytest.mark.parametrize(
         "plant", ("alder", "birch", "grass", "mugwort", "olive", "ragweed")
@@ -114,7 +114,7 @@ class TestAirQuality:
             hourly, pd.Series
         )
         assert current is None or current >= 0
-        assert all((hourly >= 0) | hourly.isna())
+        assert all((hourly.to_numpy() >= 0) | hourly.isna())
 
     def test_current_aqi_method_with_default_parameters(
         self, air_quality: pyweather.AirQuality
@@ -199,7 +199,9 @@ class TestAirQuality:
         pollen_conc = air_quality.get_hourly_pollen_conc()
 
         assert isinstance(gas_conc, pd.Series) and isinstance(pollen_conc, pd.Series)
-        assert all(gas_conc >= 0) and all((pollen_conc >= 0) | pollen_conc.isna())
+        assert all(gas_conc.to_numpy() >= 0) and all(
+            (pollen_conc.to_numpy() >= 0) | pollen_conc.isna()
+        )
 
     def test_hourly_ammonia_and_dust_conc_methods(
         self, air_quality: pyweather.AirQuality
@@ -212,7 +214,9 @@ class TestAirQuality:
         dust_conc = air_quality.get_hourly_dust_conc()
 
         assert isinstance(dust_conc, pd.Series) and isinstance(ammonia_conc, pd.Series)
-        assert all(dust_conc >= 0) and all((ammonia_conc >= 0) | ammonia_conc.isna())
+        assert all(dust_conc.to_numpy() >= 0) and all(
+            (ammonia_conc.to_numpy() >= 0) | ammonia_conc.isna()
+        )
 
     def test_hourly_particulate_matter_methods(
         self, air_quality: pyweather.AirQuality
@@ -225,7 +229,7 @@ class TestAirQuality:
         pm10_conc = air_quality.get_hourly_pm10_conc()
 
         assert isinstance(pm2_5_conc, pd.Series) and isinstance(pm10_conc, pd.Series)
-        assert all(pm2_5_conc >= 0) and all(pm10_conc >= 0)
+        assert all(pm2_5_conc.to_numpy() >= 0) and all(pm10_conc.to_numpy() >= 0)
 
     def test_hourly_optical_methods(self, air_quality: pyweather.AirQuality) -> None:
         r"""
@@ -236,4 +240,4 @@ class TestAirQuality:
         optical_depth = air_quality.get_hourly_aerosol_optical_depth()
 
         assert isinstance(uv_index, pd.Series) and isinstance(optical_depth, pd.Series)
-        assert all(uv_index >= 0) and all(optical_depth >= 0)
+        assert all(uv_index.to_numpy() >= 0) and all(optical_depth.to_numpy() >= 0)
