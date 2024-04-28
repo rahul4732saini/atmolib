@@ -54,7 +54,9 @@ class TestMarineWeather:
         Test the marine weather summary extraction methods.
         """
 
-        marine_weather = pyweather.MarineWeather(0, 0, wave_type=wave_type)
+        marine_weather = pyweather.MarineWeather(
+            0, 0, wave_type=wave_type, forecast_days=2
+        )
 
         current = marine_weather.get_current_summary()
         hourly = marine_weather.get_hourly_summary()
@@ -82,7 +84,9 @@ class TestMarineWeather:
         Test the marine weather summary extraction methods.
         """
 
-        marine_weather = pyweather.MarineWeather(0, 0, wave_type=wave_type)
+        marine_weather = pyweather.MarineWeather(
+            0, 0, wave_type=wave_type, forecast_days=2
+        )
 
         height = marine_weather.get_current_wave_height()
         direction = marine_weather.get_current_wave_direction()
@@ -103,7 +107,9 @@ class TestMarineWeather:
         Test the marine weather summary extraction methods.
         """
 
-        marine_weather = pyweather.MarineWeather(0, 0, wave_type=wave_type)
+        marine_weather = pyweather.MarineWeather(
+            0, 0, wave_type=wave_type, forecast_days=2
+        )
 
         height = marine_weather.get_hourly_wave_height()
         direction = marine_weather.get_hourly_wave_direction()
@@ -128,7 +134,9 @@ class TestMarineWeather:
         Test the marine weather summary extraction methods.
         """
 
-        marine_weather = pyweather.MarineWeather(0, 0, wave_type=wave_type)
+        marine_weather = pyweather.MarineWeather(
+            0, 0, wave_type=wave_type, forecast_days=2
+        )
 
         height = marine_weather.get_daily_max_wave_height()
         direction = marine_weather.get_daily_dominant_wave_direction()
