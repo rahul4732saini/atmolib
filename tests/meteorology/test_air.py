@@ -1,5 +1,5 @@
 r"""
-Tests objects and methods defined within `pyweather/meteorology/air.py` file.
+Tests objects and methods defined within `atmolib/meteorology/air.py` file.
 """
 
 from types import NoneType
@@ -7,48 +7,48 @@ from types import NoneType
 import pytest
 import pandas as pd
 
-import pyweather
+import atmolib
 
 
 class TestAirQuality:
     r"""
-    Tests the `pyweather.AirQuality` class and its defined methods.
+    Tests the `atmolib.AirQuality` class and its defined methods.
     """
 
     def test_object_initialization(
         self, valid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
         r"""
-        Test the `pyweather.AirQuality` object initialization with valid parameters.
+        Test the `atmolib.AirQuality` object initialization with valid parameters.
         """
 
         for i in valid_coordinates:
-            pyweather.AirQuality(*i)
+            atmolib.AirQuality(*i)
 
         # Tests the object initialization with different `forecast_days` arguments.
         for days in (1, 4, 7):
-            pyweather.AirQuality(0, 0, forecast_days=days)
+            atmolib.AirQuality(0, 0, forecast_days=days)
 
     def test_object_initialization_with_invalid_parameters(
         self, invalid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
         r"""
-        Test the `pyweather.AirQuality` object initialization with valid parameters.
+        Test the `atmolib.AirQuality` object initialization with valid parameters.
         """
 
         with pytest.raises(AssertionError):
 
             # Expects an AssertionError upon initialization with invalid coorindates.
             for i in invalid_coordinates:
-                pyweather.AirQuality(*i)
+                atmolib.AirQuality(*i)
 
             # Expects an AssertionError upon initialization with invalid `forecast_days` argument.
             for days in (0, -1, 9):
-                pyweather.AirQuality(0, 0, forecast_days=days)
+                atmolib.AirQuality(0, 0, forecast_days=days)
 
     def test_air_quality_summary_methods(
         self,
-        air_quality: pyweather.AirQuality,
+        air_quality: atmolib.AirQuality,
     ) -> None:
         r"""
         Tests the air quality summary extraction methods.
@@ -62,14 +62,14 @@ class TestAirQuality:
         # Verifies the index/columns of the resultant pandas.Series/DataFrame.
         assert (
             current.index.tolist()
-            == pyweather.constants.CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES
+            == atmolib.constants.CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES
             and hourly.columns.tolist()
-            == pyweather.constants.HOURLY_AIR_QUALITY_SUMMARY_DATA_TYPES
+            == atmolib.constants.HOURLY_AIR_QUALITY_SUMMARY_DATA_TYPES
         )
 
     @pytest.mark.parametrize("source", ("european", "us"))
     def test_current_aqi_method(
-        self, air_quality: pyweather.AirQuality, source: pyweather.constants.AQI_SOURCES
+        self, air_quality: atmolib.AirQuality, source: str
     ) -> None:
         r"""
         Tests the `AirQuality.get_current_aqi` method with different sources.
@@ -84,7 +84,7 @@ class TestAirQuality:
         "gas", ("ozone", "carbon_monoxide", "nitrogen_dioxide", "sulphur_dioxide")
     )
     def test_gaseous_conc_methods(
-        self, air_quality: pyweather.AirQuality, gas: pyweather.constants.GASES
+        self, air_quality: atmolib.AirQuality, gas: str
     ) -> None:
         r"""
         Test the current and hourly gaseous concentration extraction methods.
@@ -101,7 +101,7 @@ class TestAirQuality:
         "plant", ("alder", "birch", "grass", "mugwort", "olive", "ragweed")
     )
     def test_pollen_conc_methods(
-        self, air_quality: pyweather.AirQuality, plant: pyweather.constants.PLANTS
+        self, air_quality: atmolib.AirQuality, plant: str
     ) -> None:
         r"""
         Tests the current and hourly pollen grains concentration extraction methods.
@@ -117,7 +117,7 @@ class TestAirQuality:
         assert all((hourly.to_numpy() >= 0) | hourly.isna())
 
     def test_current_aqi_method_with_default_parameters(
-        self, air_quality: pyweather.AirQuality
+        self, air_quality: atmolib.AirQuality
     ) -> None:
         r"""
         Tests the `AirQuality.get_current_aqi` method with default parameters.
@@ -129,7 +129,7 @@ class TestAirQuality:
         assert 0 <= aqi <= 500
 
     def test_current_gas_and_pollen_conc_methods_with_default_parameters(
-        self, air_quality: pyweather.AirQuality
+        self, air_quality: atmolib.AirQuality
     ) -> None:
         r"""
         Tests the `AirQuality.get_current_gaseous_conc` and
@@ -145,7 +145,7 @@ class TestAirQuality:
         assert gas_conc >= 0 and (pollen_conc is None or pollen_conc >= 0)
 
     def test_current_ammonia_and_dust_conc_methods(
-        self, air_quality: pyweather.AirQuality
+        self, air_quality: atmolib.AirQuality
     ) -> None:
         r"""
         Tests the current ammonia and dust concentration extraction methods.
@@ -160,7 +160,7 @@ class TestAirQuality:
         assert (ammonia_conc is None or ammonia_conc >= 0) and dust_conc >= 0
 
     def test_current_particulate_matter_methods(
-        self, air_quality: pyweather.AirQuality
+        self, air_quality: atmolib.AirQuality
     ) -> None:
         r"""
         Tests the current particulate matter 2.5 & 10 extraction methods.
@@ -174,7 +174,7 @@ class TestAirQuality:
         )
         assert pm2_5_conc >= 0 and pm10_conc >= 0
 
-    def test_current_optical_methods(self, air_quality: pyweather.AirQuality) -> None:
+    def test_current_optical_methods(self, air_quality: atmolib.AirQuality) -> None:
         r"""
         Tests the current optical related extraction methods.
         """
@@ -188,7 +188,7 @@ class TestAirQuality:
         assert uv_index >= 0 and optical_depth >= 0
 
     def test_hourly_gas_and_pollen_conc_methods_with_default_parameters(
-        self, air_quality: pyweather.AirQuality
+        self, air_quality: atmolib.AirQuality
     ) -> None:
         r"""
         Tests the `AirQuality.get_hourly_gaseous_conc` and
@@ -204,7 +204,7 @@ class TestAirQuality:
         )
 
     def test_hourly_ammonia_and_dust_conc_methods(
-        self, air_quality: pyweather.AirQuality
+        self, air_quality: atmolib.AirQuality
     ) -> None:
         r"""
         Tests the hourly ammonia and dust concentration extraction methods.
@@ -219,7 +219,7 @@ class TestAirQuality:
         )
 
     def test_hourly_particulate_matter_methods(
-        self, air_quality: pyweather.AirQuality
+        self, air_quality: atmolib.AirQuality
     ) -> None:
         r"""
         Tests the hourly particulate matter 2.5 & 10 extraction methods.
@@ -231,7 +231,7 @@ class TestAirQuality:
         assert isinstance(pm2_5_conc, pd.Series) and isinstance(pm10_conc, pd.Series)
         assert all(pm2_5_conc.to_numpy() >= 0) and all(pm10_conc.to_numpy() >= 0)
 
-    def test_hourly_optical_methods(self, air_quality: pyweather.AirQuality) -> None:
+    def test_hourly_optical_methods(self, air_quality: atmolib.AirQuality) -> None:
         r"""
         Tests the hourly optical related extraction methods.
         """

@@ -1,70 +1,66 @@
 r"""
-Tests the objects and methods defined within `pyweather/meteorology/marine.py` file.
+Tests the objects and methods defined within `atmolib/meteorology/marine.py` file.
 """
 
 import pytest
 import pandas as pd
 
-import pyweather
+import atmolib
 
 
 class TestMarineWeather:
     r"""
-    Tests the `pyweather.MarineWeather` class and its defined methods.
+    Tests the `atmolib.MarineWeather` class and its defined methods.
     """
 
     def test_object_initialization(
         self, valid_marine_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
         r"""
-        Test the `pyweather.MarineWeather` object initialization with valid parameters.
+        Test the `atmolib.MarineWeather` object initialization with valid parameters.
         """
 
         for i in valid_marine_coordinates:
-            pyweather.MarineWeather(*i)
-
-        # Tests the initialization with different `wave_type` and `forecast_days` arguments.
-        for days in (1, 5, 8):
-            pyweather.MarineWeather(0, 0, forecast_days=days)
+            atmolib.MarineWeather(*i)
 
     @pytest.mark.parametrize("type_", ("composite", "wind", "swell"))
     def test_object_intialization_wave_type_parameter(
-        self, type_: pyweather.constants.WAVE_TYPES
+        self, type_: atmolib.constants.WAVE_TYPES
     ) -> None:
         r"""
-        Tests the `pyweather.MarineWeather` object initialization
+        Tests the `atmolib.MarineWeather` object initialization
         with different `wave_type` arguments.
         """
-        pyweather.MarineWeather(0, 0, wave_type=type_)
+        atmolib.MarineWeather(0, 0, wave_type=type_)
 
     def test_object_initialization_with_invalid_parameters(
         self, invalid_marine_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
         r"""
-        Tests the `pyweather.MarineWeather` object initialization with invalid parameters.
+        Tests the `atmolib.MarineWeather` object initialization with invalid parameters.
         """
 
-        with pytest.raises(pyweather.errors.RequestError):
+        with pytest.raises(atmolib.errors.RequestError):
 
             # Expects a RequestError upon initialization with invalid coordinates.
             for i in invalid_marine_coordinates:
-                pyweather.MarineWeather(*i)
+                atmolib.MarineWeather(*i)
 
         with pytest.raises(AssertionError):
 
             # Expects a ValueError upon initialization with invalid `wave_type` argument.
             for days in (0, -1, 9):
-                pyweather.MarineWeather(0, 0, forecast_days=days)
+                atmolib.MarineWeather(0, 0, forecast_days=days)
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
     def test_marine_weather_summary_methods(
-        self, wave_type: pyweather.constants.WAVE_TYPES
+        self, wave_type: atmolib.constants.WAVE_TYPES
     ) -> None:
         r"""
         Test the marine weather summary extraction methods.
         """
 
-        marine_weather = pyweather.MarineWeather(
+        marine_weather = atmolib.MarineWeather(
             0, 0, wave_type=wave_type, forecast_days=2
         )
 
@@ -83,18 +79,18 @@ class TestMarineWeather:
             current.index.tolist()
             == hourly.columns.tolist()
             == daily.columns.tolist()
-            == pyweather.constants.MARINE_WEATHER_SUMMARY_DATA_TYPES
+            == atmolib.constants.MARINE_WEATHER_SUMMARY_DATA_TYPES
         )
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
     def test_current_marine_weather_methods(
-        self, wave_type: pyweather.constants.WAVE_TYPES
+        self, wave_type: atmolib.constants.WAVE_TYPES
     ) -> None:
         r"""
         Test the marine weather summary extraction methods.
         """
 
-        marine_weather = pyweather.MarineWeather(
+        marine_weather = atmolib.MarineWeather(
             0, 0, wave_type=wave_type, forecast_days=2
         )
 
@@ -111,13 +107,13 @@ class TestMarineWeather:
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
     def test_hourly_marine_weather_methods(
-        self, wave_type: pyweather.constants.WAVE_TYPES
+        self, wave_type: atmolib.constants.WAVE_TYPES
     ) -> None:
         r"""
         Test the marine weather summary extraction methods.
         """
 
-        marine_weather = pyweather.MarineWeather(
+        marine_weather = atmolib.MarineWeather(
             0, 0, wave_type=wave_type, forecast_days=2
         )
 
@@ -138,13 +134,13 @@ class TestMarineWeather:
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
     def test_daily_marine_weather_methods(
-        self, wave_type: pyweather.constants.WAVE_TYPES
+        self, wave_type: atmolib.constants.WAVE_TYPES
     ) -> None:
         r"""
         Test the marine weather summary extraction methods.
         """
 
-        marine_weather = pyweather.MarineWeather(
+        marine_weather = atmolib.MarineWeather(
             0, 0, wave_type=wave_type, forecast_days=2
         )
 

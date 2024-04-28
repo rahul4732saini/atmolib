@@ -1,22 +1,22 @@
 from datetime import date, timedelta
 
 import pytest
-import pyweather
+import atmolib
 
 
 @pytest.fixture
-def weather() -> pyweather.Weather:
-    return pyweather.Weather(0, 0, forecast_days=2)
+def weather() -> atmolib.Weather:
+    return atmolib.Weather(0, 0, forecast_days=2)
 
 
 @pytest.fixture
-def archive() -> pyweather.WeatherArchive:
-    return pyweather.WeatherArchive(0, 0, "2020-01-01", "2020-01-10")
+def archive() -> atmolib.WeatherArchive:
+    return atmolib.WeatherArchive(0, 0, "2020-01-01", "2020-01-10")
 
 
 @pytest.fixture
-def air_quality() -> pyweather.AirQuality:
-    return pyweather.AirQuality(0, 0, forecast_days=2)
+def air_quality() -> atmolib.AirQuality:
+    return atmolib.AirQuality(0, 0, forecast_days=2)
 
 
 @pytest.fixture
