@@ -1,5 +1,5 @@
 <h1 align=center>
-<img src="https://raw.githubusercontent.com/rahul4732saini/pyweather/dev/assets/pyweather.png?raw=true" width=500>
+<img src="https://raw.githubusercontent.com/rahul4732saini/pyweather/dev/assets/atmolib.png?raw=true" width=500>
 </h1>
 
 <a href="https://www.codefactor.io/repository/github/rahul4732saini/pyweather"><img src="https://www.codefactor.io/repository/github/rahul4732saini/pyweather/badge" alt="CodeFactor" /></a>
