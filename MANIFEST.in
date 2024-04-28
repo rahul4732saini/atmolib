@@ -1,5 +1,0 @@
-# Includes the weather_codes.json data file
-include weather_codes.json
-
-# Include the license file
-include LICENSE
