@@ -16,6 +16,6 @@ class RequestError(Exception):
     (e.g., HTTP status codes other than 200).
     """
 
-    def __init__(self, status_code, message=None) -> None:
+    def __init__(self, status_code: int, message=None) -> None:
         message = f"Server responded with status code {status_code}. {message}"
         super().__init__(message)
