@@ -1,5 +1,5 @@
 <h1 align=center>
-<img src="https://raw.githubusercontent.com/rahul4732saini/atmolib/dev/assets/atmolib.png?raw=true" width=500>
+<img src="https://raw.githubusercontent.com/rahul4732saini/atmolib/main/assets/atmolib.png?raw=true" width=500>
 </h1>
 
 <a href="https://www.codefactor.io/repository/github/rahul4732saini/atmolib"><img src="https://www.codefactor.io/repository/github/rahul4732saini/atmolib/badge" alt="CodeFactor" /></a>
