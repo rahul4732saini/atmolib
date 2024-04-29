@@ -7,7 +7,7 @@
 
 <a href="https://www.github.com/rahul4732saini/atmolib"><img src="https://img.shields.io/badge/status-beta-yellow" alt="projectStatus"></a>
 <a href="https://www.github.com/rahul4732saini/atmolib"><img src="https://img.shields.io/badge/python-3.10+-blue?label=Python" alt="pythonVersion"></a>
-<a href="https://www.github.com/rahul4732saini/atmolib"><img src="https://img.shields.io/badge/License-MIT-green" alt="pythonVersion"></a>
+<a href="https://github.com/rahul4732saini/atmolib/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green" alt="pythonVersion"></a>
 
 <a href="https://www.pypi.org/project/atmolib"><img src="https://img.shields.io/pypi/v/atmolib.svg?logo=pypi&logoColor=ffa07a&label=PyPI Version" alt="pythonVersion"></a>
 <a href="https://www.pypi.org/project/atmolib"><img src="https://img.shields.io/pypi/dm/atmolib.svg?label=PyPI Downloads" alt="pythonVersion"></a>
