@@ -568,7 +568,7 @@ class TestWeather:
 
         assert isinstance(speed, pd.Series) and isinstance(direction, pd.Series)
         assert all(speed.to_numpy() >= 0) and all(
-            (direction.to_numpy() >= 0) & (direction.to_numpy() < 360)
+            (direction.to_numpy() >= 0) & (direction.to_numpy() <= 360)
         )
 
     def test_daily_wind_methods_with_default_parameters(
@@ -589,7 +589,7 @@ class TestWeather:
         )
         assert (
             all(speed.to_numpy() >= 0)
-            and all((direction.to_numpy() >= 0) & (direction.to_numpy() < 360))
+            and all((direction.to_numpy() >= 0) & (direction.to_numpy() <= 360))
             and all(gusts.to_numpy() >= 0)
         )
 

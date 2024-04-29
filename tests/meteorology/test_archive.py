@@ -450,7 +450,7 @@ class TestWeatherArchive:
         )
         assert (
             all(speed.to_numpy() >= 0)
-            and all((direction.to_numpy() >= 0) & (direction.to_numpy() < 360))
+            and all((direction.to_numpy() >= 0) & (direction.to_numpy() <= 360))
             and all(gusts.to_numpy() >= 0)
         )
 

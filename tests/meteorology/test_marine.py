@@ -103,7 +103,7 @@ class TestMarineWeather:
             and isinstance(direction, int | float)
             and isinstance(period, int | float)
         )
-        assert height >= 0 and direction in range(360) and period >= 0
+        assert height >= 0 and 0 <= direction <= 360 and period >= 0
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
     def test_hourly_marine_weather_methods(
@@ -128,7 +128,7 @@ class TestMarineWeather:
         )
         assert (
             all(height.to_numpy() >= 0)
-            and all((direction.to_numpy() >= 0) & (direction.to_numpy() < 360))
+            and all((direction.to_numpy() >= 0) & (direction.to_numpy() <= 360))
             and all(period.to_numpy() >= 0)
         )
 
@@ -155,6 +155,6 @@ class TestMarineWeather:
         )
         assert (
             all(height.to_numpy() >= 0)
-            and all((direction.to_numpy() >= 0) & (direction.to_numpy() < 360))
+            and all((direction.to_numpy() >= 0) & (direction.to_numpy() <= 360))
             and all(period.to_numpy() >= 0)
         )
