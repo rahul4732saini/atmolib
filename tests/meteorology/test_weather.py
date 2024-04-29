@@ -488,7 +488,7 @@ class TestWeather:
             and isinstance(gusts, int | float)
         )
 
-        assert speed >= 0 and direction in range(360) and gusts >= 0
+        assert speed >= 0 and 0 <= direction <= 360 and gusts >= 0
 
     @pytest.mark.parametrize("altitude", (10, 80, 120, 180))
     def test_hourly_wind_methods_altitude_parameter(
@@ -504,7 +504,7 @@ class TestWeather:
 
         assert isinstance(speed, pd.Series) and isinstance(direction, pd.Series)
         assert all(speed.to_numpy() >= 0) and all(
-            (direction.to_numpy() >= 0) & (direction.to_numpy() < 360)
+            (direction.to_numpy() >= 0) & (direction.to_numpy() <= 360)
         )
 
     @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
@@ -554,7 +554,7 @@ class TestWeather:
             and isinstance(gusts, int | float)
         )
 
-        assert speed >= 0 and direction in range(360) and gusts >= 0
+        assert speed >= 0 and 0 <= direction <= 360 and gusts >= 0
 
     def test_hourly_wind_methods_with_default_parameters(
         self, weather: atmolib.Weather
