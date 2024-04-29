@@ -5,16 +5,16 @@
 <a href="https://www.codefactor.io/repository/github/rahul4732saini/atmolib"><img src="https://www.codefactor.io/repository/github/rahul4732saini/atmolib/badge" alt="CodeFactor" /></a>
 <a href="https://github.com/rahul4732saini/atmolib/actions/workflows/pytest.yml"><img src="https://github.com/rahul4732saini/atmolib/workflows/Pytest/badge.svg" alt="Pytest" /></a>
 
-<a href="https://www.github.com/rahul4732saini/atmolib"><img src="https://img.shields.io/badge/status-beta-yellow" alt="projectStatus"></a>
-<a href="https://www.github.com/rahul4732saini/atmolib"><img src="https://img.shields.io/badge/python-3.10+-blue?label=Python" alt="pythonVersion"></a>
-<a href="https://github.com/rahul4732saini/atmolib/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green" alt="pythonVersion"></a>
+<a href="https://www.github.com/rahul4732saini/atmolib"><img src="https://img.shields.io/badge/status-beta-yellow?maxAge=60" alt="projectStatus"></a>
+<a href="https://www.github.com/rahul4732saini/atmolib"><img src="https://img.shields.io/badge/python-3.10+-blue?label=Python&maxAge=60" alt="pythonVersion"></a>
+<a href="https://github.com/rahul4732saini/atmolib/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?maxAge=60" alt="License"></a>
 
-<a href="https://www.pypi.org/project/atmolib"><img src="https://img.shields.io/pypi/v/atmolib.svg?logo=pypi&logoColor=ffa07a&label=PyPI Version" alt="pythonVersion"></a>
-<a href="https://www.pypi.org/project/atmolib"><img src="https://img.shields.io/pypi/dm/atmolib.svg?label=PyPI Downloads" alt="pythonVersion"></a>
+<a href="https://www.pypi.org/project/atmolib"><img src="https://img.shields.io/pypi/v/atmolib.svg?logo=pypi&logoColor=ffa07a&label=PyPI Version&maxAge=60" alt="PyPI-Version"></a>
+<a href="https://www.pypi.org/project/atmolib"><img src="https://img.shields.io/pypi/dm/atmolib.svg?label=PyPI Downloads" alt="PyPI-Downloads"></a>
 
 <a href="https://www.github.com/rahul4732saini/atmolib"><img src="https://img.shields.io/github/stars/rahul4732saini/atmolib.svg?style=social&label=Star&maxAge=60" alt="StarProject"></a>
-<a href="https://www.twitter.com/rahulsaini4732"><img src="https://img.shields.io/twitter/follow/rahulsaini4732?style=social&label=Follow&maxAge=60"></a>
-<a href="https://www.linkedin.com/in/rahul-saini-9191a5286/)"><img src="https://img.shields.io/badge/LinkedIn-Connect-blue?style=social&logo=linkedin"></a>
+<a href="https://www.twitter.com/rahulsaini4732"><img src="https://img.shields.io/twitter/follow/rahulsaini4732?style=social&label=Follow&maxAge=60" alt="Twitter"></a>
+<a href="https://www.linkedin.com/in/rahul-saini-9191a5286/)"><img src="https://img.shields.io/badge/LinkedIn-Connect-blue?style=social&logo=linkedin&maxAge=60" alt="Linkedin"></a>
 
 <table border=1 cellpadding=10><tr><td>
 
