@@ -2,7 +2,7 @@ r"""
 Constants Module
 ----------------
 
-This module comprises all the constants used throughout the pyweather package.
+This module comprises all the constants used throughout the atmolib package.
 These constants are designed to assist other functionalities present within the package.
 """
 
@@ -82,7 +82,7 @@ AQI_LEVELS = {
 # Available atmospheric gases for gaseous concentration data extraction.
 GASES = Literal["ozone", "carbon_monoxide", "nitrogen_dioxide", "sulphur_dioxide"]
 
-# Available plant options for pollen grains concentration data extraction.
+# Available plants for pollen grains concentration data extraction.
 PLANTS = Literal["alder", "birch", "grass", "mugwort", "olive", "ragweed"]
 
 DAILY_WEATHER_REQUEST_TYPES = Literal["max", "min", "mean"]
@@ -91,10 +91,10 @@ DAILY_WEATHER_REQUEST_TYPES = Literal["max", "min", "mean"]
 WAVE_TYPES = Literal["composite", "wind", "swell"]
 
 # Dictionary of keys as accepted arguments by users mapped to values used
-# as request parameter for extracting data from the Open-Meteo Marine API.
+# as request parameters for extracting data from the Open-Meteo Marine API.
 WAVE_TYPES_MAP = {"composite": "", "wind": "wind_", "swell": "swell_"}
 
-# Available types of temperatures which can be extracted from the API.
+# Available types of temperature data which can be extracted from the API endpoints.
 TEMPERATURE_TYPES = Literal["temperature_2m", "apparent_temperature"]
 
 CURRENT_WEATHER_SUMMARY_DATA_TYPES = [
@@ -120,17 +120,17 @@ CURRENT_WEATHER_SUMMARY_INDEX_LABELS = [
 ]
 
 # List of marine weather data types extracted in the marine weather
-# summary data extraction. The same are also used as the index
-# labels for the marine weather summary pandas Series object.
+# summary data extraction. The same are also used as the index labels
+# for the marine weather summary pandas Series/DataFrame object.
 MARINE_WEATHER_SUMMARY_DATA_TYPES = [
     "wave_height",
     "wave_direction",
     "wave_period",
 ]
 
-# List of air quality data types extracted in the current
-# air quality summary data extraction. The same are also used
-# as the index labels for the air quality summary pandas Series object.
+# List of air quality data types extracted in the current air quality
+# summary data extraction. The same are also used as the index labels
+# for the current air quality summary data pandas Series object.
 CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES = [
     "dust",
     "pm10",
