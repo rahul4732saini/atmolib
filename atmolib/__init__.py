@@ -28,6 +28,7 @@ __all__ = (
     "constants",
     "errors",
     "objects",
+    "version",
 )
 
 from .version import version
