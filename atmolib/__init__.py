@@ -1,9 +1,9 @@
 r"""
-Pyweather Package
+Atmolib Package
 -----------------
 
-PyWeather is a Python library that provides easy and fast access to meteorology data through
-the Open-Meteo APIs. It enables developers to extract weather, historical weather, air quality,
+Atmolib is a Python library that provides easy and fast access to meteorology data through
+Open-Meteo APIs. It enables developers to extract weather, historical weather, air quality,
 and marine weather data effortlessly, empowering them to integrate accurate meteorological
 information seamlessly into their applications.
 
