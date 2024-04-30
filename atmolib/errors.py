@@ -2,8 +2,8 @@ r"""
 Errors Module
 -------------
 
-The module defined error class used throughout the pyweather
-package to handle various exceptional scenarios.
+This module defines error classes used throughout the
+atmolib package to handle various exceptional scenarios.
 """
 
 
