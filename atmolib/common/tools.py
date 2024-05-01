@@ -3,7 +3,7 @@ Tools module
 ------------
 
 This module comprises utility functions and tools supporting other
-objects and functionalities throughout the pyweather package.
+objects and functionalities throughout the atmolib package.
 """
 
 from typing import Any
@@ -27,7 +27,7 @@ def _request_json(
     - api (str): Absolute URL of the API endpoint.
     - params (dict[str, Any]): Necessary parameters for the API request including the
     coordinates of the location, requested data type, etc.
-    - session (requests.Session | None): A requests.Session object for making the API
+    - session (requests.Session | None): A `requests.Session` object for making the API
     requests. If not provided, the default requests session is used.
 
     #### Returns:
@@ -64,13 +64,13 @@ def get_current_data(
     directly by its users. It is exposed publicly for use by other modules within the package.
 
     #### Params:
-    - session (requests.Session): A requests.Session object for making the API requests.
+    - session (requests.Session): A `requests.Session` object for making the API requests.
     - api (str): Absolute URL of the API endpoint.
     - params (dict[str, str | int]): Necessary parameters for the API request including the
     coordinates of the location, requested data type, etc.
 
     #### Returns:
-    - int | float: Returns the requested current meteorology data in integer or float format.
+    - int | float: Returns the requested current meteorology data.
     """
 
     if params.get("latitude") is None or params.get("longitude") is None:
@@ -81,19 +81,19 @@ def get_current_data(
 
     if params.get("current") is None:
         raise KeyError(
-            "`current` key not found in the `params` dictionary "
+            "'current' key not found in the `params` dictionary "
             "with the requested meteorology data type."
         )
 
     results: dict[str, Any] = _request_json(api, params, session)
 
-    # The 'current' key in the `results` dictionary holds all
-    # the current meteorology data key-value pairs.
+    # The 'current' key in the `results` dictionary holds
+    # all the current meteorology data key-value pairs.
     data: dict[str, Any] = results["current"]
 
-    # Extracts the requested current meteorology data. The name of the key for the
-    # requested data is obtained from the 'current' key in the `params` dictionary.
-    # The value associated with this key is returned as the result.
+    # Extracts the requested current meteorology data. The key name for the requested
+    # data is obtained from the 'current' key in the `params` dictionary. The value
+    # associated with this key is returned as the result.
     return data[params["current"]]
 
 
@@ -107,7 +107,7 @@ def get_periodical_data(
     directly by its users. It is exposed publicly for use by other modules within the package.
 
     #### Params:
-    - session (requests.Session): A requests.Session object for making the API requests.
+    - session (requests.Session): A `requests.Session` object for making the API requests.
     - api (str): Absolute URL of the API endpoint.
     - frequency (str): Frequency of the meteorology data; 'hourly' or 'daily'.
     - params (dict[str, Any]): Necessary parameters for the API request including the
@@ -167,7 +167,7 @@ def get_current_summary(
     directly by its users. It is exposed publicly for use by other modules within the package.
 
     #### Params:
-    - session (requests.Session): A requests.Session object for making the API requests.
+    - session (requests.Session): A `requests.Session` object for making the API requests.
     - api (str): Absolute URL of the API endpoint.
     - params (dict[str, str | int]): Necessary parameters for the API request including the
     coordinates of the location, requested data type, etc.
@@ -187,7 +187,7 @@ def get_current_summary(
 
     if params.get("current") is None:
         raise KeyError(
-            "`current` key not found in the `params` dictionary "
+            "'current' key not found in the `params` dictionary "
             "with the requested weather data types."
         )
 
@@ -213,7 +213,7 @@ def get_periodical_summary(
     directly by its users. It is exposed publicly for use by other modules within the package.
 
     #### Params:
-    - session (requests.Session): A requests.Session object for making the API requests.
+    - session (requests.Session): A `requests.Session` object for making the API requests.
     - api (str): Absolute URL of the API endpoint.
     - params (dict[str, str | int]): Necessary parameters for the API request including the
     coordinates of the location, requested data type, etc.
@@ -253,7 +253,7 @@ def get_periodical_summary(
     # data to be used as index labels in the summary pandas DataFrame.
     timeline: list[str] = data.pop("time")
 
-    # Creates a dataframe of the request summary data and modifies the
+    # Creates a pandas DataFrame of the request summary data and modifies the
     # column labels with the supplied column labels in the `labels` list.
     dataframe: pd.DataFrame = pd.DataFrame(data, index=timeline)
     dataframe.columns = pd.Index(labels)
@@ -303,8 +303,7 @@ def get_elevation(lat: int | float, long: int | float) -> float:
 
 def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
     r"""
-    Retrieves the city details from Open-meteo
-    geocoding API based on the name of the city.
+    Retrieves the city details from Open-meteo geocoding API based on the city name.
 
     #### Params:
         - name (str): The name of the city to retrieve details for.
