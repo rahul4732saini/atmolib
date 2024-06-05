@@ -43,7 +43,7 @@ setup(
         "pandas==2.2.2",
         "python-dateutil==2.9.0.post0",
         "pytz==2024.1",
-        "requests==2.31.0",
+        "requests==2.32.2",
         "six==1.16.0",
         "tzdata==2024.1",
         "urllib3==2.2.1",
