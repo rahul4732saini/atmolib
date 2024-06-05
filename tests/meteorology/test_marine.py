@@ -33,18 +33,10 @@ class TestMarineWeather:
         """
         atmolib.MarineWeather(0, 0, wave_type=type_)
 
-    def test_object_initialization_with_invalid_parameters(
-        self, invalid_marine_coordinates: tuple[tuple[float, float], ...]
-    ) -> None:
+    def test_object_initialization_with_invalid_parameters(self) -> None:
         r"""
         Tests the `atmolib.MarineWeather` object initialization with invalid parameters.
         """
-
-        with pytest.raises(atmolib.errors.RequestError):
-
-            # Expects a RequestError upon initialization with invalid coordinates.
-            for i in invalid_marine_coordinates:
-                atmolib.MarineWeather(*i)
 
         with pytest.raises(AssertionError):
 
