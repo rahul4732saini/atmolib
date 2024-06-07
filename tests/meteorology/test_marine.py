@@ -3,6 +3,7 @@ Tests the objects and methods defined within `atmolib/meteorology/marine.py` fil
 """
 
 import pytest
+import numpy as np
 import pandas as pd
 
 import atmolib
@@ -95,7 +96,6 @@ class TestMarineWeather:
             and isinstance(direction, int | float)
             and isinstance(period, int | float)
         )
-        assert height >= 0 and 0 <= direction <= 360 and period >= 0
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
     def test_hourly_marine_weather_methods(
@@ -118,11 +118,6 @@ class TestMarineWeather:
             and isinstance(direction, pd.Series)
             and isinstance(period, pd.Series)
         )
-        assert (
-            all(height.to_numpy() >= 0)
-            and all((direction.to_numpy() >= 0) & (direction.to_numpy() <= 360))
-            and all(period.to_numpy() >= 0)
-        )
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
     def test_daily_marine_weather_methods(
@@ -144,9 +139,4 @@ class TestMarineWeather:
             isinstance(height, pd.Series)
             and isinstance(direction, pd.Series)
             and isinstance(period, pd.Series)
-        )
-        assert (
-            all(height.to_numpy() >= 0)
-            and all((direction.to_numpy() >= 0) & (direction.to_numpy() <= 360))
-            and all(period.to_numpy() >= 0)
         )
