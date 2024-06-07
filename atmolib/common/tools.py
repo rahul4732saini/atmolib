@@ -3,7 +3,7 @@ Tools module
 ------------
 
 This module comprises utility functions and tools supporting other
-objects and functionalities throughout the pyweather package.
+classes and functions throughout the atmolib package.
 """
 
 from typing import Any
