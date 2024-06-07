@@ -10,12 +10,10 @@ current marine weather data and up to upcoming 8-days hourly and daily marine we
 """
 
 import atexit
-from typing import Any
 
 import requests
 import pandas as pd
 
-from ..errors import RequestError
 from ..objects import BaseForecast
 from ..common import constants, tools
 
@@ -61,14 +59,7 @@ class MarineWeather(BaseForecast):
         #### Raises:
         - RequestError: If no marine data is available at the specified coordinates.
         """
-
         super().__init__(lat, long, forecast_days)
-
-        # Verifies the availability of marine weather data at the specified
-        # coordinates at object initialization. Raises `RequestError` if no
-        # marine weather data is available at the specified coordinates.
-        self._check_data_availability()
-
         self.wave_type = wave_type
 
     @property
@@ -100,34 +91,6 @@ class MarineWeather(BaseForecast):
             f"MarineWeather(lat={self._lat}, long={self._long}, "
             f"wave_type={self._wave_type!r}, forecast_days={self._forecast_days})"
         )
-
-    def __setattr__(self, __name: str, __value: Any) -> None:
-        super().__setattr__(__name, __value)
-
-        if __name in ("_lat", "_long"):
-
-            # Only executes the verification method if coordinate attributes
-            # (`_lat`, `_long`) are altered post initialization by verifying
-            # it with the `_params` dictionary.
-            if (
-                self._params.get("latitude") is not None
-                and self._params.get("longitude") is not None
-            ):
-                self._check_data_availability()
-
-    def _check_data_availability(self) -> None:
-        r"""
-        Verifies the availability of marine weather data for the specified coordinates.
-        """
-
-        # Requests the Marine Weather API without any custom data parameters to verify
-        # data availability at the specified coordinates. An error with 400 status code
-        # is sent by the API if data is not available at the specified coordinates.
-        with self._session.get(constants.MARINE_API, params=self._params) as response:
-            data: dict[str, Any] = response.json()
-
-            if response.status_code != 200:
-                raise RequestError(response.status_code, data["reason"])
 
     def get_current_summary(self) -> pd.Series:
         r"""

@@ -2,8 +2,7 @@ r"""
 Errors Module
 -------------
 
-This module defines error classes used throughout the
-atmolib package to handle various exceptional scenarios.
+The module defines error classes to handle various exceptional scenarios throughout the atmolib package.
 """
 
 
