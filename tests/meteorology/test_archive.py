@@ -1,4 +1,4 @@
-r"""
+"""
 Tests the objects and methods defined within `atmolib/meteorology/archive.py` file.
 """
 
@@ -12,7 +12,7 @@ import atmolib
 
 
 class TestWeatherArchive:
-    r"""
+    """
     Tests the `atmolib.WeatherArchive` class and its defined methods.
     """
 
@@ -21,7 +21,7 @@ class TestWeatherArchive:
         valid_coordinates: tuple[tuple[float, float], ...],
         valid_archive_dates: tuple[tuple[str, str], ...],
     ) -> None:
-        r"""
+        """
         Test the `atmolib.WeatherArchive` object initialization with valid parameters.
         """
 
@@ -36,7 +36,7 @@ class TestWeatherArchive:
         invalid_coordinates: tuple[tuple[float, float], ...],
         invalid_archive_dates: tuple[tuple[str, str], ...],
     ) -> None:
-        r"""
+        """
         Tests the `atmolib.WeatherArchive` object initialization with invalid parameters.
         """
 
@@ -55,7 +55,7 @@ class TestWeatherArchive:
 
     @staticmethod
     def _verify_summary_methods(hourly: pd.DataFrame, daily: pd.DataFrame) -> None:
-        r"""
+        """
         Verifies the execution of hourly and daily summary extraction methods.
         """
 
@@ -73,7 +73,7 @@ class TestWeatherArchive:
     def _verify_temp_and_apparent_temp_methods(
         temp: pd.Series, apparent_temp: pd.Series
     ) -> None:
-        r"""
+        """
         Verifies the `Weather.get_hourly_temperature` and
         `Weather.get_hourly_apparent_temperature` methods.
         """
@@ -85,7 +85,7 @@ class TestWeatherArchive:
 
     @staticmethod
     def _verify_cloud_cover_methods(hourly: pd.Series) -> None:
-        r"""
+        """
         Verifies the cloud cover extraction methods.
         """
         assert isinstance(hourly, pd.Series)
@@ -95,7 +95,7 @@ class TestWeatherArchive:
     def _verify_hourly_temperature_methods(
         temp: pd.Series, apparent_temp: pd.Series, soil_temp: pd.Series
     ) -> None:
-        r"""
+        """
         Verifies the hourly temperature extraction methods.
         """
         assert (
@@ -121,7 +121,7 @@ class TestWeatherArchive:
         temp_unit: atmolib.constants.TEMPERATURE_UNITS,
         precipitation_unit: atmolib.constants.PRECIPITATION_UNITS,
     ) -> None:
-        r"""
+        """
         Tests the hourly and daily summary extraction methods with
         different `temperature_unit` and `precipitation_unit` parameters.
         """
@@ -136,7 +136,7 @@ class TestWeatherArchive:
         archive: atmolib.WeatherArchive,
         unit: atmolib.constants.WIND_SPEED_UNITS,
     ) -> None:
-        r"""
+        """
         Tests the hourly and daily summary extraction
         methods with different `wind_speed` unit arguments.
         """
@@ -148,7 +148,7 @@ class TestWeatherArchive:
     def test_summary_methods_with_default_parameters(
         self, archive: atmolib.WeatherArchive
     ) -> None:
-        r"""
+        """
         Tests the hourly and daily summary
         extraction methods with default parameters.
         """
@@ -162,7 +162,7 @@ class TestWeatherArchive:
     def test_temperature_methods_altitude_parameter(
         self, archive: atmolib.WeatherArchive, altitude
     ) -> None:
-        r"""
+        """
         Tests the `WeatherArchive.get_hourly_temperature`
         method with different `altitude` arguments.
         """
@@ -178,7 +178,7 @@ class TestWeatherArchive:
         archive: atmolib.WeatherArchive,
         unit: atmolib.constants.TEMPERATURE_UNITS,
     ) -> None:
-        r"""
+        """
         Tests the hourly temperature extraction methods with different `unit` parameters.
         """
 
@@ -192,7 +192,7 @@ class TestWeatherArchive:
     def test_hourly_soil_temperature_method_depth_parameter(
         self, archive: atmolib.WeatherArchive, depth: int
     ) -> None:
-        r"""
+        """
         Tests the `WeatherArchive.get_hourly_soil_temperature`
         with different `depth` arguments.
         """
@@ -208,7 +208,7 @@ class TestWeatherArchive:
         archive: atmolib.WeatherArchive,
         unit: atmolib.constants.TEMPERATURE_UNITS,
     ) -> None:
-        r"""
+        """
         Tests the daily temperature extraction methods with different `unit` arguments.
         """
         self._verify_temp_and_apparent_temp_methods(
@@ -222,7 +222,7 @@ class TestWeatherArchive:
         archive: atmolib.WeatherArchive,
         type_: atmolib.constants.DAILY_WEATHER_REQUEST_TYPES,
     ) -> None:
-        r"""
+        """
         Tests the daily temperature extraction methods with different `type_` arguments.
         """
         self._verify_temp_and_apparent_temp_methods(
@@ -233,7 +233,7 @@ class TestWeatherArchive:
     def test_hourly_temperature_methods_with_default_parameters(
         self, archive: atmolib.WeatherArchive
     ) -> None:
-        r"""
+        """
         Tests the hourly temperature extraction methods with default parameters.
         """
 
@@ -246,7 +246,7 @@ class TestWeatherArchive:
     def test_daily_temperature_methods_with_default_parameters(
         self, archive: atmolib.Weather
     ) -> None:
-        r"""
+        """
         Tests the daily temperature extraction methods with default parameters.
         """
         self._verify_temp_and_apparent_temp_methods(
@@ -261,7 +261,7 @@ class TestWeatherArchive:
         archive: atmolib.WeatherArchive,
         unit: atmolib.constants.PRECIPITATION_UNITS,
     ) -> None:
-        r"""
+        """
         Tests the hourly and daily precipitation extraction
         methods with different `unit` arguments.
         """
@@ -291,7 +291,7 @@ class TestWeatherArchive:
     def test_periodical_precipitation_methods_with_default_parameters(
         self, archive: atmolib.WeatherArchive
     ) -> None:
-        r"""
+        """
         Tests the hourly and daily precipitation extraction methods with default parameters.
         """
 
@@ -328,7 +328,7 @@ class TestWeatherArchive:
         archive: atmolib.WeatherArchive,
         level: atmolib.constants.PRESSURE_LEVELS,
     ) -> None:
-        r"""
+        """
         Tests the `WeatherArchive.get_hourly_pressure` with different `level` arguments.
         """
         hourly = archive.get_hourly_pressure(level=level)
@@ -340,7 +340,7 @@ class TestWeatherArchive:
     def test_cloud_cover_methods_level_parameter(
         self, weather: atmolib.Weather, level: atmolib.constants.CLOUD_COVER_LEVEL
     ) -> None:
-        r"""
+        """
         Tests the `WeatherArchive.get_hourly_cloud_cover`
         method with different `level` arguments.
         """
@@ -349,7 +349,7 @@ class TestWeatherArchive:
     def test_cloud_cover_methods_with_default_parameters(
         self, archive: atmolib.WeatherArchive
     ) -> None:
-        r"""
+        """
         Tests the hourly cloud cover extraction methods with default parameters.
         """
         self._verify_cloud_cover_methods(archive.get_hourly_cloud_cover())
@@ -363,7 +363,7 @@ class TestWeatherArchive:
         archive: atmolib.WeatherArchive,
         altitude: atmolib.constants.ARCHIVE_WIND_ALTITUDES,
     ) -> None:
-        r"""
+        """
         Tests the hourly wind related extraction
         methods with different `altitude` arguments.
         """
@@ -382,7 +382,7 @@ class TestWeatherArchive:
         archive: atmolib.WeatherArchive,
         unit: atmolib.constants.WIND_SPEED_UNITS,
     ) -> None:
-        r"""
+        """
         Tests the hourly wind related extraction
         methods with different `unit` arguments.
         """
@@ -399,7 +399,7 @@ class TestWeatherArchive:
         archive: atmolib.WeatherArchive,
         unit: atmolib.constants.WIND_SPEED_UNITS,
     ) -> None:
-        r"""
+        """
         Tests the daily wind related extraction
         methods with different `unit` arguments.
         """
@@ -413,7 +413,7 @@ class TestWeatherArchive:
     def test_hourly_wind_methods_with_default_parameters(
         self, archive: atmolib.WeatherArchive
     ) -> None:
-        r"""
+        """
         Tests the hourly wind related extraction methods with default parameters.
         """
 
@@ -435,7 +435,7 @@ class TestWeatherArchive:
     def test_daily_wind_methods_with_default_parameters(
         self, archive: atmolib.WeatherArchive
     ) -> None:
-        r"""
+        """
         Tests the daily wind related extraction methods with default parameters.
         """
 
@@ -462,7 +462,7 @@ class TestWeatherArchive:
         archive: atmolib.WeatherArchive,
         frequency: atmolib.constants.FREQUENCY,
     ) -> None:
-        r"""
+        """
         Tests the `WeatherArchive.get_periodical_weather_code`
         method with different `frequency` arguments.
         """
@@ -482,7 +482,7 @@ class TestWeatherArchive:
     # methods are tested in the following block.
 
     def test_relative_humidity_methods(self, weather: atmolib.Weather) -> None:
-        r"""
+        """
         Tests the `WeatherArchive.get_hourly_relative_humidity` method.
         """
         hourly = weather.get_hourly_relative_humidity()
@@ -493,7 +493,7 @@ class TestWeatherArchive:
     def test_hourly_soil_moisture_method(
         self, archive: atmolib.WeatherArchive, depth: int
     ) -> None:
-        r"""
+        """
         Tests the hourly soil moisture extractions methods.
         """
         moisture = archive.get_hourly_soil_moisture(depth=depth)
@@ -502,7 +502,7 @@ class TestWeatherArchive:
     def test_daylight_and_sunlight_duration_methods(
         self, archive: atmolib.WeatherArchive
     ) -> None:
-        r"""
+        """
         Tests the `WeatherArchive.get_daily_daylight_duration` and
         `WeatherArchive.get_sunshine_duration` methods.
         """
@@ -518,7 +518,7 @@ class TestWeatherArchive:
     def test_sunrise_and_sunset_time_methods(
         self, archive: atmolib.WeatherArchive
     ) -> None:
-        r"""
+        """
         Tests the `WeatherArchive.get_daily_sunrise_time` and
         `WeatherArchive.get_daily_sunset_time` methods.
         """

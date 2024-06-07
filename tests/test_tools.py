@@ -1,4 +1,4 @@
-r"""
+"""
 Tests public functions defined within `atmolib/common/tools.py` file.
 """
 
@@ -9,7 +9,7 @@ import atmolib
 def test_get_elevation_function(
     valid_coordinates: tuple[tuple[float, float], ...]
 ) -> None:
-    r"""
+    """
     Tests the `atmolib.tools.get_elevation` function with valid coorindates.
     """
 
@@ -20,7 +20,7 @@ def test_get_elevation_function(
 def test_get_elevation_function_with_invalid_coordinates(
     invalid_coordinates: tuple[tuple[float, float], ...]
 ) -> None:
-    r"""
+    """
     Tests the `atmolib.tools.get_elevation` function with invalid coordinates.
     """
 
@@ -32,7 +32,7 @@ def test_get_elevation_function_with_invalid_coordinates(
 
 
 def test_city_details_function() -> None:
-    r"""
+    """
     Tests the `atmolib.tools.get_city_details` function with different city names.
     """
 
@@ -41,7 +41,7 @@ def test_city_details_function() -> None:
 
 
 def test_city_details_function_with_invalid_count() -> None:
-    r"""
+    """
     Tests the `atmolib.tools.get_city_details` function with invalid `count` parameter.
     """
 

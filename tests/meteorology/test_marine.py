@@ -1,4 +1,4 @@
-r"""
+"""
 Tests the objects and methods defined within `atmolib/meteorology/marine.py` file.
 """
 
@@ -10,14 +10,14 @@ import atmolib
 
 
 class TestMarineWeather:
-    r"""
+    """
     Tests the `atmolib.MarineWeather` class and its defined methods.
     """
 
     def test_object_initialization(
         self, valid_marine_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
-        r"""
+        """
         Test the `atmolib.MarineWeather` object initialization with valid parameters.
         """
 
@@ -28,14 +28,14 @@ class TestMarineWeather:
     def test_object_intialization_wave_type_parameter(
         self, type_: atmolib.constants.WAVE_TYPES
     ) -> None:
-        r"""
+        """
         Tests the `atmolib.MarineWeather` object initialization
         with different `wave_type` arguments.
         """
         atmolib.MarineWeather(0, 0, wave_type=type_)
 
     def test_object_initialization_with_invalid_parameters(self) -> None:
-        r"""
+        """
         Tests the `atmolib.MarineWeather` object initialization with invalid parameters.
         """
 
@@ -49,7 +49,7 @@ class TestMarineWeather:
     def test_marine_weather_summary_methods(
         self, wave_type: atmolib.constants.WAVE_TYPES
     ) -> None:
-        r"""
+        """
         Test the marine weather summary extraction methods.
         """
 
@@ -79,7 +79,7 @@ class TestMarineWeather:
     def test_current_marine_weather_methods(
         self, wave_type: atmolib.constants.WAVE_TYPES
     ) -> None:
-        r"""
+        """
         Test the marine weather summary extraction methods.
         """
 
@@ -101,7 +101,7 @@ class TestMarineWeather:
     def test_hourly_marine_weather_methods(
         self, wave_type: atmolib.constants.WAVE_TYPES
     ) -> None:
-        r"""
+        """
         Test the marine weather summary extraction methods.
         """
 
@@ -123,7 +123,7 @@ class TestMarineWeather:
     def test_daily_marine_weather_methods(
         self, wave_type: atmolib.constants.WAVE_TYPES
     ) -> None:
-        r"""
+        """
         Test the marine weather summary extraction methods.
         """
 

@@ -1,4 +1,4 @@
-r"""
+"""
 Marine Module
 -------------
 
@@ -19,7 +19,7 @@ from ..common import constants, tools
 
 
 class MarineWeather(BaseForecast):
-    r"""
+    """
     MarineWeather class allows extraction of marine weather data based on the latitude and longitude
     coordinates. It interacts with the Open-Meteo Marine Weather API to fetch the current or up to
     upcoming 8-days hourly and daily marine weather forecast data with a resolution of 5 kilometers(km).
@@ -43,7 +43,7 @@ class MarineWeather(BaseForecast):
         wave_type: constants.WAVE_TYPES = "composite",
         forecast_days: int = 7,
     ) -> None:
-        r"""
+        """
         Creates an instance of the MarineWeather class.
 
         #### Params:
@@ -93,7 +93,7 @@ class MarineWeather(BaseForecast):
         )
 
     def get_current_summary(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of current marine weather summary data
         at the specified coordinates of the specified wave type.
 
@@ -117,7 +117,7 @@ class MarineWeather(BaseForecast):
         )
 
     def get_hourly_summary(self) -> pd.DataFrame:
-        r"""
+        """
         Returns a pandas DataFrame of hourly marine weather summary data
         at the specified coordinates of the specified wave type.
 
@@ -141,7 +141,7 @@ class MarineWeather(BaseForecast):
         )
 
     def get_daily_summary(self) -> pd.DataFrame:
-        r"""
+        """
         Returns a pandas DataFrame of daily marine weather summary data
         at the specified coordinates of the specified wave type.
 
@@ -169,21 +169,21 @@ class MarineWeather(BaseForecast):
         )
 
     def get_current_wave_height(self) -> int | float:
-        r"""
+        """
         Returns the current wave height in meters(m) of the
         specified wave type at the specified coordinates.
         """
         return self._get_current_data({"current": f"{self._type}wave_height"})
 
     def get_current_wave_direction(self) -> int | float:
-        r"""
+        """
         Returns the current wave direction in degrees of the specified
         wave type at the specified coordinates.
         """
         return self._get_current_data({"current": f"{self._type}wave_direction"})
 
     def get_current_wave_period(self) -> int | float:
-        r"""
+        """
         Returns the current wave period (It refers to the time taken by two consecutive
         wave crests (or troughs) to pass a fixed point) in seconds(d) of the
         specified wave type at the specified coordinates.
@@ -191,35 +191,35 @@ class MarineWeather(BaseForecast):
         return self._get_current_data({"current": f"{self._type}wave_period"})
 
     def get_hourly_wave_height(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of hourly mean wave height in meters(m) of the
         specified wave type at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": f"{self._type}wave_height"})
 
     def get_hourly_wave_direction(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of hourly wave direction in degrees of the
         specified wave type at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": f"{self._type}wave_direction"})
 
     def get_hourly_wave_period(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of hourly wave period in seconds(s) of the
         specified wave type at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": f"{self._type}wave_period"})
 
     def get_daily_max_wave_height(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of daily maximum wave height in meters(m) of the
         specified wave type at the specified coordinates.
         """
         return self._get_periodical_data({"daily": f"{self._type}wave_height_max"})
 
     def get_daily_dominant_wave_direction(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of daily dominant wave direction in degrees of the
         specified wave type at the specified coordinates.
         """
@@ -228,7 +228,7 @@ class MarineWeather(BaseForecast):
         )
 
     def get_daily_max_wave_period(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of daily maximum wave period in seconds of the
         specified wave type at the specified coordinates.
         """

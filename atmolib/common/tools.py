@@ -1,4 +1,4 @@
-r"""
+"""
 Tools module
 ------------
 
@@ -20,7 +20,7 @@ from ..errors import RequestError
 def _request_json(
     api: str, params: dict[str, Any], session: requests.Session | None = None
 ) -> dict[str, Any]:
-    r"""
+    """
     Sends a GET request to the supplied API, retrieves the JSON data, and returns it.
 
     #### Params:
@@ -57,7 +57,7 @@ def _request_json(
 def get_current_data(
     session: requests.Session, api: str, params: dict[str, Any]
 ) -> int | float:
-    r"""
+    """
     Base function for current meteorology data extraction from the supplied API.
 
     This function is intended for internal use within the package and may not be called
@@ -100,7 +100,7 @@ def get_current_data(
 def get_periodical_data(
     session: requests.Session, api: str, params: dict[str, Any], dtype=np.float16
 ) -> pd.Series:
-    r"""
+    """
     Base function for the periodical (daily/hourly) meteorology data extraction from supplied API.
 
     This function is intended for internal use within the package and may not be called
@@ -160,7 +160,7 @@ def get_periodical_data(
 def get_current_summary(
     session: requests.Session, api: str, params: dict[str, Any], labels: list[str]
 ) -> pd.Series:
-    r"""
+    """
     Base function for current meteorology summary data extraction from supplied API.
 
     This function is intended for internal use within the package and may not be called
@@ -206,7 +206,7 @@ def get_current_summary(
 def get_periodical_summary(
     session: requests.Session, api: str, params: dict[str, Any], labels: list[str]
 ) -> pd.DataFrame:
-    r"""
+    """
     Base function for periodical meteorology summary data extraction from supplied API.
 
     This function is intended for internal use within the package and may not be called
@@ -262,7 +262,7 @@ def get_periodical_summary(
 
 
 def get_elevation(lat: int | float, long: int | float) -> float:
-    r"""
+    """
     Retrieves elevation data from Open-meteo elevation
     API based on the latitude and longitude coordinates.
 
@@ -302,7 +302,7 @@ def get_elevation(lat: int | float, long: int | float) -> float:
 
 
 def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
-    r"""
+    """
     Retrieves the city details from Open-meteo geocoding API based on the city name.
 
     #### Params:

@@ -1,4 +1,4 @@
-r"""
+"""
 Air Quality Module
 ------------------
 
@@ -19,7 +19,7 @@ from ..common import constants, tools
 
 
 class AirQuality(BaseForecast):
-    r"""
+    """
     AirQuality class to extract air quality data based on the latitudinal and longitudinal
     coordinates of the location. It interacts with the Open-Meteo Air Quality API to fetch
     the current or up to upcoming 7-days hourly air quality forecast data.
@@ -37,7 +37,7 @@ class AirQuality(BaseForecast):
     def __init__(
         self, lat: int | float, long: int | float, forecast_days: int = 7
     ) -> None:
-        r"""
+        """
         Creates an instance of the AirQuality class.
 
         #### Params:
@@ -50,7 +50,7 @@ class AirQuality(BaseForecast):
 
     @staticmethod
     def _verify_atmospheric_gas(gas: constants.GASES) -> None:
-        r"""
+        """
         Verifies whether the specified atmospheric gas is supported by the Open-Meteo
         Air Quality API for the extraction of gaseous concentration in air.
         """
@@ -68,7 +68,7 @@ class AirQuality(BaseForecast):
 
     @staticmethod
     def _verify_plant_species(plant: constants.PLANTS) -> None:
-        r"""
+        """
         Verifies whether the specified plant species is supported by the Open-Meteo
         Air Quality API for the extraction of pollen grain concentration in air.
         """
@@ -80,7 +80,7 @@ class AirQuality(BaseForecast):
             )
 
     def get_current_summary(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of current air quality summary
         data at the specified coordinates in the specified units.
 
@@ -110,7 +110,7 @@ class AirQuality(BaseForecast):
         )
 
     def get_hourly_summary(self) -> pd.DataFrame:
-        r"""
+        """
         Returns a pandas Series of hourly air quality summary
         data at the specified coordinates in the specified units.
 
@@ -138,7 +138,7 @@ class AirQuality(BaseForecast):
         )
 
     def get_current_aqi(self, source: constants.AQI_SOURCES = "european") -> int:
-        r"""
+        """
         Returns the current US/European Air Quality
         Index value at the specified coordinates.
 
@@ -156,21 +156,21 @@ class AirQuality(BaseForecast):
         return int(self._get_current_data({"current": "european_aqi"}))
 
     def get_current_ammonia_conc(self) -> int | float | None:
-        r"""
+        """
         Returns the current concentration(micro g/m^3) of ammonia(NH3) in air.
         Only available for Europe. Returns None for Non-European regions.
         """
         return self._get_current_data({"current": "ammonia"})
 
     def get_current_dust_conc(self) -> int | float:
-        r"""
+        """
         Returns the current concentration(micro g/m^3) of dust in air
         10 meters(m) above ground level at the specified coordinates.
         """
         return self._get_current_data({"current": "dust"})
 
     def get_current_gaseous_conc(self, gas: constants.GASES = "ozone") -> int | float:
-        r"""
+        """
         Returns the current concentration(miro g/m^3) of the specified atmospheric
         gas in air 10 meters(m) above the ground level at the specified coordinates.
 
@@ -182,14 +182,14 @@ class AirQuality(BaseForecast):
         return self._get_current_data({"current": gas})
 
     def get_current_pm2_5_conc(self) -> int | float:
-        r"""
+        """
         Returns the current concentration(micro g/m^3) of particulate matter with diameter
         smaller than the 2.5 micro meter(m) in air 10 meters(m) above the ground level.
         """
         return self._get_current_data({"current": "pm2_5"})
 
     def get_current_pm10_conc(self) -> int | float:
-        r"""
+        """
         Returns the current concentration(micro g/m^3) of particulate matter with diameter
         smaller than the 10 micro meter(m) in air 10 meters(m) above the ground level.
         """
@@ -198,7 +198,7 @@ class AirQuality(BaseForecast):
     def get_current_pollen_conc(
         self, plant: constants.PLANTS = "grass"
     ) -> int | float | None:
-        r"""
+        """
         Returns the current concentration(grains/m^3) of pollens of the specified
         plant. Only available for Europe as provided by CAMS European Air Quality
         forecast. Returns None for Non-European regions.
@@ -211,13 +211,13 @@ class AirQuality(BaseForecast):
         return self._get_current_data({"current": f"{plant}_pollen"})
 
     def get_current_uv_index(self) -> int | float:
-        r"""
+        """
         Returns the current Ultra-Violet radiation index value at the specified coordinates.
         """
         return self._get_current_data({"current": "uv_index"})
 
     def get_current_aerosol_optical_depth(self) -> int | float:
-        r"""
+        """
         Returns the current aerosol optical depth at 550 nm at the specified coordinates.
 
         Aerosol optical depth (AOD) at 550 nm is a measure of the extinction of solar radiation
@@ -228,21 +228,21 @@ class AirQuality(BaseForecast):
         return self._get_current_data({"current": "aerosol_optical_depth"})
 
     def get_hourly_dust_conc(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of hourly concentration(micro g/m^3) data of dust
         in air 10 meters(m) above ground level at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": "dust"})
 
     def get_hourly_uv_index(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of hourly Ultra-Violet
         radiation index data at the specified coordinates.
         """
         return self._get_periodical_data({"hourly": "uv_index"})
 
     def get_hourly_pm2_5_conc(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of hourly concentration(micro g/m^3) data
         of particulate matter with diameter smaller than the 2.5 micro meter(m)
         in air 10 meters(m) above the ground level.
@@ -250,7 +250,7 @@ class AirQuality(BaseForecast):
         return self._get_periodical_data({"hourly": "pm2_5"})
 
     def get_hourly_pm10_conc(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of hourly concentration(micro g/m^3)
         data of particulate matter with diameter smaller than the 10 micro
         meter(m) in air 10 meters(m) above the ground level.
@@ -258,7 +258,7 @@ class AirQuality(BaseForecast):
         return self._get_periodical_data({"hourly": "pm10"})
 
     def get_hourly_pollen_conc(self, plant: constants.PLANTS = "grass") -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of hourly concentration(grains/m^3) data of pollens
         of the specified plant. Only available for Europe as provided by CAMS European
         Air Quality forecast. Returns None for Non-European regions.
@@ -271,7 +271,7 @@ class AirQuality(BaseForecast):
         return self._get_periodical_data({"hourly": f"{plant}_pollen"})
 
     def get_hourly_aerosol_optical_depth(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of hourly aerosol optical
         depth data at 550 nm at the specified coordinates.
 
@@ -283,7 +283,7 @@ class AirQuality(BaseForecast):
         return self._get_periodical_data({"hourly": "aerosol_optical_depth"})
 
     def get_hourly_gaseous_conc(self, gas: constants.GASES = "ozone") -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of hourly concentration(miro g/m^3) data of
         the specified atmospheric gas in air 10 meters(m) above ground level.
 
@@ -295,7 +295,7 @@ class AirQuality(BaseForecast):
         return self._get_periodical_data({"hourly": gas})
 
     def get_hourly_ammonia_conc(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of hourly concentration(micro g/m^3) data of ammonia(NH3)
         in air. Only available for Europe. Returns None for Non-European regions.
         """

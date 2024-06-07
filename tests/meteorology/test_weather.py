@@ -1,4 +1,4 @@
-r"""
+"""
 Tests the objects and methods defined within `atmolib/meteorology/weather.py` file.
 """
 
@@ -12,14 +12,14 @@ import atmolib
 
 
 class TestWeather:
-    r"""
+    """
     Tests the `atmolib.Weather` class and its defined methods.
     """
 
     def test_object_initialization(
         self, valid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
-        r"""
+        """
         Test the `atmolib.Weather` object initialization with valid parameters.
         """
 
@@ -32,7 +32,7 @@ class TestWeather:
     def test_object_initialization_with_invalid_parameters(
         self, invalid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
-        r"""
+        """
         Tests the `atmolib.Weather` object initialization with invalid parameters.
         """
 
@@ -50,7 +50,7 @@ class TestWeather:
     def _verify_summary_methods(
         current: pd.Series, hourly: pd.DataFrame, daily: pd.DataFrame
     ) -> None:
-        r"""
+        """
         Verifies the execution of summary extraction methods.
         """
 
@@ -79,7 +79,7 @@ class TestWeather:
     def _verify_temp_and_apparent_temp_methods(
         temp: pd.Series, apparent_temp: pd.Series
     ) -> None:
-        r"""
+        """
         Verifies the `Weather.get_hourly_temperature` and
         `Weather.get_hourly_apparent_temperature` methods.
         """
@@ -91,7 +91,7 @@ class TestWeather:
 
     @staticmethod
     def _verify_cloud_cover_methods(current: int | float, hourly: pd.Series) -> None:
-        r"""
+        """
         Verifies the cloud cover extraction methods.
         """
 
@@ -109,7 +109,7 @@ class TestWeather:
     def test_summary_methods_with_temperature_and_precipitation_unit_parameters(
         self, weather: atmolib.Weather, temp_unit: str, precipitation_unit: str
     ) -> None:
-        r"""
+        """
         Tests the current, hourly and daily summary extraction methods with
         different `temperature_unit` and `precipitation_unit` parameters.
         """
@@ -129,7 +129,7 @@ class TestWeather:
     def test_summary_methods_with_wind_speed_unit_parameters(
         self, weather: atmolib.Weather, unit: str
     ) -> None:
-        r"""
+        """
         Tests the current, hourly and daily summary extraction
         methods with different `wind_speed` unit arguments.
         """
@@ -142,7 +142,7 @@ class TestWeather:
     def test_summary_methods_with_default_parameters(
         self, weather: atmolib.Weather
     ) -> None:
-        r"""
+        """
         Tests the current, hourly and daily summary
         extraction methods with default parameters.
         """
@@ -158,7 +158,7 @@ class TestWeather:
     def test_temperature_methods_altitude_parameter(
         self, weather: atmolib.Weather, altitude: int
     ) -> None:
-        r"""
+        """
         Tests the current and hourly temperature extraction
         methods with different `altitude` arguments.
         """
@@ -173,7 +173,7 @@ class TestWeather:
     def test_current_temperature_methods_unit_parameter(
         self, weather: atmolib.Weather, unit: str
     ) -> None:
-        r"""
+        """
         Tests the current temperature extraction
         methods with different `unit` arguments.
         """
@@ -187,7 +187,7 @@ class TestWeather:
     def test_hourly_temperature_methods_unit_parameter(
         self, weather: atmolib.Weather, unit: str
     ) -> None:
-        r"""
+        """
         Tests the hourly temperature methods with different `unit` parameters.
         """
 
@@ -210,7 +210,7 @@ class TestWeather:
     def test_hourly_soil_temperature_method_depth_parameter(
         self, weather: atmolib.Weather, depth: int
     ) -> None:
-        r"""
+        """
         Tests the `Weather.get_hourly_soil_temperature` with different `depth` arguments.
         """
         temp = weather.get_hourly_soil_temperature(depth=depth)
@@ -222,7 +222,7 @@ class TestWeather:
     def test_daily_temperature_methods_unit_parameter(
         self, weather: atmolib.Weather, unit: str
     ) -> None:
-        r"""
+        """
         Tests the daily temperature extraction methods with different `unit` arguments.
         """
         self._verify_temp_and_apparent_temp_methods(
@@ -233,7 +233,7 @@ class TestWeather:
     def test_daily_temperature_methods_type_parameter(
         self, weather: atmolib.Weather, type_: str
     ) -> None:
-        r"""
+        """
         Tests the daily temperature extraction methods with different `type_` arguments.
         """
         self._verify_temp_and_apparent_temp_methods(
@@ -244,7 +244,7 @@ class TestWeather:
     def test_current_temperature_methods_with_default_parameters(
         self, weather: atmolib.Weather
     ) -> None:
-        r"""
+        """
         Tests the current temperature extraction methods with default parameters.
         """
         temp = weather.get_current_temperature()
@@ -255,7 +255,7 @@ class TestWeather:
     def test_hourly_temperature_methods_with_default_parameters(
         self, weather: atmolib.Weather
     ) -> None:
-        r"""
+        """
         Tests the hourly temperature extraction methods with default parameters.
         """
 
@@ -278,7 +278,7 @@ class TestWeather:
     def test_daily_temperature_methods_with_default_parameters(
         self, weather: atmolib.Weather
     ) -> None:
-        r"""
+        """
         Tests the daily temperature extraction methods with default parameters.
         """
         self._verify_temp_and_apparent_temp_methods(
@@ -291,7 +291,7 @@ class TestWeather:
     def test_current_precipitation_methods_unit_parameter(
         self, weather: atmolib.Weather, unit: str
     ) -> None:
-        r"""
+        """
         Tests the current precipitation extraction
         methods with different `unit` arguments.
         """
@@ -308,7 +308,7 @@ class TestWeather:
     def test_periodical_precipitation_methods_unit_parameter(
         self, weather: atmolib.Weather, unit: str
     ) -> None:
-        r"""
+        """
         Tests the hourly and daily precipitation extraction
         methods with different `unit` arguments.
         """
@@ -338,7 +338,7 @@ class TestWeather:
     def test_current_percipitation_methods_with_default_parameters(
         self, weather: atmolib.Weather
     ) -> None:
-        r"""
+        """
         Tests the precipitation extraction methods with default parameters.
         """
 
@@ -357,7 +357,7 @@ class TestWeather:
     def test_periodical_precipitation_methods_with_default_parameters(
         self, weather: atmolib.Weather
     ) -> None:
-        r"""
+        """
         Tests the hourly and daily precipitation extraction methods with default parameters.
         """
 
@@ -389,7 +389,7 @@ class TestWeather:
         )
 
     def test_precipitation_probability_methods(self, weather: atmolib.Weather) -> None:
-        r"""
+        """
         Tests the precipitation probability extraction methods.
         """
 
@@ -405,7 +405,7 @@ class TestWeather:
     def test_atmospheric_pressure_extraction_methods(
         self, weather: atmolib.Weather, level: str
     ) -> None:
-        r"""
+        """
         Tests the current and hourly atmospheric pressure
         extraction methods with different `level` arguments.
         """
@@ -422,7 +422,7 @@ class TestWeather:
     def test_cloud_cover_methods_level_parameter(
         self, weather: atmolib.Weather, level: str
     ) -> None:
-        r"""
+        """
         Tests the current and hourly cloud cover extraction
         methods with different `level` arguments.
         """
@@ -434,7 +434,7 @@ class TestWeather:
     def test_cloud_cover_methods_with_default_parameters(
         self, weather: atmolib.Weather
     ) -> None:
-        r"""
+        """
         Tests the current and hourly cloud cover
         extraction methods with default parameters.
         """
@@ -444,7 +444,7 @@ class TestWeather:
         )
 
     def test_total_cloud_cover_methods(self, weather: atmolib.Weather) -> None:
-        r"""
+        """
         Tests the current and hourly total cloud cover extraction methods.
         """
         self._verify_cloud_cover_methods(
@@ -458,7 +458,7 @@ class TestWeather:
     def test_current_wind_methods_unit_parameter(
         self, weather: atmolib.Weather, unit: str
     ) -> None:
-        r"""
+        """
         Tests the current wind speed/gusts extraction
         methods with different `unit` arguments.
         """
@@ -473,7 +473,7 @@ class TestWeather:
     def test_current_wind_methods_altitude_parameter(
         self, weather: atmolib.Weather, altitude: int
     ) -> None:
-        r"""
+        """
         Test the current wind related extraction
         methods with different `altitude` parameters.
         """
@@ -494,7 +494,7 @@ class TestWeather:
     def test_hourly_wind_methods_altitude_parameter(
         self, weather: atmolib.Weather, altitude: int
     ) -> None:
-        r"""
+        """
         Tests the hourly wind related extraction
         methods with different `altitude` arguments.
         """
@@ -511,7 +511,7 @@ class TestWeather:
     def test_hourly_wind_methods_unit_parameter(
         self, weather: atmolib.Weather, unit: str
     ) -> None:
-        r"""
+        """
         Tests the hourly wind related extraction
         methods with different `unit` arguments.
         """
@@ -526,7 +526,7 @@ class TestWeather:
     def test_daily_wind_methods_unit_parameter(
         self, weather: atmolib.Weather, unit: str
     ) -> None:
-        r"""
+        """
         Tests the daily wind related extraction
         methods with different `unit` arguments.
         """
@@ -540,7 +540,7 @@ class TestWeather:
     def test_current_wind_methods_with_default_parameters(
         self, weather: atmolib.Weather
     ) -> None:
-        r"""
+        """
         Tests the current wind related extraction methods with default parameters.
         """
 
@@ -559,7 +559,7 @@ class TestWeather:
     def test_hourly_wind_methods_with_default_parameters(
         self, weather: atmolib.Weather
     ) -> None:
-        r"""
+        """
         Tests the hourly wind related extraction methods with default parameters.
         """
 
@@ -574,7 +574,7 @@ class TestWeather:
     def test_daily_wind_methods_with_default_parameters(
         self, weather: atmolib.Weather
     ) -> None:
-        r"""
+        """
         Tests the daily wind related extraction methods with default parameters.
         """
 
@@ -596,7 +596,7 @@ class TestWeather:
     # The following block tests weather code extraction methods.
 
     def test_current_weather_code_method(self, weather: atmolib.Weather) -> None:
-        r"""
+        """
         Tests the `Weather.get_current_weather_code` method.
         """
 
@@ -610,7 +610,7 @@ class TestWeather:
     def test_periodical_weather_code_method(
         self, weather: atmolib.Weather, frequency: str
     ) -> None:
-        r"""
+        """
         Tests the `Weather.get_periodical_weather_code` method with different `frequency` arguments.
         """
 
@@ -629,7 +629,7 @@ class TestWeather:
     # methods are tested in the following block.
 
     def test_relative_humidity_methods(self, weather: atmolib.Weather) -> None:
-        r"""
+        """
         Tests the current and hourly relative humidity extraction methods.
         """
 
@@ -645,28 +645,28 @@ class TestWeather:
     def test_hourly_soil_moisture_method(
         self, weather: atmolib.Weather, depth: int
     ) -> None:
-        r"""
+        """
         Tests the hourly soil moisture extractions methods.
         """
         moisture = weather.get_hourly_soil_moisture(depth=depth)
         assert isinstance(moisture, pd.Series) and all(moisture.to_numpy() >= 0)
 
     def test_daily_max_uv_index_method(self, weather: atmolib.Weather) -> None:
-        r"""
+        """
         Tests the `atmolib.get_daily_max_uv_index` method.
         """
         daily = weather.get_daily_max_uv_index()
         assert isinstance(daily, pd.Series) and all(daily.to_numpy() >= 0)
 
     def test_is_day_or_night_method(self, weather: atmolib.Weather) -> None:
-        r"""
+        """
         Tests the `atmolib.is_day_or_night` method.
         """
         is_day_or_night = weather.is_day_or_night()
         assert is_day_or_night in (1, 0)
 
     def test_visibility_methods(self, weather: atmolib.Weather) -> None:
-        r"""
+        """
         Tests the current and hourly visibility extraction methods.
         """
 
@@ -679,7 +679,7 @@ class TestWeather:
     def test_daylight_and_sunlight_duration_methods(
         self, weather: atmolib.Weather
     ) -> None:
-        r"""
+        """
         Tests the `Weather.get_daily_daylight_duration` and
         `Weather.get_sunshine_duration` methods.
         """
@@ -693,7 +693,7 @@ class TestWeather:
         ) and all((sunshine.to_numpy() >= 0) & (sunshine.to_numpy() <= 86_400))
 
     def test_sunrise_and_sunset_time_methods(self, weather: atmolib.Weather) -> None:
-        r"""
+        """
         Tests the `Weather.get_daily_sunrise_time` and
         `Weather.get_daily_sunset_time` methods.
         """

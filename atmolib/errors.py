@@ -1,4 +1,4 @@
-r"""
+"""
 Errors Module
 -------------
 
@@ -7,7 +7,7 @@ The module defines error classes to handle various exceptional scenarios through
 
 
 class RequestError(Exception):
-    r"""
+    """
     RequestError class for handling API requests errors.
 
     This exception is raised when there's an error during API requests,

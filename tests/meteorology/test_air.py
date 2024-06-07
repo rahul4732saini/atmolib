@@ -1,4 +1,4 @@
-r"""
+"""
 Tests objects and methods defined within `atmolib/meteorology/air.py` file.
 """
 
@@ -11,14 +11,14 @@ import atmolib
 
 
 class TestAirQuality:
-    r"""
+    """
     Tests the `atmolib.AirQuality` class and its defined methods.
     """
 
     def test_object_initialization(
         self, valid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
-        r"""
+        """
         Test the `atmolib.AirQuality` object initialization with valid parameters.
         """
 
@@ -32,7 +32,7 @@ class TestAirQuality:
     def test_object_initialization_with_invalid_parameters(
         self, invalid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
-        r"""
+        """
         Test the `atmolib.AirQuality` object initialization with valid parameters.
         """
 
@@ -50,7 +50,7 @@ class TestAirQuality:
         self,
         air_quality: atmolib.AirQuality,
     ) -> None:
-        r"""
+        """
         Tests the air quality summary extraction methods.
         """
 
@@ -71,7 +71,7 @@ class TestAirQuality:
     def test_current_aqi_method(
         self, air_quality: atmolib.AirQuality, source: str
     ) -> None:
-        r"""
+        """
         Tests the `AirQuality.get_current_aqi` method with different sources.
         """
 
@@ -86,7 +86,7 @@ class TestAirQuality:
     def test_gaseous_conc_methods(
         self, air_quality: atmolib.AirQuality, gas: str
     ) -> None:
-        r"""
+        """
         Test the current and hourly gaseous concentration extraction methods.
         """
 
@@ -103,7 +103,7 @@ class TestAirQuality:
     def test_pollen_conc_methods(
         self, air_quality: atmolib.AirQuality, plant: str
     ) -> None:
-        r"""
+        """
         Tests the current and hourly pollen grains concentration extraction methods.
         """
 
@@ -119,7 +119,7 @@ class TestAirQuality:
     def test_current_aqi_method_with_default_parameters(
         self, air_quality: atmolib.AirQuality
     ) -> None:
-        r"""
+        """
         Tests the `AirQuality.get_current_aqi` method with default parameters.
         """
 
@@ -131,7 +131,7 @@ class TestAirQuality:
     def test_current_gas_and_pollen_conc_methods_with_default_parameters(
         self, air_quality: atmolib.AirQuality
     ) -> None:
-        r"""
+        """
         Tests the `AirQuality.get_current_gaseous_conc` and
         `AirQuality.get_current_pollen_conc` methods with default parameters.
         """
@@ -147,7 +147,7 @@ class TestAirQuality:
     def test_current_ammonia_and_dust_conc_methods(
         self, air_quality: atmolib.AirQuality
     ) -> None:
-        r"""
+        """
         Tests the current ammonia and dust concentration extraction methods.
         """
 
@@ -162,7 +162,7 @@ class TestAirQuality:
     def test_current_particulate_matter_methods(
         self, air_quality: atmolib.AirQuality
     ) -> None:
-        r"""
+        """
         Tests the current particulate matter 2.5 & 10 extraction methods.
         """
 
@@ -175,7 +175,7 @@ class TestAirQuality:
         assert pm2_5_conc >= 0 and pm10_conc >= 0
 
     def test_current_optical_methods(self, air_quality: atmolib.AirQuality) -> None:
-        r"""
+        """
         Tests the current optical related extraction methods.
         """
 
@@ -190,7 +190,7 @@ class TestAirQuality:
     def test_hourly_gas_and_pollen_conc_methods_with_default_parameters(
         self, air_quality: atmolib.AirQuality
     ) -> None:
-        r"""
+        """
         Tests the `AirQuality.get_hourly_gaseous_conc` and
         `AirQuality.get_hourly_pollen_conc` methods with default parameters.
         """
@@ -206,7 +206,7 @@ class TestAirQuality:
     def test_hourly_ammonia_and_dust_conc_methods(
         self, air_quality: atmolib.AirQuality
     ) -> None:
-        r"""
+        """
         Tests the hourly ammonia and dust concentration extraction methods.
         """
 
@@ -221,7 +221,7 @@ class TestAirQuality:
     def test_hourly_particulate_matter_methods(
         self, air_quality: atmolib.AirQuality
     ) -> None:
-        r"""
+        """
         Tests the hourly particulate matter 2.5 & 10 extraction methods.
         """
 
@@ -232,7 +232,7 @@ class TestAirQuality:
         assert all(pm2_5_conc.to_numpy() >= 0) and all(pm10_conc.to_numpy() >= 0)
 
     def test_hourly_optical_methods(self, air_quality: atmolib.AirQuality) -> None:
-        r"""
+        """
         Tests the hourly optical related extraction methods.
         """
 

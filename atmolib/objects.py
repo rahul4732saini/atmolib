@@ -1,4 +1,4 @@
-r"""
+"""
 Objects Module
 --------------
 
@@ -16,7 +16,7 @@ from .common import tools, constants
 
 
 class BaseMeteor:
-    r"""
+    """
     Base class for all meteorology classes.
     """
 
@@ -56,7 +56,7 @@ class BaseMeteor:
         self._long = self._params["longitude"] = __value
 
     def _get_current_data(self, params: dict[str, Any]) -> int | float:
-        r"""
+        """
         Uses the specified parameters to request the specified
         Open-Meteo API and returns the current weather data.
 
@@ -75,7 +75,7 @@ class BaseMeteor:
     def _get_periodical_data(
         self, params: dict[str, Any], dtype=np.float16
     ) -> pd.Series:
-        r"""
+        """
         Uses the specified parameters to request the specified Open-Meteo
         API and returns the periodical weather data as a pandas Series.
 
@@ -94,7 +94,7 @@ class BaseMeteor:
 
 
 class BaseForecast(BaseMeteor):
-    r"""
+    """
     Base class for all weather forecast classes.
     """
 
@@ -136,13 +136,13 @@ class BaseForecast(BaseMeteor):
 
 
 class BaseWeather(BaseMeteor):
-    r"""
+    """
     Baseclass for all weather classes.
     """
 
     @staticmethod
     def _verify_temperature_unit(unit: constants.TEMPERATURE_UNITS) -> None:
-        r"""
+        """
         Verifies the specified temperature unit. Raises a ValueError if the
         argument provided is not a valid unit.
         """
@@ -154,7 +154,7 @@ class BaseWeather(BaseMeteor):
 
     @staticmethod
     def _verify_precipitation_unit(unit: constants.PRECIPITATION_UNITS) -> None:
-        r"""
+        """
         Verifies the specified precipitation unit. Raises a ValueError if the
         argument provided is not a valid unit.
         """
@@ -164,7 +164,7 @@ class BaseWeather(BaseMeteor):
 
     @staticmethod
     def _verify_wind_speed_unit(unit: constants.WIND_SPEED_UNITS) -> None:
-        r"""
+        """
         Verifies the specified wind speed unit. Raises a ValueError if the
         argument provided is not a valid unit.
         """
@@ -180,7 +180,7 @@ class BaseWeather(BaseMeteor):
         precipitation_unit: constants.PRECIPITATION_UNITS,
         wind_speed_unit: constants.WIND_SPEED_UNITS,
     ) -> None:
-        r"""
+        """
         Verifies the specified temperature, precipitation and wind speed units.
         """
 
@@ -193,7 +193,7 @@ class BaseWeather(BaseMeteor):
         altitude: constants.TEMPERATURE_ALTITUDE = 2,
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of temperature data 2 meters(m) above
         the ground level at the specified coordinates.
 
@@ -215,7 +215,7 @@ class BaseWeather(BaseMeteor):
     def get_hourly_apparent_temperature(
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
     ) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of apparent temperature 2 meters(m) above
         the ground level data at the specified coordinates.
 
@@ -231,7 +231,7 @@ class BaseWeather(BaseMeteor):
     def get_hourly_dew_point(
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
     ) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of hourly dew point data 2 meters(m) above the
         ground level at the specified coordinates.
 
@@ -245,7 +245,7 @@ class BaseWeather(BaseMeteor):
         )
 
     def get_hourly_relative_humidity(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of hourly relative humidity percentage(%) data
         2 meters(m) above the ground level at the specified coordinates.
         """
@@ -254,7 +254,7 @@ class BaseWeather(BaseMeteor):
     def get_periodical_weather_code(
         self, frequency: constants.FREQUENCY = "daily"
     ) -> pd.DataFrame:
-        r"""
+        """
         Returns a pandas DataFrame of hourly weather code data with its corresponding
         description at the specified coordinates.
 
@@ -290,7 +290,7 @@ class BaseWeather(BaseMeteor):
     def get_hourly_rainfall(
         self, unit: constants.PRECIPITATION_UNITS = "mm"
     ) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of hourly rainfall data
         in mm/inch at the specified coordinates.
 
@@ -301,7 +301,7 @@ class BaseWeather(BaseMeteor):
         return self._get_periodical_data({"hourly": "rain", "precipitation_unit": unit})
 
     def get_hourly_snowfall(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of hourly snowfall data
         in centimeters(cm) at the specified coordinates.
         """
@@ -310,7 +310,7 @@ class BaseWeather(BaseMeteor):
     def get_hourly_pressure(
         self, level: constants.PRESSURE_LEVELS = "surface"
     ) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of the hourly atmospheric pressure data
         in Hectopascal (hPa) at the specified coordinates.
 
@@ -329,7 +329,7 @@ class BaseWeather(BaseMeteor):
         return self._get_periodical_data({"hourly": pressure})
 
     def get_hourly_total_cloud_cover(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of hourly total cloud cover percentage(%) data
         at the specified coordinates.
         """
@@ -338,7 +338,7 @@ class BaseWeather(BaseMeteor):
     def get_hourly_cloud_cover(
         self, level: constants.CLOUD_COVER_LEVEL = "low"
     ) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of hourly cloud cover percentage(%) data
         at the specified level and coordinates.
 
@@ -360,7 +360,7 @@ class BaseWeather(BaseMeteor):
     def get_hourly_precipitation(
         self, unit: constants.PRECIPITATION_UNITS = "mm"
     ) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of hourly precipitation (sum of rain, showers, and snowfall)
         data at the specified coordinates.
 
@@ -376,7 +376,7 @@ class BaseWeather(BaseMeteor):
     def get_hourly_wind_gusts(
         self, unit: constants.WIND_SPEED_UNITS = "kmh"
     ) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of hourly wind gusts data 10 meters(m) above the
         ground level at the specified coordinates.
 
@@ -398,7 +398,7 @@ class BaseWeather(BaseMeteor):
         type_: constants.DAILY_WEATHER_REQUEST_TYPES = "mean",
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of daily maximum, minimum or mean temperature data
         2 meters(m) above the ground level at the specified coordinates.
 
@@ -424,7 +424,7 @@ class BaseWeather(BaseMeteor):
         type_: constants.DAILY_WEATHER_REQUEST_TYPES = "mean",
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of daily maximum, minimum or mean apparent temperature
         data 2 meters(m) above the ground level at the specified coordinates.
 
@@ -449,7 +449,7 @@ class BaseWeather(BaseMeteor):
     def get_daily_max_wind_speed(
         self, unit: constants.WIND_SPEED_UNITS = "kmh"
     ) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of daily maximum wind speed 2 meters(m)
         above the ground level at the specified coordinates.
 
@@ -464,7 +464,7 @@ class BaseWeather(BaseMeteor):
         return self._get_periodical_data({"daily": "wind_speed_10m_max"})
 
     def get_daily_dominant_wind_direction(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of daily dominant wind direction in degrees data
         10 meters(m) above the ground level at the specified coordinates.
         """
@@ -473,7 +473,7 @@ class BaseWeather(BaseMeteor):
     def get_daily_max_wind_gusts(
         self, unit: constants.WIND_SPEED_UNITS = "kmh"
     ) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series daily maximum wind gusts 2 meters(m)
         above the ground level at the specified coordinates.
 
@@ -490,7 +490,7 @@ class BaseWeather(BaseMeteor):
     def get_daily_total_precipitation(
         self, unit: constants.PRECIPITATION_UNITS = "mm"
     ) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of daily precipitation (sum of rain, showers, and snowfall)
         data at the specified coordinates.
 
@@ -506,7 +506,7 @@ class BaseWeather(BaseMeteor):
     def get_daily_total_rainfall(
         self, unit: constants.PRECIPITATION_UNITS = "mm"
     ) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of daily rainfall data
         in mm/inch at the specified coordinates.
 
@@ -520,42 +520,42 @@ class BaseWeather(BaseMeteor):
         )
 
     def get_daily_total_snowfall(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of daily rainfall data in
         centimeters(m) at the specified coordinates.
         """
         return self._get_periodical_data({"daily": "snowfall_sum"})
 
     def get_daily_sunrise_time(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of daily sunrise time in the ISO-8601 datetime
         format (YYYY-MM-DDTHH:MM) at the specified coordinates.
         """
         return self._get_periodical_data({"daily": "sunrise"}, dtype=np.object_)
 
     def get_daily_sunset_time(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of daily sunset time in the ISO-8601 datetime
         format (YYYY-MM-DDTHH:MM) at the specified coordinates.
         """
         return self._get_periodical_data({"daily": "sunset"}, dtype=np.object_)
 
     def get_daily_daylight_duration(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of daily daylight duration
         in seconds(s) at the specified coordinates.
         """
         return self._get_periodical_data({"daily": "daylight_duration"})
 
     def get_daily_sunshine_duration(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of daily sunshine duration
         in seconds(s) at the specified coordinates.
         """
         return self._get_periodical_data({"daily": "sunshine_duration"})
 
     def get_daily_total_shortwave_radiation(self) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of daily sum of shortwave radiation in Mega
         Joules per square meter (MJ/m^2) sat the specified coordinates.
         """

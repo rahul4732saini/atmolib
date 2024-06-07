@@ -1,4 +1,4 @@
-r"""
+"""
 Weather Archive Module
 ----------------------
 
@@ -22,7 +22,7 @@ from ..objects import BaseMeteor, BaseWeather
 
 
 class WeatherArchive(BaseWeather, BaseMeteor):
-    r"""
+    """
     WeatherArchive class to extract historical weather data based on the
     latitudinal and longitudinal coordinates of the location within the
     specified date range. It interacts with the Open-Meteo Weather History
@@ -52,7 +52,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         start_date: str | date | datetime,
         end_date: str | date | datetime,
     ) -> None:
-        r"""
+        """
         Creates an instance of the WeatherArchive class.
 
         #### Params:
@@ -115,7 +115,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
 
     @staticmethod
     def _resolve_date(target: str | date | datetime, var: str) -> date:
-        r"""
+        """
         Verifies the supplied date argument, and resolves it into a `datetime.date` object.
 
         The `var` parameter has to be the name of the actual date parameter
@@ -140,7 +140,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
 
     @staticmethod
     def _get_soil_depth(depth: int) -> str:
-        r"""
+        """
         Returns a string representation of the depth range
         supported as a request parameter for the API request.
 
@@ -169,7 +169,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         precipitation_unit: constants.PRECIPITATION_UNITS = "mm",
         wind_speed_unit: constants.WIND_SPEED_UNITS = "kmh",
     ) -> pd.DataFrame:
-        r"""
+        """
         Returns a pandas DataFrame of hourly historical weather summary data at the
         specified coordinates in the specified units within the specified date range.
 
@@ -209,7 +209,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         precipitation_unit: constants.PRECIPITATION_UNITS = "mm",
         wind_speed_unit: constants.WIND_SPEED_UNITS = "kmh",
     ) -> pd.DataFrame:
-        r"""
+        """
         Returns a pandas DataFrame of daily historical weather summary data at the
         specified coordinates in the specified units within the specified date range.
 
@@ -246,7 +246,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         altitude: constants.ARCHIVE_WIND_ALTITUDES = 10,
         unit: constants.WIND_SPEED_UNITS = "kmh",
     ) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of hourly wind speed data at the specified
         altitude and coordinates within the supplied date range.
 
@@ -272,7 +272,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         self,
         altitude: constants.ARCHIVE_WIND_ALTITUDES = 10,
     ) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of hourly wind direction data at the
         specified altitude and coordinates within the supplied date range.
 
@@ -288,7 +288,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
     def get_hourly_soil_temperature(
         self, depth: int = 0, unit: constants.TEMPERATURE_UNITS = "celsius"
     ) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of hourly soil temperature data at the specified
         depth and coordinates in the specified unit within the supplied date range.
 
@@ -309,7 +309,7 @@ class WeatherArchive(BaseWeather, BaseMeteor):
         )
 
     def get_hourly_soil_moisture(self, depth: int = 0) -> pd.Series:
-        r"""
+        """
         Returns a pandas Series of hourly soil moisture data at the specified
         depth and coordinates in the specified unit within the supplied date range.
 
