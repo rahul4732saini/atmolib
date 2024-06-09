@@ -2,8 +2,8 @@
 Objects Module
 --------------
 
-This module comprises classes that serve as foundational components
-for various objects and functionalities within the pyweather package.
+This module comprises classes serving as foundational components
+for various classes and functions within the atmolib package.
 """
 
 from typing import Any
@@ -27,7 +27,7 @@ class BaseMeteor:
 
     def __init__(self, lat: int | float, long: int | float) -> None:
 
-        # `params`` dictionary to be used to store request parameters for API requests.
+        # `params` dictionary to store parameters for API requests.
         self._params: dict[str, Any] = {}
 
         self.lat = lat
@@ -117,8 +117,7 @@ class BaseForecast(BaseMeteor):
     @forecast_days.setter
     def forecast_days(self, __value: int) -> None:
 
-        # Asserts if the forecast days value is within the range of the maximum forecast
-        # days assigned by the child class with the `_max_forecast_days` class attribute.
+        # Asserts if the forecast days value is within the range of the maximum forecast days assigned by the child class.
         assert __value in range(1, self._max_forecast_days + 1), ValueError(
             f"`forecast_days` must be in the range of 1 and {self._max_forecast_days}; got {__value!r}."
         )
