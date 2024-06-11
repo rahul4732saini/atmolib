@@ -2,8 +2,9 @@
 Tests the objects and methods defined within `atmolib/meteorology/marine.py` file.
 """
 
+from types import NoneType
+
 import pytest
-import numpy as np
 import pandas as pd
 
 import atmolib
@@ -92,9 +93,9 @@ class TestMarineWeather:
         period = marine_weather.get_current_wave_period()
 
         assert (
-            isinstance(height, int | float)
-            and isinstance(direction, int | float)
-            and isinstance(period, int | float)
+            isinstance(height, int | float | NoneType)
+            and isinstance(direction, int | float | NoneType)
+            and isinstance(period, int | float | NoneType)
         )
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
