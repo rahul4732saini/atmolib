@@ -2,8 +2,8 @@
 Tools module
 ------------
 
-This module comprises utility functions and tools supporting other
-classes and functions throughout the atmolib package.
+This module comprises utility functions and tools supporting
+other classes and functions throughout the atmolib package.
 """
 
 from typing import Any
@@ -21,23 +21,23 @@ def _request_json(
     api: str, params: dict[str, Any], session: requests.Session | None = None
 ) -> dict[str, Any]:
     """
-    Sends a GET request to the supplied API, retrieves the JSON data, and returns it.
+    Sends a GET request to the specified API, and returns the retrieved the JSON data.
 
     #### Params:
-    - api (str): Absolute URL of the API endpoint.
+    - api (str): Absolute URL to the API endpoint.
     - params (dict[str, Any]): Necessary parameters for the API request including the
     coordinates of the location, requested data type, etc.
     - session (requests.Session | None): A `requests.Session` object for making the API
     requests. If not provided, the default requests session is used.
 
     #### Returns:
-    - dict[str, Any]: A dictionary containing the JSON response from the API.
+    - dict[str, Any]: A dictionary comprising JSON response retrieved from the API.
 
     #### Raises:
     - RequestError: If there is an error while requesting the API.
     """
 
-    # The `session` is used as the handler if supplied else the module
+    # The `session` is used as the handler if specified else the module
     # itself is used to execute the `get` method for data extraction.
     request_handler: requests.Session | ModuleType = session if session else requests
 
@@ -58,7 +58,7 @@ def get_current_data(
     session: requests.Session, api: str, params: dict[str, Any]
 ) -> int | float:
     """
-    Base function for current meteorology data extraction from the supplied API.
+    Base function for current meteorology data extraction from the specified API.
 
     This function is intended for internal use within the package and may not be called
     directly by its users. It is exposed publicly for use by other modules within the package.

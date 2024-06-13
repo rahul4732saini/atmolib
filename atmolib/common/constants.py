@@ -2,8 +2,8 @@
 Constants Module
 ----------------
 
-This module comprises all the constants used throughout the atmolib package.
-These constants are designed to assist other functionalities present within the package.
+This module comprises constants used throughout the atmolib package,
+assisting other classes and functions present within the package.
 """
 
 import json
@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 WEATHER_CODES_FILE = BASE_DIR / "weather_codes.json"
 WEATHER_CODES = json.load(WEATHER_CODES_FILE.open())
 
-# Available frequencies of periodical weather data.
+# Available frequencies for periodical weather data extraction.
 FREQUENCY = Literal["hourly", "daily"]
 
 # Units used as request parameters in different weather data extraction requests.
