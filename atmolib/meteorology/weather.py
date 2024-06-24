@@ -4,9 +4,6 @@ Weather Module
 
 This module defines the Weather class facilitating the extraction of weather data from the
 Open-Meteo Weather API based on the latitudinal and longitudinal coordinates of the location.
-
-The Weather class allows users to extract various types of weather data including current
-weather data and up to upcoming 16-days hourly and daily weather forecast data.
 """
 
 import atexit

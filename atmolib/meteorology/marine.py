@@ -2,11 +2,9 @@
 Marine Module
 -------------
 
-This module defines the MarineWeather class facilitating the extraction of marine weather data from
-the Open-Meteo Marine Weather API based on the latitudinal and longitudinal coordinates of the location.
-
-The MarineWeather class allows users to extract various types of marine weather data, including 
-current marine weather data and up to upcoming 8-days hourly and daily marine weather forecast data.
+This module defines the MarineWeather class facilitating the extraction of marine
+weather data from the Open-Meteo Marine Weather API based on the latitudinal and
+longitudinal coordinates of the location.
 """
 
 import atexit

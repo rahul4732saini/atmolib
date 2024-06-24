@@ -4,9 +4,6 @@ Air Quality Module
 
 This module defines the AirQuality class facilitating the extraction of air quality data from
 the Open-Meteo Air Quality API based on the latitudinal and longitudinal coordinates of the location.
-
-The AirQuality class allows users to extract various types of air quality data, including 
-current air quality data and up to upcoming 7-days hourly air quality forecast data.
 """
 
 import atexit

@@ -5,9 +5,6 @@ Weather Archive Module
 This module defines the WeatherArchive class facilitating the extraction
 of historical weather data from the Open-Meteo Weather History API based
 on the latitudinal and longitudinal coordinates of the location.
-
-The WeatherArchive class allows users to extract various types of historical 
-weather data and information ranging from the year 1940 till the present.
 """
 
 import atexit
