@@ -28,7 +28,7 @@
 
 <h3 align=center>Package Description</h3>
 
-<b>atmolib</b> is a weather package that offers its users an easy and flexible way to access and parse weather data in a pythonic way. The package uses the Open-Meteo Web APIs to fetch the weather data in its backend.
+<b>atmolib</b> is a weather package that offers an easy and flexible way to its users to access and parse weather data in a pythonic way. The package uses the Open-Meteo Web APIs to fetch the weather data in its backend.
 
 ## Installation
 
@@ -38,13 +38,13 @@ Install `atmolib` using `pip`:
 $ python -m pip install -U atmolib --no-cache-dir
 ```
 
-[Required Dependencies](./requirements.lock)
+[Required Dependencies](./requirements.txt)
 
 ## Quick Guide
 
-<b>atmolib</b> offers its users an array of objects which can be used for meteorology data extraction from the Open-Meteo's Web APIs.
+<b>atmolib</b> offers its users a series of classes which can be used for meteorology data extraction from the Open-Meteo's Web APIs.
 
-The names of the objects with their description are mentioned as follows:
+The names of the classes with their description are mentioned as follows:
 
 - `Weather`<br>
   Offers comprehensive extraction of current, hourly, and daily weather forecast data, encompassing temperature, dew point, weather code, soil temperature, visibility, and more, at specified coordinates.
@@ -55,7 +55,7 @@ The names of the objects with their description are mentioned as follows:
 - `AirQuality`<br>
   Provides access to current and hourly air quality forecast data, encompassing AQI, atmospheric gas concentrations, UV index, and more, at specified coordinates.
 
-The also provides users with some useful functions as a part of the package as mentioned below:
+The package also provides users with some useful functions as a part of the package as mentioned below:
 
 - `get_elevation`<br>
   Extracts the elevation in meters(m) at the specified coordinates.
@@ -65,8 +65,7 @@ The also provides users with some useful functions as a part of the package as m
 
 ## Basic Usage
 
-This guide provides the basic usage of the atmolib package and highlights some of the generally used methods.
-All the methods in the package are designed to be used with minimal arguments with default
+This guide provides the basic usage of the atmolib package and highlights some of the generally used methods. All the methods in the package are designed to be used with minimal arguments with default
 arguments already being specified in all of them.
 
 - `Weather` class usage:
