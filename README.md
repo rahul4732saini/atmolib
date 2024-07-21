@@ -42,18 +42,18 @@ $ python -m pip install -U atmolib --no-cache-dir
 
 ## Quick Guide
 
-<b>atmolib</b> offers its users a series of classes which can be used for meteorology data extraction from the Open-Meteo's Web APIs.
+<b>atmolib</b> offers a series of classes to its users which can be used for meteorology data extraction from Open-Meteo's Web APIs.
 
-The names of the classes with their description are mentioned as follows:
+The classes along with their corresponding descriptions are mentioned as follows:
 
 - `Weather`<br>
-  Offers comprehensive extraction of current, hourly, and daily weather forecast data, encompassing temperature, dew point, weather code, soil temperature, visibility, and more, at specified coordinates.
+  Offers comprehensive extraction of current, hourly, and daily weather forecast data, encompassing temperature, dew point, weather code, soil temperature, visibility, etc.
 - `WeatherArchive`<br>
-  Enables retrieval of historical weather data, spanning hourly and daily records from 1940 till the present day, at specified coordinates.
+  Enables retrieval of historical weather data, spanning hourly and daily records from 1940 till the present day.
 - `MarineWeather`<br>
-  Empowers users to access current, hourly, and daily marine weather forecast data, including wave height, wave direction, and wave period, at specified coordinates within a 5 kilometer(km) resolution.
+  Empowers users to access current, hourly, and daily marine weather forecast data, including wave height, wave direction, and wave period within a resolution of 5 kilometers(km).
 - `AirQuality`<br>
-  Provides access to current and hourly air quality forecast data, encompassing AQI, atmospheric gas concentrations, UV index, and more, at specified coordinates.
+  Provides access to current and hourly air quality forecast data, encompassing AQI, atmospheric gas concentrations, UV index, etc.
 
 The package also provides users with some useful functions as a part of the package as mentioned below:
 
@@ -61,7 +61,7 @@ The package also provides users with some useful functions as a part of the pack
   Extracts the elevation in meters(m) at the specified coordinates.
 
 - `get_city_details`<br>
-  Extracts the city details such as coordinates, country, timezone, etc. based on the specified name.
+  Extracts the city details such as coordinates, country, timezone, etc. based on the specified city name.
 
 ## Basic Usage
 
