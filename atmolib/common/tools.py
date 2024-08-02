@@ -2,8 +2,8 @@
 Tools module
 ------------
 
-This module comprises utility functions and tools supporting
-other classes and functions throughout the atmolib package.
+This module comprises utility functions supporting
+other classes and functions throughout the package.
 """
 
 from typing import Any

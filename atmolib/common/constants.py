@@ -2,8 +2,8 @@
 Constants Module
 ----------------
 
-This module comprises constants used throughout the atmolib package,
-assisting other classes and functions present within the package.
+This module comprises constants designed to assist various
+classes and functions defined within the package.
 """
 
 import json
