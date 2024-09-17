@@ -2,8 +2,8 @@
 Tools module
 ------------
 
-This module comprises utility functions supporting
-other classes and functions throughout the package.
+This module comprises utility functions designed to support
+other classes and functions defined within the package.
 """
 
 from typing import Any
@@ -21,31 +21,25 @@ def _request_json(
     api: str, params: dict[str, Any], session: requests.Session | None = None
 ) -> dict[str, Any]:
     """
-    Sends a GET request to the specified API, and returns the retrieved the JSON data.
+    Sends a GET request to the specified API endpoint,
+    and returns the retrieved the JSON data.
 
     #### Params:
     - api (str): Absolute URL to the API endpoint.
-    - params (dict[str, Any]): Necessary parameters for the API request including the
-    coordinates of the location, requested data type, etc.
+    - params (dict[str, Any]): API request parameters.
     - session (requests.Session | None): A `requests.Session` object for making the API
-    requests. If not provided, the default requests session is used.
-
-    #### Returns:
-    - dict[str, Any]: A dictionary comprising JSON response retrieved from the API.
-
-    #### Raises:
-    - RequestError: If there is an error while requesting the API.
+    requests. If not specified, the default requests session is used.
     """
 
-    # The `session` is used as the handler if specified else the module
-    # itself is used to execute the `get` method for data extraction.
+    # Uses the `requests.Session` object as the request handler if specified
+    # explicitly, or otherwise, uses the `reuqests` module as the fallback.
     request_handler: requests.Session | ModuleType = session if session else requests
 
     with request_handler.get(api, params=params) as response:
         results: dict[str, Any] = response.json()
 
-        # Raises a custom RequestError if the response status code is not 200 (OK).
-        # The error message is extracted from the API response itself.
+        # Raises a request error if the response
+        # status code does not indicate a success.
         if response.status_code != 200:
             message = results["reason"]
 
@@ -58,19 +52,12 @@ def get_current_data(
     session: requests.Session, api: str, params: dict[str, Any]
 ) -> int | float:
     """
-    Base function for current meteorology data extraction from the specified API.
-
-    This function is intended for internal use within the package and may not be called
-    directly by its users. It is exposed publicly for use by other modules within the package.
+    Extracts current meteorology data from the specified API endpoint.
 
     #### Params:
     - session (requests.Session): A `requests.Session` object for making the API requests.
-    - api (str): Absolute URL of the API endpoint.
-    - params (dict[str, str | int]): Necessary parameters for the API request including the
-    coordinates of the location, requested data type, etc.
-
-    #### Returns:
-    - int | float: Returns the requested current meteorology data.
+    - api (str): Absolute URL to the API endpoint.
+    - params (dict[str, str | int]): API request parameters.
     """
 
     if params.get("latitude") is None or params.get("longitude") is None:
@@ -87,8 +74,8 @@ def get_current_data(
 
     results: dict[str, Any] = _request_json(api, params, session)
 
-    # The 'current' key in the `results` dictionary holds
-    # all the current meteorology data key-value pairs.
+    # Extracts the current meteorology data key-value
+    # pairs mapped with the `current` key.
     data: dict[str, Any] = results["current"]
 
     # Extracts the requested current meteorology data. The key name for the requested
@@ -101,27 +88,20 @@ def get_periodical_data(
     session: requests.Session, api: str, params: dict[str, Any], dtype=np.float16
 ) -> pd.Series:
     """
-    Base function for the periodical (daily/hourly) meteorology data extraction from supplied API.
-
-    This function is intended for internal use within the package and may not be called
-    directly by its users. It is exposed publicly for use by other modules within the package.
+    Extracts periodica (daily/hourly) meteorology
+    data from the specified API endpoint.
 
     #### Params:
     - session (requests.Session): A `requests.Session` object for making the API requests.
     - api (str): Absolute URL of the API endpoint.
-    - frequency (str): Frequency of the meteorology data; 'hourly' or 'daily'.
-    - params (dict[str, Any]): Necessary parameters for the API request including the
-    coordinates of the location, requested data type, etc.
-    - dtype: numpy datatype for storing the requested data in a pandas Series efficiently.
+    - frequency (str): Frequency of the meteorology data (hourly/daily).
+    - params (dict[str, Any]): API request parameters.
+    - dtype: numpy datatype for efficient data storage.
 
     #### Returns:
     - pd.Series: Returns a pandas Series comprising the datetime and periodical meteorology
     data. The index comprises the datetime/date of the corresponding data depending upon the
     frequency in ISO-8601 format (YYYY-MM-DDTHH:MM) or (YYYY-MM-DD).
-
-    #### Raises:
-    - ValueError: If `frequency` is assigned to an object other than 'hourly' or 'daily'.
-    - KeyError: If 'hourly' key is not found in the `params` dictionary.
     """
 
     if params.get("latitude") is None or params.get("longitude") is None:
