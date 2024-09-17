@@ -2,8 +2,8 @@
 Common package
 --------------
 
-This packages comprises constants and utility functions assisting
-others classes and functions throughout the atmolib package.
+This packages comprises constants and utility function definitions
+for assisting others classes and functions throughout the package.
 """
 
 __all__ = "constants", "tools"

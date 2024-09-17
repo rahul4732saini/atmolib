@@ -3,7 +3,7 @@ Objects Module
 --------------
 
 This module comprises classes serving as foundational components
-for various classes and functions within the atmolib package.
+for various classes and functions within the package.
 """
 
 from typing import Any

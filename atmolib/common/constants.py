@@ -2,8 +2,8 @@
 Constants Module
 ----------------
 
-This module comprises constants used throughout the atmolib package,
-assisting other classes and functions present within the package.
+This module comprises constants designed to assist the
+various classes and functions defined within the package.
 """
 
 import json
@@ -20,15 +20,16 @@ ELEVATION_API = "https://api.open-meteo.com/v1/elevation"
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Weather codes JSON file comprising weather codes mapped with the corresponding
-# description of the same. `WEATHER_CODES` loads the JSON file into a dictionary.
+# Loads the `weather_codes.json` file comprising weather
+# codes mapped with their corresponding descriptions.
+
 WEATHER_CODES_FILE = BASE_DIR / "weather_codes.json"
-WEATHER_CODES = json.load(WEATHER_CODES_FILE.open())
+WEATHER_CODES = json.load((BASE_DIR / "weather_codes.json").open())
 
 # Available frequencies for periodical weather data extraction.
 FREQUENCY = Literal["hourly", "daily"]
 
-# Units used as request parameters in different weather data extraction requests.
+# Units used as parameters in different weather data extraction requests.
 TEMPERATURE_UNITS = Literal["celsius", "fahrenheit"]
 WIND_SPEED_UNITS = Literal["kmh", "mph", "ms", "kn"]
 PRECIPITATION_UNITS = Literal["mm", "inch"]
@@ -36,8 +37,8 @@ PRECIPITATION_UNITS = Literal["mm", "inch"]
 CLOUD_COVER_LEVEL = Literal["low", "mid", "high"]
 PRESSURE_LEVELS = Literal["sealevel", "surface"]
 
-# Dictionary of keys as accepted arguments by users mapped to values used
-# as request parameter for extracting data from the API Endpoints.
+# Maps user specified arguments with request parameters
+# for extracting meteorology data from API endpoints.
 PRESSURE_LEVEL_MAPPING = {"sealevel": "pressure_msl", "surface": "surface_pressure"}
 
 # Holds the altitude in meters(m) above the surface level for different request types.
