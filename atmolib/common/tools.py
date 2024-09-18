@@ -28,7 +28,7 @@ def _request_json(
     - api (str): Absolute URL of the API endpoint.
     - params (dict[str, Any]): API request parameters.
     - session (requests.Session | None): A `requests.Session` object for making the API
-    requests. If not specified, the `reuqests` module as the fallback.
+    requests. If not specified, the `requests` module as the fallback.
     """
 
     request_handler: requests.Session | ModuleType = session if session else requests
