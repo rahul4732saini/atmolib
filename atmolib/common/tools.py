@@ -223,18 +223,12 @@ def get_periodical_summary(
 
 def get_elevation(lat: int | float, long: int | float) -> float:
     """
-    Retrieves elevation data from Open-meteo elevation
-    API based on the latitude and longitude coordinates.
+    Extracts elevation in meters(m) at the specified latitude
+    and longitude from the Open-meteo elevation API.
 
     #### Params:
         - lat (int | float): latitudinal coordinates of the location.
         - long (int | float): longitudinal coordinates of the location.
-
-    #### Raises:
-        - ValueError: If `lat` or `long` are not integers or floating point numbers.
-
-    #### Returns:
-        - float: Returns the elevation at the supplied coordinates in meters(m).
 
     #### Example:
         >>> altitude = get_elevation(26.91, 32.89)
@@ -243,19 +237,15 @@ def get_elevation(lat: int | float, long: int | float) -> float:
     """
 
     if not -90 <= lat <= 90:
-        raise ValueError(
-            "`lat` must be an integer or floating point number between -90 and 90."
-        )
+        raise ValueError("'lat' must be a number between -90 and 90.")
 
     if not -180 <= long <= 180:
-        raise ValueError(
-            "`long` must be an integer or floating point number between -180 and 180."
-        )
+        raise ValueError("'long' must be a number between -180 and 180.")
 
     params: dict[str, int | float] = {"latitude": lat, "longitude": long}
     results: dict[str, Any] = _request_json(constants.ELEVATION_API, params)
 
-    # Extracts and returns the elevation data from the results mapping.
+    # Extracts and returns the elevation data from the API response mapping.
     return results["elevation"]
 
 
