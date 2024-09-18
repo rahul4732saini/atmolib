@@ -22,17 +22,15 @@ def _request_json(
 ) -> dict[str, Any]:
     """
     Sends a GET request to the specified API endpoint,
-    and returns the retrieved the JSON data.
+    and returns the retrieved the JSON response.
 
     #### Params:
-    - api (str): Absolute URL to the API endpoint.
+    - api (str): Absolute URL of the API endpoint.
     - params (dict[str, Any]): API request parameters.
     - session (requests.Session | None): A `requests.Session` object for making the API
-    requests. If not specified, the default requests session is used.
+    requests. If not specified, the `reuqests` module as the fallback.
     """
 
-    # Uses the `requests.Session` object as the request handler if specified
-    # explicitly, or otherwise, uses the `reuqests` module as the fallback.
     request_handler: requests.Session | ModuleType = session if session else requests
 
     with request_handler.get(api, params=params) as response:
@@ -40,7 +38,7 @@ def _request_json(
 
         # Raises a request error if the response
         # status code does not indicate a success.
-        if response.status_code != 200:
+        if response.status_code // 100 != 2:
             message = results["reason"]
 
             raise RequestError(response.status_code, message)
@@ -56,7 +54,7 @@ def get_current_data(
 
     #### Params:
     - session (requests.Session): A `requests.Session` object for making the API requests.
-    - api (str): Absolute URL to the API endpoint.
+    - api (str): Absolute URL of the API endpoint.
     - params (dict[str, str | int]): API request parameters.
     """
 
@@ -85,10 +83,10 @@ def get_current_data(
 
 
 def get_periodical_data(
-    session: requests.Session, api: str, params: dict[str, Any], dtype=np.float16
+    session: requests.Session, api: str, params: dict[str, Any], dtype=np.float32
 ) -> pd.Series:
     """
-    Extracts periodica (daily/hourly) meteorology
+    Extracts periodical (daily/hourly) meteorology
     data from the specified API endpoint.
 
     #### Params:
@@ -110,14 +108,11 @@ def get_periodical_data(
             "to indicate the coordinates of the location."
         )
 
-    # Iterates through the `params` dictionary searching for the key named after
-    # the frequency ('hourly' or 'daily') of the requested data and assigns the key
-    # to the `frequency` variable to be used ahead. Raises a KeyError if none is found.
-    for key in params:
-        if key in ("hourly", "daily"):
-            frequency: str = key
-            break
-    else:
+    # Looks up for the frequency of the requested periodical data
+    # in the parameters mapping and raises an error if not found.
+    frequency: str | None = params.get("hourly", params.get("daily"))
+
+    if frequency is None:
         raise KeyError(
             "Expected 'daily' or 'hourly' parameter in the `params` dictionary; got none."
         )
@@ -141,22 +136,15 @@ def get_current_summary(
     session: requests.Session, api: str, params: dict[str, Any], labels: list[str]
 ) -> pd.Series:
     """
-    Base function for current meteorology summary data extraction from supplied API.
-
-    This function is intended for internal use within the package and may not be called
-    directly by its users. It is exposed publicly for use by other modules within the package.
+    Extracts current meteorology summary
+    data from the supplied API endpoint.
 
     #### Params:
     - session (requests.Session): A `requests.Session` object for making the API requests.
     - api (str): Absolute URL of the API endpoint.
-    - params (dict[str, str | int]): Necessary parameters for the API request including the
-    coordinates of the location, requested data type, etc.
-    - labels (list[str]): A list of strings used as index labels for
-    the summary data pandas Series object.
-
-    #### Returns:
-    - pd.Series: Returns a pandas Series of the current meteorology summary data, comprising
-    the index labels being the string representations of the data types.
+    - params (dict[str, str | int]): API request parameters.
+    - labels (list[str]): List of strings representing the index labels for
+    the resultant pandas Series object.
     """
 
     if params.get("latitude") is None or params.get("longitude") is None:
@@ -173,11 +161,11 @@ def get_current_summary(
 
     results: dict[str, Any] = _request_json(api, params, session)
 
-    # The 'current' key in the `results` dictionary holds
-    # all the current summary data key-value pairs.
+    # The 'current' key in the `results` mapping holds
+    # the current summary data key-value pairs.
     data: dict[str, Any] = results["current"]
 
-    # Removing unnecessary key-values pairs.
+    # Removing redundant key-values pairs from summary data.
     del data["time"], data["interval"]
 
     return pd.Series(data.values(), index=labels)
@@ -187,22 +175,15 @@ def get_periodical_summary(
     session: requests.Session, api: str, params: dict[str, Any], labels: list[str]
 ) -> pd.DataFrame:
     """
-    Base function for periodical meteorology summary data extraction from supplied API.
-
-    This function is intended for internal use within the package and may not be called
-    directly by its users. It is exposed publicly for use by other modules within the package.
+    Extracts periodical meteorology summary
+    data from the specified API endpoint.
 
     #### Params:
     - session (requests.Session): A `requests.Session` object for making the API requests.
     - api (str): Absolute URL of the API endpoint.
-    - params (dict[str, str | int]): Necessary parameters for the API request including the
-    coordinates of the location, requested data type, etc.
-    - labels (list[str]): A list of strings used as index labels for
-    the summary data pandas Series object.
-
-    #### Returns:
-    - pd.Series: Returns a pandas Series of the periodical meteorology summary data, comprising
-    the index labels being the string representations of the data types.
+    - params (dict[str, str | int]): API request parameters.
+    - labels (list[str]): List of strings representing the index labels
+    for the resultant pandas Series object.
     """
 
     if params.get("latitude") is None or params.get("longitude") is None:
@@ -211,16 +192,13 @@ def get_periodical_summary(
             "to indicate the coordinates of the location."
         )
 
-    # Iterates through the `params` dictionary searching for the key named after
-    # the frequency ('hourly' or 'daily') of the requested data and assigns the key
-    # to the `frequency` variable to be used ahead. Raises a KeyError if none is found.
-    for key in params:
-        if key in ("hourly", "daily"):
-            frequency: str = key
-            break
-    else:
+    # Looks up for the frequency of the requested periodical data
+    # in the parameters mapping and raises an error if not found.
+    frequency: str | None = params.get("hourly", params.get("daily"))
+
+    if frequency is None:
         raise KeyError(
-            "Expected 'daily' or 'hourly' parameter in the `params` dictionary, got none."
+            "Expected 'daily' or 'hourly' parameter in the `params` dictionary; got none."
         )
 
     results: dict[str, Any] = _request_json(api, params, session)
@@ -243,18 +221,12 @@ def get_periodical_summary(
 
 def get_elevation(lat: int | float, long: int | float) -> float:
     """
-    Retrieves elevation data from Open-meteo elevation
-    API based on the latitude and longitude coordinates.
+    Extracts elevation in meters(m) at the specified latitude
+    and longitude from the Open-meteo elevation API.
 
     #### Params:
         - lat (int | float): latitudinal coordinates of the location.
         - long (int | float): longitudinal coordinates of the location.
-
-    #### Raises:
-        - ValueError: If `lat` or `long` are not integers or floating point numbers.
-
-    #### Returns:
-        - float: Returns the elevation at the supplied coordinates in meters(m).
 
     #### Example:
         >>> altitude = get_elevation(26.91, 32.89)
@@ -263,22 +235,16 @@ def get_elevation(lat: int | float, long: int | float) -> float:
     """
 
     if not -90 <= lat <= 90:
-        raise ValueError(
-            "`lat` must be an integer or floating point number between -90 and 90."
-        )
+        raise ValueError("'lat' must be a number between -90 and 90.")
 
     if not -180 <= long <= 180:
-        raise ValueError(
-            "`long` must be an integer or floating point number between -180 and 180."
-        )
+        raise ValueError("'long' must be a number between -180 and 180.")
 
     params: dict[str, int | float] = {"latitude": lat, "longitude": long}
     results: dict[str, Any] = _request_json(constants.ELEVATION_API, params)
 
-    # Extracts the elevation data from the 'elevation' key-value pair in the `results` dictionary.
-    (elevation,) = results["elevation"]
-
-    return elevation
+    # Extracts and returns the elevation data from the API response mapping.
+    return results["elevation"]
 
 
 def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
@@ -287,26 +253,17 @@ def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
 
     #### Params:
         - name (str): The name of the city to retrieve details for.
-        - count (int): The number of results to be shown; must be an integer between 1 and 20.
-
-    #### Returns:
-        - list[dict[str, Any]] | None: Returns a list of dictionaries containing details of the city.
-        Each dictionary represents a result, containing various information about the city. None is
-        returned if no cities corresponding to the supplied name are found in the database.
-
-    #### Raises:
-        - ValueError: If `count` is not a positive integer.
+        - count (int): Maximum number of matching city records to be extracted;
+        must be an integer between 1 and 20.
     """
 
-    if count not in range(1, 21):
-        raise ValueError("`count` must be an integer between 1 and 20.")
+    if not isinstance(count, int) or count not in range(1, 21):
+        raise ValueError("'count' must be an integer between 1 and 20.")
 
     params: dict[str, str | int] = {"name": name, "count": count}
     results: dict[str, Any] = _request_json(constants.GEOCODING_API, params)
 
-    # Extracts city details from the 'results' key-value pair in the `results` dictionary.
-    # The key-value pair is only present if cities with matching names are found in the
-    # Open-Meteo database. None is assigned and returned if matching cities are not found.
-    details: list[dict[str, Any]] | None = results.get("results")
-
-    return details
+    # Extracts the city details from the 'results' key in the API response
+    # mapping. `None` is returned if no cities with the specified name are
+    # found in the Open-Meteo database.
+    return results.get("results")
