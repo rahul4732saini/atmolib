@@ -108,11 +108,17 @@ def get_periodical_data(
             "to indicate the coordinates of the location."
         )
 
+    frequency: str
+
     # Looks up for the frequency of the requested periodical data
     # in the parameters mapping and raises an error if not found.
-    frequency: str | None = params.get("hourly", params.get("daily"))
+    if "hourly" in params:
+        frequency = "hourly"
 
-    if frequency is None:
+    elif "daily" in params:
+        frequency = "daily"
+
+    else:
         raise KeyError(
             "Expected 'daily' or 'hourly' parameter in the `params` dictionary; got none."
         )
@@ -192,11 +198,17 @@ def get_periodical_summary(
             "to indicate the coordinates of the location."
         )
 
+    frequency: str
+
     # Looks up for the frequency of the requested periodical data
     # in the parameters mapping and raises an error if not found.
-    frequency: str | None = params.get("hourly", params.get("daily"))
+    if "hourly" in params:
+        frequency = "hourly"
 
-    if frequency is None:
+    elif "daily" in params:
+        frequency = "daily"
+
+    else:
         raise KeyError(
             "Expected 'daily' or 'hourly' parameter in the `params` dictionary; got none."
         )
