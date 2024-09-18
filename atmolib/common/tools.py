@@ -40,7 +40,7 @@ def _request_json(
 
         # Raises a request error if the response
         # status code does not indicate a success.
-        if response.status_code != 200:
+        if response.status_code // 100 != 2:
             message = results["reason"]
 
             raise RequestError(response.status_code, message)
