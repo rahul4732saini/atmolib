@@ -110,14 +110,11 @@ def get_periodical_data(
             "to indicate the coordinates of the location."
         )
 
-    # Iterates through the `params` dictionary searching for the key named after
-    # the frequency ('hourly' or 'daily') of the requested data and assigns the key
-    # to the `frequency` variable to be used ahead. Raises a KeyError if none is found.
-    for key in params:
-        if key in ("hourly", "daily"):
-            frequency: str = key
-            break
-    else:
+    # Looks up for the frequency of the requested periodical data
+    # in the parameters mapping and raises an error if not found.
+    frequency: str | None = params.get("hourly", params.get("daily"))
+
+    if frequency is None:
         raise KeyError(
             "Expected 'daily' or 'hourly' parameter in the `params` dictionary; got none."
         )
@@ -197,16 +194,13 @@ def get_periodical_summary(
             "to indicate the coordinates of the location."
         )
 
-    # Iterates through the `params` dictionary searching for the key named after
-    # the frequency ('hourly' or 'daily') of the requested data and assigns the key
-    # to the `frequency` variable to be used ahead. Raises a KeyError if none is found.
-    for key in params:
-        if key in ("hourly", "daily"):
-            frequency: str = key
-            break
-    else:
+    # Looks up for the frequency of the requested periodical data
+    # in the parameters mapping and raises an error if not found.
+    frequency: str | None = params.get("hourly", params.get("daily"))
+
+    if frequency is None:
         raise KeyError(
-            "Expected 'daily' or 'hourly' parameter in the `params` dictionary, got none."
+            "Expected 'daily' or 'hourly' parameter in the `params` dictionary; got none."
         )
 
     results: dict[str, Any] = _request_json(api, params, session)
