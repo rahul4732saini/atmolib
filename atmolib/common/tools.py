@@ -244,7 +244,9 @@ def get_elevation(lat: int | float, long: int | float) -> float:
     results: dict[str, Any] = _request_json(constants.ELEVATION_API, params)
 
     # Extracts and returns the elevation data from the API response mapping.
-    return results["elevation"]
+    (elevation,) = results["elevation"]
+
+    return elevation
 
 
 def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
