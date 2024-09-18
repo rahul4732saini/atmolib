@@ -22,17 +22,15 @@ def _request_json(
 ) -> dict[str, Any]:
     """
     Sends a GET request to the specified API endpoint,
-    and returns the retrieved the JSON data.
+    and returns the retrieved the JSON response.
 
     #### Params:
-    - api (str): Absolute URL to the API endpoint.
+    - api (str): Absolute URL of the API endpoint.
     - params (dict[str, Any]): API request parameters.
     - session (requests.Session | None): A `requests.Session` object for making the API
-    requests. If not specified, the default requests session is used.
+    requests. If not specified, the `reuqests` module as the fallback.
     """
 
-    # Uses the `requests.Session` object as the request handler if specified
-    # explicitly, or otherwise, uses the `reuqests` module as the fallback.
     request_handler: requests.Session | ModuleType = session if session else requests
 
     with request_handler.get(api, params=params) as response:
@@ -56,7 +54,7 @@ def get_current_data(
 
     #### Params:
     - session (requests.Session): A `requests.Session` object for making the API requests.
-    - api (str): Absolute URL to the API endpoint.
+    - api (str): Absolute URL of the API endpoint.
     - params (dict[str, str | int]): API request parameters.
     """
 
@@ -85,10 +83,10 @@ def get_current_data(
 
 
 def get_periodical_data(
-    session: requests.Session, api: str, params: dict[str, Any], dtype=np.float16
+    session: requests.Session, api: str, params: dict[str, Any], dtype=np.float32
 ) -> pd.Series:
     """
-    Extracts periodica (daily/hourly) meteorology
+    Extracts periodical (daily/hourly) meteorology
     data from the specified API endpoint.
 
     #### Params:
@@ -143,7 +141,7 @@ def get_current_summary(
 
     #### Params:
     - session (requests.Session): A `requests.Session` object for making the API requests.
-    - api (str): Absolute URL to the API endpoint.
+    - api (str): Absolute URL of the API endpoint.
     - params (dict[str, str | int]): API request parameters.
     - labels (list[str]): List of strings representing the index labels for
     the resultant pandas Series object.
@@ -182,7 +180,7 @@ def get_periodical_summary(
 
     #### Params:
     - session (requests.Session): A `requests.Session` object for making the API requests.
-    - api (str): Absolute URL to the API endpoint.
+    - api (str): Absolute URL of the API endpoint.
     - params (dict[str, str | int]): API request parameters.
     - labels (list[str]): List of strings representing the index labels
     for the resultant pandas Series object.
