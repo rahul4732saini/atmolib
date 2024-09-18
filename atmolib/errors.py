@@ -2,18 +2,18 @@
 Errors Module
 -------------
 
-The module defines error classes to handle various
-exceptional scenarios throughout the atmolib package.
+The module defines error classes for handling
+various exceptional scenarios within the package.
 """
 
 
 class RequestError(Exception):
     """
-    RequestError class for handling API requests errors.
+    RequestError class for handling API request errors.
 
     This exception is raised when there's an error during API requests,
     encompassing various issues such as server-related errors
-    (e.g., HTTP status codes other than 200).
+    (eg.: HTTP status codes other than 200).
     """
 
     def __init__(self, status_code: int, message: str | None = None) -> None:

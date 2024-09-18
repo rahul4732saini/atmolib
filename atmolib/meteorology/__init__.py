@@ -2,9 +2,12 @@ r"""
 Meteorology Package
 -------------------
 
-This package facilitates the extraction of meteorology data including
-weather, historical weather, marine, and air quality data. It provides
-a comprehensive set of classes and functions for the same.
+This package facilitates the extraction of meteorological data, encompassing weather,
+historical weather, marine conditions, and air quality data. If offers a robust suite
+of classes and function designed for the same.
+
+### Classes Exported:
+    - `Weather`: Extracts current or upto upcoming 16-days hourly and daily weather forecase data.
 
 Classes Exported:
 - `Weather`: Extracts current or up to upcoming 16-days hourly and daily weather forecast data.
