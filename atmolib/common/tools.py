@@ -141,22 +141,15 @@ def get_current_summary(
     session: requests.Session, api: str, params: dict[str, Any], labels: list[str]
 ) -> pd.Series:
     """
-    Base function for current meteorology summary data extraction from supplied API.
-
-    This function is intended for internal use within the package and may not be called
-    directly by its users. It is exposed publicly for use by other modules within the package.
+    Extracts current meteorology summary
+    data from the supplied API endpoint.
 
     #### Params:
     - session (requests.Session): A `requests.Session` object for making the API requests.
-    - api (str): Absolute URL of the API endpoint.
-    - params (dict[str, str | int]): Necessary parameters for the API request including the
-    coordinates of the location, requested data type, etc.
-    - labels (list[str]): A list of strings used as index labels for
-    the summary data pandas Series object.
-
-    #### Returns:
-    - pd.Series: Returns a pandas Series of the current meteorology summary data, comprising
-    the index labels being the string representations of the data types.
+    - api (str): Absolute URL to the API endpoint.
+    - params (dict[str, str | int]): API request parameters.
+    - labels (list[str]): List of strings representing the index labels for
+    the resultant pandas Series object.
     """
 
     if params.get("latitude") is None or params.get("longitude") is None:
@@ -173,11 +166,11 @@ def get_current_summary(
 
     results: dict[str, Any] = _request_json(api, params, session)
 
-    # The 'current' key in the `results` dictionary holds
-    # all the current summary data key-value pairs.
+    # The 'current' key in the `results` mapping holds
+    # the current summary data key-value pairs.
     data: dict[str, Any] = results["current"]
 
-    # Removing unnecessary key-values pairs.
+    # Removing redundant key-values pairs from summary data.
     del data["time"], data["interval"]
 
     return pd.Series(data.values(), index=labels)
@@ -187,22 +180,15 @@ def get_periodical_summary(
     session: requests.Session, api: str, params: dict[str, Any], labels: list[str]
 ) -> pd.DataFrame:
     """
-    Base function for periodical meteorology summary data extraction from supplied API.
-
-    This function is intended for internal use within the package and may not be called
-    directly by its users. It is exposed publicly for use by other modules within the package.
+    Extracts periodical meteorology summary
+    data from the specified API endpoint.
 
     #### Params:
     - session (requests.Session): A `requests.Session` object for making the API requests.
-    - api (str): Absolute URL of the API endpoint.
-    - params (dict[str, str | int]): Necessary parameters for the API request including the
-    coordinates of the location, requested data type, etc.
-    - labels (list[str]): A list of strings used as index labels for
-    the summary data pandas Series object.
-
-    #### Returns:
-    - pd.Series: Returns a pandas Series of the periodical meteorology summary data, comprising
-    the index labels being the string representations of the data types.
+    - api (str): Absolute URL to the API endpoint.
+    - params (dict[str, str | int]): API request parameters.
+    - labels (list[str]): List of strings representing the index labels
+    for the resultant pandas Series object.
     """
 
     if params.get("latitude") is None or params.get("longitude") is None:
