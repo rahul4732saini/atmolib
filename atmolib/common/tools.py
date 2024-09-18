@@ -255,10 +255,8 @@ def get_elevation(lat: int | float, long: int | float) -> float:
     params: dict[str, int | float] = {"latitude": lat, "longitude": long}
     results: dict[str, Any] = _request_json(constants.ELEVATION_API, params)
 
-    # Extracts the elevation data from the 'elevation' key-value pair in the `results` dictionary.
-    (elevation,) = results["elevation"]
-
-    return elevation
+    # Extracts and returns the elevation data from the results mapping.
+    return results["elevation"]
 
 
 def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
@@ -284,9 +282,7 @@ def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
     params: dict[str, str | int] = {"name": name, "count": count}
     results: dict[str, Any] = _request_json(constants.GEOCODING_API, params)
 
-    # Extracts city details from the 'results' key-value pair in the `results` dictionary.
-    # The key-value pair is only present if cities with matching names are found in the
-    # Open-Meteo database. None is assigned and returned if matching cities are not found.
-    details: list[dict[str, Any]] | None = results.get("results")
-
-    return details
+    # Extracts the city details from the 'results' key in the API response
+    # mapping. `None` is returned if no cities with the specified name are
+    # found in the Open-Meteo database.
+    return results.get("results")
