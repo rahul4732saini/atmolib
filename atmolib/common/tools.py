@@ -97,10 +97,10 @@ def get_periodical_data(
     """
 
     for key in ("latitude", "longitude"):
-            if key in params:
-                continue
+        if key in params:
+            continue
 
-            raise KeyError(f"Required parameter {key!r} not found in the 'params' mapping.")
+        raise KeyError(f"Required parameter {key!r} not found in the 'params' mapping.")
 
     frequency: str
 
@@ -149,10 +149,10 @@ def get_current_summary(
 
 
     for key in ("latitude", "longitude", "current"):
-            if key in params:
-                continue
+        if key in params:
+            continue
 
-            raise KeyError(f"Required parameter {key!r} not found in the 'params' mapping.")
+        raise KeyError(f"Required parameter {key!r} not found in the 'params' mapping.")
 
     results: dict[str, Any] = _request_json(api, params, session)
 
@@ -183,10 +183,10 @@ def get_periodical_summary(
 
 
     for key in ("latitude", "longitude"):
-            if key in params:
-                continue
+        if key in params:
+            continue
 
-            raise KeyError(f"Required parameter {key!r} not found in the 'params' mapping.")
+        raise KeyError(f"Required parameter {key!r} not found in the 'params' mapping.")
 
     frequency: str
 
