@@ -58,17 +58,11 @@ def get_current_data(
     - params (dict[str, str | int]): API request parameters.
     """
 
-    if params.get("latitude") is None or params.get("longitude") is None:
-        raise KeyError(
-            "'latitude' or 'longitude' key not found in the `params` dictionary "
-            "to indicate the coordinates of the location."
-        )
+    for key in ("latitude", "longitude", "current"):
+        if key in params:
+            continue
 
-    if params.get("current") is None:
-        raise KeyError(
-            "'current' key not found in the `params` dictionary "
-            "with the requested meteorology data type."
-        )
+        raise KeyError(f"Required parameter {key!r} not found in the 'params' mapping.")
 
     results: dict[str, Any] = _request_json(api, params, session)
 
@@ -102,11 +96,11 @@ def get_periodical_data(
     frequency in ISO-8601 format (YYYY-MM-DDTHH:MM) or (YYYY-MM-DD).
     """
 
-    if params.get("latitude") is None or params.get("longitude") is None:
-        raise KeyError(
-            "'latitude' or 'longitude' key not found in the `params` dictionary "
-            "to indicate the coordinates of the location."
-        )
+    for key in ("latitude", "longitude"):
+            if key in params:
+                continue
+
+            raise KeyError(f"Required parameter {key!r} not found in the 'params' mapping.")
 
     frequency: str
 
@@ -153,17 +147,12 @@ def get_current_summary(
     the resultant pandas Series object.
     """
 
-    if params.get("latitude") is None or params.get("longitude") is None:
-        raise KeyError(
-            "'latitude' or 'longitude' key not found in the `params` dictionary "
-            "to indicate the coordinates of the location."
-        )
 
-    if params.get("current") is None:
-        raise KeyError(
-            "'current' key not found in the `params` dictionary "
-            "with the requested weather data types."
-        )
+    for key in ("latitude", "longitude", "current"):
+            if key in params:
+                continue
+
+            raise KeyError(f"Required parameter {key!r} not found in the 'params' mapping.")
 
     results: dict[str, Any] = _request_json(api, params, session)
 
@@ -192,11 +181,12 @@ def get_periodical_summary(
     for the resultant pandas Series object.
     """
 
-    if params.get("latitude") is None or params.get("longitude") is None:
-        raise KeyError(
-            "'latitude' or 'longitude' key not found in the `params` dictionary "
-            "to indicate the coordinates of the location."
-        )
+
+    for key in ("latitude", "longitude"):
+            if key in params:
+                continue
+
+            raise KeyError(f"Required parameter {key!r} not found in the 'params' mapping.")
 
     frequency: str
 
