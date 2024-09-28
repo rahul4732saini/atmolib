@@ -25,7 +25,7 @@ class AirQuality(BaseForecast):
     _session = requests.Session()
     _api = constants.AIR_QUALITY_API
 
-    # The maximum number of days in the future for forecast data extraction.
+    # Maximum number of supported days in the future for forecast data extraction.
     _max_forecast_days = 7
 
     # Closes the request session upon exit.
@@ -48,8 +48,8 @@ class AirQuality(BaseForecast):
     @staticmethod
     def _verify_atmospheric_gas(gas: constants.GASES) -> None:
         """
-        Verifies whether the specified atmospheric gas is supported by the Open-Meteo
-        Air Quality API for the extraction of gaseous concentration in air.
+        Verifies whether the specified atmospheric gas is supported
+        for the extraction ofaerial gaseous concentration.
         """
 
         if gas not in (
@@ -66,8 +66,8 @@ class AirQuality(BaseForecast):
     @staticmethod
     def _verify_plant_species(plant: constants.PLANTS) -> None:
         """
-        Verifies whether the specified plant species is supported by the Open-Meteo
-        Air Quality API for the extraction of pollen grain concentration in air.
+        Verifies whether the specified plant species is supported
+        for the extraction of aerial pollen grain concentration.
         """
 
         if plant not in ("alder", "birch", "grass", "mugwort", "olive", "ragweed"):
@@ -78,8 +78,7 @@ class AirQuality(BaseForecast):
 
     def get_current_summary(self) -> pd.Series:
         """
-        Returns a pandas Series of current air quality summary
-        data at the specified coordinates in the specified units.
+        Returns a pandas Series of the current air quality summary data.
 
         #### The air quality summary data includes the following data types:
         - European AQI
@@ -108,8 +107,7 @@ class AirQuality(BaseForecast):
 
     def get_hourly_summary(self) -> pd.DataFrame:
         """
-        Returns a pandas Series of hourly air quality summary
-        data at the specified coordinates in the specified units.
+        Returns a pandas Series of the hourly air quality summary data.
 
         #### The air quality summary data includes the following data types:
         - Particulate Matter PM 10
