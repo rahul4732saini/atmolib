@@ -27,7 +27,7 @@ def _request_json(
     #### Params:
     - api (str): Absolute URL of the API endpoint.
     - params (dict[str, Any]): API request parameters.
-    - session (requests.Session | None): A `requests.Session` object for making the API
+    - session (requests.Session | None): A `requests.Session` object for making API
     requests. If not specified, the `requests` module as the fallback.
     """
 
@@ -53,7 +53,7 @@ def get_current_data(
     Extracts current meteorology data from the specified API endpoint.
 
     #### Params:
-    - session (requests.Session): A `requests.Session` object for making the API requests.
+    - session (requests.Session): A `requests.Session` object for making API requests.
     - api (str): Absolute URL of the API endpoint.
     - params (dict[str, str | int]): API request parameters.
     """
@@ -76,15 +76,16 @@ def get_periodical_data(
     session: requests.Session, api: str, params: dict[str, Any], dtype=np.float32
 ) -> pd.Series:
     """
-    Extracts periodical (daily/hourly) meteorology
+    Extracts periodical (hourly/daily) meteorology
     data from the specified API endpoint.
 
     #### Params:
-    - session (requests.Session): A `requests.Session` object for making the API requests.
+    - session (requests.Session): A `requests.Session` object for making API requests.
     - api (str): Absolute URL of the API endpoint.
     - frequency (str): Frequency of the meteorology data (hourly/daily).
     - params (dict[str, Any]): API request parameters.
-    - dtype: numpy datatype for efficient data storage.
+    - dtype: numpy datatype for meteorology data storage.
+    Defaults to float32 (32-bit floating point number).
 
     #### Returns:
     - pd.Series: Returns a pandas Series comprising the datetime and periodical meteorology
@@ -136,7 +137,7 @@ def get_current_summary(
     data from the supplied API endpoint.
 
     #### Params:
-    - session (requests.Session): A `requests.Session` object for making the API requests.
+    - session (requests.Session): A `requests.Session` object for making API requests.
     - api (str): Absolute URL of the API endpoint.
     - params (dict[str, str | int]): API request parameters.
     - labels (list[str]): List of strings representing the index labels for
@@ -169,13 +170,12 @@ def get_periodical_summary(
     data from the specified API endpoint.
 
     #### Params:
-    - session (requests.Session): A `requests.Session` object for making the API requests.
+    - session (requests.Session): A `requests.Session` object for making API requests.
     - api (str): Absolute URL of the API endpoint.
     - params (dict[str, str | int]): API request parameters.
     - labels (list[str]): List of strings representing the index labels
     for the resultant pandas Series object.
     """
-
 
     for key in ("latitude", "longitude"):
         if key in params:
@@ -218,8 +218,8 @@ def get_periodical_summary(
 
 def get_elevation(lat: int | float, long: int | float) -> float:
     """
-    Extracts elevation in meters(m) at the specified latitude
-    and longitude from the Open-meteo elevation API.
+    Extracts elevation in meters(m) from the sea-level at the specified
+    latitude and longitude from the Open-meteo's elevation API.
 
     #### Params:
         - lat (int | float): latitudinal coordinates of the location.
