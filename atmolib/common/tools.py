@@ -66,14 +66,10 @@ def get_current_data(
 
     results: dict[str, Any] = _request_json(api, params, session)
 
-    # Extracts the current meteorology data key-value
-    # pairs mapped with the `current` key.
-    data: dict[str, Any] = results["current"]
-
-    # Extracts the requested current meteorology data. The key name for the requested
-    # data is obtained from the 'current' key in the `params` dictionary. The value
-    # associated with this key is returned as the result.
-    return data[params["current"]]
+    # Extracts the request current meteorology data metrics from
+    # the 'results' mapping. It is mapped with the metric's name
+    # within the dictionary mapped with the 'current' key.
+    return results["current"][params["current"]]
 
 
 def get_periodical_data(
@@ -156,8 +152,7 @@ def get_current_summary(
 
     results: dict[str, Any] = _request_json(api, params, session)
 
-    # The 'current' key in the `results` mapping holds
-    # the current summary data key-value pairs.
+    # Extracts current meteorology data from the 'current' key in the 'results' mapping.
     data: dict[str, Any] = results["current"]
 
     # Removing redundant key-values pairs from summary data.
@@ -205,8 +200,8 @@ def get_periodical_summary(
 
     results: dict[str, Any] = _request_json(api, params, session)
 
-    # The key corresponding to the supplied `frequency` in the `results`
-    # dictionary holds all the current summary data key-value pairs.
+    # Extracts periodical summary data from the key corresponding
+    # to the specified 'frequency' in the 'results' mapping.
     data: dict[str, Any] = results[frequency]
 
     # Removed the 'time' key-value pair containing the timeline of the summary
