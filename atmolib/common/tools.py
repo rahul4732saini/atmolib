@@ -111,18 +111,17 @@ def get_periodical_data(
 
     else:
         raise KeyError(
-            "Expected 'daily' or 'hourly' parameter in the `params` dictionary; got none."
+            "frequency key 'daily' or 'hourly' not found in the 'params' mapping."
         )
 
     results: dict[str, Any] = _request_json(api, params, session)
 
-    # The key corresponding to the supplied `frequency` in the `results` dictionary
-    # holds all the periodical meteorology data key-value pairs.
+    # Extracts meteorology data mapped with the key corresponding to the
+    # name of the specified 'frequency' within the 'results' mapping.
     data: dict[str, Any] = results[frequency]
 
-    # pandas Series comprising datetime and periodical meteorology data. The data is retrieved
-    # from the key-value pair named after the requested data type (e.g. temperature_2m,
-    # meteorology_code, etc.) in the `data` dictionary.
+    # Extracts meteorology data mapped with the metric's name from
+    # the 'data' mapping and initializes the pandas Series object.
     series = pd.Series(data[params[frequency]], index=data["time"], dtype=dtype)
     series.index.name = "Date" if frequency == "daily" else "Datetime"
 
@@ -195,21 +194,21 @@ def get_periodical_summary(
 
     else:
         raise KeyError(
-            "Expected 'daily' or 'hourly' parameter in the `params` dictionary; got none."
+            "frequency key 'daily' or 'hourly' not found in the 'params' mapping."
         )
 
     results: dict[str, Any] = _request_json(api, params, session)
 
-    # Extracts periodical summary data from the key corresponding
-    # to the specified 'frequency' in the 'results' mapping.
+    # Extracts summary data mapped with the key corresponding to the
+    # name of the specified 'frequency' within the 'results' mapping.
     data: dict[str, Any] = results[frequency]
 
-    # Removed the 'time' key-value pair containing the timeline of the summary
-    # data to be used as index labels in the summary pandas DataFrame.
+    # Pops the data timeline array mapped with 'time' key within the 'data'
+    # mapping to be used as index lables in the resultant pandas DataFrame.
     timeline: list[str] = data.pop("time")
 
-    # Creates a pandas DataFrame of the request summary data and modifies the
-    # column labels with the supplied column labels in the `labels` list.
+    # Initializes a pandas DataFrame for the summary data and alters the
+    # column labels with the specified labels within the `labels` array.
     dataframe: pd.DataFrame = pd.DataFrame(data, index=timeline)
     dataframe.columns = pd.Index(labels)
 
