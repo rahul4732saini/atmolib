@@ -46,6 +46,23 @@ def _request_json(
     return results
 
 
+def _verify_keys(params: dict[str, Any], keys: tuple[str]) -> None:
+    """
+    Looks up for the specified keys in the parameters
+    mapping and raises a `KeyError` if any are missing.
+
+    #### Params:
+    - params (dict[str, Any]): API request parameters.
+    - keys (tuple[str]): Keys to look up for in the parameters mapping.
+    """
+
+    for key in keys:
+        if key in params:
+            continue
+        
+        raise KeyError(f"Required parameter {key!r} not found in the 'params' mapping.")
+
+
 def get_current_data(
     session: requests.Session, api: str, params: dict[str, Any]
 ) -> int | float:
