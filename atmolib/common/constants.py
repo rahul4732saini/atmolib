@@ -22,8 +22,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Loads the `weather_codes.json` file comprising weather
 # codes mapped with their corresponding descriptions.
-
-WEATHER_CODES_FILE = BASE_DIR / "weather_codes.json"
 WEATHER_CODES = json.load((BASE_DIR / "weather_codes.json").open())
 
 # Available frequencies for periodical weather data extraction.
