@@ -35,11 +35,7 @@ PRECIPITATION_UNITS = Literal["mm", "inch"]
 CLOUD_COVER_LEVEL = Literal["low", "mid", "high"]
 PRESSURE_LEVELS = Literal["sealevel", "surface"]
 
-# Maps user specified arguments with request parameters
-# for extracting meteorology data from API endpoints.
-PRESSURE_LEVEL_MAPPING = {"sealevel": "pressure_msl", "surface": "surface_pressure"}
-
-# Holds the altitude in meters(m) above the surface level for different request types.
+# Holds altitude in meters(m) above the surface level for different request types.
 TEMPERATURE_ALTITUDE = Literal[2, 80, 120, 180]
 WIND_ALTITUDE = Literal[10, 80, 120, 180]
 ARCHIVE_WIND_ALTITUDES = Literal[10, 100]
@@ -68,7 +64,7 @@ SOIL_MOISTURE_DEPTH = {
 # Air Quality Index sources.
 AQI_SOURCES = Literal["european", "us"]
 
-# Mapping of AQI descriptions falling within different ranges of AQI.
+# Maps different AQI ranges with their corresponding descriptions.
 AQI_LEVELS = {
     range(50): "Good",
     range(51, 101): "Moderate",
@@ -89,9 +85,10 @@ DAILY_WEATHER_REQUEST_TYPES = Literal["max", "min", "mean"]
 # Available wave types for marine weather data extraction.
 WAVE_TYPES = Literal["composite", "wind", "swell"]
 
-# Dictionary of keys as accepted arguments by users mapped to values used
-# as request parameters for extracting data from the Open-Meteo Marine API.
+# Maps user specified arguments with request parameters
+# for extracting meteorology data from API endpoints.
 WAVE_TYPES_MAP = {"composite": "", "wind": "wind_", "swell": "swell_"}
+PRESSURE_LEVEL_MAPPING = {"sealevel": "pressure_msl", "surface": "surface_pressure"}
 
 # Available types of temperature data which can be extracted from the API endpoints.
 TEMPERATURE_TYPES = Literal["temperature_2m", "apparent_temperature"]
