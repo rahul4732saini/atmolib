@@ -75,12 +75,7 @@ def get_current_data(
     - params (dict[str, str | int]): API request parameters.
     """
 
-    for key in ("latitude", "longitude", "current"):
-        if key in params:
-            continue
-
-        raise KeyError(f"Required parameter {key!r} not found in the 'params' mapping.")
-
+    _verify_keys(params, ("latitude", "longitude", "current"))
     results: dict[str, Any] = _request_json(api, params, session)
 
     # Extracts the request current meteorology data metrics from
@@ -110,12 +105,7 @@ def get_periodical_data(
     frequency in ISO-8601 format (YYYY-MM-DDTHH:MM) or (YYYY-MM-DD).
     """
 
-    for key in ("latitude", "longitude"):
-        if key in params:
-            continue
-
-        raise KeyError(f"Required parameter {key!r} not found in the 'params' mapping.")
-
+    _verify_keys(params, ("latitude", "longitude"))
     frequency: str
 
     # Looks up for the frequency of the requested periodical data
@@ -160,13 +150,7 @@ def get_current_summary(
     the resultant pandas Series object.
     """
 
-
-    for key in ("latitude", "longitude", "current"):
-        if key in params:
-            continue
-
-        raise KeyError(f"Required parameter {key!r} not found in the 'params' mapping.")
-
+    _verify_keys(params, ("latitude", "longitude", "current"))
     results: dict[str, Any] = _request_json(api, params, session)
 
     # Extracts current meteorology data from the 'current' key in the 'results' mapping.
@@ -193,12 +177,7 @@ def get_periodical_summary(
     for the resultant pandas Series object.
     """
 
-    for key in ("latitude", "longitude"):
-        if key in params:
-            continue
-
-        raise KeyError(f"Required parameter {key!r} not found in the 'params' mapping.")
-
+    _verify_keys(params, ("latitude", "longitude"))
     frequency: str
 
     # Looks up for the frequency of the requested periodical data
