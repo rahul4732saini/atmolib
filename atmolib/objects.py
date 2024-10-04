@@ -20,6 +20,8 @@ class BaseMeteor:
     Base class for all meteorology classes.
     """
 
+    # The following classes attributes are essential for operation and
+    # must be explicitly defined by the child classes as per requirements.
     _session: requests.Session
     _api: str
 
@@ -57,14 +59,13 @@ class BaseMeteor:
 
     def _get_current_data(self, params: dict[str, Any]) -> int | float:
         """
-        Uses the specified parameters to request the specified
-        Open-Meteo API and returns the current weather data.
+        Extracts current meteorology data from Open-Meteo's
+        API endpoints based on the specified parameters.
 
         #### Params:
         - params (dict[str, Any]): API request parameters.
         """
 
-        # `_session` and `_api` class attributes must be defined by the child class.
         data: int | float = tools.get_current_data(
             self._session, self._api, params | self._params
         )
@@ -75,16 +76,14 @@ class BaseMeteor:
         self, params: dict[str, Any], dtype=np.float16
     ) -> pd.Series:
         """
-        Uses the specified parameters to request the specified Open-Meteo
-        API and returns the periodical weather data as a pandas Series.
+        Extracts periodical meteorology data from Open-Meteo's
+        API endpoints based on the specified parameters.
 
         #### Params:
-        - params (dict[str, Any]): A dictionary all the necessary parameters except the
-        coordinate parameters to request the Open-Meteo Weather API.
+        - params (dict[str, Any]): API request parameters.
         - dtype: Desired numpy dtype of the request meteorology data.
         """
 
-        # `_session` and `_api` class attributes must be defined by the child class.
         data: pd.Series = tools.get_periodical_data(
             self._session, self._api, params | self._params, dtype
         )
