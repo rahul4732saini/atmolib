@@ -65,12 +65,7 @@ class BaseMeteor:
         #### Params:
         - params (dict[str, Any]): API request parameters.
         """
-
-        data: int | float = tools.get_current_data(
-            self._session, self._api, params | self._params
-        )
-
-        return data
+        return tools.get_current_data(self._session, self._api, params | self._params)
 
     def _get_periodical_data(
         self, params: dict[str, Any], dtype=np.float16
@@ -83,12 +78,9 @@ class BaseMeteor:
         - params (dict[str, Any]): API request parameters.
         - dtype: Desired numpy dtype of the request meteorology data.
         """
-
-        data: pd.Series = tools.get_periodical_data(
+        return tools.get_periodical_data(
             self._session, self._api, params | self._params, dtype
         )
-
-        return data
 
 
 class BaseForecast(BaseMeteor):
