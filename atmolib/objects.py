@@ -107,15 +107,15 @@ class BaseForecast(BaseMeteor):
     @forecast_days.setter
     def forecast_days(self, __value: int) -> None:
 
-        # Asserts if the forecast days value is within the range of the maximum forecast days assigned by the child class.
-        assert __value in range(1, self._max_forecast_days + 1), ValueError(
-            f"`forecast_days` must be in the range of 1 and {self._max_forecast_days}; got {__value!r}."
-        )
-        self._forecast_days = __value
+        if __value not in range(1, self._max_forecast_days + 1):
+            raise ValueError(
+                "'forecast_days' must be an integer between 1 "
+                f"and {self._max_forecast_days}."
+            )
 
-        # Updating the `_params` dictionary with the 'forecast_days' key-value
-        # pair to be used as a parameter for requesting the Web API.
-        self._params["forecast_days"] = __value
+        # Also updates the request parameters mapping with
+        # the forecast days value for usage in API requests.
+        self._forecast_days = self._params["forecast_days"] = __value
 
     def __repr__(self) -> str:
         return (
