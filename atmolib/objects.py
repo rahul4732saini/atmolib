@@ -20,8 +20,8 @@ class BaseMeteor:
     Base class for all meteorology classes.
     """
 
-    # The following classes attributes are essential for operation and
-    # must be explicitly defined by the child classes as per requirements.
+    # The following class attributes are essential for operation and
+    # must be explicitly defined by child classes as per requirements.
     _session: requests.Session
     _api: str
 
@@ -85,11 +85,11 @@ class BaseMeteor:
 
 class BaseForecast(BaseMeteor):
     """
-    Base class for all weather forecast classes.
+    Base class for all meteorological forecast classes.
     """
 
-    # This attribute must be explicitly defined in
-    # the child classes as per their customs.
+    # This class attribute is essential for operation and must be
+    # explicitly defined by child classes as per requirements.
     _max_forecast_days: int
 
     __slots__ = "_lat", "_long", "_params", "_forecast_days"
