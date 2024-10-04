@@ -3,7 +3,7 @@ Objects Module
 --------------
 
 This module comprises classes serving as foundational components
-for various classes and functions within the package.
+for the various other classes and functions within the package.
 """
 
 from typing import Any
@@ -27,7 +27,7 @@ class BaseMeteor:
 
     def __init__(self, lat: int | float, long: int | float) -> None:
 
-        # `params` dictionary to store parameters for API requests.
+        # 'params' dictionary to store parameters for API requests.
         self._params: dict[str, Any] = {}
 
         self.lat = lat
@@ -39,9 +39,9 @@ class BaseMeteor:
 
     @lat.setter
     def lat(self, __value: int | float) -> None:
-        assert -90 <= __value <= 90, ValueError(
-            f"`lat` must be in the range of -90 and 90; got {__value}."
-        )
+        if __value < -90 or __value > 90:
+            raise ValueError(f"'lat' must be a number between -90 and 90.")
+
         self._lat = self._params["latitude"] = __value
 
     @property
@@ -50,9 +50,9 @@ class BaseMeteor:
 
     @long.setter
     def long(self, __value: int | float) -> None:
-        assert -180 <= __value <= 180, ValueError(
-            f"`long` must be in the range of -90 and 90; got {__value}."
-        )
+        if __value < -180 or __value > 180:
+            raise ValueError(f"'long' must be a number between -180 and 180.")
+
         self._long = self._params["longitude"] = __value
 
     def _get_current_data(self, params: dict[str, Any]) -> int | float:
