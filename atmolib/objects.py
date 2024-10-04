@@ -68,7 +68,7 @@ class BaseMeteor:
         return tools.get_current_data(self._session, self._api, params | self._params)
 
     def _get_periodical_data(
-        self, params: dict[str, Any], dtype=np.float16
+        self, params: dict[str, Any], dtype=np.float32
     ) -> pd.Series:
         """
         Extracts periodical meteorology data from Open-Meteo's
@@ -76,7 +76,8 @@ class BaseMeteor:
 
         #### Params:
         - params (dict[str, Any]): API request parameters.
-        - dtype: Desired numpy dtype of the request meteorology data.
+        - dtype: numpy datatype for meteorology data storage.
+        Defaults to float32 (32-bit floating point number).
         """
         return tools.get_periodical_data(
             self._session, self._api, params | self._params, dtype
