@@ -59,7 +59,7 @@ def _verify_keys(params: dict[str, Any], keys: tuple[str]) -> None:
     for key in keys:
         if key in params:
             continue
-        
+
         raise KeyError(f"Required parameter {key!r} not found in the 'params' mapping.")
 
 
@@ -72,7 +72,7 @@ def get_current_data(
     #### Params:
     - session (requests.Session): A `requests.Session` object for making API requests.
     - api (str): Absolute URL of the API endpoint.
-    - params (dict[str, str | int]): API request parameters.
+    - params (dict[str, Any]): API request parameters.
     """
 
     _verify_keys(params, ("latitude", "longitude", "current"))
@@ -145,7 +145,7 @@ def get_current_summary(
     #### Params:
     - session (requests.Session): A `requests.Session` object for making API requests.
     - api (str): Absolute URL of the API endpoint.
-    - params (dict[str, str | int]): API request parameters.
+    - params (dict[str, Any]): API request parameters.
     - labels (list[str]): List of strings representing the index labels for
     the resultant pandas Series object.
     """
@@ -172,7 +172,7 @@ def get_periodical_summary(
     #### Params:
     - session (requests.Session): A `requests.Session` object for making API requests.
     - api (str): Absolute URL of the API endpoint.
-    - params (dict[str, str | int]): API request parameters.
+    - params (dict[str, Any]): API request parameters.
     - labels (list[str]): List of strings representing the index labels
     for the resultant pandas Series object.
     """

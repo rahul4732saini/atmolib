@@ -61,8 +61,7 @@ class BaseMeteor:
         Open-Meteo API and returns the current weather data.
 
         #### Params:
-        - params (dict[str, Any]): A dictionary all the necessary parameters except the
-        coordinate parameters to request the Open-Meteo Weather API.
+        - params (dict[str, Any]): API request parameters.
         """
 
         # `_session` and `_api` class attributes must be defined by the child class.
