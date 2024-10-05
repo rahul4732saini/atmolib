@@ -216,18 +216,19 @@ class TestWeatherArchive:
             archive.get_daily_apparent_temperature(unit=unit),
         )
 
-    @pytest.mark.parametrize("type_", ("mean", "max", "min"))
-    def test_daily_temperature_methods_type_parameter(
+    @pytest.mark.parametrize("metric", ("mean", "max", "min"))
+    def test_daily_temperature_methods_metric_parameter(
         self,
         archive: atmolib.WeatherArchive,
-        type_: atmolib.constants.DAILY_WEATHER_REQUEST_TYPES,
+        metric: atmolib.constants.DAILY_WEATHER_REQUEST_TYPES,
     ) -> None:
         """
-        Tests the daily temperature extraction methods with different `type_` arguments.
+        Tests the daily temperature extraction
+        methods with different `metric` arguments.
         """
         self._verify_temp_and_apparent_temp_methods(
-            archive.get_daily_temperature(type_=type_),
-            archive.get_daily_apparent_temperature(type_=type_),
+            archive.get_daily_temperature(metric=metric),
+            archive.get_daily_apparent_temperature(metric=metric),
         )
 
     def test_hourly_temperature_methods_with_default_parameters(
