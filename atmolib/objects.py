@@ -254,22 +254,20 @@ class BaseWeather(BaseMeteor):
         """
 
         if frequency not in ("hourly", "daily"):
-            raise ValueError(
-                f"Expected `frequency` to be 'hourly' or 'daily'; got {frequency!r}."
-            )
+            raise ValueError(f"Invalid frequency specified: {frequency!r}")
 
         data: pd.Series = self._get_periodical_data(
             {frequency: "weather_code"}, dtype=np.uint8
         )
 
-        # Converting the Series into a pandas.DataFrame to
-        # add a new column for weather code description.
+        # Converting the Series into a pandas.DataFrame object
+        # to add a new column for weather code description.
         dataframe = data.to_frame("data")
 
         # Creating a new column 'description' mapped to the
         # description of the corresponding weather code.
-        dataframe["description"] = dataframe.data.map(
-            lambda x: constants.WEATHER_CODES[str(x)]
+        dataframe["description"] = dataframe["data"].map(
+            lambda code: constants.WEATHER_CODES[str(code)]
         )
 
         return dataframe
