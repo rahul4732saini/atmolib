@@ -58,10 +58,7 @@ class AirQuality(BaseForecast):
             "nitrogen_dioxide",
             "sulphur_dioxide",
         ):
-            raise ValueError(
-                "Expected `gas` to be 'ozone', 'carbon_monoxide',"
-                f"'nitrogen_dioxide' or 'sulphur_dioxide'; got {gas!r}."
-            )
+            raise ValueError(f"Invalid atmospheric gas specified: {gas!r}")
 
     @staticmethod
     def _verify_plant_species(plant: constants.PLANTS) -> None:
@@ -71,10 +68,7 @@ class AirQuality(BaseForecast):
         """
 
         if plant not in ("alder", "birch", "grass", "mugwort", "olive", "ragweed"):
-            raise ValueError(
-                "Expected `plant` to be one of 'alder', 'birch', 'grass', 'mugwort',"
-                f"'olive' or 'ragweed'; got {plant!r}."
-            )
+            raise ValueError(f"Invalid plant species specified: {plant!r}")
 
     def get_current_summary(self) -> pd.Series:
         """
@@ -134,7 +128,8 @@ class AirQuality(BaseForecast):
 
     def get_current_aqi(self, source: constants.AQI_SOURCES = "european") -> int:
         """
-        Extracts current Air Quality Index value based on the specified source.
+        Extracts current Air Quality Index value
+        based on the specified AQI source.
 
         #### Params:
         - source: Source of the Air Quality Index; must be one of the following:
@@ -143,9 +138,7 @@ class AirQuality(BaseForecast):
         """
 
         if source not in ("european", "us"):
-            raise ValueError(
-                f"Expected `source` to be 'european' or 'us'; got {source!r}."
-            )
+            raise ValueError(f"Invalid AQI source specified: {source!r}")
 
         return int(self._get_current_data({"current": "european_aqi"}))
 
