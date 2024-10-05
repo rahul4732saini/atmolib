@@ -36,7 +36,7 @@ class TestAirQuality:
         Test the `atmolib.AirQuality` object initialization with valid parameters.
         """
 
-        with pytest.raises(AssertionError):
+        with pytest.raises(ValueError):
 
             # Expects an AssertionError upon initialization with invalid coorindates.
             for i in invalid_coordinates:

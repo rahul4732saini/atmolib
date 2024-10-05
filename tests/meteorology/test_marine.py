@@ -40,7 +40,7 @@ class TestMarineWeather:
         Tests the `atmolib.MarineWeather` object initialization with invalid parameters.
         """
 
-        with pytest.raises(AssertionError):
+        with pytest.raises(ValueError):
 
             # Expects a ValueError upon initialization with invalid `wave_type` argument.
             for days in (0, -1, 9):

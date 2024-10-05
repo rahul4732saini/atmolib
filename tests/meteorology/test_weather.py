@@ -36,7 +36,7 @@ class TestWeather:
         Tests the `atmolib.Weather` object initialization with invalid parameters.
         """
 
-        with pytest.raises(AssertionError):
+        with pytest.raises(ValueError):
 
             # Expects an AssertionError upon initialization with invalid coordinates.
             for i in invalid_coordinates:
