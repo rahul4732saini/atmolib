@@ -17,15 +17,16 @@ from ..common import constants, tools
 
 class AirQuality(BaseForecast):
     """
-    AirQuality class to extract air quality data based on the latitudinal and longitudinal
-    coordinates of the location. It interacts with Open-Meteo's Air Quality API to fetch
-    the current or up to upcoming 7-days hourly air quality forecast data.
+    AirQuality class defines the mechanism for extraction of air quality data based
+    on the latitudinal and longitudinal coordinates of the location. It interactes
+    with Open Meteo's Air Quality API to fetch the current or up to upcoming 7-days
+    hourly air quality forecast data.
     """
 
     _session = requests.Session()
     _api = constants.AIR_QUALITY_API
 
-    # Maximum number of supported days in the future for forecast data extraction.
+    # The maximum number of days for which forecast data can be extracted.
     _max_forecast_days = 7
 
     # Closes the request session upon exit.
@@ -48,8 +49,8 @@ class AirQuality(BaseForecast):
     @staticmethod
     def _verify_atmospheric_gas(gas: constants.GASES) -> None:
         """
-        Verifies whether the specified atmospheric gas is supported
-        for the extraction ofaerial gaseous concentration.
+        Verifies the specified atmospheric gas value
+        and raises a ValueError if found invalid.
         """
 
         if gas not in (
@@ -63,8 +64,8 @@ class AirQuality(BaseForecast):
     @staticmethod
     def _verify_plant_species(plant: constants.PLANTS) -> None:
         """
-        Verifies whether the specified plant species is supported
-        for the extraction of aerial pollen grain concentration.
+        Verifies the specified plant species value
+        and raises a ValueError if found invalid.
         """
 
         if plant not in ("alder", "birch", "grass", "mugwort", "olive", "ragweed"):
@@ -88,8 +89,8 @@ class AirQuality(BaseForecast):
         - Ammonia[NH3] Concentration (Only available for Europe)
         """
 
-        # A string representation of the air quality summary data types
-        # separated by commas as supported for requesting the Web API.
+        # String representation of the summary data types seperated
+        # by commas as supported for requesting the API endpoint.
         data_types: str = f",".join(constants.CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES)
 
         return tools.get_current_summary(
@@ -115,8 +116,8 @@ class AirQuality(BaseForecast):
         - Ammonia[NH3] Concentration (Only available for Europe)
         """
 
-        # A string representation of the air quality summary data types
-        # separated by commas as supported for requesting the Web API.
+        # String representation of the summary data types seperated
+        # by commas as supported for requesting the API endpoint.
         data_types: str = f",".join(constants.HOURLY_AIR_QUALITY_SUMMARY_DATA_TYPES)
 
         return tools.get_periodical_summary(
@@ -128,8 +129,7 @@ class AirQuality(BaseForecast):
 
     def get_current_aqi(self, source: constants.AQI_SOURCES = "european") -> int:
         """
-        Extracts current Air Quality Index value
-        based on the specified AQI source.
+        Extracts current Air Quality Index based on the specified AQI source.
 
         #### Params:
         - source: Source of the Air Quality Index; must be one of the following:
