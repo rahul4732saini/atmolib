@@ -452,15 +452,17 @@ class BaseWeather(BaseMeteor):
         self, unit: constants.WIND_SPEED_UNITS = "kmh"
     ) -> pd.Series:
         """
-        Returns a pandas Series daily maximum wind gusts 2 meters(m)
-        above the ground level at the specified coordinates.
+        Extracts daily maximum wind gusts at 2 meters(m) above
+        the ground level in the specified wind speed unit.
 
         #### Params:
         - unit (str): Wind speed unit; must be one of the following:
-            - 'kmh' (kilometers per hour)
-            - 'mph' (miles per hour)
-            - 'ms' (meter per second)
-            - 'kn' (knots)
+            - `kmh` (kilometers per hour)
+            - `mph` (miles per hour)
+            - `ms` (meter per second)
+            - `kn` (knots)
+
+            Defaults to `kmh`.
         """
         self._verify_wind_speed_unit(unit)
         return self._get_periodical_data({"daily": "wind_gusts_10m_max"})
@@ -469,11 +471,11 @@ class BaseWeather(BaseMeteor):
         self, unit: constants.PRECIPITATION_UNITS = "mm"
     ) -> pd.Series:
         """
-        Returns a pandas Series of daily precipitation (sum of rain, showers, and snowfall)
-        data at the specified coordinates.
+        Extracts daily total precipitation (rain + showers + snowfall)
+        sum data in the specified precipitation unit.
 
         #### Params:
-        - unit (str): Precipitation unit; must be 'mm' or 'inch'.
+        - unit (str): Precipitation unit; must be `mm` or `inch`. Defaults to `mm`.
         """
         self._verify_precipitation_unit(unit)
 
@@ -485,11 +487,10 @@ class BaseWeather(BaseMeteor):
         self, unit: constants.PRECIPITATION_UNITS = "mm"
     ) -> pd.Series:
         """
-        Returns a pandas Series of daily rainfall data
-        in mm/inch at the specified coordinates.
+        Extracts daily total rainfall data in the specified precipitation unit.
 
         #### Params:
-        - unit (str): Precipitation unit; must be 'mm' or 'inch'.
+        - unit (str): Precipitation unit; must be `mm` or `inch`. Defaults to `mm`.
         """
         self._verify_precipitation_unit(unit)
 
@@ -499,42 +500,39 @@ class BaseWeather(BaseMeteor):
 
     def get_daily_total_snowfall(self) -> pd.Series:
         """
-        Returns a pandas Series of daily rainfall data in
-        centimeters(m) at the specified coordinates.
+        Extracts daily total snowfall data in centimeters(cm).
         """
         return self._get_periodical_data({"daily": "snowfall_sum"})
 
     def get_daily_sunrise_time(self) -> pd.Series:
         """
-        Returns a pandas Series of daily sunrise time in the ISO-8601 datetime
-        format (YYYY-MM-DDTHH:MM) at the specified coordinates.
+        Extracts daily sunrise time in the ISO-8601
+        datetime format (YYYY-MM-DDTHH:MM).
         """
         return self._get_periodical_data({"daily": "sunrise"}, dtype=np.object_)
 
     def get_daily_sunset_time(self) -> pd.Series:
         """
-        Returns a pandas Series of daily sunset time in the ISO-8601 datetime
-        format (YYYY-MM-DDTHH:MM) at the specified coordinates.
+        Extracts daily sunset time in the ISO-8601
+        datetime format (YYYY-MM-DDTHH:MM).
         """
         return self._get_periodical_data({"daily": "sunset"}, dtype=np.object_)
 
     def get_daily_daylight_duration(self) -> pd.Series:
         """
-        Returns a pandas Series of daily daylight duration
-        in seconds(s) at the specified coordinates.
+        Extracts daily daylight duration time in seconds(s)
         """
         return self._get_periodical_data({"daily": "daylight_duration"})
 
     def get_daily_sunshine_duration(self) -> pd.Series:
         """
-        Returns a pandas Series of daily sunshine duration
-        in seconds(s) at the specified coordinates.
+        Extracts daily sunlight duration time in seconds(s).
         """
         return self._get_periodical_data({"daily": "sunshine_duration"})
 
     def get_daily_total_shortwave_radiation(self) -> pd.Series:
         """
-        Returns a pandas Series of daily sum of shortwave radiation in Mega
-        Joules per square meter (MJ/m^2) sat the specified coordinates.
+        Extracts daily shortwave radiation sum
+        in Mega Joules per square meter (MJ/m^2).
         """
         return self._get_periodical_data({"daily": "shortwave_radiation_sum"})
