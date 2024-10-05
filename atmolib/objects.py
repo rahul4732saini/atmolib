@@ -304,7 +304,7 @@ class BaseWeather(BaseMeteor):
         pressure: str | None = constants.PRESSURE_LEVEL_MAPPING.get(level)
 
         if pressure is None:
-            raise ValueError(f"Invalid pressure level specified: {level!r}")
+            raise ValueError(f"Invalid measurement level specified: {level!r}")
 
         return self._get_periodical_data({"hourly": pressure})
 
