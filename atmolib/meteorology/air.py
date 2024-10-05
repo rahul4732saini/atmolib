@@ -189,26 +189,29 @@ class AirQuality(BaseForecast):
         self, plant: constants.PLANTS = "grass"
     ) -> int | float | None:
         """
-        Returns the current concentration(grains/m^3) of pollens of the specified
+        Extracts current aerial pollen concentration(grains/m^3) of the specified
         plant. Only available for Europe as provided by CAMS European Air Quality
         forecast. Returns None for Non-European regions.
 
         #### Params:
-        - plant (str): Plant whose pollen concentration can be extracted; must be one of
-        ('alder', 'birch', 'grass', 'mugwort', 'olive', 'ragweed').
+        - plant (str): Plant whose pollen concentration has to be extracted;
+        must be one of `alder`, `birch`, `grass`, `mugwort`, `olive`, `ragweed`.
+        Defaults to `grass`.
         """
         self._verify_plant_species(plant)
         return self._get_current_data({"current": f"{plant}_pollen"})
 
     def get_current_uv_index(self) -> int | float:
         """
-        Returns the current Ultra-Violet radiation index value at the specified coordinates.
+        Extracts current Ultra-Violet(UV) radiation index.
         """
         return self._get_current_data({"current": "uv_index"})
 
     def get_current_aerosol_optical_depth(self) -> int | float:
         """
-        Returns the current aerosol optical depth at 550 nm at the specified coordinates.
+        Extracts the current aerosal optical depth at a wavelength of 550nm.
+
+        #### Brief:
 
         Aerosol optical depth (AOD) at 550 nm is a measure of the extinction of solar radiation
         at a wavelength of 550 nanometers (green-yellow region of the visible spectrum) due to
@@ -219,15 +222,14 @@ class AirQuality(BaseForecast):
 
     def get_hourly_dust_conc(self) -> pd.Series:
         """
-        Returns a pandas Series of hourly concentration(micro g/m^3) data of dust
-        in air 10 meters(m) above ground level at the specified coordinates.
+        Extracts hourly aerial dust concentration(micro g/m^3)
+        at 10 meters(m) above the ground level.
         """
         return self._get_periodical_data({"hourly": "dust"})
 
     def get_hourly_uv_index(self) -> pd.Series:
         """
-        Returns a pandas Series of hourly Ultra-Violet
-        radiation index data at the specified coordinates.
+        Extracts horuly Ultra-Violet(UV) radiation index data.
         """
         return self._get_periodical_data({"hourly": "uv_index"})
 
