@@ -380,17 +380,12 @@ class BaseWeather(BaseMeteor):
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.Series:
         """
-        Extracts daily temperature statistical metrics (maximum, minimum, mean)
+        Extracts daily temperature statistical metrics (max, min, mean)
         at 2 meters(m) above ground level in the specified temperature unit.
 
         #### Params:
-        - metric (str): The type of daily temperature to be extracted;
-        must be 'min', 'max' or 'mean'.
-            - `min`: Daily minimum temperature.
-            - `max`: Daily maximum temperature.
-            - `mean`: Daily mean temperature.
-
-            Defaults to `mean`.
+        - metric (str): Statistical metric to be extracted;
+        must be 'min', 'max' or 'mean'. Defaults to `mean`.
         - unit: Temperature unit; must be `celsius` or `fahrenheit`. Defaults to `celsius`.
         """
 
@@ -405,29 +400,26 @@ class BaseWeather(BaseMeteor):
 
     def get_daily_apparent_temperature(
         self,
-        type_: constants.DAILY_WEATHER_REQUEST_TYPES = "mean",
+        metric: constants.DAILY_WEATHER_REQUEST_TYPES = "mean",
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.Series:
         """
-        Returns a pandas Series of daily maximum, minimum or mean apparent temperature
-        data 2 meters(m) above the ground level at the specified coordinates.
+        Extracts daily apparent temperature statistical metrics (max, min, mean)
+        at 2 meters(m) above the ground level in the specified temperature unit.
 
         #### Params:
-        - type (str): Specifies the type of daily apparent temperature to
-        be retrieved; must be 'min', 'max' or 'mean'.
-            - 'min': Daily minimum apparent temperature.
-            - 'max': Daily maximum apparent temperature.
-            - 'mean': Daily mean apparent temperature.
-        - unit: Temperature unit; must be 'celsius' or 'fahrenheit'.
+        - metric (str): Statistical metric to be extracted;
+        must be 'min', 'max' or 'mean'. Defaults to `mean`.
+        - unit: Temperature unit; must be `celsius` or `fahrenheit`. Defaults to `celsius`.
         """
 
-        if type_ not in ("max", "min", "mean"):
-            raise ValueError(f"Expected `type` to be 'min' or 'max'; got {type_!r}.")
+        if metric not in ("max", "min", "mean"):
+            raise ValueError(f"Invalid stastistical metric specified: {metric!r}")
 
         self._verify_temperature_unit(unit)
 
         return self._get_periodical_data(
-            {"daily": f"apparent_temperature_{type_}", "temperature_unit": unit}
+            {"daily": f"apparent_temperature_{metric}", "temperature_unit": unit}
         )
 
     def get_daily_max_wind_speed(
