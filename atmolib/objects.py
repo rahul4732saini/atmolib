@@ -300,13 +300,13 @@ class BaseWeather(BaseMeteor):
         Defaults to `surface`.
         """
 
-        # Mapped value of the specified pressure level.
-        pressure: str | None = constants.PRESSURE_LEVEL_MAPPING.get(level)
+        # Extracts the request metric based on the specified measurement level.
+        metric: str | None = constants.PRESSURE_LEVEL_MAPPING.get(level)
 
-        if pressure is None:
+        if metric is None:
             raise ValueError(f"Invalid measurement level specified: {level!r}")
 
-        return self._get_periodical_data({"hourly": pressure})
+        return self._get_periodical_data({"hourly": metric})
 
     def get_hourly_total_cloud_cover(self) -> pd.Series:
         """
