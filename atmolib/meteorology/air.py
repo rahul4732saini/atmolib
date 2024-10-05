@@ -151,34 +151,37 @@ class AirQuality(BaseForecast):
 
     def get_current_dust_conc(self) -> int | float:
         """
-        Returns the current concentration(micro g/m^3) of dust in air
-        10 meters(m) above ground level at the specified coordinates.
+        Extracts current aerial dust concentration(micro g/m^3)
+        at 10 meters(m) above the ground level.
         """
         return self._get_current_data({"current": "dust"})
 
     def get_current_gaseous_conc(self, gas: constants.GASES = "ozone") -> int | float:
         """
-        Returns the current concentration(miro g/m^3) of the specified atmospheric
-        gas in air 10 meters(m) above the ground level at the specified coordinates.
+        Extracts current aerial concentration(micro g/m^3) of the specified
+        atmospheric gas at 10 meters(m) above the ground level.
 
         #### Params:
-        - gas (str): Gas whose concentration needs to be extracted; must be one of the following:
-        ('ozone', 'carbon_monoxide', 'nitrogen_dioxide', 'sulphur_dioxide').
+        - gas (str): Atmospheirc gas whose concentration has to be extracted;
+        must be one of `ozone`, `carbon_dioxide`, `nitrogen_dioxide`,
+        or `sulphur_dioxide`. Defaults to `ozone`.
         """
         self._verify_atmospheric_gas(gas)
         return self._get_current_data({"current": gas})
 
     def get_current_pm2_5_conc(self) -> int | float:
         """
-        Returns the current concentration(micro g/m^3) of particulate matter with diameter
-        smaller than the 2.5 micro meter(m) in air 10 meters(m) above the ground level.
+        Extracts current aerial concentraction(micro g/m^3) of particulate
+        matter with a diameter smaller than 2.5 micro meter(m) at 10 meters(m)
+        above the ground level.
         """
         return self._get_current_data({"current": "pm2_5"})
 
     def get_current_pm10_conc(self) -> int | float:
         """
-        Returns the current concentration(micro g/m^3) of particulate matter with diameter
-        smaller than the 10 micro meter(m) in air 10 meters(m) above the ground level.
+        Extracts current aerial concentraction(micro g/m^3) of particulate
+        matter with a diameter smaller than 10 micro meter(m) at 10 meters(m)
+        above the ground level.
         """
         return self._get_current_data({"current": "pm10"})
 
