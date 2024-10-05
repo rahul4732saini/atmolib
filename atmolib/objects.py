@@ -274,19 +274,17 @@ class BaseWeather(BaseMeteor):
         self, unit: constants.PRECIPITATION_UNITS = "mm"
     ) -> pd.Series:
         """
-        Returns a pandas Series of hourly rainfall data
-        in mm/inch at the specified coordinates.
+        Extracts hourly rainfall data in the specified precipitation unit.
 
         #### Params:
-        - unit (str): Precipitation unit; must be 'mm' or 'inch'.
+        - unit (str): Precipitation unit; must be `mm` or `inch`. Defaults to `mm`.
         """
         self._verify_precipitation_unit(unit)
         return self._get_periodical_data({"hourly": "rain", "precipitation_unit": unit})
 
     def get_hourly_snowfall(self) -> pd.Series:
         """
-        Returns a pandas Series of hourly snowfall data
-        in centimeters(cm) at the specified coordinates.
+        Extracts hourly snowfall data in centimeters(cm).
         """
         return self._get_periodical_data({"hourly": "rain"})
 
@@ -294,11 +292,12 @@ class BaseWeather(BaseMeteor):
         self, level: constants.PRESSURE_LEVELS = "surface"
     ) -> pd.Series:
         """
-        Returns a pandas Series of the hourly atmospheric pressure data
-        in Hectopascal (hPa) at the specified coordinates.
+        Extracts hourly atmospheric perssure data in Hectopasacals(hPa)
+        at the specified measurement level.
 
         #### Params:
-        - level (str): Desired level of the atmospheric data; must be 'surface' or 'sealevel'.
+        - level (str): Desired measurement level; must be `surface` or `sealevel`.
+        Defaults to `surface`.
         """
 
         # Mapped value of the specified pressure level.
@@ -311,8 +310,7 @@ class BaseWeather(BaseMeteor):
 
     def get_hourly_total_cloud_cover(self) -> pd.Series:
         """
-        Returns a pandas Series of hourly total cloud cover percentage(%) data
-        at the specified coordinates.
+        Extracts hourly total cloud cover percentage(%) data.
         """
         return self._get_periodical_data({"hourly": "cloud_cover"})
 
