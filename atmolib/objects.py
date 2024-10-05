@@ -192,9 +192,7 @@ class BaseWeather(BaseMeteor):
         self._verify_temperature_unit(unit)
 
         if altitude not in (2, 80, 120, 180):
-            raise ValueError(
-                f"Expected `altitude` to be 2, 80, 120 or 180; got {altitude}."
-            )
+            raise ValueError(f"Invalid altitude value specified: {altitude}")
 
         return self._get_periodical_data(
             {"hourly": f"temperature_{altitude}m", "temperature_unit": unit}
@@ -307,9 +305,7 @@ class BaseWeather(BaseMeteor):
         pressure: str | None = constants.PRESSURE_LEVEL_MAPPING.get(level)
 
         if pressure is None:
-            raise ValueError(
-                f"Expected `level` to be 'sealevel' or 'surface'; got {level!r}."
-            )
+            raise ValueError(f"Invalid pressure level specified: {level!r}")
 
         return self._get_periodical_data({"hourly": pressure})
 
@@ -336,9 +332,7 @@ class BaseWeather(BaseMeteor):
         """
 
         if level not in ("low", "mid", "high"):
-            raise ValueError(
-                f"Expected `level` to be 'low', 'mid' or 'high'; got {level!r}."
-            )
+            raise ValueError(f"Invalid cloud cover level specified: {level!r}")
 
         return self._get_periodical_data({"hourly": f"cloud_cover_{level}"})
 
