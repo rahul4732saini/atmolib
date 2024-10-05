@@ -318,19 +318,21 @@ class BaseWeather(BaseMeteor):
         self, level: constants.CLOUD_COVER_LEVEL = "low"
     ) -> pd.Series:
         """
-        Returns a pandas Series of hourly cloud cover percentage(%) data
-        at the specified level and coordinates.
+        Extracts hourly cloud cover percentage(%)
+        data at the specified altitude level.
 
         #### Params:
         - level (str): Altitude level of the desired cloud coverage; must be
         one of the following:
-            - 'low' (clouds and fog up to an altitude of 3 km.)
-            - 'mid' (clouds at an altitude between 3 km and 8 km.)
-            - 'high' (clouds at an altitude higher than 8 km.)
+            - `low` (clouds and fog up to an altitude of 3 km)
+            - `mid` (clouds at an altitude between 3 km and 8 km)
+            - `high` (clouds at an altitude higher than 8 km)
+
+            Defaults to `low`.
         """
 
         if level not in ("low", "mid", "high"):
-            raise ValueError(f"Invalid cloud cover level specified: {level!r}")
+            raise ValueError(f"Invalid altitude level specified: {level!r}")
 
         return self._get_periodical_data({"hourly": f"cloud_cover_{level}"})
 
@@ -338,11 +340,11 @@ class BaseWeather(BaseMeteor):
         self, unit: constants.PRECIPITATION_UNITS = "mm"
     ) -> pd.Series:
         """
-        Returns a pandas Series of hourly precipitation (sum of rain, showers, and snowfall)
-        data at the specified coordinates.
+        Extracts hourly precipitation (rain + showers + snowfall)
+        data in the specified precipitation unit.
 
         #### Params:
-        - unit (str): Precipitation unit; must be 'mm' or 'inch'.
+        - unit (str): Precipitation unit; must be `mm` or `inch`. Defaults to `mm`.
         """
         self._verify_precipitation_unit(unit)
 
@@ -354,15 +356,17 @@ class BaseWeather(BaseMeteor):
         self, unit: constants.WIND_SPEED_UNITS = "kmh"
     ) -> pd.Series:
         """
-        Returns a pandas Series of hourly wind gusts data 10 meters(m) above the
-        ground level at the specified coordinates.
+        Extracts hourly wind guasts data at 10 meters(m) above
+        the ground level in the specified wind speed unit.
 
         #### Params:
         - unit (str): Wind speed unit; must be one of the following:
-            - 'kmh' (kilometers per hour)
-            - 'mph' (miles per hour)
-            - 'ms' (meter per second)
-            - 'kn' (knots)
+            - `kmh` (kilometers per hour)
+            - `mph` (miles per hour)
+            - `kn` (knots)
+            - `ms` (meter per second)
+
+            Defaults to `kmh`.
         """
         self._verify_wind_speed_unit(unit)
 
@@ -427,23 +431,25 @@ class BaseWeather(BaseMeteor):
         self, unit: constants.WIND_SPEED_UNITS = "kmh"
     ) -> pd.Series:
         """
-        Returns a pandas Series of daily maximum wind speed 2 meters(m)
-        above the ground level at the specified coordinates.
+        Extracts daily maximum wind speed data at 2 meters(m) above
+        the ground level in the specified wind speed unit.
 
         #### Params:
         - unit (str): Wind speed unit; must be one of the following:
-            - 'kmh' (kilometers per hour)
-            - 'mph' (miles per hour)
-            - 'ms' (meter per second)
-            - 'kn' (knots)
+            - `kmh` (kilometers per hour)
+            - `mph` (miles per hour)
+            - `kn` (knots)
+            - `ms` (meter per second)
+
+            Defaults to `kmh`.
         """
         self._verify_wind_speed_unit(unit)
         return self._get_periodical_data({"daily": "wind_speed_10m_max"})
 
     def get_daily_dominant_wind_direction(self) -> pd.Series:
         """
-        Returns a pandas Series of daily dominant wind direction in degrees data
-        10 meters(m) above the ground level at the specified coordinates.
+        Extracts daily dominant wind direction data in
+        degrees at 10 meters(m) above the ground level.
         """
         return self._get_periodical_data({"daily": "wind_direction_10m_dominant"})
 
