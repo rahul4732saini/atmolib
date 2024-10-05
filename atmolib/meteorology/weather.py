@@ -14,7 +14,7 @@ import numpy as np
 import pandas as pd
 
 from ..common import constants, tools
-from ..objects import BaseForecast, BaseWeather
+from ..base import BaseForecast, BaseWeather
 
 
 class Weather(BaseForecast, BaseWeather):

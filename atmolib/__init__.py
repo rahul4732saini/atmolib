@@ -27,12 +27,12 @@ __all__ = (
     "AirQuality",
     "constants",
     "errors",
-    "objects",
+    "base",
     "version",
 )
 
 from .version import version
-from . import errors, objects
+from . import errors, base
 from .common import tools, constants
 from .common.tools import get_city_details, get_elevation
 from .meteorology import Weather, WeatherArchive, AirQuality, MarineWeather

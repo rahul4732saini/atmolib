@@ -15,7 +15,7 @@ import requests
 import pandas as pd
 
 from ..common import constants, tools
-from ..objects import BaseMeteor, BaseWeather
+from ..base import BaseMeteor, BaseWeather
 
 
 class WeatherArchive(BaseWeather, BaseMeteor):

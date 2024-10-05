@@ -11,7 +11,7 @@ import atexit
 import requests
 import pandas as pd
 
-from ..objects import BaseForecast
+from ..base import BaseForecast
 from ..common import constants, tools
 
 
