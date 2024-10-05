@@ -180,12 +180,14 @@ class BaseWeather(BaseMeteor):
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.Series:
         """
-        Returns a pandas Series of temperature data 2 meters(m) above
-        the ground level at the specified coordinates.
+        Extracts hourly temperature data at the specified altitude
+        above the ground level in the specified temperature unit.
 
         #### Params:
-        - altitude (int): Altitude from the ground level; must be 2, 80, 120 or 180.
-        - unit (str): Temperature unit; must be 'celsius' or 'fahrenheit'.
+        - altitude (int): Altitude in meters(m) above the ground level;
+        must be one of 2, 80, 120, or 180. Defaults to 2.
+        - unit (str): Temperature unit; must be `celsius` or `fahrenheit`.
+        Defaults to `celsius`.
         """
         self._verify_temperature_unit(unit)
 
@@ -202,11 +204,12 @@ class BaseWeather(BaseMeteor):
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
     ) -> pd.Series:
         """
-        Returns a pandas Series of apparent temperature 2 meters(m) above
-        the ground level data at the specified coordinates.
+        Extracts hourly apparent temperature data at 2 meters(m)
+        above the ground level in the specified temperature unit.
 
         #### Params:
-        - unit (str): Temperature unit; must be 'celsius' or 'fahrenheit'.
+        - unit (str): Temperature unit; must be `celsius` or `fahrenheit`.
+        Defaults to `celsius`.
         """
         self._verify_temperature_unit(unit)
 
@@ -218,11 +221,12 @@ class BaseWeather(BaseMeteor):
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
     ) -> pd.Series:
         """
-        Returns a pandas Series of hourly dew point data 2 meters(m) above the
-        ground level at the specified coordinates.
+        Extracts hourly dew point data at 2 meters(m) above
+        the ground level in the specified temperature unit.
 
         #### Params:
-        - unit (str): Temperature unit; must be 'celsius' or 'fahrenheit'.
+        - unit (str): Temperature unit; must be `celsius` or `fahrenheit`.
+        Defaults to `celsius`.
         """
         self._verify_temperature_unit(unit)
 
@@ -232,8 +236,8 @@ class BaseWeather(BaseMeteor):
 
     def get_hourly_relative_humidity(self) -> pd.Series:
         """
-        Returns a pandas Series of hourly relative humidity percentage(%) data
-        2 meters(m) above the ground level at the specified coordinates.
+        Extracts hourly relative humidity percentage(%)
+        data at 2 meters(m) above the ground level.
         """
         return self._get_periodical_data({"hourly": "relative_humidity_2m"})
 
@@ -241,15 +245,12 @@ class BaseWeather(BaseMeteor):
         self, frequency: constants.FREQUENCY = "daily"
     ) -> pd.DataFrame:
         """
-        Returns a pandas DataFrame of hourly weather code data with its corresponding
-        description at the specified coordinates.
+        Extracts periodical weather code data with their
+        corresponding descriptions at the specified frequency.
 
         #### Params:
-        - frequency (str): Frequency of the data distribution; must be 'daily' or 'hourly'.
-
-        #### Columns:
-        - data: weather code at the corresponding hour (timeline as a part of the index).
-        - description: description of the corresponding weather code.
+        - frequency (str): Frequency of the data distribution;
+        must be `daily` or `hourly`. Defaults to `daily`.
         """
 
         if frequency not in ("hourly", "daily"):
