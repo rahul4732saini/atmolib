@@ -2,8 +2,8 @@
 Air Quality Module
 ------------------
 
-This module defines the AirQuality class facilitating the extraction of air quality data from
-the Open-Meteo Air Quality API based on the latitudinal and longitudinal coordinates of the location.
+This mdoule defines the AirQuality class facilitating extraction
+of air quality data from Open-Meteo's Air Quality API.
 """
 
 import atexit
@@ -18,7 +18,7 @@ from ..common import constants, tools
 class AirQuality(BaseForecast):
     """
     AirQuality class to extract air quality data based on the latitudinal and longitudinal
-    coordinates of the location. It interacts with the Open-Meteo Air Quality API to fetch
+    coordinates of the location. It interacts with Open-Meteo's Air Quality API to fetch
     the current or up to upcoming 7-days hourly air quality forecast data.
     """
 
@@ -41,7 +41,7 @@ class AirQuality(BaseForecast):
         - lat (int | float): Latitudinal coordinates of the location.
         - long (int | float): Longitudinal coordinates of the location.
         - forecast_days (int): Number of days for which the forecast has to
-        be extracted; must be in the range of 1 and 7.
+        be extracted; must be in the range of 1 and 7. Defaults to 7.
         """
         super().__init__(lat, long, forecast_days)
 
