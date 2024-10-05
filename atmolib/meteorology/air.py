@@ -78,9 +78,9 @@ class AirQuality(BaseForecast):
 
     def get_current_summary(self) -> pd.Series:
         """
-        Returns a pandas Series of the current air quality summary data.
+        Extracts current air quality summary data.
 
-        #### The air quality summary data includes the following data types:
+        #### The summary data distribution includes the following:
         - European AQI
         - United States AQI
         - Particulate Matter PM 10
@@ -107,9 +107,9 @@ class AirQuality(BaseForecast):
 
     def get_hourly_summary(self) -> pd.DataFrame:
         """
-        Returns a pandas Series of the hourly air quality summary data.
+        Extracts hourly air quality summary data.
 
-        #### The air quality summary data includes the following data types:
+        #### The summary data distribution includes the following:
         - Particulate Matter PM 10
         - Particulate Matter PM 2.5
         - Carbon Monoxide[CO] Concentration
@@ -134,8 +134,7 @@ class AirQuality(BaseForecast):
 
     def get_current_aqi(self, source: constants.AQI_SOURCES = "european") -> int:
         """
-        Returns the current US/European Air Quality
-        Index value at the specified coordinates.
+        Extracts current Air Quality Index value based on the specified source.
 
         #### Params:
         - source: Source of the Air Quality Index; must be one of the following:
@@ -152,7 +151,7 @@ class AirQuality(BaseForecast):
 
     def get_current_ammonia_conc(self) -> int | float | None:
         """
-        Returns the current concentration(micro g/m^3) of ammonia(NH3) in air.
+        Extracts the current aerial ammonia(NH3) concentration (micro g/m^3).
         Only available for Europe. Returns None for Non-European regions.
         """
         return self._get_current_data({"current": "ammonia"})
