@@ -1,6 +1,6 @@
 """
-Objects Module
---------------
+Base Module
+-----------
 
 This module comprises classes serving as foundational components
 for the various other classes and functions within the package.
