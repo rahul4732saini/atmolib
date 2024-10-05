@@ -376,28 +376,31 @@ class BaseWeather(BaseMeteor):
 
     def get_daily_temperature(
         self,
-        type_: constants.DAILY_WEATHER_REQUEST_TYPES = "mean",
+        metric: constants.DAILY_WEATHER_REQUEST_TYPES = "mean",
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> pd.Series:
         """
-        Returns a pandas Series of daily maximum, minimum or mean temperature data
-        2 meters(m) above the ground level at the specified coordinates.
+        Extracts daily temperature statistical metrics (maximum, minimum, mean)
+        at 2 meters(m) above ground level in the specified temperature unit.
 
         #### Params:
-        - type (str): The type of daily temperature to be extracted; must be 'min', 'max' or 'mean'.
-            - 'min': Daily minimum temperature.
-            - 'max': Daily maximum temperature.
-            - 'mean': Daily mean temperature.
-        - unit: Temperature unit; must be 'celsius' or 'fahrenheit'.
+        - metric (str): The type of daily temperature to be extracted;
+        must be 'min', 'max' or 'mean'.
+            - `min`: Daily minimum temperature.
+            - `max`: Daily maximum temperature.
+            - `mean`: Daily mean temperature.
+
+            Defaults to `mean`.
+        - unit: Temperature unit; must be `celsius` or `fahrenheit`. Defaults to `celsius`.
         """
 
-        if type_ not in ("max", "min", "mean"):
-            raise ValueError(f"Expected `type` to be 'min' or 'max'; got {type_!r}.")
+        if metric not in ("max", "min", "mean"):
+            raise ValueError(f"Invalid stastistical metric specified: {metric!r}")
 
         self._verify_temperature_unit(unit)
 
         return self._get_periodical_data(
-            {"daily": f"temperature_2m_{type_}", "temperature_unit": unit}
+            {"daily": f"temperature_2m_{metric}", "temperature_unit": unit}
         )
 
     def get_daily_apparent_temperature(
