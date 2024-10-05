@@ -133,36 +133,32 @@ class BaseWeather(BaseMeteor):
     @staticmethod
     def _verify_temperature_unit(unit: constants.TEMPERATURE_UNITS) -> None:
         """
-        Verifies the specified temperature unit. Raises a ValueError if the
-        argument provided is not a valid unit.
+        Verifies the specified temperature unit
+        and raises a ValueError if found invalid.
         """
 
         if unit not in ("celsius", "fahrenheit"):
-            raise ValueError(
-                f"Expected `unit` to be 'celsius' or 'fahrenheit'; got {unit!r}."
-            )
+            raise ValueError(f"Invalid temperature unit {unit!r}")
 
     @staticmethod
     def _verify_precipitation_unit(unit: constants.PRECIPITATION_UNITS) -> None:
         """
-        Verifies the specified precipitation unit. Raises a ValueError if the
-        argument provided is not a valid unit.
+        Verifies the specified precipitation unit
+        and raises a ValueError if found invalid.
         """
 
         if unit not in ("mm", "inch"):
-            raise ValueError(f"Expected `unit` to be 'mm' or 'inch'; got {unit!r}.")
+            raise ValueError(f"Invalid precipitation unit {unit!r}")
 
     @staticmethod
     def _verify_wind_speed_unit(unit: constants.WIND_SPEED_UNITS) -> None:
         """
-        Verifies the specified wind speed unit. Raises a ValueError if the
-        argument provided is not a valid unit.
+        Verifies the specified wind speed unit
+        and raises a ValueError if found invalid.
         """
 
         if unit not in ("kmh", "mph", "ms", "kn"):
-            raise ValueError(
-                f"Expected `unit` to be 'kmh', 'mph', 'ms' or 'kn'; got {unit!r}."
-            )
+            raise ValueError(f"Invalid wind speed unit {unit!r}")
 
     def _verify_units(
         self,
