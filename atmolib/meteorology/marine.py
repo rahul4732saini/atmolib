@@ -67,21 +67,18 @@ class MarineWeather(BaseForecast):
     @wave_type.setter
     def wave_type(self, __value: str) -> None:
 
-        # Retrieves the corresponding wave type value used as a request parameter for
-        # extracting marine weather data from the Open-Meteo Marine Weather API.
+        # Extracts the request parameter for the
+        # corresponding user specified wave type.
         wave_type: str | None = constants.WAVE_TYPES_MAP.get(__value)
 
         if wave_type is None:
-            raise ValueError(
-                f"Expected `wave_type` to be 'composite', 'wind' or 'swell'; got {__value!r}."
-            )
+            raise ValueError(f"Invalid wave type specified: {__value!r}")
 
-        # `self._wave_type` is assigned the wave type value
-        # same as specified for user reference.
+        # Sets the same value as specified for user reference.
         self._wave_type = __value
 
-        # `self._type` is used internally by the methods for
-        # requesting marine weather data from the API.
+        # Stores the wave type paramter for internal usage by
+        # extraction methods for requesting the API endpoint.
         self._type = wave_type
 
     def __repr__(self) -> str:
