@@ -2,7 +2,7 @@
 Air Quality Module
 ------------------
 
-This mdoule defines the AirQuality class facilitating extraction
+This module defines the AirQuality class facilitating extraction
 of air quality data from Open-Meteo's Air Quality API.
 """
 
@@ -18,7 +18,7 @@ from ..common import constants, tools
 class AirQuality(BaseForecast):
     """
     AirQuality class defines the mechanism for extraction of air quality data based
-    on the latitudinal and longitudinal coordinates of the location. It interactes
+    on the latitudinal and longitudinal coordinates of the location. It interacts
     with Open Meteo's Air Quality API to fetch the current or up to upcoming 7-days
     hourly air quality forecast data.
     """
@@ -89,7 +89,7 @@ class AirQuality(BaseForecast):
         - Ammonia[NH3] Concentration (Only available for Europe)
         """
 
-        # String representation of the summary data types seperated
+        # String representation of the summary data types separated
         # by commas as supported for requesting the API endpoint.
         data_types: str = f",".join(constants.CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES)
 
@@ -116,7 +116,7 @@ class AirQuality(BaseForecast):
         - Ammonia[NH3] Concentration (Only available for Europe)
         """
 
-        # String representation of the summary data types seperated
+        # String representation of the summary data types separated
         # by commas as supported for requesting the API endpoint.
         data_types: str = f",".join(constants.HOURLY_AIR_QUALITY_SUMMARY_DATA_TYPES)
 
@@ -132,7 +132,8 @@ class AirQuality(BaseForecast):
         Extracts current Air Quality Index based on the specified AQI source.
 
         #### Params:
-        - source: Source of the Air Quality Index; must be one of the following:
+        - source (str): Source of the Air Quality Index;
+        must be one of the following:
             - 'european' (Extracts the European Air Quality Index)
             - 'us' (Extracts the USA Air Quality Index)
         """
@@ -162,7 +163,7 @@ class AirQuality(BaseForecast):
         atmospheric gas at 10 meters(m) above the ground level.
 
         #### Params:
-        - gas (str): Atmospheirc gas whose concentration has to be extracted;
+        - gas (str): Atmospheric gas whose concentration has to be extracted;
         must be one of `ozone`, `carbon_dioxide`, `nitrogen_dioxide`,
         or `sulphur_dioxide`. Defaults to `ozone`.
         """
@@ -171,7 +172,7 @@ class AirQuality(BaseForecast):
 
     def get_current_pm2_5_conc(self) -> int | float:
         """
-        Extracts current aerial concentraction(micro g/m^3) of particulate
+        Extracts current aerial concentration(micro g/m^3) of particulate
         matter with a diameter smaller than 2.5 micro meter(m) at 10 meters(m)
         above the ground level.
         """
@@ -179,7 +180,7 @@ class AirQuality(BaseForecast):
 
     def get_current_pm10_conc(self) -> int | float:
         """
-        Extracts current aerial concentraction(micro g/m^3) of particulate
+        Extracts current aerial concentration(micro g/m^3) of particulate
         matter with a diameter smaller than 10 micro meter(m) at 10 meters(m)
         above the ground level.
         """
@@ -209,7 +210,7 @@ class AirQuality(BaseForecast):
 
     def get_current_aerosol_optical_depth(self) -> int | float:
         """
-        Extracts the current aerosal optical depth at a wavelength of 550nm.
+        Extracts current aerosol optical depth at a wavelength of 550nm.
 
         #### Brief:
 
@@ -229,13 +230,13 @@ class AirQuality(BaseForecast):
 
     def get_hourly_uv_index(self) -> pd.Series:
         """
-        Extracts horuly Ultra-Violet(UV) radiation index data.
+        Extracts hourly Ultra-Violet(UV) radiation index data.
         """
         return self._get_periodical_data({"hourly": "uv_index"})
 
     def get_hourly_pm2_5_conc(self) -> pd.Series:
         """
-        Extracts hourly aerial concentraction(micro g/m^3) of particulate
+        Extracts hourly aerial concentration(micro g/m^3) of particulate
         matter with a diameter smaller than 2.5 micro meter(m) at 10 meters(m)
         above the ground level.
         """
@@ -243,7 +244,7 @@ class AirQuality(BaseForecast):
 
     def get_hourly_pm10_conc(self) -> pd.Series:
         """
-        Extracts hourly aerial concentraction(micro g/m^3) of particulate
+        Extracts hourly aerial concentration(micro g/m^3) of particulate
         matter with a diameter smaller than 10 micro meter(m) at 10 meters(m)
         above the ground level.
         """
@@ -265,7 +266,7 @@ class AirQuality(BaseForecast):
 
     def get_hourly_aerosol_optical_depth(self) -> pd.Series:
         """
-        Extracts the current aerosal optical depth at a wavelength of 550nm.
+        Extracts current aerosol optical depth at a wavelength of 550nm.
 
         #### Brief:
 
@@ -282,7 +283,7 @@ class AirQuality(BaseForecast):
         atmospheric gas at 10 meters(m) above the ground level.
 
         #### Params:
-        - gas (str): Atmospheirc gas whose concentration has to be extracted;
+        - gas (str): Atmospheric gas whose concentration has to be extracted;
         must be one of `ozone`, `carbon_dioxide`, `nitrogen_dioxide`,
         or `sulphur_dioxide`. Defaults to `ozone`.
         """
@@ -291,7 +292,7 @@ class AirQuality(BaseForecast):
 
     def get_hourly_ammonia_conc(self) -> pd.Series:
         """
-        Extracts hourly aerial ammonia concentration(micro g/m^3) data.
+        Extracts hourly aerial ammonia concentration(micro g/m^3).
         Only available for Europe. Returns None for Non-European regions.
         """
         return self._get_periodical_data({"hourly": "ammonia"})
