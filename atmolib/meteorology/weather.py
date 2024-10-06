@@ -2,8 +2,8 @@
 Weather Module
 --------------
 
-This module defines the Weather class facilitating the extraction of weather data from the
-Open-Meteo Weather API based on the latitudinal and longitudinal coordinates of the location.
+This module defines the Weather class facilitating extraction
+of weather data from Open-Meteo's Weather API.
 """
 
 import atexit
@@ -19,9 +19,10 @@ from ..base import BaseForecast, BaseWeather
 
 class Weather(BaseForecast, BaseWeather):
     """
-    Weather class to extract weather data based on the latitudinal and longitudinal
-    coordinates of the location. It interacts with the Open-Meteo Weather API to fetch
-    the current or upcoming 16-days hourly and daily weather forecast data.
+    Weather class defines mechanism for extraction of weather data based on the
+    latitudinal and longitudinal coordinates of the location. It interacts with
+    Open-Meteo's Weather API to fetch the current or upto upcoming 16-days hourly
+    and daily weather forecast data.
     """
 
     __slots__ = "_lat", "_long", "_params", "_forecast_days"
@@ -29,7 +30,7 @@ class Weather(BaseForecast, BaseWeather):
     _api = constants.WEATHER_API
     _session = requests.Session()
 
-    # The maximum number of days in the future for forecast data extraction.
+    # Maximum number of days for which forecast data can be extracted.
     _max_forecast_days = 16
 
     # Closes the request session upon exit.
@@ -45,21 +46,19 @@ class Weather(BaseForecast, BaseWeather):
         - lat (int | float): Latitudinal coordinates of the location.
         - long (int | float): Longitudinal coordinates of the location.
         - forecast_days (int): Number of days for which the forecast has to
-        be extracted; must be in the range of 1 and 16.
+        be extracted; must be in the range of 1 and 16. Defaults to 7.
         """
         super().__init__(lat, long, forecast_days)
 
     @staticmethod
     def _verify_wind_altitude(altitude: int) -> None:
         """
-        Verifies the specified altitude for wind data extraction. Raises a ValueError if
-        the argument provided is not a valid altitude for requesting data from the API.
+        Verifies the specified altitude for wind data extraction
+        and raises a ValueError if found invalid.
         """
 
         if altitude not in (10, 80, 120, 180):
-            raise ValueError(
-                f"Expected `altitude` to be 10, 80, 120 or 180; got {altitude}."
-            )
+            raise ValueError(f"Invalid altitude value specified: {altitude!r}")
 
     def get_current_summary(
         self,
