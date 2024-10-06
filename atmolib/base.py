@@ -292,7 +292,7 @@ class BaseWeather(BaseMeteor):
         self, level: constants.PRESSURE_LEVELS = "surface"
     ) -> pd.Series:
         """
-        Extracts hourly atmospheric perssure data in Hectopasacals(hPa)
+        Extracts hourly atmospheric pressure data in Hectopascals(hPa)
         at the specified measurement level.
 
         #### Params:
@@ -356,7 +356,7 @@ class BaseWeather(BaseMeteor):
         self, unit: constants.WIND_SPEED_UNITS = "kmh"
     ) -> pd.Series:
         """
-        Extracts hourly wind guasts data at 10 meters(m) above
+        Extracts hourly wind gusts data at 10 meters(m) above
         the ground level in the specified wind speed unit.
 
         #### Params:
@@ -390,7 +390,7 @@ class BaseWeather(BaseMeteor):
         """
 
         if metric not in ("max", "min", "mean"):
-            raise ValueError(f"Invalid stastistical metric specified: {metric!r}")
+            raise ValueError(f"Invalid statistical metric specified: {metric!r}")
 
         self._verify_temperature_unit(unit)
 
@@ -414,7 +414,7 @@ class BaseWeather(BaseMeteor):
         """
 
         if metric not in ("max", "min", "mean"):
-            raise ValueError(f"Invalid stastistical metric specified: {metric!r}")
+            raise ValueError(f"Invalid statistical metric specified: {metric!r}")
 
         self._verify_temperature_unit(unit)
 
