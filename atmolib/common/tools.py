@@ -46,7 +46,7 @@ def _request_json(
     return results
 
 
-def _verify_keys(params: dict[str, Any], keys: tuple[str]) -> None:
+def _verify_keys(params: dict[str, Any], keys: tuple[str, ...]) -> None:
     """
     Looks up for the specified keys in the parameters
     mapping and raises a `KeyError` if any are missing.
@@ -79,8 +79,8 @@ def get_current_data(
     results: dict[str, Any] = _request_json(api, params, session)
 
     # Extracts the request current meteorology data metrics from
-    # the 'results' mapping. It is mapped with the metric's name
-    # within the dictionary mapped with the 'current' key.
+    # the 'results' mapping. It is mapped with the name of the requested
+    # metric within the dictionary mapped with the 'current' key.
     return results["current"][params["current"]]
 
 
@@ -127,8 +127,8 @@ def get_periodical_data(
     # name of the specified 'frequency' within the 'results' mapping.
     data: dict[str, Any] = results[frequency]
 
-    # Extracts meteorology data mapped with the metric's name from
-    # the 'data' mapping and initializes the pandas Series object.
+    # Extracts meteorology data mapped with the name of the requested metric
+    # from the 'data' mapping and initializes the pandas Series object.
     series = pd.Series(data[params[frequency]], index=data["time"], dtype=dtype)
     series.index.name = "Date" if frequency == "daily" else "Datetime"
 
@@ -200,7 +200,7 @@ def get_periodical_summary(
     data: dict[str, Any] = results[frequency]
 
     # Pops the data timeline array mapped with 'time' key within the 'data'
-    # mapping to be used as index lables in the resultant pandas DataFrame.
+    # mapping to be used as index labels in the resultant pandas DataFrame.
     timeline: list[str] = data.pop("time")
 
     # Initializes a pandas DataFrame for the summary data and alters the
