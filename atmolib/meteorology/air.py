@@ -26,7 +26,7 @@ class AirQuality(BaseForecast):
     _session = requests.Session()
     _api = constants.AIR_QUALITY_API
 
-    # The maximum number of days for which forecast data can be extracted.
+    # Maximum number of days for which forecast data can be extracted.
     _max_forecast_days = 7
 
     # Closes the request session upon exit.
@@ -214,47 +214,48 @@ class AirQuality(BaseForecast):
 
         #### Brief:
 
-        Aerosol optical depth (AOD) at 550 nm is a measure of the extinction of solar radiation
-        at a wavelength of 550 nanometers (green-yellow region of the visible spectrum) due to
-        aerosol particles in the atmosphere. It is commonly used as an indicator of haze or the
-        presence of aerosols in the atmosphere.
+        Aerosol optical depth (AOD) at 550 nm is a measure of the extinction of
+        solar radiation at a wavelength of 550 nanometers (green-yellow region
+        of the visible spectrum) due to aerosol particles in the atmosphere. It
+        is commonly used as an indicator of haze or the presence of aerosols in
+        the atmosphere.
         """
         return self._get_current_data({"current": "aerosol_optical_depth"})
 
     def get_hourly_dust_conc(self) -> pd.Series:
         """
         Extracts hourly aerial dust concentration(micro g/m^3)
-        at 10 meters(m) above the ground level.
+        forecast at 10 meters(m) above the ground level.
         """
         return self._get_periodical_data({"hourly": "dust"})
 
     def get_hourly_uv_index(self) -> pd.Series:
         """
-        Extracts hourly Ultra-Violet(UV) radiation index data.
+        Extracts hourly Ultra-Violet(UV) radiation index forecast.
         """
         return self._get_periodical_data({"hourly": "uv_index"})
 
     def get_hourly_pm2_5_conc(self) -> pd.Series:
         """
-        Extracts hourly aerial concentration(micro g/m^3) of particulate
-        matter with a diameter smaller than 2.5 micro meter(m) at 10 meters(m)
-        above the ground level.
+        Extracts hourly aerial concentration(micro g/m^3) forecast of
+        particulate matter with a diameter smaller than 2.5 micro meter(m)
+        at 10 meters(m) above the ground level.
         """
         return self._get_periodical_data({"hourly": "pm2_5"})
 
     def get_hourly_pm10_conc(self) -> pd.Series:
         """
-        Extracts hourly aerial concentration(micro g/m^3) of particulate
-        matter with a diameter smaller than 10 micro meter(m) at 10 meters(m)
-        above the ground level.
+        Extracts hourly aerial concentration(micro g/m^3) forecast of
+        particulate matter with a diameter smaller than 10 micro meter(m)
+        at 10 meters(m) above the ground level.
         """
         return self._get_periodical_data({"hourly": "pm10"})
 
     def get_hourly_pollen_conc(self, plant: constants.PLANTS = "grass") -> pd.Series:
         """
-        Extracts hourly aerial pollen concentration(grains/m^3) of the specified
-        plant. Only available for Europe as provided by CAMS European Air Quality
-        forecast. Returns None for Non-European regions.
+        Extracts hourly aerial pollen concentration(grains/m^3) forecast of
+        the specified plant. Only available for Europe as provided by CAMS
+        European Air Quality forecast. Returns None for Non-European regions.
 
         #### Params:
         - plant (str): Plant whose pollen concentration has to be extracted;
@@ -266,21 +267,23 @@ class AirQuality(BaseForecast):
 
     def get_hourly_aerosol_optical_depth(self) -> pd.Series:
         """
-        Extracts current aerosol optical depth at a wavelength of 550nm.
+        Extracts hourly aerosol optical depth
+        forecast at a wavelength of 550nm.
 
         #### Brief:
 
-        Aerosol optical depth (AOD) at 550 nm is a measure of the extinction of solar radiation
-        at a wavelength of 550 nanometers (green-yellow region of the visible spectrum) due to
-        aerosol particles in the atmosphere. It is commonly used as an indicator of haze or the
-        presence of aerosols in the atmosphere.
+        Aerosol optical depth (AOD) at 550 nm is a measure of the extinction of
+        solar radiation at a wavelength of 550 nanometers (green-yellow region
+        of the visible spectrum) due to aerosol particles in the atmosphere. It
+        is commonly used as an indicator of haze or the presence of aerosols in
+        the atmosphere.
         """
         return self._get_periodical_data({"hourly": "aerosol_optical_depth"})
 
     def get_hourly_gaseous_conc(self, gas: constants.GASES = "ozone") -> pd.Series:
         """
-        Extracts hourly aerial concentration(micro g/m^3) of the specified
-        atmospheric gas at 10 meters(m) above the ground level.
+        Extracts hourly aerial concentration(micro g/m^3) forecast of the
+        specified atmospheric gas at 10 meters(m) above the ground level.
 
         #### Params:
         - gas (str): Atmospheric gas whose concentration has to be extracted;
@@ -292,7 +295,7 @@ class AirQuality(BaseForecast):
 
     def get_hourly_ammonia_conc(self) -> pd.Series:
         """
-        Extracts hourly aerial ammonia concentration(micro g/m^3).
+        Extracts hourly aerial ammonia concentration(micro g/m^3) forecast.
         Only available for Europe. Returns None for Non-European regions.
         """
         return self._get_periodical_data({"hourly": "ammonia"})
