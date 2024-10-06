@@ -67,18 +67,31 @@ class Weather(BaseForecast, BaseWeather):
         wind_speed_unit: constants.WIND_SPEED_UNITS = "kmh",
     ) -> pd.Series:
         """
-        Returns a pandas Series of current weather summary data
-        at the specified coordinates in the specified units.
+        Extracts current weather summary data in the specified
+        temperature, precipitation, and wind speed unit.
 
-        #### The weather summary data includes the following data types:
-        - temperature (2m above the ground level)
-        - relative humidity (2m above the ground level)
+        #### Params:
+        - temperature_unit (str): Temperature unit; must be `celsius`
+        or `fahrenheit`. Defaults to `celsius`.
+        - precipitation_unit (str): Precipitation unit; must be `mm`
+        or `inch`. Defaults to `mm`.
+        - wind_speed_unit (str): Wind speed unit; must be one of the following:
+            - `kmh` (kilometers per hour)
+            - `mph` (miles per hour)
+            - `kn` (knots)
+            - `ms` (meter per second)
+
+            Defaults to `kmh`.
+
+        #### The summary data distribution includes the following:
+        - temperature (2m above ground level)
+        - relative humidity (2m above ground level)
         - precipitation (sum of rain/showers/snowfall)
         - weather code
         - cloud cover percentage
-        - surface pressure in HPa (Hecto-pascal)
-        - wind speed (10m above the ground level)
-        - wind direction in degrees (10m above the ground level)
+        - surface pressure in HPa (Hectopascal)
+        - wind speed (10m above ground level)
+        - wind direction in degrees (10m above ground level)
         """
         self._verify_units(temperature_unit, precipitation_unit, wind_speed_unit)
 
@@ -107,19 +120,32 @@ class Weather(BaseForecast, BaseWeather):
         wind_speed_unit: constants.WIND_SPEED_UNITS = "kmh",
     ) -> pd.DataFrame:
         """
-        Returns a pandas DataFrame of hourly weather summary data
-        at the specified coordinates in the specified units.
+        Extracts hourly weather summary forecast data in the
+        specified temperature, precipitation, and wind speed unit.
 
-        #### The weather summary data includes the following data types:
-        - temperature (2m above the ground level)
+        #### Params:
+        - temperature_unit (str): Temperature unit; must be `celsius`
+        or `fahrenheit`. Defaults to `celsius`.
+        - precipitation_unit (str): Precipitation unit; must be `mm`
+        or `inch`. Defaults to `mm`.
+        - wind_speed_unit (str): Wind speed unit; must be one of the following:
+            - `kmh` (kilometers per hour)
+            - `mph` (miles per hour)
+            - `kn` (knots)
+            - `ms` (meter per second)
+
+            Defaults to `kmh`.
+
+        #### The summary data distribution includes the following:
+        - temperature (2m above ground level)
         - relative humidity (2m above the ground level)
-        - dew point (2m above the ground level)
+        - dew point (2m above ground level)
         - precipitation (sum of rain/showers/snowfall)
         - weather code
         - visibility in meters(m)
         - cloud cover percentage(%)
-        - surface pressure in HPa (Hecto-pascal)
-        - wind speed (10m above the ground level)
+        - surface pressure in HPa (Hectopascal)
+        - wind speed (10m above ground level)
         - surface soil temperature
         """
         self._verify_units(temperature_unit, precipitation_unit, wind_speed_unit)
@@ -149,16 +175,29 @@ class Weather(BaseForecast, BaseWeather):
         wind_speed_unit: constants.WIND_SPEED_UNITS = "kmh",
     ) -> pd.DataFrame:
         """
-        Returns a pandas DataFrame of daily weather summary data
-        at the specified coordinates in the specified units.
+        Extracts daily weather summary forecast data in the
+        specified temperature, precipitation, and wind speed unit.
 
-        #### The weather summary data includes the following data types:
-        - mean temperature (2m above the ground level)
+        #### Params:
+        - temperature_unit (str): Temperature unit; must be `celsius`
+        or `fahrenheit`. Defaults to `celsius`.
+        - precipitation_unit (str): Precipitation unit; must be `mm`
+        or `inch`. Defaults to `mm`.
+        - wind_speed_unit (str): Wind speed unit; must be one of the following:
+            - `kmh` (kilometers per hour)
+            - `mph` (miles per hour)
+            - `kn` (knots)
+            - `ms` (meter per second)
+
+            Defaults to `kmh`.
+
+        #### The summary data distribution includes the following:
+        - mean temperature (2m above ground level)
         - total precipitation (sum of rain/showers/snowfall)
         - weather code
         - Daylight duration
         - max Ultra-Violet (UV) index
-        - mean wind speed (10m above the ground level)
+        - mean wind speed (10m above ground level)
         - dominant wind direction
         """
         self._verify_units(temperature_unit, precipitation_unit, wind_speed_unit)
