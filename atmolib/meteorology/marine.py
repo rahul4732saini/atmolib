@@ -89,17 +89,16 @@ class MarineWeather(BaseForecast):
 
     def get_current_summary(self) -> pd.Series:
         """
-        Returns a pandas Series of current marine weather summary data
-        at the specified coordinates of the specified wave type.
+        Extracts current marine weather summary data.
 
-        #### The marine weather summary data includes the following data types:
+        #### The summary data distribution includes the following:
         - Wave height
         - Wave direction
         - Wave period
         """
 
-        # A string representation of the marine weather summary data types
-        # separated by commas as supported for requesting the Web API.
+        # String representation of the summary data types separated
+        # by commas as supported for requesting the API endpoint.
         data_types: str = self._type + f",{self._type}".join(
             constants.MARINE_WEATHER_SUMMARY_DATA_TYPES
         )
@@ -113,17 +112,16 @@ class MarineWeather(BaseForecast):
 
     def get_hourly_summary(self) -> pd.DataFrame:
         """
-        Returns a pandas DataFrame of hourly marine weather summary data
-        at the specified coordinates of the specified wave type.
+        Extracts hourly marine weather forecase summary data.
 
-        #### The marine weather summary data includes the following data types:
+        #### The summary data distribution includes the following:
         - Wave height
         - Wave direction
         - Wave period
         """
 
-        # A string representation of the marine weather summary data types
-        # separated by commas as supported for requesting the Web API.
+        # String representation of the summary data types separated
+        # by commas as supported for requesting the API endpoint.
         data_types: str = self._type + f",{self._type}".join(
             constants.MARINE_WEATHER_SUMMARY_DATA_TYPES
         )
@@ -137,23 +135,18 @@ class MarineWeather(BaseForecast):
 
     def get_daily_summary(self) -> pd.DataFrame:
         """
-        Returns a pandas DataFrame of daily marine weather summary data
-        at the specified coordinates of the specified wave type.
+        Extracts daily marine weather forecast summary data.
 
-        #### The marine weather summary data includes the following data types:
+        #### The summary data distribution includes the following:
         - Max wave height
         - Dominant wave direction
         - Max wave period
         """
 
-        # A string representation of the marine weather summary data types
-        # separated by commas as supported for requesting the Web API.
+        # String representation of the summary data types separated
+        # by commas as supported for requesting the API endpoint.
         data_types: str = self._type + f",{self._type}".join(
-            (
-                "wave_height_max",
-                "wave_direction_dominant",
-                "wave_period_max",
-            )
+            constants.DAILY_MARINE_WEATHER_SUMMARY_DATA_TYPES
         )
 
         return tools.get_periodical_summary(
@@ -164,67 +157,60 @@ class MarineWeather(BaseForecast):
         )
 
     def get_current_wave_height(self) -> int | float:
-        """
-        Returns the current wave height in meters(m) of the
-        specified wave type at the specified coordinates.
-        """
+        """Extracts current wave height in meters(m)."""
         return self._get_current_data({"current": f"{self._type}wave_height"})
 
     def get_current_wave_direction(self) -> int | float:
-        """
-        Returns the current wave direction in degrees of the specified
-        wave type at the specified coordinates.
-        """
+        """Extracts current wave direction in degrees."""
         return self._get_current_data({"current": f"{self._type}wave_direction"})
 
     def get_current_wave_period(self) -> int | float:
         """
-        Returns the current wave period (It refers to the time taken by two consecutive
-        wave crests (or troughs) to pass a fixed point) in seconds(d) of the
-        specified wave type at the specified coordinates.
+        Extracts current wave period in seconds(s).
+
+        #### Brief:
+
+        Wave period refers to the time taken by two consecutive
+        wave crests (or troughs) to pass through a fixed point.
         """
         return self._get_current_data({"current": f"{self._type}wave_period"})
 
     def get_hourly_wave_height(self) -> pd.Series:
-        """
-        Returns a pandas Series of hourly mean wave height in meters(m) of the
-        specified wave type at the specified coordinates.
-        """
+        """Extracts hourly wave height forecast in meters(m)."""
         return self._get_periodical_data({"hourly": f"{self._type}wave_height"})
 
     def get_hourly_wave_direction(self) -> pd.Series:
-        """
-        Returns a pandas Series of hourly wave direction in degrees of the
-        specified wave type at the specified coordinates.
-        """
+        """Extracts hourly wave direction forecast in degrees."""
         return self._get_periodical_data({"hourly": f"{self._type}wave_direction"})
 
     def get_hourly_wave_period(self) -> pd.Series:
         """
-        Returns a pandas Series of hourly wave period in seconds(s) of the
-        specified wave type at the specified coordinates.
+        Extracts hourly wave period forecast in seconds(s).
+
+        #### Brief:
+
+        Wave period refers to the time taken by two consecutive
+        wave crests (or troughs) to pass through a fixed point.
         """
         return self._get_periodical_data({"hourly": f"{self._type}wave_period"})
 
     def get_daily_max_wave_height(self) -> pd.Series:
-        """
-        Returns a pandas Series of daily maximum wave height in meters(m) of the
-        specified wave type at the specified coordinates.
-        """
+        """Extracts daily maximum wave height forecast in meters(m)."""
         return self._get_periodical_data({"daily": f"{self._type}wave_height_max"})
 
     def get_daily_dominant_wave_direction(self) -> pd.Series:
-        """
-        Returns a pandas Series of daily dominant wave direction in degrees of the
-        specified wave type at the specified coordinates.
-        """
+        """Extracts daily dominant wave direction forecast in degrees."""
         return self._get_periodical_data(
             {"daily": f"{self._type}wave_direction_dominant"}
         )
 
     def get_daily_max_wave_period(self) -> pd.Series:
         """
-        Returns a pandas Series of daily maximum wave period in seconds of the
-        specified wave type at the specified coordinates.
+        Extracts daily maximum wave period forecast in seconds(s).
+
+        #### Brief:
+
+        Wave period refers to the time taken by two consecutive
+        wave crests (or troughs) to pass through a fixed point.
         """
         return self._get_periodical_data({"daily": f"{self._type}wave_period_max"})
