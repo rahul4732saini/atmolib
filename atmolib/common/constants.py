@@ -124,6 +124,12 @@ MARINE_WEATHER_SUMMARY_DATA_TYPES = [
     "wave_period",
 ]
 
+DAILY_MARINE_WEATHER_SUMMARY_DATA_TYPES = [
+    "wave_height_max",
+    "wave_direction_dominant",
+    "wave_period_max",
+]
+
 # List of air quality data types extracted in the current air quality
 # summary data extraction. The same are also used as the index labels
 # for the current air quality summary data pandas Series object.
