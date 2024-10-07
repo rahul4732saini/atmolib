@@ -61,15 +61,16 @@ class WeatherArchive(BaseWeather):
 
         super().__init__(lat, long)
 
-        self.start_date = start_date
-        self.end_date = end_date
+        self.set_start_date(start_date)
+        self.set_end_date(end_date)
 
     @property
     def start_date(self) -> date:
         return self._start_date
 
-    @start_date.setter
-    def start_date(self, __value: str | date | datetime) -> None:
+    def set_start_date(self, /, __value: str | date | datetime) -> None:
+        """Sets the start date for historical weather extraction."""
+
         start_date: date = self._resolve_date(__value)
 
         if hasattr(self, "_end_date") and self._end_date < start_date:
@@ -85,8 +86,9 @@ class WeatherArchive(BaseWeather):
     def end_date(self) -> date:
         return self._end_date
 
-    @end_date.setter
-    def end_date(self, __value: str | date | datetime) -> None:
+    def set_end_date(self, /, __value: str | date | datetime) -> None:
+        """Sets the end date for historical weather extraction."""
+
         end_date: date = self._resolve_date(__value)
 
         if hasattr(self, "_start_date") and end_date < self._start_date:
