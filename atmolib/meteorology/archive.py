@@ -68,37 +68,9 @@ class WeatherArchive(BaseWeather):
     def start_date(self) -> date:
         return self._start_date
 
-    def set_start_date(self, /, __value: str | date | datetime) -> None:
-        """Sets the start date for historical weather extraction."""
-
-        start_date: date = self._resolve_date(__value)
-
-        if hasattr(self, "_end_date") and self._end_date < start_date:
-            raise ValueError("'start_date' must be lower or equal to 'end_date'")
-
-        self._start_date: date = start_date
-
-        # Updates the parameters mapping with the start date for
-        # requesting weather history from the Weather History API.
-        self._params["start_date"] = start_date.strftime(r"%Y-%m-%d")
-
     @property
     def end_date(self) -> date:
         return self._end_date
-
-    def set_end_date(self, /, __value: str | date | datetime) -> None:
-        """Sets the end date for historical weather extraction."""
-
-        end_date: date = self._resolve_date(__value)
-
-        if hasattr(self, "_start_date") and end_date < self._start_date:
-            raise ValueError("'end_date' must be greater or equal to 'start_date'")
-
-        self._end_date: date = end_date
-
-        # Updates the parameters mapping with the end date for
-        # requesting weather history from the Weather History API.
-        self._params["end_date"] = end_date.strftime(r"%Y-%m-%d")
 
     def __repr__(self) -> str:
         return (
@@ -124,6 +96,34 @@ class WeatherArchive(BaseWeather):
             raise ValueError(f"'{target:%Y-%m-%d}' is a date in the future.")
 
         return target
+
+    def set_start_date(self, /, __value: str | date | datetime) -> None:
+        """Sets the start date for historical weather extraction."""
+
+        start_date: date = self._resolve_date(__value)
+
+        if hasattr(self, "_end_date") and self._end_date < start_date:
+            raise ValueError("'start_date' must be lower or equal to 'end_date'")
+
+        self._start_date: date = start_date
+
+        # Updates the parameters mapping with the start date for
+        # requesting weather history from the Weather History API.
+        self._params["start_date"] = start_date.strftime(r"%Y-%m-%d")
+
+    def set_end_date(self, /, __value: str | date | datetime) -> None:
+        """Sets the end date for historical weather extraction."""
+
+        end_date: date = self._resolve_date(__value)
+
+        if hasattr(self, "_start_date") and end_date < self._start_date:
+            raise ValueError("'end_date' must be greater or equal to 'start_date'")
+
+        self._end_date: date = end_date
+
+        # Updates the parameters mapping with the end date for
+        # requesting weather history from the Weather History API.
+        self._params["end_date"] = end_date.strftime(r"%Y-%m-%d")
 
     @staticmethod
     def _get_soil_depth(depth: int) -> str:
