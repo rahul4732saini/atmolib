@@ -28,11 +28,9 @@ class WeatherArchive(BaseWeather):
     __slots__ = (
         "_lat",
         "_long",
+        "_params",
         "_start_date",
         "_end_date",
-        "_initial_date",
-        "_final_date",
-        "_params",
     )
 
     _session = requests.Session()
@@ -67,8 +65,8 @@ class WeatherArchive(BaseWeather):
         self.end_date = end_date
 
     @property
-    def start_date(self) -> str | date | datetime:
-        return self._initial_date
+    def start_date(self) -> date:
+        return self._start_date
 
     @start_date.setter
     def start_date(self, __value: str | date | datetime) -> None:
@@ -77,16 +75,15 @@ class WeatherArchive(BaseWeather):
         if hasattr(self, "_end_date") and self._end_date < start_date:
             raise ValueError("'start_date' must be lower or equal to 'end_date'")
 
+        self._start_date: date = start_date
+
         # Updates the parameters mapping with the start date for
         # requesting weather history from the Weather History API.
         self._params["start_date"] = start_date.strftime(r"%Y-%m-%d")
 
-        self._start_date: date = start_date
-        self._initial_date: str | date | datetime = __value
-
     @property
-    def end_date(self) -> str | date | datetime:
-        return self._final_date
+    def end_date(self) -> date:
+        return self._end_date
 
     @end_date.setter
     def end_date(self, __value: str | date | datetime) -> None:
@@ -95,12 +92,11 @@ class WeatherArchive(BaseWeather):
         if hasattr(self, "_start_date") and end_date < self._start_date:
             raise ValueError("'end_date' must be greater or equal to 'start_date'")
 
+        self._end_date: date = end_date
+
         # Updates the parameters mapping with the end date for
         # requesting weather history from the Weather History API.
         self._params["end_date"] = end_date.strftime(r"%Y-%m-%d")
-
-        self._end_date: date = end_date
-        self._final_date: str | date | datetime = __value
 
     def __repr__(self) -> str:
         return (
