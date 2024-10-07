@@ -153,23 +153,36 @@ class WeatherArchive(BaseWeather):
         wind_speed_unit: constants.WIND_SPEED_UNITS = "kmh",
     ) -> pd.DataFrame:
         """
-        Returns a pandas DataFrame of hourly historical weather summary data at the
-        specified coordinates in the specified units within the specified date range.
+        Extracts the historical hourly weather summary in the
+        specified temperature, precipitation and wind speed units.
+
+        #### Params:
+        - temperature_unit (str): Temperature unit; must be `celsius`
+        or `fahrenheit`. Defaults to `celsius`.
+        - precipitation_unit (str): Precipitation unit; must be `mm`
+        or `inch`. Defaults to `mm`.
+        - wind_speed_unit (str): Wind speed unit; must be one of the following:
+            - `kmh` (kilometers per hour)
+            - `mph` (miles per hour)
+            - `kn` (knots)
+            - `ms` (meter per second)
+
+            Defaults to `kmh`.
 
         #### The weather summary data includes the following data types:
-        - temperature (2m above the ground level)
-        - relative humidity (2m above the ground level)
-        - dew point (2m above the ground level)
+        - temperature (2m above ground level)
+        - relative humidity (2m above ground level)
+        - dew point (2m above ground level)
         - precipitation (sum of rain/showers/snowfall)
-        - surface pressure in HPa (Hecto-pascal)
-        - wind speed (10m above the ground level)
+        - surface pressure in HPa (Hectopascals)
+        - wind speed (10m above ground level)
         - surface soil temperature
         - weather code
         """
         self._verify_units(temperature_unit, precipitation_unit, wind_speed_unit)
 
-        # A string representation of the weather summary data types
-        # separated by commas as supported for requesting the Web API.
+        # String representation of the summary data types separated
+        # by commas as supported for requesting the API endpoint.
         data_types: str = ",".join(constants.HOURLY_ARCHIVE_SUMMARY_DATA_TYPES)
 
         params: dict[str, Any] = {
@@ -193,21 +206,34 @@ class WeatherArchive(BaseWeather):
         wind_speed_unit: constants.WIND_SPEED_UNITS = "kmh",
     ) -> pd.DataFrame:
         """
-        Returns a pandas DataFrame of daily historical weather summary data at the
-        specified coordinates in the specified units within the specified date range.
+        Extracts the daily historical weather summary in the
+        specified temperature, precipitation and wind speed unit.
+
+        #### Params:
+        - temperature_unit (str): Temperature unit; must be `celsius`
+        or `fahrenheit`. Defaults to `celsius`.
+        - precipitation_unit (str): Precipitation unit; must be `mm`
+        or `inch`. Defaults to `mm`.
+        - wind_speed_unit (str): Wind speed unit; must be one of the following:
+            - `kmh` (kilometers per hour)
+            - `mph` (miles per hour)
+            - `kn` (knots)
+            - `ms` (meter per second)
+
+            Defaults to `kmh`.
 
         #### The weather summary data includes the following data types:
-        - Mean temperature (2m above the ground level)
+        - Mean temperature (2m above ground level)
         - precipitation (sum of rain/showers/snowfall)
         - Daylight duration in seconds
-        - surface pressure in HPa (Hecto-pascal)
-        - Mean wind speed (10m above the ground level)
+        - surface pressure in HPa (Hectopascals)
+        - Mean wind speed (10m above ground level)
         - weather code
         """
         self._verify_units(temperature_unit, precipitation_unit, wind_speed_unit)
 
-        # A string representation of the weather summary data types
-        # separated by commas as supported for requesting the Web API.
+        # String representation of the summary data types separated
+        # by commas as supported for requesting the API endpoint.
         data_types: str = ",".join(constants.DAILY_ARCHIVE_SUMMARY_DATA_TYPES)
 
         params: dict[str, Any] = {
