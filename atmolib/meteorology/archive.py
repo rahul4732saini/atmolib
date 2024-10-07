@@ -153,8 +153,8 @@ class WeatherArchive(BaseWeather):
         wind_speed_unit: constants.WIND_SPEED_UNITS = "kmh",
     ) -> pd.DataFrame:
         """
-        Extracts the historical hourly weather summary in the
-        specified temperature, precipitation and wind speed units.
+        Extracts historical hourly weather summary in the specified
+        temperature, precipitation and wind speed units.
 
         #### Params:
         - temperature_unit (str): Temperature unit; must be `celsius`
@@ -206,8 +206,8 @@ class WeatherArchive(BaseWeather):
         wind_speed_unit: constants.WIND_SPEED_UNITS = "kmh",
     ) -> pd.DataFrame:
         """
-        Extracts the daily historical weather summary in the
-        specified temperature, precipitation and wind speed unit.
+        Extracts daily historical weather summary in the specified
+        temperature, precipitation and wind speed unit.
 
         #### Params:
         - temperature_unit (str): Temperature unit; must be `celsius`
@@ -256,20 +256,23 @@ class WeatherArchive(BaseWeather):
         unit: constants.WIND_SPEED_UNITS = "kmh",
     ) -> pd.Series:
         """
-        Returns a pandas Series of hourly wind speed data at the specified
-        altitude and coordinates within the supplied date range.
+        Extracts historical hourly wind speed data at the
+        specified altitude and in the specified wind speed unit.
 
         #### Params:
-        - altitude (int): Altitude from the ground level in meters(m); must be 10 or 100.
+        - altitude (int): Altitude above the ground level in meters(m);
+        must be 10 or 100. Defaults to 10.
         - unit (str): Wind speed unit; must be one of the following:
-            - 'kmh' (kilometers per hour)
-            - 'mph' (miles per hour)
-            - 'ms' (meter per second)
-            - 'kn' (knots)
+            - `kmh` (kilometers per hour)
+            - `mph` (miles per hour)
+            - `ms` (meter per second)
+            - `kn` (knots)
+
+            Defaults to `kmh`
         """
 
         if altitude not in (10, 100):
-            raise ValueError(f"Expected `altitude` to be 10 or 100; got {altitude}.")
+            raise ValueError(f"Invalid altitude level specified: {altitude}")
 
         self._verify_wind_speed_unit(unit)
 
@@ -278,19 +281,19 @@ class WeatherArchive(BaseWeather):
         )
 
     def get_hourly_wind_direction(
-        self,
-        altitude: constants.ARCHIVE_WIND_ALTITUDES = 10,
+        self, altitude: constants.ARCHIVE_WIND_ALTITUDES = 10
     ) -> pd.Series:
         """
-        Returns a pandas Series of hourly wind direction data at the
-        specified altitude and coordinates within the supplied date range.
+        Extracts historical hourly wind direction
+        data in degrees at the specified altitude.
 
         #### Params:
-        - altitude (int): Altitude from the ground level in meters(m); must be 10 or 100.
+        - altitude (int): Altitude from the ground level in meters(m);
+        must be 10 or 100. Defaults to 10.
         """
 
         if altitude not in (10, 100):
-            raise ValueError(f"Expected `altitude` to be 10 or 100; got {altitude}.")
+            raise ValueError(f"Invalid altitude level specified: {altitude}")
 
         return self._get_periodical_data({"hourly": f"wind_direction_{altitude}m"})
 
