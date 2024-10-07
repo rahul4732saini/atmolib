@@ -2,9 +2,8 @@
 Weather Archive Module
 ----------------------
 
-This module defines the WeatherArchive class facilitating the extraction
-of historical weather data from the Open-Meteo Weather History API based
-on the latitudinal and longitudinal coordinates of the location.
+This module defines the WeatherArchive class facilitating extraction
+of historical weather data from Open-Meteo's Weather History API.
 """
 
 import atexit
@@ -20,10 +19,10 @@ from ..base import BaseMeteor, BaseWeather
 
 class WeatherArchive(BaseWeather, BaseMeteor):
     """
-    WeatherArchive class to extract historical weather data based on the
-    latitudinal and longitudinal coordinates of the location within the
-    specified date range. It interacts with the Open-Meteo Weather History
-    API to fetch the weather data ranging from 1940 till the present.
+    WeatherArchive class defines mechanism for extraction of historical weather data
+    based on the latitudinal and longitudinal coordinates of the location. It interacts
+    with Open-Meteo's Weather History API to featch weather data ranging from 1940 till
+    the present.
     """
 
     __slots__ = (
