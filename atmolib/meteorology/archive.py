@@ -301,15 +301,17 @@ class WeatherArchive(BaseWeather):
         self, depth: int = 0, unit: constants.TEMPERATURE_UNITS = "celsius"
     ) -> pd.Series:
         """
-        Returns a pandas Series of hourly soil temperature data at the specified
-        depth and coordinates in the specified unit within the supplied date range.
+        Extracts historical hourly soil temperature data at the
+        specified depth and in the specified temperature unit.
 
         #### Params:
-        - depth (int): Desired depth of the temperature data within the ground level in
+        - depth (int):
+        - depth (int): Desired depth of the temperature data beneath the ground level in
         centimeters(m). Temperature is extracted as a part of a range of depth. Available
-        depth ranges are 0-7cm, 7-28cm, 28-100cm, 100-255cm. The supplied depth must fall
-        in the range of 0 and 255.
-        - unit (str): Temperature unit; must be 'celsius' or 'fahrenheit'.
+        depth ranges are 0-7cm, 7-28cm, 28-100cm, 100-255cm. The specified depth must fall
+        in the range of 0 and 255. Defaults to 0.
+        - unit (str): Temperature unit; must be `celsius` or `fahrenheit`.
+        Defaults to `celsius`.
         """
         self._verify_temperature_unit(unit)
 
@@ -322,14 +324,13 @@ class WeatherArchive(BaseWeather):
 
     def get_hourly_soil_moisture(self, depth: int = 0) -> pd.Series:
         """
-        Returns a pandas Series of hourly soil moisture data at the specified
-        depth and coordinates in the specified unit within the supplied date range.
+        Extracts historical hourly soil moisture at the specified depth.
 
         #### Params:
-        - depth (int): Desired depth of the moisture data within the ground level in
+        - depth (int): Desired depth of the moisture data beneath the ground level in
         centimeters(m). Moisture is extracted as a part of a range of depth. Available
-        depth ranges are 0-7cm, 7-28cm, 28-100cm, 100-255cm. The supplied depth must fall
-        in the range of 0 and 255.
+        depth ranges are 0-7cm, 7-28cm, 28-100cm, 100-255cm. The specified depth must fall
+        in the range of 0 and 255. Defaults to 0.
         """
 
         # Extracts the string representation of the depth range.
