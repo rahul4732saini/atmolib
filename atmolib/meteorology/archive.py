@@ -121,15 +121,14 @@ class WeatherArchive(BaseWeather):
             try:
                 target = datetime.strptime(target, r"%Y-%m-%d").date()
 
-            except (ValueError, TypeError):
-                raise ValueError(f"Invalid value for `{var}` parameter.")
+            except ValueError:
+                raise ValueError(f"{target!r} is not a valid date format.")
 
         if isinstance(target, datetime):
             target = target.date()
 
-        assert target <= date.today(), ValueError(
-            f"`{var}` must not be some date in the future."
-        )
+        if target > date.today():
+            raise ValueError(f"'{target:%Y-%m-%d}' is a date in the future.")
 
         return target
 
