@@ -70,7 +70,7 @@ class WeatherArchive(BaseWeather):
 
     @start_date.setter
     def start_date(self, __value: str | date | datetime) -> None:
-        start_date: date = self._resolve_date(__value, "start_date")
+        start_date: date = self._resolve_date(__value)
 
         if hasattr(self, "_end_date") and self._end_date < start_date:
             raise ValueError("'start_date' must be lower or equal to 'end_date'")
@@ -87,7 +87,7 @@ class WeatherArchive(BaseWeather):
 
     @end_date.setter
     def end_date(self, __value: str | date | datetime) -> None:
-        end_date: date = self._resolve_date(__value, "end_date")
+        end_date: date = self._resolve_date(__value)
 
         if hasattr(self, "_start_date") and end_date < self._start_date:
             raise ValueError("'end_date' must be greater or equal to 'start_date'")
