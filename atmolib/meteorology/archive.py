@@ -57,7 +57,7 @@ class WeatherArchive(BaseWeather):
         - start_date (str | date | datetime): Initial date for the weather data.
         - end_date (str | date | datetime): Final date for the weather data.
 
-        Date parameters must be date or datetime objects or strings
+        Date parameters must be date/datetime objects or strings
         formatted in the ISO-8601 date format (YYYY-MM-DD).
         """
 
@@ -74,12 +74,11 @@ class WeatherArchive(BaseWeather):
     def start_date(self, __value: str | date | datetime) -> None:
         start_date: date = self._resolve_date(__value, "start_date")
 
-        if hasattr(self, "_end_date"):
-            assert self._end_date >= self._start_date, ValueError(
-                "`start_date` must be lower or equal to `end_date`."
-            )
+        if hasattr(self, "_end_date") and self._end_date < start_date:
+            raise ValueError("'start_date' must be lower or equal to 'end_date'")
 
-        # Updating the `_params` dictionary with the `start_date` attribute.
+        # Updates the parameters mapping with the start date for
+        # requesting weather history from the Weather History API.
         self._params["start_date"] = start_date.strftime(r"%Y-%m-%d")
 
         self._start_date: date = start_date
@@ -93,11 +92,11 @@ class WeatherArchive(BaseWeather):
     def end_date(self, __value: str | date | datetime) -> None:
         end_date: date = self._resolve_date(__value, "end_date")
 
-        assert end_date >= self._start_date, ValueError(
-            "`end_date` must be greater or equal to `start_date`."
-        )
+        if hasattr(self, "_start_date") and end_date < self._start_date:
+            raise ValueError("'end_date' must be greater or equal to 'start_date'")
 
-        # Updating the `_params` dictionary with the `end_date` attribute.
+        # Updates the parameters mapping with the end date for
+        # requesting weather history from the Weather History API.
         self._params["end_date"] = end_date.strftime(r"%Y-%m-%d")
 
         self._end_date: date = end_date
