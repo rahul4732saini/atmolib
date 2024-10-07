@@ -14,10 +14,10 @@ import requests
 import pandas as pd
 
 from ..common import constants, tools
-from ..base import BaseMeteor, BaseWeather
+from ..base import BaseWeather
 
 
-class WeatherArchive(BaseWeather, BaseMeteor):
+class WeatherArchive(BaseWeather):
     """
     WeatherArchive class defines mechanism for extraction of historical weather data
     based on the latitudinal and longitudinal coordinates of the location. It interacts
