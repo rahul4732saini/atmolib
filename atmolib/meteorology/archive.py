@@ -109,13 +109,8 @@ class WeatherArchive(BaseWeather):
         )
 
     @staticmethod
-    def _resolve_date(target: str | date | datetime, var: str) -> date:
-        """
-        Verifies the supplied date argument, and resolves it into a `datetime.date` object.
-
-        The `var` parameter has to be the name of the actual date parameter
-        (`start_date` or `end_date`) for reference in custom error messages.
-        """
+    def _resolve_date(target: str | date | datetime) -> date:
+        """Resolves the specified date into a `datetime.date` object."""
 
         if not isinstance(target, date | datetime):
             try:
@@ -124,7 +119,7 @@ class WeatherArchive(BaseWeather):
             except ValueError:
                 raise ValueError(f"{target!r} is not a valid date format.")
 
-        if isinstance(target, datetime):
+        elif isinstance(target, datetime):
             target = target.date()
 
         if target > date.today():
