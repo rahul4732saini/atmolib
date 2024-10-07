@@ -128,27 +128,23 @@ class WeatherArchive(BaseWeather):
     @staticmethod
     def _get_soil_depth(depth: int) -> str:
         """
-        Returns a string representation of the depth range
-        supported as a request parameter for the API request.
+        Extracts the string representation of the depth range associated
+        with the specified soil depth for requesting the Weather History API.
 
         #### Params:
-        - depth (int): Desired depth for data extraction; must be an integer between 0 and 256.
+        - depth (int): Desired depth for data extraction;
+        must be an integer between 0 and 256.
         """
+
+        if depth not in range(256):
+            raise ValueError("'depth' must be an integer between 0 and 256.")
 
         for key, value in constants.ARCHIVE_SOIL_DEPTH.items():
             if depth in key:
 
-                # The range is represented in a string format as being
-                # a supported type for requesting the API.
-                depth_range: str = value
-                break
-
-        else:
-            raise ValueError(
-                f"Expected `depth` to be in the range of 0 and 256; got {depth}."
-            )
-
-        return depth_range
+                # The range is represented in a string
+                # format as supported for API requests.
+                return value
 
     def get_hourly_summary(
         self,
