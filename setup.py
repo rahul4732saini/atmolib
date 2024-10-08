@@ -2,11 +2,11 @@ from pathlib import Path
 from setuptools import setup, find_packages
 
 # Extracts the long description from the README.md file.
-DESCRIPTION_FILE = Path("./README.md").absolute()
+DESCRIPTION_FILE = Path("README.md")
 DESCRIPTION = DESCRIPTION_FILE.read_text()
 
 # Extracts the version from the atmolib/version.py file.
-VERSION_FILE = Path("./atmolib/version.py").absolute()
+VERSION_FILE = Path("atmolib/version.py")
 VERSION = VERSION_FILE.read_text().strip().replace("version = ", "").replace('"', "")
 
 setup(
