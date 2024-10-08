@@ -226,18 +226,18 @@ class Weather(BaseForecast, BaseWeather):
         unit: constants.TEMPERATURE_UNITS = "celsius",
     ) -> int | float:
         """
-        Returns the current temperature in the specified temperature unit
-        at the specified altitude in meters(m) from the ground level.
+        Extracts current temperature at the specified altitude
+        above the ground level in the specified temperature unit.
 
         #### Params:
-        - altitude (int): Altitude from the ground level; must be 2, 80, 120 or 180.
-        - unit (str): Temperature unit; must be 'celsius' or 'fahrenheit'.
+        - altitude (int): Altitude in meters(m) above the ground level;
+        must be one of 2, 80, 120, or 180. Defaults to 2.
+        - unit (str): Temperature unit; must be `celsius` or `fahrenheit`.
+        Defaults to `celsius`.
         """
 
         if altitude not in (2, 80, 120, 180):
-            raise ValueError(
-                f"Expected `altitude` to be 2, 80, 120 or 180; got {altitude}."
-            )
+            raise ValueError(f"Invalid altitude level specified: {altitude}")
 
         self._verify_temperature_unit(unit)
 
@@ -247,20 +247,18 @@ class Weather(BaseForecast, BaseWeather):
 
     def get_current_weather_code(self) -> tuple[int, str]:
         """
-        Returns a tuple comprising the current weather code followed
-        by a string description of the weather code.
+        Extracts current weather code and returns a tuple
+        comprising it along with its string description.
         """
 
         weather_code: int = int(self._get_current_data({"current": "weather_code"}))
-
-        # Weather code description is looked up in the `WEATHER_CODES` dictionary.
         description: str = constants.WEATHER_CODES[str(weather_code)]
 
         return weather_code, description
 
     def get_current_total_cloud_cover(self) -> int | float:
         """
-        Returns the current total cloud cover in percentage(%) at the specified coordinates.
+        Extracts current total cloud cover percentage(%).
         """
         return self._get_current_data({"current": "cloud_cover"})
 
@@ -268,19 +266,19 @@ class Weather(BaseForecast, BaseWeather):
         self, level: constants.CLOUD_COVER_LEVEL = "low"
     ) -> int | float:
         """
-        Returns the current cloud cover in percentage(%) at the specified level and coordinates.
+        Extracts current cloud cover percentage(%)
+        at the specified altitude level.
 
         #### Params:
-        - level (str): Altitude level of the desired cloud coverage; must be one of the following:
-            - 'low' (clouds and fog up to an altitude of 3 km.)
-            - 'mid' (clouds at an altitude between 3 km and 8 km.)
-            - 'high' (clouds at an altitude higher than 8 km.)
+        - level (str): Altitude level of the desired cloud coverage;
+        must be one of the following:
+            - 'low' (clouds and fog up to an altitude of 3 km)
+            - 'mid' (clouds at an altitude between 3 km and 8 km)
+            - 'high' (clouds at an altitude higher than 8 km)
         """
 
         if level not in ("low", "mid", "high"):
-            raise ValueError(
-                f"Expected `level` to be 'low', 'mid' or 'high'; got {level!r}."
-            )
+            raise ValueError(f"Invalid altitude level specified: {level!r}")
 
         return self._get_current_data({"current": f"cloud_cover_{level}"})
 
@@ -288,13 +286,15 @@ class Weather(BaseForecast, BaseWeather):
         self, unit: constants.TEMPERATURE_UNITS = "celsius"
     ) -> int | float:
         """
-        Returns the current apparent temperature at the specified coordinates.
-
-        Apparent temperature is the perceived feels-like temperature
-        combining wind chill factor, relative humidity and solar radiation.
+        Extracts current apparent temperature in the specified temperature unit.
 
         #### Params:
-        - unit (str): Temperature unit; must be 'celsius' or 'fahrenheit'.
+        - unit (str): Temperature unit; must be `celsius`
+        or `fahrenhiet`. Defaults to `celsius`.
+
+        #### Brief:
+        Apparent temperature is the perceived feels-like temperature
+        combining wind chill factor, relative humidity and solar radiation.
         """
         self._verify_temperature_unit(unit)
 
@@ -308,16 +308,19 @@ class Weather(BaseForecast, BaseWeather):
         unit: constants.WIND_SPEED_UNITS = "kmh",
     ) -> int | float:
         """
-        Returns the current wind speed at the specified
+        Extracts the current wind speed at the specified
         altitude and in the specified wind speed unit.
 
         #### Params:
-        - altitude (int): Altitude from the ground level; must be 10, 80, 120 or 180.
+        - altitude (int): Altitude from the ground level;
+        must be 10, 80, 120 or 180. Defaults to 10.
         - unit (str): Wind speed unit; must be one of the following:
-            - 'kmh' (kilometers per hour)
-            - 'mph' (miles per hour)
-            - 'ms' (meter per second)
-            - 'kn' (knots)
+            - `kmh` (kilometers per hour)
+            - `mph` (miles per hour)
+            - `ms` (meter per second)
+            - `kn` (knots)
+
+            Defaults to `kmh`.
         """
         self._verify_wind_altitude(altitude)
         self._verify_wind_speed_unit(unit)
@@ -331,11 +334,12 @@ class Weather(BaseForecast, BaseWeather):
         altitude: constants.WIND_ALTITUDE = 10,
     ) -> int | float:
         """
-        Returns the current wind direction in degrees at the
-        specified altitude and in the specified unit.
+        Extracts current wind direction in degress at
+        the specified altitude above the ground level.
 
         #### Params:
-        - altitude (int): Altitude from the ground level; must be 10, 80, 120 or 180.
+        - altitude (int): Altitude in meters(m) above the ground
+        level; must be 10, 80, 120 or 180. Defaults to 10.
         """
         self._verify_wind_altitude(altitude)
         return self._get_current_data({"current": f"wind_direction_{altitude}m"})
@@ -346,15 +350,19 @@ class Weather(BaseForecast, BaseWeather):
         unit: constants.WIND_SPEED_UNITS = "kmh",
     ) -> int | float:
         """
-        Returns the current wind gusts above 10 meters(m) from ground level in the specified unit.
+        Extracts current wind gusts at the specified
+        altitude and in the specified wind speed unit.
 
         #### Params:
-        - altitude (int): Altitude from the ground level; must be 10, 80, 120 or 180.
+        - altitude (int): Altitude from the ground level;
+        must be 10, 80, 120 or 180. Defaults to 10.
         - unit (str): Wind speed unit; must be one of the following:
-            - 'kmh' (kilometers per hour)
-            - 'mph' (miles per hour)
-            - 'ms' (meter per second)
-            - 'kn' (knots)
+            - `kmh` (kilometers per hour)
+            - `mph` (miles per hour)
+            - `ms` (meter per second)
+            - `kn` (knots)
+
+            Defaults to `kmh`.
         """
         self._verify_wind_altitude(altitude)
         self._verify_wind_speed_unit(unit)
@@ -365,8 +373,8 @@ class Weather(BaseForecast, BaseWeather):
 
     def get_current_relative_humidity(self) -> int | float:
         """
-        Returns the current relative humidity 2 meters(m) above the
-        ground level in percentage(%) at the specified coordinates.
+        Extracts current relative humidity percentage(%)
+        at 2 meters(m) above the ground level.
         """
         return self._get_current_data({"current": "relative_humidity_2m"})
 
@@ -374,11 +382,11 @@ class Weather(BaseForecast, BaseWeather):
         self, unit: constants.PRECIPITATION_UNITS = "mm"
     ) -> int | float:
         """
-        Returns the current precipitation (sum of rain, showers, and snowfall)
-        at the specified coordinates.
+        Extracts the current precipitation sum (rain + showers
+        + snowfall) in the specified precipitation unit.
 
         #### Params:
-        - unit: Precipitation unit; must be 'mm' or 'inch'.
+        - unit: Precipitation unit; must be `mm` or `inch`. Defaults to `mm`.
         """
         self._verify_precipitation_unit(unit)
         return self._get_current_data(
@@ -389,21 +397,19 @@ class Weather(BaseForecast, BaseWeather):
         self, level: constants.PRESSURE_LEVELS = "surface"
     ) -> int | float:
         """
-        Returns the current atmospheric pressure in Hectopascal (hPa)
-        at the specified level and coordinates.
+        Extracts current atmospheric pressure in Hectopascal(hPa)
+        at the specified measurement level.
 
         #### Params:
-        - level (str): Desired level of the atmospheric
-        pressure data; must be 'surface' or 'sealevel'.
+        - level (str): Desired level of the atmospheric pressure
+        data; must be `surface` or `sealevel`. Defaults to `surface`.
         """
 
         # Mapped value of the specified pressure level.
         pressure: str | None = constants.PRESSURE_LEVEL_MAPPING.get(level)
 
-        if not pressure:
-            raise ValueError(
-                f"Expected `level` to be 'sealevel' or 'surface'; got {level!r}."
-            )
+        if pressure is None:
+            raise ValueError(f"Invalid measurement level specified: {level!r}")
 
         return self._get_current_data({"current": pressure})
 
