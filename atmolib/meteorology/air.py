@@ -23,6 +23,8 @@ class AirQuality(BaseForecast):
     hourly air quality forecast data.
     """
 
+    __slots__ = "_lat", "_long", "_forecast_days"
+
     _session = requests.Session()
     _api = constants.AIR_QUALITY_API
 
