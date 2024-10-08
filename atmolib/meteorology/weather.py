@@ -551,15 +551,12 @@ class Weather(BaseForecast, BaseWeather):
         return self._get_periodical_data({"hourly": f"soil_moisture_{depth_range}cm"})
 
     def get_daily_max_uv_index(self) -> pd.Series:
-        """
-        Returns a pandas Series of daily maximum Ultra-Violet (UV)
-        index data at the specified coordinates.
-        """
+        """Extracts daily maximum Ultra-Violet (UV) index data."""
         return self._get_periodical_data({"daily": "uv_index_max"})
 
     def get_daily_max_precipitation_probability(self) -> pd.Series:
         """
-        Returns a pandas Series of daily maximum precipitation probability
-        (rain/showers/snowfall) in percentage (%) at the specified coordinates.
+        Extracts daily maximum precipitation (rain +
+        showers + snowfall) probability percentage(%).
         """
         return self._get_periodical_data({"daily": "precipitation_probability_max"})
