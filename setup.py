@@ -20,12 +20,11 @@ setup(
     url="https://www.github.com/rahul4732saini/atmolib",
     keywords="atmolib, weather, pandas, open-meteo",
     classifiers=[
-        "License :: OSI Approved :: Apache Software License",
+        "License :: OSI Approved :: MIT License",
         "Intended Audience :: Developers",
         "Operating System :: OS Independent",
         "Development Status :: 4 - Beta",
         "Topic :: Scientific/Engineering :: Atmospheric Science",
-        "Topic :: Scientific/Engineering :: GIS",
         "Topic :: Software Development :: Libraries",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Programming Language :: Python :: 3.10",
