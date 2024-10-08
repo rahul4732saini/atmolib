@@ -417,44 +417,44 @@ class Weather(BaseForecast, BaseWeather):
         self, unit: constants.PRECIPITATION_UNITS = "mm"
     ) -> int | float:
         """
-        Returns the current rainfall in mm/inch at the specified coordinates.
+        Extracts the current rainfall in
+        the specified precipitation unit.
 
         #### Params:
-        - unit: Precipitation unit; must be 'mm' or 'inch'.
+        - unit: Precipitation unit; must be `mm` or `inch`. Defaults to `mm`.
         """
         self._verify_precipitation_unit(unit)
         return self._get_current_data({"current": "rain", "precipitation_unit": unit})
 
     def get_current_snowfall(self) -> int | float:
         """
-        Returns the current snowfall in centimeters(cm) at the specified coordinates.
+        Extracts current snowfall in centimeters(m).
         """
         return self._get_current_data({"current": "snowfall"})
 
     def get_current_visibility(self) -> int | float:
         """
-        Returns the current visibility in meters(m) at the specified coordinates.
+        Extracts current visibility in meters(m).
         """
         return self._get_current_data({"current": "visibility"})
 
     def is_day_or_night(self) -> int:
         """
-        Returns whether it's day or night at the specified coordinates.
-        Returns integer `1` for daytime and `0` for nighttime.
+        Returns whether it's day or night. Returns the
+        integer `1` for daytime and `0` for nighttime.
         """
         return int(self._get_current_data({"current": "is_day"}))
 
     def get_hourly_visibility(self) -> pd.Series:
         """
-        Returns a pandas Series of hourly visibility data
-        in meters(m) at the specified coordinates.
+        Extracts hourly visibility data in meters(m).
         """
         return self._get_periodical_data({"hourly": "visibility"}, dtype=np.int32)
 
     def get_hourly_precipitation_probability(self) -> pd.Series:
         """
-        Returns a pandas Series of precipitation (rain/showers/snowfall)
-        probability in percentage(%) at the specified coordinates.
+        Extracts hourly precipitation (rain
+        + showers + snowfall) percentage(%).
         """
         return self._get_periodical_data({"hourly": "precipitation_probability"})
 
@@ -464,16 +464,19 @@ class Weather(BaseForecast, BaseWeather):
         unit: constants.WIND_SPEED_UNITS = "kmh",
     ) -> pd.Series:
         """
-        Returns a pandas Series of hourly wind speed data at the
-        specified coordinates and altitude in the specified unit.
+        Extracts hourly wind speed data at the specified
+        altitude and in the specified wind speed unit.
 
         #### Params:
-        - altitude (int): Altitude from the ground level; must be 10, 80, 120 or 180.
+        - altitude (int): Altitude from the ground level;
+        must be 10, 80, 120 or 180. Defaults to 10.
         - unit (str): Wind speed unit; must be one of the following:
-            - 'kmh' (kilometers per hour)
-            - 'mph' (miles per hour)
-            - 'ms' (meter per second)
-            - 'kn' (knots)
+            - `kmh` (kilometers per hour)
+            - `mph` (miles per hour)
+            - `ms` (meter per second)
+            - `kn` (knots)
+
+            Defaults to `kmh`.
         """
         self._verify_wind_altitude(altitude)
         self._verify_wind_speed_unit(unit)
@@ -486,11 +489,12 @@ class Weather(BaseForecast, BaseWeather):
         self, altitude: constants.WIND_ALTITUDE = 10
     ) -> pd.Series:
         """
-        Returns a pandas Series of hourly wind direction data in degrees at
-        the specified coordinates and altitude in the specified unit.
+        Extracts hourly wind direction data in degrees at
+        the specified altitude above the ground level.
 
         #### Params:
-        - altitude (int): Altitude from the ground level; must be 10, 80, 120 or 180.
+        - altitude (int): Altitude from the ground level;
+        must be 10, 80, 120 or 180. Defaults to 10.
         """
         self._verify_wind_altitude(altitude)
         return self._get_periodical_data({"hourly": f"wind_direction_{altitude}m"})
