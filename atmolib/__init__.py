@@ -13,7 +13,7 @@ information seamlessly into their python code.
 - Air quality information: Obtain real-time air quality data to monitor environmental conditions.
 - Marine weather data: Retrieve currrent and forecast marine weather data for maritime activities.
 
-Author: rahul4732saini
+Author: Rahul Saini (https://www.github.com/rahul4732saini)
 License: MIT, see LICENSE for more details. (https://opensource.org/licenses/MIT)
 """
 
