@@ -51,8 +51,8 @@ class AirQuality(BaseForecast):
     @staticmethod
     def _verify_atmospheric_gas(gas: constants.GASES) -> None:
         """
-        Verifies the specified atmospheric gas value
-        and raises a ValueError if found invalid.
+        Verifies the specified atmospheric gas and
+        raises a ValueError if found invalid.
         """
 
         if gas not in (
@@ -66,8 +66,8 @@ class AirQuality(BaseForecast):
     @staticmethod
     def _verify_plant_species(plant: constants.PLANTS) -> None:
         """
-        Verifies the specified plant species value
-        and raises a ValueError if found invalid.
+        Verifies the specified plant species and
+        raises a ValueError if found invalid.
         """
 
         if plant not in ("alder", "birch", "grass", "mugwort", "olive", "ragweed"):
@@ -136,8 +136,10 @@ class AirQuality(BaseForecast):
         #### Params:
         - source (str): Source of the Air Quality Index;
         must be one of the following:
-            - 'european' (Extracts the European Air Quality Index)
-            - 'us' (Extracts the USA Air Quality Index)
+            - `european` (Extracts the European Air Quality Index)
+            - `us` (Extracts the USA Air Quality Index)
+
+            Defaults to `european`.
         """
 
         if source not in ("european", "us"):
@@ -227,19 +229,19 @@ class AirQuality(BaseForecast):
     def get_hourly_dust_conc(self) -> pd.Series:
         """
         Extracts hourly aerial dust concentration(micro g/m^3)
-        forecast at 10 meters(m) above the ground level.
+        data at 10 meters(m) above the ground level.
         """
         return self._get_periodical_data({"hourly": "dust"})
 
     def get_hourly_uv_index(self) -> pd.Series:
         """
-        Extracts hourly Ultra-Violet(UV) radiation index forecast.
+        Extracts hourly Ultra-Violet(UV) radiation index data.
         """
         return self._get_periodical_data({"hourly": "uv_index"})
 
     def get_hourly_pm2_5_conc(self) -> pd.Series:
         """
-        Extracts hourly aerial concentration(micro g/m^3) forecast of
+        Extracts hourly aerial concentration(micro g/m^3) data of
         particulate matter with a diameter smaller than 2.5 micro meter(m)
         at 10 meters(m) above the ground level.
         """
@@ -247,7 +249,7 @@ class AirQuality(BaseForecast):
 
     def get_hourly_pm10_conc(self) -> pd.Series:
         """
-        Extracts hourly aerial concentration(micro g/m^3) forecast of
+        Extracts hourly aerial concentration(micro g/m^3) data of
         particulate matter with a diameter smaller than 10 micro meter(m)
         at 10 meters(m) above the ground level.
         """
@@ -255,7 +257,7 @@ class AirQuality(BaseForecast):
 
     def get_hourly_pollen_conc(self, plant: constants.PLANTS = "grass") -> pd.Series:
         """
-        Extracts hourly aerial pollen concentration(grains/m^3) forecast of
+        Extracts hourly aerial pollen concentration(grains/m^3) data of
         the specified plant. Only available for Europe as provided by CAMS
         European Air Quality forecast. Returns None for Non-European regions.
 
@@ -269,8 +271,7 @@ class AirQuality(BaseForecast):
 
     def get_hourly_aerosol_optical_depth(self) -> pd.Series:
         """
-        Extracts hourly aerosol optical depth
-        forecast at a wavelength of 550nm.
+        Extracts hourly aerosol optical depth data at a wavelength of 550nm.
 
         #### Brief:
 
@@ -284,7 +285,7 @@ class AirQuality(BaseForecast):
 
     def get_hourly_gaseous_conc(self, gas: constants.GASES = "ozone") -> pd.Series:
         """
-        Extracts hourly aerial concentration(micro g/m^3) forecast of the
+        Extracts hourly aerial concentration(micro g/m^3) data of the
         specified atmospheric gas at 10 meters(m) above the ground level.
 
         #### Params:
@@ -297,7 +298,7 @@ class AirQuality(BaseForecast):
 
     def get_hourly_ammonia_conc(self) -> pd.Series:
         """
-        Extracts hourly aerial ammonia concentration(micro g/m^3) forecast.
+        Extracts hourly aerial ammonia concentration(micro g/m^3) data.
         Only available for Europe. Returns None for Non-European regions.
         """
         return self._get_periodical_data({"hourly": "ammonia"})
