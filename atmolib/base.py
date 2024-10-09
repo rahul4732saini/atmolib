@@ -192,7 +192,7 @@ class BaseWeather(BaseMeteor):
         self._verify_temperature_unit(unit)
 
         if altitude not in (2, 80, 120, 180):
-            raise ValueError(f"Invalid altitude value specified: {altitude}")
+            raise ValueError(f"Invalid altitude level specified: {altitude}")
 
         return self._get_periodical_data(
             {"hourly": f"temperature_{altitude}m", "temperature_unit": unit}
@@ -243,8 +243,8 @@ class BaseWeather(BaseMeteor):
         self, frequency: constants.FREQUENCY = "daily"
     ) -> pd.DataFrame:
         """
-        Extracts periodical weather code data with their
-        corresponding descriptions at the specified frequency.
+        Extracts periodical weather code data with their corresponding
+        descriptions at the specified measurement frequency.
 
         #### Params:
         - frequency (str): Frequency of the data distribution;
@@ -259,11 +259,11 @@ class BaseWeather(BaseMeteor):
         )
 
         # Converting the Series into a pandas.DataFrame object
-        # to add a new column for weather code description.
+        # to add a new column for weather code descriptions.
         dataframe = data.to_frame("data")
 
         # Creating a new column 'description' mapped to the
-        # description of the corresponding weather code.
+        # description of the corresponding weather codes.
         dataframe["description"] = dataframe["data"].map(
             lambda code: constants.WEATHER_CODES[str(code)]
         )
@@ -296,8 +296,8 @@ class BaseWeather(BaseMeteor):
         at the specified measurement level.
 
         #### Params:
-        - level (str): Desired measurement level; must be `surface` or `sealevel`.
-        Defaults to `surface`.
+        - level (str): Desired measurement level; must be `surface`
+        or `sealevel`. Defaults to `surface`.
         """
 
         # Extracts the request metric based on the specified measurement level.
@@ -385,8 +385,9 @@ class BaseWeather(BaseMeteor):
 
         #### Params:
         - metric (str): Statistical metric to be extracted;
-        must be 'min', 'max' or 'mean'. Defaults to `mean`.
-        - unit: Temperature unit; must be `celsius` or `fahrenheit`. Defaults to `celsius`.
+        must be `min`, `max` or `mean`. Defaults to `mean`.
+        - unit: Temperature unit; must be `celsius` or `fahrenheit`.
+        Defaults to `celsius`.
         """
 
         if metric not in ("max", "min", "mean"):
@@ -409,8 +410,9 @@ class BaseWeather(BaseMeteor):
 
         #### Params:
         - metric (str): Statistical metric to be extracted;
-        must be 'min', 'max' or 'mean'. Defaults to `mean`.
-        - unit: Temperature unit; must be `celsius` or `fahrenheit`. Defaults to `celsius`.
+        must be `min`, `max` or `mean`. Defaults to `mean`.
+        - unit: Temperature unit; must be `celsius` or `fahrenheit`.
+        Defaults to `celsius`.
         """
 
         if metric not in ("max", "min", "mean"):
