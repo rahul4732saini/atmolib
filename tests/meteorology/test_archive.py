@@ -116,10 +116,7 @@ class TestWeatherArchive:
         (("celsius", "mm"), ("fahrenheit", "inch")),
     )
     def test_summary_methods_with_temperature_and_precipitation_unit_parameters(
-        self,
-        archive: atmolib.WeatherArchive,
-        temp_unit: atmolib.constants.TEMPERATURE_UNITS,
-        precipitation_unit: atmolib.constants.PRECIPITATION_UNITS,
+        self, archive: atmolib.WeatherArchive, temp_unit: str, precipitation_unit: str
     ) -> None:
         """
         Tests the hourly and daily summary extraction methods with
@@ -132,9 +129,7 @@ class TestWeatherArchive:
 
     @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
     def test_summary_methods_with_wind_speed_unit_parameters(
-        self,
-        archive: atmolib.WeatherArchive,
-        unit: atmolib.constants.WIND_SPEED_UNITS,
+        self, archive: atmolib.WeatherArchive, unit: str
     ) -> None:
         """
         Tests the hourly and daily summary extraction
@@ -174,9 +169,7 @@ class TestWeatherArchive:
 
     @pytest.mark.parametrize("unit", ("celsius", "fahrenheit"))
     def test_hourly_temperature_methods_unit_parameter(
-        self,
-        archive: atmolib.WeatherArchive,
-        unit: atmolib.constants.TEMPERATURE_UNITS,
+        self, archive: atmolib.WeatherArchive, unit: str
     ) -> None:
         """
         Tests the hourly temperature extraction methods with different `unit` parameters.
@@ -204,9 +197,7 @@ class TestWeatherArchive:
 
     @pytest.mark.parametrize("unit", ("celsius", "fahrenheit"))
     def test_daily_temperature_methods_unit_parameter(
-        self,
-        archive: atmolib.WeatherArchive,
-        unit: atmolib.constants.TEMPERATURE_UNITS,
+        self, archive: atmolib.WeatherArchive, unit: str
     ) -> None:
         """
         Tests the daily temperature extraction methods with different `unit` arguments.
@@ -258,9 +249,7 @@ class TestWeatherArchive:
 
     @pytest.mark.parametrize("unit", ("mm", "inch"))
     def test_periodical_precipitation_methods_unit_parameter(
-        self,
-        archive: atmolib.WeatherArchive,
-        unit: atmolib.constants.PRECIPITATION_UNITS,
+        self, archive: atmolib.WeatherArchive, unit: str
     ) -> None:
         """
         Tests the hourly and daily precipitation extraction
@@ -379,9 +368,7 @@ class TestWeatherArchive:
 
     @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
     def test_hourly_wind_methods_unit_parameter(
-        self,
-        archive: atmolib.WeatherArchive,
-        unit: atmolib.constants.WIND_SPEED_UNITS,
+        self, archive: atmolib.WeatherArchive, unit: str
     ) -> None:
         """
         Tests the hourly wind related extraction
@@ -396,9 +383,7 @@ class TestWeatherArchive:
 
     @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
     def test_daily_wind_methods_unit_parameter(
-        self,
-        archive: atmolib.WeatherArchive,
-        unit: atmolib.constants.WIND_SPEED_UNITS,
+        self, archive: atmolib.WeatherArchive, unit: str
     ) -> None:
         """
         Tests the daily wind related extraction
@@ -459,9 +444,7 @@ class TestWeatherArchive:
 
     @pytest.mark.parametrize("frequency", ("hourly", "daily"))
     def test_periodical_weather_code_method(
-        self,
-        archive: atmolib.WeatherArchive,
-        frequency: atmolib.constants.FREQUENCY,
+        self, archive: atmolib.WeatherArchive, frequency: str
     ) -> None:
         """
         Tests the `WeatherArchive.get_periodical_weather_code`
