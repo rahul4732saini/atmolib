@@ -28,7 +28,6 @@ with open(BASE_DIR / "weather_codes.json") as file:
 # Available frequencies for periodical weather data extraction.
 FREQUENCY = "hourly", "daily"
 
-# Units used as parameters in different weather data extraction requests.
 TEMPERATURE_UNITS = Literal["celsius", "fahrenheit"]
 WIND_SPEED_UNITS = Literal["kmh", "mph", "ms", "kn"]
 PRECIPITATION_UNITS = Literal["mm", "inch"]
@@ -36,7 +35,6 @@ PRECIPITATION_UNITS = Literal["mm", "inch"]
 CLOUD_COVER_LEVEL = Literal["low", "mid", "high"]
 PRESSURE_LEVELS = Literal["sealevel", "surface"]
 
-# Holds altitude in meters(m) above the surface level for different request types.
 TEMPERATURE_ALTITUDE = Literal[2, 80, 120, 180]
 WIND_ALTITUDE = Literal[10, 80, 120, 180]
 ARCHIVE_WIND_ALTITUDES = Literal[10, 100]
@@ -62,7 +60,6 @@ SOIL_MOISTURE_DEPTH = {
     range(27, 82): "27_to_81",
 }
 
-# Air Quality Index sources.
 AQI_SOURCES = Literal["european", "us"]
 
 # Maps different AQI ranges with their corresponding descriptions.
@@ -83,7 +80,6 @@ PLANTS = Literal["alder", "birch", "grass", "mugwort", "olive", "ragweed"]
 
 DAILY_WEATHER_REQUEST_TYPES = Literal["max", "min", "mean"]
 
-# Available wave types for marine weather data extraction.
 WAVE_TYPES = Literal["composite", "wind", "swell"]
 
 # Maps user specified arguments with request parameters
