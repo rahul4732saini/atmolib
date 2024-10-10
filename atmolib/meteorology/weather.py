@@ -221,7 +221,7 @@ class Weather(BaseForecast, BaseWeather):
         )
 
     def get_current_temperature(
-        self, altitude: constants.TEMPERATURE_ALTITUDE = 2, unit: str = "celsius"
+        self, altitude: constants.TEMPERATURE_ALTITUDES = 2, unit: str = "celsius"
     ) -> int | float:
         """
         Extracts current temperature at the specified altitude
@@ -299,7 +299,7 @@ class Weather(BaseForecast, BaseWeather):
         )
 
     def get_current_wind_speed(
-        self, altitude: constants.WIND_ALTITUDE = 10, unit: str = "kmh"
+        self, altitude: constants.WIND_ALTITUDES = 10, unit: str = "kmh"
     ) -> int | float:
         """
         Extracts the current wind speed at the specified
@@ -325,7 +325,7 @@ class Weather(BaseForecast, BaseWeather):
 
     def get_current_wind_direction(
         self,
-        altitude: constants.WIND_ALTITUDE = 10,
+        altitude: constants.WIND_ALTITUDES = 10,
     ) -> int | float:
         """
         Extracts current wind direction in degress at
@@ -339,7 +339,7 @@ class Weather(BaseForecast, BaseWeather):
         return self._get_current_data({"current": f"wind_direction_{altitude}m"})
 
     def get_current_wind_gusts(
-        self, altitude: constants.WIND_ALTITUDE = 10, unit: str = "kmh"
+        self, altitude: constants.WIND_ALTITUDES = 10, unit: str = "kmh"
     ) -> int | float:
         """
         Extracts current wind gusts at the specified
@@ -447,7 +447,7 @@ class Weather(BaseForecast, BaseWeather):
         return self._get_periodical_data({"hourly": "precipitation_probability"})
 
     def get_hourly_wind_speed(
-        self, altitude: constants.WIND_ALTITUDE = 10, unit: str = "kmh"
+        self, altitude: constants.WIND_ALTITUDES = 10, unit: str = "kmh"
     ) -> pd.Series:
         """
         Extracts hourly wind speed data at the specified
@@ -472,7 +472,7 @@ class Weather(BaseForecast, BaseWeather):
         )
 
     def get_hourly_wind_direction(
-        self, altitude: constants.WIND_ALTITUDE = 10
+        self, altitude: constants.WIND_ALTITUDES = 10
     ) -> pd.Series:
         """
         Extracts hourly wind direction data in degrees at

@@ -172,7 +172,7 @@ class BaseWeather(BaseMeteor):
         self._verify_wind_speed_unit(wind_speed_unit)
 
     def get_hourly_temperature(
-        self, altitude: constants.TEMPERATURE_ALTITUDE = 2, unit: str = "celsius"
+        self, altitude: constants.TEMPERATURE_ALTITUDES = 2, unit: str = "celsius"
     ) -> pd.Series:
         """
         Extracts hourly temperature data at the specified altitude
