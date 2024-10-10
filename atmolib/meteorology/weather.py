@@ -62,9 +62,9 @@ class Weather(BaseForecast, BaseWeather):
 
     def get_current_summary(
         self,
-        temperature_unit: constants.TEMPERATURE_UNITS = "celsius",
-        precipitation_unit: constants.PRECIPITATION_UNITS = "mm",
-        wind_speed_unit: constants.WIND_SPEED_UNITS = "kmh",
+        temperature_unit: str = "celsius",
+        precipitation_unit: str = "mm",
+        wind_speed_unit: str = "kmh",
     ) -> pd.Series:
         """
         Extracts current weather summary data in the specified
@@ -115,9 +115,9 @@ class Weather(BaseForecast, BaseWeather):
 
     def get_hourly_summary(
         self,
-        temperature_unit: constants.TEMPERATURE_UNITS = "celsius",
-        precipitation_unit: constants.PRECIPITATION_UNITS = "mm",
-        wind_speed_unit: constants.WIND_SPEED_UNITS = "kmh",
+        temperature_unit: str = "celsius",
+        precipitation_unit: str = "mm",
+        wind_speed_unit: str = "kmh",
     ) -> pd.DataFrame:
         """
         Extracts hourly weather summary forecast data in the
@@ -170,9 +170,9 @@ class Weather(BaseForecast, BaseWeather):
 
     def get_daily_summary(
         self,
-        temperature_unit: constants.TEMPERATURE_UNITS = "celsius",
-        precipitation_unit: constants.PRECIPITATION_UNITS = "mm",
-        wind_speed_unit: constants.WIND_SPEED_UNITS = "kmh",
+        temperature_unit: str = "celsius",
+        precipitation_unit: str = "mm",
+        wind_speed_unit: str = "kmh",
     ) -> pd.DataFrame:
         """
         Extracts daily weather summary forecast data in the
@@ -221,9 +221,7 @@ class Weather(BaseForecast, BaseWeather):
         )
 
     def get_current_temperature(
-        self,
-        altitude: constants.TEMPERATURE_ALTITUDE = 2,
-        unit: constants.TEMPERATURE_UNITS = "celsius",
+        self, altitude: constants.TEMPERATURE_ALTITUDE = 2, unit: str = "celsius"
     ) -> int | float:
         """
         Extracts current temperature at the specified altitude
@@ -282,9 +280,7 @@ class Weather(BaseForecast, BaseWeather):
 
         return self._get_current_data({"current": f"cloud_cover_{level}"})
 
-    def get_current_apparent_temperature(
-        self, unit: constants.TEMPERATURE_UNITS = "celsius"
-    ) -> int | float:
+    def get_current_apparent_temperature(self, unit: str = "celsius") -> int | float:
         """
         Extracts current apparent temperature in the specified temperature unit.
 
@@ -303,9 +299,7 @@ class Weather(BaseForecast, BaseWeather):
         )
 
     def get_current_wind_speed(
-        self,
-        altitude: constants.WIND_ALTITUDE = 10,
-        unit: constants.WIND_SPEED_UNITS = "kmh",
+        self, altitude: constants.WIND_ALTITUDE = 10, unit: str = "kmh"
     ) -> int | float:
         """
         Extracts the current wind speed at the specified
@@ -345,9 +339,7 @@ class Weather(BaseForecast, BaseWeather):
         return self._get_current_data({"current": f"wind_direction_{altitude}m"})
 
     def get_current_wind_gusts(
-        self,
-        altitude: constants.WIND_ALTITUDE = 10,
-        unit: constants.WIND_SPEED_UNITS = "kmh",
+        self, altitude: constants.WIND_ALTITUDE = 10, unit: str = "kmh"
     ) -> int | float:
         """
         Extracts current wind gusts at the specified
@@ -378,9 +370,7 @@ class Weather(BaseForecast, BaseWeather):
         """
         return self._get_current_data({"current": "relative_humidity_2m"})
 
-    def get_current_precipitation(
-        self, unit: constants.PRECIPITATION_UNITS = "mm"
-    ) -> int | float:
+    def get_current_precipitation(self, unit: str = "mm") -> int | float:
         """
         Extracts the current precipitation sum (rain + showers
         + snowfall) in the specified precipitation unit.
@@ -413,9 +403,7 @@ class Weather(BaseForecast, BaseWeather):
 
         return self._get_current_data({"current": pressure})
 
-    def get_current_rainfall(
-        self, unit: constants.PRECIPITATION_UNITS = "mm"
-    ) -> int | float:
+    def get_current_rainfall(self, unit: str = "mm") -> int | float:
         """
         Extracts the current rainfall in
         the specified precipitation unit.
@@ -459,9 +447,7 @@ class Weather(BaseForecast, BaseWeather):
         return self._get_periodical_data({"hourly": "precipitation_probability"})
 
     def get_hourly_wind_speed(
-        self,
-        altitude: constants.WIND_ALTITUDE = 10,
-        unit: constants.WIND_SPEED_UNITS = "kmh",
+        self, altitude: constants.WIND_ALTITUDE = 10, unit: str = "kmh"
     ) -> pd.Series:
         """
         Extracts hourly wind speed data at the specified
@@ -500,9 +486,7 @@ class Weather(BaseForecast, BaseWeather):
         return self._get_periodical_data({"hourly": f"wind_direction_{altitude}m"})
 
     def get_hourly_soil_temperature(
-        self,
-        depth: constants.SOIL_TEMP_DEPTH = 0,
-        unit: constants.TEMPERATURE_UNITS = "celsius",
+        self, depth: constants.SOIL_TEMP_DEPTH = 0, unit: str = "celsius"
     ) -> pd.Series:
         """
         Returns a pandas Series of hourly soil temperature data at
