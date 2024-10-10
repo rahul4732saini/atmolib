@@ -131,40 +131,37 @@ class BaseWeather(BaseMeteor):
     """
 
     @staticmethod
-    def _verify_temperature_unit(unit: constants.TEMPERATURE_UNITS) -> None:
+    def _verify_temperature_unit(unit: str) -> None:
         """
         Verifies the specified temperature unit
         and raises a ValueError if found invalid.
         """
 
-        if unit not in ("celsius", "fahrenheit"):
+        if unit not in constants.TEMPERATURE_UNITS:
             raise ValueError(f"Invalid temperature unit {unit!r}")
 
     @staticmethod
-    def _verify_precipitation_unit(unit: constants.PRECIPITATION_UNITS) -> None:
+    def _verify_precipitation_unit(unit: str) -> None:
         """
         Verifies the specified precipitation unit
         and raises a ValueError if found invalid.
         """
 
-        if unit not in ("mm", "inch"):
+        if unit not in constants.PRECIPITATION_UNITS:
             raise ValueError(f"Invalid precipitation unit {unit!r}")
 
     @staticmethod
-    def _verify_wind_speed_unit(unit: constants.WIND_SPEED_UNITS) -> None:
+    def _verify_wind_speed_unit(unit: str) -> None:
         """
         Verifies the specified wind speed unit
         and raises a ValueError if found invalid.
         """
 
-        if unit not in ("kmh", "mph", "ms", "kn"):
+        if unit not in constants.WIND_SPEED_UNITS:
             raise ValueError(f"Invalid wind speed unit {unit!r}")
 
     def _verify_units(
-        self,
-        temperature_unit: constants.TEMPERATURE_UNITS,
-        precipitation_unit: constants.PRECIPITATION_UNITS,
-        wind_speed_unit: constants.WIND_SPEED_UNITS,
+        self, temperature_unit: str, precipitation_unit: str, wind_speed_unit: str
     ) -> None:
         """
         Verifies the specified temperature, precipitation and wind speed units.
@@ -175,9 +172,7 @@ class BaseWeather(BaseMeteor):
         self._verify_wind_speed_unit(wind_speed_unit)
 
     def get_hourly_temperature(
-        self,
-        altitude: constants.TEMPERATURE_ALTITUDE = 2,
-        unit: constants.TEMPERATURE_UNITS = "celsius",
+        self, altitude: constants.TEMPERATURE_ALTITUDE = 2, unit: str = "celsius"
     ) -> pd.Series:
         """
         Extracts hourly temperature data at the specified altitude
@@ -198,9 +193,7 @@ class BaseWeather(BaseMeteor):
             {"hourly": f"temperature_{altitude}m", "temperature_unit": unit}
         )
 
-    def get_hourly_apparent_temperature(
-        self, unit: constants.TEMPERATURE_UNITS = "celsius"
-    ) -> pd.Series:
+    def get_hourly_apparent_temperature(self, unit: str = "celsius") -> pd.Series:
         """
         Extracts hourly apparent temperature data at 2 meters(m)
         above the ground level in the specified temperature unit.
@@ -215,9 +208,7 @@ class BaseWeather(BaseMeteor):
             {"hourly": "apparent_temperature", "temperature_unit": unit}
         )
 
-    def get_hourly_dew_point(
-        self, unit: constants.TEMPERATURE_UNITS = "celsius"
-    ) -> pd.Series:
+    def get_hourly_dew_point(self, unit: str = "celsius") -> pd.Series:
         """
         Extracts hourly dew point data at 2 meters(m) above
         the ground level in the specified temperature unit.
@@ -268,9 +259,7 @@ class BaseWeather(BaseMeteor):
 
         return dataframe
 
-    def get_hourly_rainfall(
-        self, unit: constants.PRECIPITATION_UNITS = "mm"
-    ) -> pd.Series:
+    def get_hourly_rainfall(self, unit: str = "mm") -> pd.Series:
         """
         Extracts hourly rainfall data in the specified precipitation unit.
 
@@ -334,9 +323,7 @@ class BaseWeather(BaseMeteor):
 
         return self._get_periodical_data({"hourly": f"cloud_cover_{level}"})
 
-    def get_hourly_precipitation(
-        self, unit: constants.PRECIPITATION_UNITS = "mm"
-    ) -> pd.Series:
+    def get_hourly_precipitation(self, unit: str = "mm") -> pd.Series:
         """
         Extracts hourly precipitation (rain + showers + snowfall)
         data in the specified precipitation unit.
@@ -350,9 +337,7 @@ class BaseWeather(BaseMeteor):
             {"hourly": "precipitation", "precipitation_unit": unit}
         )
 
-    def get_hourly_wind_gusts(
-        self, unit: constants.WIND_SPEED_UNITS = "kmh"
-    ) -> pd.Series:
+    def get_hourly_wind_gusts(self, unit: str = "kmh") -> pd.Series:
         """
         Extracts hourly wind gusts data at 10 meters(m) above
         the ground level in the specified wind speed unit.
@@ -375,7 +360,7 @@ class BaseWeather(BaseMeteor):
     def get_daily_temperature(
         self,
         metric: constants.DAILY_WEATHER_REQUEST_TYPES = "mean",
-        unit: constants.TEMPERATURE_UNITS = "celsius",
+        unit: str = "celsius",
     ) -> pd.Series:
         """
         Extracts daily temperature statistical metrics (max, min, mean)
@@ -400,7 +385,7 @@ class BaseWeather(BaseMeteor):
     def get_daily_apparent_temperature(
         self,
         metric: constants.DAILY_WEATHER_REQUEST_TYPES = "mean",
-        unit: constants.TEMPERATURE_UNITS = "celsius",
+        unit: str = "celsius",
     ) -> pd.Series:
         """
         Extracts daily apparent temperature statistical metrics (max, min, mean)
@@ -422,9 +407,7 @@ class BaseWeather(BaseMeteor):
             {"daily": f"apparent_temperature_{metric}", "temperature_unit": unit}
         )
 
-    def get_daily_max_wind_speed(
-        self, unit: constants.WIND_SPEED_UNITS = "kmh"
-    ) -> pd.Series:
+    def get_daily_max_wind_speed(self, unit: str = "kmh") -> pd.Series:
         """
         Extracts daily maximum wind speed data at 2 meters(m) above
         the ground level in the specified wind speed unit.
@@ -448,9 +431,7 @@ class BaseWeather(BaseMeteor):
         """
         return self._get_periodical_data({"daily": "wind_direction_10m_dominant"})
 
-    def get_daily_max_wind_gusts(
-        self, unit: constants.WIND_SPEED_UNITS = "kmh"
-    ) -> pd.Series:
+    def get_daily_max_wind_gusts(self, unit: str = "kmh") -> pd.Series:
         """
         Extracts daily maximum wind gusts at 2 meters(m) above
         the ground level in the specified wind speed unit.
@@ -467,9 +448,7 @@ class BaseWeather(BaseMeteor):
         self._verify_wind_speed_unit(unit)
         return self._get_periodical_data({"daily": "wind_gusts_10m_max"})
 
-    def get_daily_total_precipitation(
-        self, unit: constants.PRECIPITATION_UNITS = "mm"
-    ) -> pd.Series:
+    def get_daily_total_precipitation(self, unit: str = "mm") -> pd.Series:
         """
         Extracts daily total precipitation (rain + showers + snowfall)
         sum data in the specified precipitation unit.
@@ -483,9 +462,7 @@ class BaseWeather(BaseMeteor):
             {"daily": "precipitation_sum", "precipitation_unit": unit}
         )
 
-    def get_daily_total_rainfall(
-        self, unit: constants.PRECIPITATION_UNITS = "mm"
-    ) -> pd.Series:
+    def get_daily_total_rainfall(self, unit: str = "mm") -> pd.Series:
         """
         Extracts daily total rainfall data in the specified precipitation unit.
 
