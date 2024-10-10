@@ -26,7 +26,7 @@ with open(BASE_DIR / "weather_codes.json") as file:
     WEATHER_CODES = json.load(file)
 
 # Available frequencies for periodical weather data extraction.
-FREQUENCY = Literal["hourly", "daily"]
+FREQUENCY = "hourly", "daily"
 
 # Units used as parameters in different weather data extraction requests.
 TEMPERATURE_UNITS = Literal["celsius", "fahrenheit"]
