@@ -91,9 +91,6 @@ WAVE_TYPES = Literal["composite", "wind", "swell"]
 WAVE_TYPES_MAP = {"composite": "", "wind": "wind_", "swell": "swell_"}
 PRESSURE_LEVEL_MAPPING = {"sealevel": "pressure_msl", "surface": "surface_pressure"}
 
-# Available types of temperature data which can be extracted from the API endpoints.
-TEMPERATURE_TYPES = Literal["temperature_2m", "apparent_temperature"]
-
 CURRENT_WEATHER_SUMMARY_DATA_TYPES = [
     "temperature_2m",
     "relative_humidity_2m",
