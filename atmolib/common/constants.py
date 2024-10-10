@@ -35,8 +35,8 @@ PRECIPITATION_UNITS = "mm", "inch"
 CLOUD_COVER_LEVEL = Literal["low", "mid", "high"]
 PRESSURE_LEVELS = Literal["sealevel", "surface"]
 
-TEMPERATURE_ALTITUDE = Literal[2, 80, 120, 180]
-WIND_ALTITUDE = Literal[10, 80, 120, 180]
+TEMPERATURE_ALTITUDES = Literal[2, 80, 120, 180]
+WIND_ALTITUDES = Literal[10, 80, 120, 180]
 ARCHIVE_WIND_ALTITUDES = Literal[10, 100]
 
 # Available depth-range options in centimeters(cm) for
