@@ -142,9 +142,9 @@ class WeatherArchive(BaseWeather):
 
     def get_hourly_summary(
         self,
-        temperature_unit: constants.TEMPERATURE_UNITS = "celsius",
-        precipitation_unit: constants.PRECIPITATION_UNITS = "mm",
-        wind_speed_unit: constants.WIND_SPEED_UNITS = "kmh",
+        temperature_unit: str = "celsius",
+        precipitation_unit: str = "mm",
+        wind_speed_unit: str = "kmh",
     ) -> pd.DataFrame:
         """
         Extracts historical hourly weather summary in the specified
@@ -195,9 +195,9 @@ class WeatherArchive(BaseWeather):
 
     def get_daily_summary(
         self,
-        temperature_unit: constants.TEMPERATURE_UNITS = "celsius",
-        precipitation_unit: constants.PRECIPITATION_UNITS = "mm",
-        wind_speed_unit: constants.WIND_SPEED_UNITS = "kmh",
+        temperature_unit: str = "celsius",
+        precipitation_unit: str = "mm",
+        wind_speed_unit: str = "kmh",
     ) -> pd.DataFrame:
         """
         Extracts daily historical weather summary in the specified
@@ -245,9 +245,7 @@ class WeatherArchive(BaseWeather):
         )
 
     def get_hourly_wind_speed(
-        self,
-        altitude: constants.ARCHIVE_WIND_ALTITUDES = 10,
-        unit: constants.WIND_SPEED_UNITS = "kmh",
+        self, altitude: constants.ARCHIVE_WIND_ALTITUDES = 10, unit: str = "kmh"
     ) -> pd.Series:
         """
         Extracts historical hourly wind speed data at the
@@ -292,7 +290,7 @@ class WeatherArchive(BaseWeather):
         return self._get_periodical_data({"hourly": f"wind_direction_{altitude}m"})
 
     def get_hourly_soil_temperature(
-        self, depth: int = 0, unit: constants.TEMPERATURE_UNITS = "celsius"
+        self, depth: int = 0, unit: str = "celsius"
     ) -> pd.Series:
         """
         Extracts historical hourly soil temperature data at the
