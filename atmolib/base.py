@@ -239,9 +239,7 @@ class BaseWeather(BaseMeteor):
         """
         return self._get_periodical_data({"hourly": "relative_humidity_2m"})
 
-    def get_periodical_weather_code(
-        self, frequency: constants.FREQUENCY = "daily"
-    ) -> pd.DataFrame:
+    def get_periodical_weather_code(self, frequency: str = "daily") -> pd.DataFrame:
         """
         Extracts periodical weather code data with their corresponding
         descriptions at the specified measurement frequency.
@@ -251,7 +249,7 @@ class BaseWeather(BaseMeteor):
         must be `daily` or `hourly`. Defaults to `daily`.
         """
 
-        if frequency not in ("hourly", "daily"):
+        if frequency not in constants.FREQUENCY:
             raise ValueError(f"Invalid frequency specified: {frequency!r}")
 
         data: pd.Series = self._get_periodical_data(
