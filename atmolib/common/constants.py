@@ -28,9 +28,9 @@ with open(BASE_DIR / "weather_codes.json") as file:
 # Available frequencies for periodical weather data extraction.
 FREQUENCY = "hourly", "daily"
 
-TEMPERATURE_UNITS = Literal["celsius", "fahrenheit"]
-WIND_SPEED_UNITS = Literal["kmh", "mph", "ms", "kn"]
-PRECIPITATION_UNITS = Literal["mm", "inch"]
+TEMPERATURE_UNITS = "celsius", "fahrenheit"
+WIND_SPEED_UNITS = "kmh", "mph", "ms", "kn"
+PRECIPITATION_UNITS = "mm", "inch"
 
 CLOUD_COVER_LEVEL = Literal["low", "mid", "high"]
 PRESSURE_LEVELS = Literal["sealevel", "surface"]
