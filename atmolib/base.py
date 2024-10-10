@@ -240,7 +240,7 @@ class BaseWeather(BaseMeteor):
         must be `daily` or `hourly`. Defaults to `daily`.
         """
 
-        if frequency not in constants.FREQUENCY:
+        if frequency not in constants.FREQUENCIES:
             raise ValueError(f"Invalid frequency specified: {frequency!r}")
 
         data: pd.Series = self._get_periodical_data(
