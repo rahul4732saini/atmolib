@@ -261,7 +261,7 @@ class Weather(BaseForecast, BaseWeather):
         return self._get_current_data({"current": "cloud_cover"})
 
     def get_current_cloud_cover(
-        self, level: constants.CLOUD_COVER_LEVEL = "low"
+        self, level: constants.CLOUD_COVER_LEVELS = "low"
     ) -> int | float:
         """
         Extracts current cloud cover percentage(%)

@@ -32,7 +32,7 @@ TEMPERATURE_UNITS = "celsius", "fahrenheit"
 WIND_SPEED_UNITS = "kmh", "mph", "ms", "kn"
 PRECIPITATION_UNITS = "mm", "inch"
 
-CLOUD_COVER_LEVEL = Literal["low", "mid", "high"]
+CLOUD_COVER_LEVELS = Literal["low", "mid", "high"]
 PRESSURE_LEVELS = Literal["sealevel", "surface"]
 
 TEMPERATURE_ALTITUDES = Literal[2, 80, 120, 180]

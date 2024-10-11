@@ -302,7 +302,7 @@ class BaseWeather(BaseMeteor):
         return self._get_periodical_data({"hourly": "cloud_cover"})
 
     def get_hourly_cloud_cover(
-        self, level: constants.CLOUD_COVER_LEVEL = "low"
+        self, level: constants.CLOUD_COVER_LEVELS = "low"
     ) -> pd.Series:
         """
         Extracts hourly cloud cover percentage(%)
