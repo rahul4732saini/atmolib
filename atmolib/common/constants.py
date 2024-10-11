@@ -8,7 +8,6 @@ various classes and functions defined within the package.
 
 import json
 from pathlib import Path
-from typing import Literal
 
 # API endpoint URLs.
 WEATHER_API = "https://api.open-meteo.com/v1/forecast"

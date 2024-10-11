@@ -209,9 +209,7 @@ class TestWeatherArchive:
 
     @pytest.mark.parametrize("metric", ("mean", "max", "min"))
     def test_daily_temperature_methods_metric_parameter(
-        self,
-        archive: atmolib.WeatherArchive,
-        metric: atmolib.constants.DAILY_WEATHER_REQUEST_TYPES,
+        self, archive: atmolib.WeatherArchive, metric: str
     ) -> None:
         """
         Tests the daily temperature extraction
