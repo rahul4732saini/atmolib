@@ -25,6 +25,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 with open(BASE_DIR / "weather_codes.json") as file:
     WEATHER_CODES = json.load(file)
 
+AQI_SOURCES = Literal["european", "us"]
+
+# Maps different AQI ranges with their corresponding descriptions.
+AQI_LEVELS = {
+    range(50): "Good",
+    range(51, 101): "Moderate",
+    range(101, 151): "Slight Unhealthy",
+    range(151, 201): "Unhealthy",
+    range(201, 301): "Very Unhealthy",
+    range(301, 501): "Hazardous",
+}
+
 # Available frequencies for periodical weather data extraction.
 FREQUENCIES = "hourly", "daily"
 
@@ -39,6 +51,15 @@ TEMPERATURE_ALTITUDES = 2, 80, 120, 180
 WIND_ALTITUDES = 10, 80, 120, 180
 ARCHIVE_WIND_ALTITUDES = 10, 100
 
+# Available atmospheric gases for gaseous concentration data extraction.
+GASES = Literal["ozone", "carbon_monoxide", "nitrogen_dioxide", "sulphur_dioxide"]
+
+# Available plants for pollen grains concentration data extraction.
+PLANTS = Literal["alder", "birch", "grass", "mugwort", "olive", "ragweed"]
+
+# Available depth options in centimeters(cm) for soil temperature data extraction.
+SOIL_TEMP_DEPTH = 0, 6, 18, 54
+
 # Available depth-range options in centimeters(cm) for
 # historical soil temperature/moisture data extraction.
 ARCHIVE_SOIL_DEPTH = {
@@ -47,9 +68,6 @@ ARCHIVE_SOIL_DEPTH = {
     range(28, 100): "28_to_100",
     range(100, 256): "100_to_255",
 }
-
-# Available depth options in centimeters(cm) for soil temperature data extraction.
-SOIL_TEMP_DEPTH = 0, 6, 18, 54
 
 # Available depth-range options in centimeters(cm) for soil moisture data extraction.
 SOIL_MOISTURE_DEPTH = {
@@ -60,26 +78,7 @@ SOIL_MOISTURE_DEPTH = {
     range(27, 82): "27_to_81",
 }
 
-AQI_SOURCES = Literal["european", "us"]
-
-# Maps different AQI ranges with their corresponding descriptions.
-AQI_LEVELS = {
-    range(50): "Good",
-    range(51, 101): "Moderate",
-    range(101, 151): "Slight Unhealthy",
-    range(151, 201): "Unhealthy",
-    range(201, 301): "Very Unhealthy",
-    range(301, 501): "Hazardous",
-}
-
-# Available atmospheric gases for gaseous concentration data extraction.
-GASES = Literal["ozone", "carbon_monoxide", "nitrogen_dioxide", "sulphur_dioxide"]
-
-# Available plants for pollen grains concentration data extraction.
-PLANTS = Literal["alder", "birch", "grass", "mugwort", "olive", "ragweed"]
-
 DAILY_WEATHER_REQUEST_TYPES = Literal["max", "min", "mean"]
-
 WAVE_TYPES = Literal["composite", "wind", "swell"]
 
 # Maps user specified arguments with request parameters
