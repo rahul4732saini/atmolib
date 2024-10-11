@@ -51,16 +51,15 @@ TEMPERATURE_ALTITUDES = 2, 80, 120, 180
 WIND_ALTITUDES = 10, 80, 120, 180
 ARCHIVE_WIND_ALTITUDES = 10, 100
 
-# Available atmospheric gases for gaseous concentration data extraction.
+# Available atmospheric gases and plant species for
+# corresponding aerial concentration data extraction.
 GASES = Literal["ozone", "carbon_monoxide", "nitrogen_dioxide", "sulphur_dioxide"]
-
-# Available plants for pollen grains concentration data extraction.
 PLANTS = Literal["alder", "birch", "grass", "mugwort", "olive", "ragweed"]
 
-# Available depth options in centimeters(cm) for soil temperature data extraction.
+# Available soil depths in centimeters(cm) for temperature data extraction.
 SOIL_TEMP_DEPTH = 0, 6, 18, 54
 
-# Available depth-range options in centimeters(cm) for
+# Available soil depth ranges in centimeters(m) for
 # historical soil temperature/moisture data extraction.
 ARCHIVE_SOIL_DEPTH = {
     range(7): "0_to_7",
@@ -69,7 +68,7 @@ ARCHIVE_SOIL_DEPTH = {
     range(100, 256): "100_to_255",
 }
 
-# Available depth-range options in centimeters(cm) for soil moisture data extraction.
+# Available soil depth ranges in centimeters(cm) for soil moisture data extraction.
 SOIL_MOISTURE_DEPTH = {
     range(1): "0_to_1",
     range(1, 3): "1_to_3",
@@ -81,8 +80,8 @@ SOIL_MOISTURE_DEPTH = {
 DAILY_WEATHER_REQUEST_TYPES = Literal["max", "min", "mean"]
 WAVE_TYPES = Literal["composite", "wind", "swell"]
 
-# Maps user specified arguments with request parameters
-# for extracting meteorology data from API endpoints.
+# Maps user specified arguments with their corresponding request
+# parameters for extracting meteorology data from API endpoints.
 WAVE_TYPES_MAP = {"composite": "", "wind": "wind_", "swell": "swell_"}
 PRESSURE_LEVEL_MAPPING = {"sealevel": "pressure_msl", "surface": "surface_pressure"}
 
