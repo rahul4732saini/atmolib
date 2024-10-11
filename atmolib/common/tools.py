@@ -60,7 +60,9 @@ def _verify_keys(params: dict[str, Any], keys: tuple[str, ...]) -> None:
         if key in params:
             continue
 
-        raise KeyError(f"Required parameter {key!r} not found in the 'params' mapping.")
+        raise KeyError(
+            f"Required parameter {key!r} not found in the request parameters."
+        )
 
 
 def get_current_data(
@@ -117,9 +119,7 @@ def get_periodical_data(
         frequency = "daily"
 
     else:
-        raise KeyError(
-            "frequency key 'daily' or 'hourly' not found in the 'params' mapping."
-        )
+        raise KeyError("frequency parameter not found in the reuqest parameters.")
 
     results: dict[str, Any] = _request_json(api, params, session)
 
@@ -189,9 +189,7 @@ def get_periodical_summary(
         frequency = "daily"
 
     else:
-        raise KeyError(
-            "frequency key 'daily' or 'hourly' not found in the 'params' mapping."
-        )
+        raise KeyError("frequency parameter not found in the request parameters.")
 
     results: dict[str, Any] = _request_json(api, params, session)
 
