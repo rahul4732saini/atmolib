@@ -53,8 +53,8 @@ ARCHIVE_WIND_ALTITUDES = 10, 100
 
 # Available atmospheric gases and plant species for
 # corresponding aerial concentration data extraction.
-GASES = Literal["ozone", "carbon_monoxide", "nitrogen_dioxide", "sulphur_dioxide"]
-PLANTS = Literal["alder", "birch", "grass", "mugwort", "olive", "ragweed"]
+GASES = "ozone", "carbon_monoxide", "nitrogen_dioxide", "sulphur_dioxide"
+PLANTS = "alder", "birch", "grass", "mugwort", "olive", "ragweed"
 
 # Available soil depths in centimeters(cm) for temperature data extraction.
 SOIL_TEMP_DEPTH = 0, 6, 18, 54
@@ -77,8 +77,8 @@ SOIL_MOISTURE_DEPTH = {
     range(27, 82): "27_to_81",
 }
 
-DAILY_WEATHER_STATISTICAL_METRICS = Literal["max", "min", "mean"]
-WAVE_TYPES = Literal["composite", "wind", "swell"]
+DAILY_WEATHER_STATISTICAL_METRICS = "max", "min", "mean"
+WAVE_TYPES = "composite", "wind", "swell"
 
 # Maps user specified arguments with their corresponding request
 # parameters for extracting meteorology data from API endpoints.

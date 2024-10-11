@@ -354,9 +354,7 @@ class BaseWeather(BaseMeteor):
         )
 
     def get_daily_temperature(
-        self,
-        metric: constants.DAILY_WEATHER_STATISTICAL_METRICS = "mean",
-        unit: str = "celsius",
+        self, metric: str = "mean", unit: str = "celsius"
     ) -> pd.Series:
         """
         Extracts daily temperature statistical metrics (max, min, mean)
@@ -369,7 +367,7 @@ class BaseWeather(BaseMeteor):
         Defaults to `celsius`.
         """
 
-        if metric not in ("max", "min", "mean"):
+        if metric not in constants.DAILY_WEATHER_STATISTICAL_METRICS:
             raise ValueError(f"Invalid statistical metric specified: {metric!r}")
 
         self._verify_temperature_unit(unit)
@@ -379,9 +377,7 @@ class BaseWeather(BaseMeteor):
         )
 
     def get_daily_apparent_temperature(
-        self,
-        metric: constants.DAILY_WEATHER_STATISTICAL_METRICS = "mean",
-        unit: str = "celsius",
+        self, metric: str = "mean", unit: str = "celsius"
     ) -> pd.Series:
         """
         Extracts daily apparent temperature statistical metrics (max, min, mean)
@@ -394,7 +390,7 @@ class BaseWeather(BaseMeteor):
         Defaults to `celsius`.
         """
 
-        if metric not in ("max", "min", "mean"):
+        if metric not in constants.DAILY_WEATHER_STATISTICAL_METRICS:
             raise ValueError(f"Invalid statistical metric specified: {metric!r}")
 
         self._verify_temperature_unit(unit)

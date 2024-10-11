@@ -39,7 +39,7 @@ class MarineWeather(BaseForecast):
         self,
         lat: int | float,
         long: int | float,
-        wave_type: constants.WAVE_TYPES = "composite",
+        wave_type: str = "composite",
         forecast_days: int = 7,
     ) -> None:
         """

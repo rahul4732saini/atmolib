@@ -49,28 +49,23 @@ class AirQuality(BaseForecast):
         super().__init__(lat, long, forecast_days)
 
     @staticmethod
-    def _verify_atmospheric_gas(gas: constants.GASES) -> None:
+    def _verify_atmospheric_gas(gas: str) -> None:
         """
         Verifies the specified atmospheric gas and
         raises a ValueError if found invalid.
         """
 
-        if gas not in (
-            "ozone",
-            "carbon_monoxide",
-            "nitrogen_dioxide",
-            "sulphur_dioxide",
-        ):
+        if gas not in constants.GASES:
             raise ValueError(f"Invalid atmospheric gas specified: {gas!r}")
 
     @staticmethod
-    def _verify_plant_species(plant: constants.PLANTS) -> None:
+    def _verify_plant_species(plant: str) -> None:
         """
         Verifies the specified plant species and
         raises a ValueError if found invalid.
         """
 
-        if plant not in ("alder", "birch", "grass", "mugwort", "olive", "ragweed"):
+        if plant not in constants.PLANTS:
             raise ValueError(f"Invalid plant species specified: {plant!r}")
 
     def get_current_summary(self) -> pd.Series:
@@ -139,7 +134,7 @@ class AirQuality(BaseForecast):
             - `european` (Extracts the European Air Quality Index)
             - `us` (Extracts the USA Air Quality Index)
 
-            Defaults to `european`.
+            Defaults to `european`.`
         """
 
         if source not in constants.AQI_SOURCES:
@@ -161,7 +156,7 @@ class AirQuality(BaseForecast):
         """
         return self._get_current_data({"current": "dust"})
 
-    def get_current_gaseous_conc(self, gas: constants.GASES = "ozone") -> int | float:
+    def get_current_gaseous_conc(self, gas: str = "ozone") -> int | float:
         """
         Extracts current aerial concentration(micro g/m^3) of the specified
         atmospheric gas at 10 meters(m) above the ground level.
@@ -190,9 +185,7 @@ class AirQuality(BaseForecast):
         """
         return self._get_current_data({"current": "pm10"})
 
-    def get_current_pollen_conc(
-        self, plant: constants.PLANTS = "grass"
-    ) -> int | float | None:
+    def get_current_pollen_conc(self, plant: str = "grass") -> int | float | None:
         """
         Extracts current aerial pollen concentration(grains/m^3) of the specified
         plant. Only available for Europe as provided by CAMS European Air Quality
@@ -255,7 +248,7 @@ class AirQuality(BaseForecast):
         """
         return self._get_periodical_data({"hourly": "pm10"})
 
-    def get_hourly_pollen_conc(self, plant: constants.PLANTS = "grass") -> pd.Series:
+    def get_hourly_pollen_conc(self, plant: str = "grass") -> pd.Series:
         """
         Extracts hourly aerial pollen concentration(grains/m^3) data of
         the specified plant. Only available for Europe as provided by CAMS
@@ -283,7 +276,7 @@ class AirQuality(BaseForecast):
         """
         return self._get_periodical_data({"hourly": "aerosol_optical_depth"})
 
-    def get_hourly_gaseous_conc(self, gas: constants.GASES = "ozone") -> pd.Series:
+    def get_hourly_gaseous_conc(self, gas: str = "ozone") -> pd.Series:
         """
         Extracts hourly aerial concentration(micro g/m^3) data of the
         specified atmospheric gas at 10 meters(m) above the ground level.
