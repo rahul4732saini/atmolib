@@ -129,7 +129,7 @@ class AirQuality(BaseForecast):
             constants.HOURLY_AIR_QUALITY_SUMMARY_DATA_TYPES,
         )
 
-    def get_current_aqi(self, source: constants.AQI_SOURCES = "european") -> int:
+    def get_current_aqi(self, source: str = "european") -> int:
         """
         Extracts current Air Quality Index based on the specified AQI source.
 
@@ -142,7 +142,7 @@ class AirQuality(BaseForecast):
             Defaults to `european`.
         """
 
-        if source not in ("european", "us"):
+        if source not in constants.AQI_SOURCES:
             raise ValueError(f"Invalid AQI source specified: {source!r}")
 
         return int(self._get_current_data({"current": "european_aqi"}))

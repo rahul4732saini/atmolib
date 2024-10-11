@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 with open(BASE_DIR / "weather_codes.json") as file:
     WEATHER_CODES = json.load(file)
 
-AQI_SOURCES = Literal["european", "us"]
+AQI_SOURCES = "european", "us"
 
 # Maps different AQI ranges with their corresponding descriptions.
 AQI_LEVELS = {
