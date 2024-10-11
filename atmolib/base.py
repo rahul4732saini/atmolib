@@ -355,7 +355,7 @@ class BaseWeather(BaseMeteor):
 
     def get_daily_temperature(
         self,
-        metric: constants.DAILY_WEATHER_REQUEST_TYPES = "mean",
+        metric: constants.DAILY_WEATHER_STATISTICAL_METRICS = "mean",
         unit: str = "celsius",
     ) -> pd.Series:
         """
@@ -380,7 +380,7 @@ class BaseWeather(BaseMeteor):
 
     def get_daily_apparent_temperature(
         self,
-        metric: constants.DAILY_WEATHER_REQUEST_TYPES = "mean",
+        metric: constants.DAILY_WEATHER_STATISTICAL_METRICS = "mean",
         unit: str = "celsius",
     ) -> pd.Series:
         """

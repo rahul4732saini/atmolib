@@ -77,7 +77,7 @@ SOIL_MOISTURE_DEPTH = {
     range(27, 82): "27_to_81",
 }
 
-DAILY_WEATHER_REQUEST_TYPES = Literal["max", "min", "mean"]
+DAILY_WEATHER_STATISTICAL_METRICS = Literal["max", "min", "mean"]
 WAVE_TYPES = Literal["composite", "wind", "swell"]
 
 # Maps user specified arguments with their corresponding request
