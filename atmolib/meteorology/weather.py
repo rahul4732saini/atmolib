@@ -221,7 +221,7 @@ class Weather(BaseForecast, BaseWeather):
         )
 
     def get_current_temperature(
-        self, altitude: constants.TEMPERATURE_ALTITUDES = 2, unit: str = "celsius"
+        self, altitude: int = 2, unit: str = "celsius"
     ) -> int | float:
         """
         Extracts current temperature at the specified altitude
@@ -234,7 +234,7 @@ class Weather(BaseForecast, BaseWeather):
         Defaults to `celsius`.
         """
 
-        if altitude not in (2, 80, 120, 180):
+        if altitude not in constants.TEMPERATURE_ALTITUDES:
             raise ValueError(f"Invalid altitude level specified: {altitude}")
 
         self._verify_temperature_unit(unit)
@@ -260,9 +260,7 @@ class Weather(BaseForecast, BaseWeather):
         """
         return self._get_current_data({"current": "cloud_cover"})
 
-    def get_current_cloud_cover(
-        self, level: constants.CLOUD_COVER_LEVELS = "low"
-    ) -> int | float:
+    def get_current_cloud_cover(self, level: str = "low") -> int | float:
         """
         Extracts current cloud cover percentage(%)
         at the specified altitude level.
@@ -275,7 +273,7 @@ class Weather(BaseForecast, BaseWeather):
             - 'high' (clouds at an altitude higher than 8 km)
         """
 
-        if level not in ("low", "mid", "high"):
+        if level not in constants.CLOUD_COVER_LEVELS:
             raise ValueError(f"Invalid altitude level specified: {level!r}")
 
         return self._get_current_data({"current": f"cloud_cover_{level}"})
@@ -299,7 +297,7 @@ class Weather(BaseForecast, BaseWeather):
         )
 
     def get_current_wind_speed(
-        self, altitude: constants.WIND_ALTITUDES = 10, unit: str = "kmh"
+        self, altitude: int = 10, unit: str = "kmh"
     ) -> int | float:
         """
         Extracts the current wind speed at the specified
@@ -323,10 +321,7 @@ class Weather(BaseForecast, BaseWeather):
             {"current": f"wind_speed_{altitude}m", "wind_speed_unit": unit}
         )
 
-    def get_current_wind_direction(
-        self,
-        altitude: constants.WIND_ALTITUDES = 10,
-    ) -> int | float:
+    def get_current_wind_direction(self, altitude: int = 10) -> int | float:
         """
         Extracts current wind direction in degress at
         the specified altitude above the ground level.
@@ -339,7 +334,7 @@ class Weather(BaseForecast, BaseWeather):
         return self._get_current_data({"current": f"wind_direction_{altitude}m"})
 
     def get_current_wind_gusts(
-        self, altitude: constants.WIND_ALTITUDES = 10, unit: str = "kmh"
+        self, altitude: int = 10, unit: str = "kmh"
     ) -> int | float:
         """
         Extracts current wind gusts at the specified
@@ -383,9 +378,7 @@ class Weather(BaseForecast, BaseWeather):
             {"current": "precipitation", "precipitation_unit": unit}
         )
 
-    def get_current_pressure(
-        self, level: constants.PRESSURE_LEVELS = "surface"
-    ) -> int | float:
+    def get_current_pressure(self, level: str = "surface") -> int | float:
         """
         Extracts current atmospheric pressure in Hectopascal(hPa)
         at the specified measurement level.
@@ -446,9 +439,7 @@ class Weather(BaseForecast, BaseWeather):
         """
         return self._get_periodical_data({"hourly": "precipitation_probability"})
 
-    def get_hourly_wind_speed(
-        self, altitude: constants.WIND_ALTITUDES = 10, unit: str = "kmh"
-    ) -> pd.Series:
+    def get_hourly_wind_speed(self, altitude: int = 10, unit: str = "kmh") -> pd.Series:
         """
         Extracts hourly wind speed data at the specified
         altitude and in the specified wind speed unit.
@@ -471,9 +462,7 @@ class Weather(BaseForecast, BaseWeather):
             {"hourly": f"wind_speed_{altitude}m", "wind_speed_unit": unit}
         )
 
-    def get_hourly_wind_direction(
-        self, altitude: constants.WIND_ALTITUDES = 10
-    ) -> pd.Series:
+    def get_hourly_wind_direction(self, altitude: int = 10) -> pd.Series:
         """
         Extracts hourly wind direction data in degrees at
         the specified altitude above the ground level.
@@ -486,7 +475,7 @@ class Weather(BaseForecast, BaseWeather):
         return self._get_periodical_data({"hourly": f"wind_direction_{altitude}m"})
 
     def get_hourly_soil_temperature(
-        self, depth: constants.SOIL_TEMP_DEPTH = 0, unit: str = "celsius"
+        self, depth: int = 0, unit: str = "celsius"
     ) -> pd.Series:
         """
         Returns a pandas Series of hourly soil temperature data at

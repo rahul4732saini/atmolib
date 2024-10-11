@@ -314,9 +314,7 @@ class TestWeatherArchive:
 
     @pytest.mark.parametrize("level", ("surface", "sealevel"))
     def test_hourly_atmospheric_pressure_method(
-        self,
-        archive: atmolib.WeatherArchive,
-        level: atmolib.constants.PRESSURE_LEVELS,
+        self, archive: atmolib.WeatherArchive, level: str
     ) -> None:
         """
         Tests the `WeatherArchive.get_hourly_pressure` with different `level` arguments.
@@ -328,7 +326,7 @@ class TestWeatherArchive:
 
     @pytest.mark.parametrize("level", ("low", "mid", "high"))
     def test_cloud_cover_methods_level_parameter(
-        self, weather: atmolib.Weather, level: atmolib.constants.CLOUD_COVER_LEVEL
+        self, weather: atmolib.Weather, level: str
     ) -> None:
         """
         Tests the `WeatherArchive.get_hourly_cloud_cover`
@@ -349,9 +347,7 @@ class TestWeatherArchive:
 
     @pytest.mark.parametrize("altitude", (10, 100))
     def test_hourly_wind_methods_altitude_parameter(
-        self,
-        archive: atmolib.WeatherArchive,
-        altitude: atmolib.constants.ARCHIVE_WIND_ALTITUDES,
+        self, archive: atmolib.WeatherArchive, altitude: int
     ) -> None:
         """
         Tests the hourly wind related extraction

@@ -32,12 +32,12 @@ TEMPERATURE_UNITS = "celsius", "fahrenheit"
 WIND_SPEED_UNITS = "kmh", "mph", "ms", "kn"
 PRECIPITATION_UNITS = "mm", "inch"
 
-CLOUD_COVER_LEVELS = Literal["low", "mid", "high"]
-PRESSURE_LEVELS = Literal["sealevel", "surface"]
+CLOUD_COVER_LEVELS = "low", "mid", "high"
+PRESSURE_LEVELS = "sealevel", "surface"
 
-TEMPERATURE_ALTITUDES = Literal[2, 80, 120, 180]
-WIND_ALTITUDES = Literal[10, 80, 120, 180]
-ARCHIVE_WIND_ALTITUDES = Literal[10, 100]
+TEMPERATURE_ALTITUDES = 2, 80, 120, 180
+WIND_ALTITUDES = 10, 80, 120, 180
+ARCHIVE_WIND_ALTITUDES = 10, 100
 
 # Available depth-range options in centimeters(cm) for
 # historical soil temperature/moisture data extraction.
@@ -49,7 +49,7 @@ ARCHIVE_SOIL_DEPTH = {
 }
 
 # Available depth options in centimeters(cm) for soil temperature data extraction.
-SOIL_TEMP_DEPTH = Literal[0, 6, 18, 54]
+SOIL_TEMP_DEPTH = 0, 6, 18, 54
 
 # Available depth-range options in centimeters(cm) for soil moisture data extraction.
 SOIL_MOISTURE_DEPTH = {

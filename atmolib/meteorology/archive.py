@@ -244,9 +244,7 @@ class WeatherArchive(BaseWeather):
             constants.DAILY_ARCHIVE_SUMMARY_COLUMN_LABELS,
         )
 
-    def get_hourly_wind_speed(
-        self, altitude: constants.ARCHIVE_WIND_ALTITUDES = 10, unit: str = "kmh"
-    ) -> pd.Series:
+    def get_hourly_wind_speed(self, altitude: int = 10, unit: str = "kmh") -> pd.Series:
         """
         Extracts historical hourly wind speed data at the
         specified altitude and in the specified wind speed unit.
@@ -272,9 +270,7 @@ class WeatherArchive(BaseWeather):
             {"hourly": f"wind_speed_{altitude}m", "wind_speed_unit": unit}
         )
 
-    def get_hourly_wind_direction(
-        self, altitude: constants.ARCHIVE_WIND_ALTITUDES = 10
-    ) -> pd.Series:
+    def get_hourly_wind_direction(self, altitude: int = 10) -> pd.Series:
         """
         Extracts historical hourly wind direction
         data in degrees at the specified altitude.

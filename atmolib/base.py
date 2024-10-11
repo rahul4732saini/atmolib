@@ -172,7 +172,7 @@ class BaseWeather(BaseMeteor):
         self._verify_wind_speed_unit(wind_speed_unit)
 
     def get_hourly_temperature(
-        self, altitude: constants.TEMPERATURE_ALTITUDES = 2, unit: str = "celsius"
+        self, altitude: int = 2, unit: str = "celsius"
     ) -> pd.Series:
         """
         Extracts hourly temperature data at the specified altitude
@@ -186,7 +186,7 @@ class BaseWeather(BaseMeteor):
         """
         self._verify_temperature_unit(unit)
 
-        if altitude not in (2, 80, 120, 180):
+        if altitude not in constants.TEMPERATURE_ALTITUDES:
             raise ValueError(f"Invalid altitude level specified: {altitude}")
 
         return self._get_periodical_data(
@@ -275,9 +275,7 @@ class BaseWeather(BaseMeteor):
         """
         return self._get_periodical_data({"hourly": "rain"})
 
-    def get_hourly_pressure(
-        self, level: constants.PRESSURE_LEVELS = "surface"
-    ) -> pd.Series:
+    def get_hourly_pressure(self, level: str = "surface") -> pd.Series:
         """
         Extracts hourly atmospheric pressure data in Hectopascals(hPa)
         at the specified measurement level.
@@ -301,9 +299,7 @@ class BaseWeather(BaseMeteor):
         """
         return self._get_periodical_data({"hourly": "cloud_cover"})
 
-    def get_hourly_cloud_cover(
-        self, level: constants.CLOUD_COVER_LEVELS = "low"
-    ) -> pd.Series:
+    def get_hourly_cloud_cover(self, level: str = "low") -> pd.Series:
         """
         Extracts hourly cloud cover percentage(%)
         data at the specified altitude level.
@@ -318,7 +314,7 @@ class BaseWeather(BaseMeteor):
             Defaults to `low`.
         """
 
-        if level not in ("low", "mid", "high"):
+        if level not in constants.CLOUD_COVER_LEVELS:
             raise ValueError(f"Invalid altitude level specified: {level!r}")
 
         return self._get_periodical_data({"hourly": f"cloud_cover_{level}"})
