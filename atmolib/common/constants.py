@@ -152,9 +152,6 @@ DAILY_WEATHER_SUMMARY_LABELS = [
     "wind_direction",
 ]
 
-# List of marine weather data types extracted in the marine weather
-# summary data extraction. The same are also used as the index labels
-# for the marine weather summary pandas Series/DataFrame object.
 MARINE_WEATHER_SUMMARY_PARAMS = [
     "wave_height",
     "wave_direction",
@@ -167,9 +164,6 @@ DAILY_MARINE_WEATHER_SUMMARY_PARAMS = [
     "wave_period_max",
 ]
 
-# List of air quality data types extracted in the current air quality
-# summary data extraction. The same are also used as the index labels
-# for the current air quality summary data pandas Series object.
 CURRENT_AIR_QUALITY_SUMMARY_PARAMS = [
     "dust",
     "pm10",
