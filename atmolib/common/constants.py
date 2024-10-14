@@ -155,13 +155,13 @@ DAILY_WEATHER_SUMMARY_LABELS = [
 # List of marine weather data types extracted in the marine weather
 # summary data extraction. The same are also used as the index labels
 # for the marine weather summary pandas Series/DataFrame object.
-MARINE_WEATHER_SUMMARY_DATA_TYPES = [
+MARINE_WEATHER_SUMMARY_PARAMS = [
     "wave_height",
     "wave_direction",
     "wave_period",
 ]
 
-DAILY_MARINE_WEATHER_SUMMARY_DATA_TYPES = [
+DAILY_MARINE_WEATHER_SUMMARY_PARAMS = [
     "wave_height_max",
     "wave_direction_dominant",
     "wave_period_max",

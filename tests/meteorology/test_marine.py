@@ -69,7 +69,7 @@ class TestMarineWeather:
             current.index.tolist()
             == hourly.columns.tolist()
             == daily.columns.tolist()
-            == atmolib.constants.MARINE_WEATHER_SUMMARY_DATA_TYPES
+            == atmolib.constants.MARINE_WEATHER_SUMMARY_PARAMS
         )
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
