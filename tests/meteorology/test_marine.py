@@ -26,9 +26,7 @@ class TestMarineWeather:
             atmolib.MarineWeather(*i)
 
     @pytest.mark.parametrize("type_", ("composite", "wind", "swell"))
-    def test_object_intialization_wave_type_parameter(
-        self, type_: atmolib.constants.WAVE_TYPES
-    ) -> None:
+    def test_object_intialization_wave_type_parameter(self, type_: str) -> None:
         """
         Tests the `atmolib.MarineWeather` object initialization
         with different `wave_type` arguments.
@@ -47,9 +45,7 @@ class TestMarineWeather:
                 atmolib.MarineWeather(0, 0, forecast_days=days)
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
-    def test_marine_weather_summary_methods(
-        self, wave_type: atmolib.constants.WAVE_TYPES
-    ) -> None:
+    def test_marine_weather_summary_methods(self, wave_type: str) -> None:
         """
         Test the marine weather summary extraction methods.
         """
@@ -77,9 +73,7 @@ class TestMarineWeather:
         )
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
-    def test_current_marine_weather_methods(
-        self, wave_type: atmolib.constants.WAVE_TYPES
-    ) -> None:
+    def test_current_marine_weather_methods(self, wave_type: str) -> None:
         """
         Test the marine weather summary extraction methods.
         """
@@ -99,9 +93,7 @@ class TestMarineWeather:
         )
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
-    def test_hourly_marine_weather_methods(
-        self, wave_type: atmolib.constants.WAVE_TYPES
-    ) -> None:
+    def test_hourly_marine_weather_methods(self, wave_type: str) -> None:
         """
         Test the marine weather summary extraction methods.
         """
@@ -121,9 +113,7 @@ class TestMarineWeather:
         )
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
-    def test_daily_marine_weather_methods(
-        self, wave_type: atmolib.constants.WAVE_TYPES
-    ) -> None:
+    def test_daily_marine_weather_methods(self, wave_type: str) -> None:
         """
         Test the marine weather summary extraction methods.
         """
