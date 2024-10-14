@@ -97,7 +97,7 @@ class Weather(BaseForecast, BaseWeather):
 
         # A string representation of the weather summary data types
         # separated by commas as supported for requesting the Web API.
-        data_types: str = ",".join(constants.CURRENT_WEATHER_SUMMARY_DATA_TYPES)
+        data_types: str = ",".join(constants.CURRENT_WEATHER_SUMMARY_PARAMS)
 
         params: dict[str, Any] = {
             "current": data_types,
@@ -110,7 +110,7 @@ class Weather(BaseForecast, BaseWeather):
             self._session,
             self._api,
             self._params | params,
-            constants.CURRENT_WEATHER_SUMMARY_INDEX_LABELS,
+            constants.CURRENT_WEATHER_SUMMARY_LABELS,
         )
 
     def get_hourly_summary(
@@ -152,7 +152,7 @@ class Weather(BaseForecast, BaseWeather):
 
         # A string representation of the weather summary data types
         # separated by commas as supported for requesting the Web API.
-        data_types: str = ",".join(constants.HOURLY_WEATHER_SUMMARY_DATA_TYPES)
+        data_types: str = ",".join(constants.HOURLY_WEATHER_SUMMARY_PARAMS)
 
         params: dict[str, Any] = {
             "hourly": data_types,
@@ -165,7 +165,7 @@ class Weather(BaseForecast, BaseWeather):
             self._session,
             self._api,
             self._params | params,
-            constants.HOURLY_WEATHER_SUMMARY_COLUMN_LABELS,
+            constants.HOURLY_WEATHER_SUMMARY_LABELS,
         )
 
     def get_daily_summary(
@@ -204,7 +204,7 @@ class Weather(BaseForecast, BaseWeather):
 
         # A string representation of the weather summary data types
         # separated by commas as supported for requesting the Web API.
-        data_types: str = ",".join(constants.DAILY_WEATHER_SUMMARY_DATA_TYPES)
+        data_types: str = ",".join(constants.DAILY_WEATHER_SUMMARY_PARAMS)
 
         params: dict[str, Any] = {
             "daily": data_types,
@@ -217,7 +217,7 @@ class Weather(BaseForecast, BaseWeather):
             self._session,
             self._api,
             self._params | params,
-            constants.DAILY_WEATHER_SUMMARY_COLUMN_LABELS,
+            constants.DAILY_WEATHER_SUMMARY_LABELS,
         )
 
     def get_current_temperature(

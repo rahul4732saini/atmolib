@@ -61,17 +61,13 @@ class TestWeather:
         )
 
         assert (
-            (
-                current.index.tolist()
-                == atmolib.constants.CURRENT_WEATHER_SUMMARY_INDEX_LABELS
-            )
+            (current.index.tolist() == atmolib.constants.CURRENT_WEATHER_SUMMARY_LABELS)
             and (
                 hourly.columns.tolist()
-                == atmolib.constants.HOURLY_WEATHER_SUMMARY_COLUMN_LABELS
+                == atmolib.constants.HOURLY_WEATHER_SUMMARY_LABELS
             )
             and (
-                daily.columns.tolist()
-                == atmolib.constants.DAILY_WEATHER_SUMMARY_COLUMN_LABELS
+                daily.columns.tolist() == atmolib.constants.DAILY_WEATHER_SUMMARY_LABELS
             )
         )
 

@@ -84,7 +84,7 @@ WAVE_TYPES = "composite", "wind", "swell"
 WAVE_TYPES_MAP = {"composite": "", "wind": "wind_", "swell": "swell_"}
 PRESSURE_LEVEL_MAPPING = {"sealevel": "pressure_msl", "surface": "surface_pressure"}
 
-CURRENT_WEATHER_SUMMARY_DATA_TYPES = [
+CURRENT_WEATHER_SUMMARY_PARAMS = [
     "temperature_2m",
     "relative_humidity_2m",
     "precipitation",
@@ -95,13 +95,59 @@ CURRENT_WEATHER_SUMMARY_DATA_TYPES = [
     "wind_direction_10m",
 ]
 
-CURRENT_WEATHER_SUMMARY_INDEX_LABELS = [
+CURRENT_WEATHER_SUMMARY_LABELS = [
     "temperature",
     "relative_humidity",
     "precipitation",
     "weather_code",
     "cloud_cover",
     "surface_pressure",
+    "wind_speed",
+    "wind_direction",
+]
+
+HOURLY_WEATHER_SUMMARY_PARAMS = [
+    "temperature_2m",
+    "relative_humidity_2m",
+    "dew_point_2m",
+    "precipitation",
+    "weather_code",
+    "surface_pressure",
+    "cloud_cover",
+    "visibility",
+    "wind_speed_10m",
+    "soil_temperature_0cm",
+]
+
+HOURLY_WEATHER_SUMMARY_LABELS = [
+    "temperature",
+    "relative_humidity",
+    "dew_point",
+    "precipitation",
+    "weather_code",
+    "surface_pressure",
+    "cloud_cover",
+    "visibility",
+    "wind_speed",
+    "soil_temperature",
+]
+
+DAILY_WEATHER_SUMMARY_PARAMS = [
+    "weather_code",
+    "temperature_2m_mean",
+    "daylight_duration",
+    "uv_index_max",
+    "precipitation_sum",
+    "wind_speed_10m_mean",
+    "wind_direction_10m_dominant",
+]
+
+DAILY_WEATHER_SUMMARY_LABELS = [
+    "weather_code",
+    "temperature",
+    "daylight_duration",
+    "uv_index",
+    "precipitation",
     "wind_speed",
     "wind_direction",
 ]
@@ -136,52 +182,6 @@ CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES = [
     "sulphur_dioxide",
     "european_aqi",
     "ammonia",
-]
-
-HOURLY_WEATHER_SUMMARY_DATA_TYPES = [
-    "temperature_2m",
-    "relative_humidity_2m",
-    "dew_point_2m",
-    "precipitation",
-    "weather_code",
-    "surface_pressure",
-    "cloud_cover",
-    "visibility",
-    "wind_speed_10m",
-    "soil_temperature_0cm",
-]
-
-HOURLY_WEATHER_SUMMARY_COLUMN_LABELS = [
-    "temperature",
-    "relative_humidity",
-    "dew_point",
-    "precipitation",
-    "weather_code",
-    "surface_pressure",
-    "cloud_cover",
-    "visibility",
-    "wind_speed",
-    "soil_temperature",
-]
-
-DAILY_WEATHER_SUMMARY_DATA_TYPES = [
-    "weather_code",
-    "temperature_2m_mean",
-    "daylight_duration",
-    "uv_index_max",
-    "precipitation_sum",
-    "wind_speed_10m_mean",
-    "wind_direction_10m_dominant",
-]
-
-DAILY_WEATHER_SUMMARY_COLUMN_LABELS = [
-    "weather_code",
-    "temperature",
-    "daylight_duration",
-    "uv_index",
-    "precipitation",
-    "wind_speed",
-    "wind_direction",
 ]
 
 HOURLY_AIR_QUALITY_SUMMARY_DATA_TYPES = [
