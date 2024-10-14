@@ -62,9 +62,9 @@ class TestAirQuality:
         # Verifies the index/columns of the resultant pandas.Series/DataFrame.
         assert (
             current.index.tolist()
-            == atmolib.constants.CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES
+            == atmolib.constants.CURRENT_AIR_QUALITY_SUMMARY_PARAMS
             and hourly.columns.tolist()
-            == atmolib.constants.HOURLY_AIR_QUALITY_SUMMARY_DATA_TYPES
+            == atmolib.constants.HOURLY_AIR_QUALITY_SUMMARY_PARAMS
         )
 
     @pytest.mark.parametrize("source", ("european", "us"))

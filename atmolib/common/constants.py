@@ -170,7 +170,7 @@ DAILY_MARINE_WEATHER_SUMMARY_PARAMS = [
 # List of air quality data types extracted in the current air quality
 # summary data extraction. The same are also used as the index labels
 # for the current air quality summary data pandas Series object.
-CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES = [
+CURRENT_AIR_QUALITY_SUMMARY_PARAMS = [
     "dust",
     "pm10",
     "ozone",
@@ -184,7 +184,7 @@ CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES = [
     "ammonia",
 ]
 
-HOURLY_AIR_QUALITY_SUMMARY_DATA_TYPES = [
+HOURLY_AIR_QUALITY_SUMMARY_PARAMS = [
     "pm10",
     "pm2_5",
     "carbon_monoxide",
@@ -196,7 +196,7 @@ HOURLY_AIR_QUALITY_SUMMARY_DATA_TYPES = [
     "ammonia",
 ]
 
-HOURLY_ARCHIVE_SUMMARY_DATA_TYPES = [
+HOURLY_ARCHIVE_SUMMARY_PARAMS = [
     "temperature_2m",
     "relative_humidity_2m",
     "dew_point_2m",
@@ -207,7 +207,7 @@ HOURLY_ARCHIVE_SUMMARY_DATA_TYPES = [
     "soil_temperature_0_to_7cm",
 ]
 
-HOURLY_ARCHIVE_SUMMARY_COLUMN_LABELS = [
+HOURLY_ARCHIVE_SUMMARY_LABELS = [
     "temperature",
     "relative_humidity",
     "dew_point",
@@ -218,7 +218,7 @@ HOURLY_ARCHIVE_SUMMARY_COLUMN_LABELS = [
     "soil_temperature",
 ]
 
-DAILY_ARCHIVE_SUMMARY_DATA_TYPES = [
+DAILY_ARCHIVE_SUMMARY_PARAMS = [
     "weather_code",
     "temperature_2m_mean",
     "daylight_duration",
@@ -227,7 +227,7 @@ DAILY_ARCHIVE_SUMMARY_DATA_TYPES = [
     "wind_direction_10m_dominant",
 ]
 
-DAILY_ARCHIVE_SUMMARY_COLUMN_LABELS = [
+DAILY_ARCHIVE_SUMMARY_LABELS = [
     "weather_code",
     "temperature",
     "daylight_duration",

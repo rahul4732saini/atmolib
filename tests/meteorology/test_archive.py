@@ -62,11 +62,8 @@ class TestWeatherArchive:
         assert isinstance(hourly, pd.DataFrame) and isinstance(daily, pd.DataFrame)
 
         assert (
-            hourly.columns.tolist()
-            == atmolib.constants.HOURLY_ARCHIVE_SUMMARY_COLUMN_LABELS
-        ) and (
-            daily.columns.tolist()
-            == atmolib.constants.DAILY_ARCHIVE_SUMMARY_COLUMN_LABELS
+            hourly.columns.tolist() == atmolib.constants.HOURLY_ARCHIVE_SUMMARY_LABELS
+            and daily.columns.tolist() == atmolib.constants.DAILY_ARCHIVE_SUMMARY_LABELS
         )
 
     @staticmethod

@@ -88,13 +88,13 @@ class AirQuality(BaseForecast):
 
         # String representation of the summary data types separated
         # by commas as supported for requesting the API endpoint.
-        data_types: str = f",".join(constants.CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES)
+        data_types: str = f",".join(constants.CURRENT_AIR_QUALITY_SUMMARY_PARAMS)
 
         return tools.get_current_summary(
             self._session,
             self._api,
             self._params | {"current": data_types},
-            constants.CURRENT_AIR_QUALITY_SUMMARY_DATA_TYPES,
+            constants.CURRENT_AIR_QUALITY_SUMMARY_PARAMS,
         )
 
     def get_hourly_summary(self) -> pd.DataFrame:
@@ -115,13 +115,13 @@ class AirQuality(BaseForecast):
 
         # String representation of the summary data types separated
         # by commas as supported for requesting the API endpoint.
-        data_types: str = f",".join(constants.HOURLY_AIR_QUALITY_SUMMARY_DATA_TYPES)
+        data_types: str = f",".join(constants.HOURLY_AIR_QUALITY_SUMMARY_PARAMS)
 
         return tools.get_periodical_summary(
             self._session,
             self._api,
             self._params | {"hourly": data_types},
-            constants.HOURLY_AIR_QUALITY_SUMMARY_DATA_TYPES,
+            constants.HOURLY_AIR_QUALITY_SUMMARY_PARAMS,
         )
 
     def get_current_aqi(self, source: str = "european") -> int:

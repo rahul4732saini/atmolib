@@ -177,7 +177,7 @@ class WeatherArchive(BaseWeather):
 
         # String representation of the summary data types separated
         # by commas as supported for requesting the API endpoint.
-        data_types: str = ",".join(constants.HOURLY_ARCHIVE_SUMMARY_DATA_TYPES)
+        data_types: str = ",".join(constants.HOURLY_ARCHIVE_SUMMARY_PARAMS)
 
         params: dict[str, Any] = {
             "hourly": data_types,
@@ -190,7 +190,7 @@ class WeatherArchive(BaseWeather):
             self._session,
             self._api,
             self._params | params,
-            constants.HOURLY_ARCHIVE_SUMMARY_COLUMN_LABELS,
+            constants.HOURLY_ARCHIVE_SUMMARY_LABELS,
         )
 
     def get_daily_summary(
@@ -228,7 +228,7 @@ class WeatherArchive(BaseWeather):
 
         # String representation of the summary data types separated
         # by commas as supported for requesting the API endpoint.
-        data_types: str = ",".join(constants.DAILY_ARCHIVE_SUMMARY_DATA_TYPES)
+        data_types: str = ",".join(constants.DAILY_ARCHIVE_SUMMARY_PARAMS)
 
         params: dict[str, Any] = {
             "daily": data_types,
@@ -241,7 +241,7 @@ class WeatherArchive(BaseWeather):
             self._session,
             self._api,
             self._params | params,
-            constants.DAILY_ARCHIVE_SUMMARY_COLUMN_LABELS,
+            constants.DAILY_ARCHIVE_SUMMARY_LABELS,
         )
 
     def get_hourly_wind_speed(self, altitude: int = 10, unit: str = "kmh") -> pd.Series:
