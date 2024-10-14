@@ -84,6 +84,10 @@ WAVE_TYPES = "composite", "wind", "swell"
 WAVE_TYPES_MAP = {"composite": "", "wind": "wind_", "swell": "swell_"}
 PRESSURE_LEVEL_MAPPING = {"sealevel": "pressure_msl", "surface": "surface_pressure"}
 
+# The constants defined below comrpise requests metric names and their
+# corresponding labels for extracting summary of various meteorological
+# factors in different time intervals.
+
 CURRENT_WEATHER_SUMMARY_PARAMS = [
     "temperature_2m",
     "relative_humidity_2m",
