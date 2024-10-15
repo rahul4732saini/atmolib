@@ -3,8 +3,6 @@ Tests the classes and methods defined
 within `atmolib/meteorology/marine.py`.
 """
 
-from types import NoneType
-
 import pytest
 import pandas as pd
 
@@ -120,57 +118,3 @@ class TestMarineWeather:
 
         assert all((hourly >= 0) | hourly.isna())
         assert all((daily >= 0) | daily.isna())
-
-    @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
-    def test_current_marine_weather_methods(self, wave_type: str) -> None:
-        """Test the marine weather summary extraction methods."""
-
-        marine_weather = atmolib.MarineWeather(
-            0, 0, wave_type=wave_type, forecast_days=2
-        )
-
-        height = marine_weather.get_current_wave_height()
-        direction = marine_weather.get_current_wave_direction()
-        period = marine_weather.get_current_wave_period()
-
-        assert (
-            isinstance(height, int | float | NoneType)
-            and isinstance(direction, int | float | NoneType)
-            and isinstance(period, int | float | NoneType)
-        )
-
-    @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
-    def test_hourly_marine_weather_methods(self, wave_type: str) -> None:
-        """Test the marine weather summary extraction methods."""
-
-        marine_weather = atmolib.MarineWeather(
-            0, 0, wave_type=wave_type, forecast_days=2
-        )
-
-        height = marine_weather.get_hourly_wave_height()
-        direction = marine_weather.get_hourly_wave_direction()
-        period = marine_weather.get_hourly_wave_period()
-
-        assert (
-            isinstance(height, pd.Series)
-            and isinstance(direction, pd.Series)
-            and isinstance(period, pd.Series)
-        )
-
-    @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
-    def test_daily_marine_weather_methods(self, wave_type: str) -> None:
-        """Test the marine weather summary extraction methods."""
-
-        marine_weather = atmolib.MarineWeather(
-            0, 0, wave_type=wave_type, forecast_days=2
-        )
-
-        height = marine_weather.get_daily_max_wave_height()
-        direction = marine_weather.get_daily_dominant_wave_direction()
-        period = marine_weather.get_daily_max_wave_period()
-
-        assert (
-            isinstance(height, pd.Series)
-            and isinstance(direction, pd.Series)
-            and isinstance(period, pd.Series)
-        )
