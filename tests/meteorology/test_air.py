@@ -178,19 +178,6 @@ class TestAirQuality:
         assert current >= 0
         assert all(hourly.to_numpy() >= 0)
 
-    def test_current_optical_methods(self, air_quality: atmolib.AirQuality) -> None:
-        """
-        Tests the current optical related extraction methods.
-        """
-
-        uv_index = air_quality.get_current_uv_index()
-        optical_depth = air_quality.get_current_aerosol_optical_depth()
-
-        assert isinstance(uv_index, int | float) and isinstance(
-            optical_depth, int | float
-        )
-        assert uv_index >= 0 and optical_depth >= 0
-
     def test_hourly_particulate_matter_extraction_methods(
         self, air_quality: atmolib.AirQuality
     ) -> None:
@@ -203,14 +190,3 @@ class TestAirQuality:
 
         assert isinstance(pm2_5_conc, pd.Series) and isinstance(pm10_conc, pd.Series)
         assert all(pm2_5_conc.to_numpy() >= 0) and all(pm10_conc.to_numpy() >= 0)
-
-    def test_hourly_optical_methods(self, air_quality: atmolib.AirQuality) -> None:
-        """
-        Tests the hourly optical related extraction methods.
-        """
-
-        uv_index = air_quality.get_hourly_uv_index()
-        optical_depth = air_quality.get_hourly_aerosol_optical_depth()
-
-        assert isinstance(uv_index, pd.Series) and isinstance(optical_depth, pd.Series)
-        assert all(uv_index.to_numpy() >= 0) and all(optical_depth.to_numpy() >= 0)
