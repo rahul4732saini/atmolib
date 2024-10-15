@@ -63,7 +63,7 @@ class TestAirQuality:
         assert hourly.columns.tolist() == constants.HOURLY_AIR_QUALITY_SUMMARY_PARAMS
 
     @pytest.mark.parametrize("source", constants.AQI_SOURCES)
-    def test_current_aqi_method(
+    def test_current_aqi_extraction_method(
         self, air_quality: atmolib.AirQuality, source: str
     ) -> None:
         """
@@ -76,7 +76,7 @@ class TestAirQuality:
         assert 0 <= aqi <= 500
 
     @pytest.mark.parametrize("gas", constants.GASES)
-    def test_gaseous_conc_methods(
+    def test_gaseous_conc_extraction_methods(
         self, air_quality: atmolib.AirQuality, gas: str
     ) -> None:
         """
@@ -91,7 +91,7 @@ class TestAirQuality:
         assert all((hourly.to_numpy() >= 0) | hourly.isna())
 
     @pytest.mark.parametrize("plant", constants.PLANTS)
-    def test_pollen_conc_methods(
+    def test_pollen_conc_extraction_methods(
         self, air_quality: atmolib.AirQuality, plant: str
     ) -> None:
         """
@@ -137,7 +137,7 @@ class TestAirQuality:
         assert current is None or current >= 0
         assert all((hourly.to_numpy() >= 0) | hourly.isna())
 
-    def test_current_particulate_matter_methods(
+    def test_current_particulate_matter_extraction_methods(
         self, air_quality: atmolib.AirQuality
     ) -> None:
         """
@@ -165,7 +165,7 @@ class TestAirQuality:
         )
         assert uv_index >= 0 and optical_depth >= 0
 
-    def test_hourly_particulate_matter_methods(
+    def test_hourly_particulate_matter_extraction_methods(
         self, air_quality: atmolib.AirQuality
     ) -> None:
         """
