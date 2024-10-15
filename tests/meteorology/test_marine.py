@@ -22,16 +22,16 @@ class TestMarineWeather:
         Test the `atmolib.MarineWeather` object initialization with valid parameters.
         """
 
-        for i in valid_marine_coordinates:
-            atmolib.MarineWeather(*i)
+        for lat, long in valid_marine_coordinates:
+            atmolib.MarineWeather(lat, long)
 
-    @pytest.mark.parametrize("type_", ("composite", "wind", "swell"))
-    def test_object_intialization_wave_type_parameter(self, type_: str) -> None:
+    @pytest.mark.parametrize("type_", constants.WAVE_TYPES)
+    def test_object_intialization_wave_type_parameter(self, wave_type: str) -> None:
         """
         Tests the `atmolib.MarineWeather` object initialization
         with different `wave_type` arguments.
         """
-        atmolib.MarineWeather(0, 0, wave_type=type_)
+        atmolib.MarineWeather(0, 0, wave_type)
 
     def test_object_initialization_with_invalid_parameters(self) -> None:
         """
