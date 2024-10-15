@@ -63,7 +63,7 @@ class TestMarineWeather:
         # Verifies the index and columns lables of the
         # resultant pandas.Series and DataFrame objects.
         assert current.index.tolist() == constants.MARINE_WEATHER_SUMMARY_PARAMS
-        assert hourly.index.tolist() == constants.MARINE_WEATHER_SUMMARY_PARAMS
+        assert hourly.columns.tolist() == constants.MARINE_WEATHER_SUMMARY_PARAMS
         assert daily.columns.tolist() == constants.MARINE_WEATHER_SUMMARY_PARAMS
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
