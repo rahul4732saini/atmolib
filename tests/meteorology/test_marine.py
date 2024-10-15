@@ -66,6 +66,23 @@ class TestMarineWeather:
         assert hourly.columns.tolist() == constants.MARINE_WEATHER_SUMMARY_PARAMS
         assert daily.columns.tolist() == constants.MARINE_WEATHER_SUMMARY_PARAMS
 
+    @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
+    def test_wave_height_extraction_methods(self, wave_type: str) -> None:
+        """Tests the current, hourly and daily wave height extraction methods."""
+
+        marine = atmolib.MarineWeather(0, 0, wave_type, forecast_days=2)
+
+        current = marine.get_current_wave_height()
+        hourly = marine.get_hourly_wave_height()
+        daily = marine.get_daily_max_wave_height()
+
+        assert current is None or current >= 0
+        assert isinstance(hourly, pd.Series)
+        assert isinstance(daily, pd.Series)
+
+        assert all((hourly >= 0) | hourly.isna())
+        assert all((daily >= 0) | daily.isna())
+
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
     def test_current_marine_weather_methods(self, wave_type: str) -> None:
         """Test the marine weather summary extraction methods."""
