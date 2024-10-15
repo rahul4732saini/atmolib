@@ -152,6 +152,19 @@ class TestAirQuality:
         )
         assert pm2_5_conc >= 0 and pm10_conc >= 0
 
+    def test_hourly_particulate_matter_extraction_methods(
+        self, air_quality: atmolib.AirQuality
+    ) -> None:
+        """
+        Tests the hourly particulate matter 2.5 & 10 extraction methods.
+        """
+
+        pm2_5_conc = air_quality.get_hourly_pm2_5_conc()
+        pm10_conc = air_quality.get_hourly_pm10_conc()
+
+        assert isinstance(pm2_5_conc, pd.Series) and isinstance(pm10_conc, pd.Series)
+        assert all(pm2_5_conc.to_numpy() >= 0) and all(pm10_conc.to_numpy() >= 0)
+
     def test_uv_index_extraction_methods(self, air_quality: atmolib.AirQuality) -> None:
         """
         Tests the current and hourly UV index extraction methods.
@@ -177,16 +190,3 @@ class TestAirQuality:
 
         assert current >= 0
         assert all(hourly.to_numpy() >= 0)
-
-    def test_hourly_particulate_matter_extraction_methods(
-        self, air_quality: atmolib.AirQuality
-    ) -> None:
-        """
-        Tests the hourly particulate matter 2.5 & 10 extraction methods.
-        """
-
-        pm2_5_conc = air_quality.get_hourly_pm2_5_conc()
-        pm10_conc = air_quality.get_hourly_pm10_conc()
-
-        assert isinstance(pm2_5_conc, pd.Series) and isinstance(pm10_conc, pd.Series)
-        assert all(pm2_5_conc.to_numpy() >= 0) and all(pm10_conc.to_numpy() >= 0)
