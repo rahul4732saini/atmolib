@@ -165,6 +165,19 @@ class TestAirQuality:
         assert current >= 0
         assert all(hourly.to_numpy() >= 0)
 
+    def test_aerosol_optial_depth_extraction_methods(
+        self, air_quality: atmolib.AirQuality
+    ) -> None:
+        "Tests the current and hourly optical depth extraction methods."
+
+        current = air_quality.get_current_aerosol_optical_depth()
+        hourly = air_quality.get_hourly_aerosol_optical_depth()
+
+        assert isinstance(hourly, pd.Series)
+
+        assert current >= 0
+        assert all(hourly.to_numpy() >= 0)
+
     def test_current_optical_methods(self, air_quality: atmolib.AirQuality) -> None:
         """
         Tests the current optical related extraction methods.
