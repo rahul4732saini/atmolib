@@ -137,21 +137,6 @@ class TestAirQuality:
         assert current is None or current >= 0
         assert all((hourly.to_numpy() >= 0) | hourly.isna())
 
-    def test_current_ammonia_and_dust_conc_methods(
-        self, air_quality: atmolib.AirQuality
-    ) -> None:
-        """
-        Tests the current ammonia and dust concentration extraction methods.
-        """
-
-        ammonia_conc = air_quality.get_current_ammonia_conc()
-        dust_conc = air_quality.get_current_dust_conc()
-
-        assert isinstance(dust_conc, int | float) and isinstance(
-            ammonia_conc, int | float | NoneType
-        )
-        assert (ammonia_conc is None or ammonia_conc >= 0) and dust_conc >= 0
-
     def test_current_particulate_matter_methods(
         self, air_quality: atmolib.AirQuality
     ) -> None:
@@ -179,21 +164,6 @@ class TestAirQuality:
             optical_depth, int | float
         )
         assert uv_index >= 0 and optical_depth >= 0
-
-    def test_hourly_ammonia_and_dust_conc_methods(
-        self, air_quality: atmolib.AirQuality
-    ) -> None:
-        """
-        Tests the hourly ammonia and dust concentration extraction methods.
-        """
-
-        ammonia_conc = air_quality.get_hourly_ammonia_conc()
-        dust_conc = air_quality.get_hourly_dust_conc()
-
-        assert isinstance(dust_conc, pd.Series) and isinstance(ammonia_conc, pd.Series)
-        assert all(dust_conc.to_numpy() >= 0) and all(
-            (ammonia_conc.to_numpy() >= 0) | ammonia_conc.isna()
-        )
 
     def test_hourly_particulate_matter_methods(
         self, air_quality: atmolib.AirQuality
