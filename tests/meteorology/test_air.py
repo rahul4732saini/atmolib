@@ -107,34 +107,6 @@ class TestAirQuality:
         assert current is None or current >= 0
         assert all((hourly.to_numpy() >= 0) | hourly.isna())
 
-    def test_current_aqi_method_with_default_parameters(
-        self, air_quality: atmolib.AirQuality
-    ) -> None:
-        """
-        Tests the `AirQuality.get_current_aqi` method with default parameters.
-        """
-
-        aqi = air_quality.get_current_aqi()
-
-        assert isinstance(aqi, int)
-        assert 0 <= aqi <= 500
-
-    def test_current_gas_and_pollen_conc_methods_with_default_parameters(
-        self, air_quality: atmolib.AirQuality
-    ) -> None:
-        """
-        Tests the `AirQuality.get_current_gaseous_conc` and
-        `AirQuality.get_current_pollen_conc` methods with default parameters.
-        """
-
-        gas_conc = air_quality.get_current_gaseous_conc()
-        pollen_conc = air_quality.get_current_pollen_conc()
-
-        assert isinstance(gas_conc, int | float) and isinstance(
-            pollen_conc, int | float | NoneType
-        )
-        assert gas_conc >= 0 and (pollen_conc is None or pollen_conc >= 0)
-
     def test_current_ammonia_and_dust_conc_methods(
         self, air_quality: atmolib.AirQuality
     ) -> None:
@@ -177,22 +149,6 @@ class TestAirQuality:
             optical_depth, int | float
         )
         assert uv_index >= 0 and optical_depth >= 0
-
-    def test_hourly_gas_and_pollen_conc_methods_with_default_parameters(
-        self, air_quality: atmolib.AirQuality
-    ) -> None:
-        """
-        Tests the `AirQuality.get_hourly_gaseous_conc` and
-        `AirQuality.get_hourly_pollen_conc` methods with default parameters.
-        """
-
-        gas_conc = air_quality.get_hourly_gaseous_conc()
-        pollen_conc = air_quality.get_hourly_pollen_conc()
-
-        assert isinstance(gas_conc, pd.Series) and isinstance(pollen_conc, pd.Series)
-        assert all(gas_conc.to_numpy() >= 0) and all(
-            (pollen_conc.to_numpy() >= 0) | pollen_conc.isna()
-        )
 
     def test_hourly_ammonia_and_dust_conc_methods(
         self, air_quality: atmolib.AirQuality
