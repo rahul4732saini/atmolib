@@ -9,6 +9,7 @@ import pytest
 import pandas as pd
 
 import atmolib
+from atmolib import constants
 
 
 class TestMarineWeather:
@@ -45,31 +46,25 @@ class TestMarineWeather:
             for days in (0, -1, 9):
                 atmolib.MarineWeather(0, 0, forecast_days=days)
 
-    @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
+    @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
     def test_marine_weather_summary_methods(self, wave_type: str) -> None:
         """Test the marine weather summary extraction methods."""
 
-        marine_weather = atmolib.MarineWeather(
-            0, 0, wave_type=wave_type, forecast_days=2
-        )
+        marine_weather = atmolib.MarineWeather(0, 0, wave_type, forecast_days=2)
 
         current = marine_weather.get_current_summary()
-        hourly = marine_weather.get_hourly_summary()
         daily = marine_weather.get_daily_summary()
+        hourly = marine_weather.get_hourly_summary()
 
-        assert (
-            isinstance(current, pd.Series)
-            and isinstance(hourly, pd.DataFrame)
-            and isinstance(daily, pd.DataFrame)
-        )
+        assert isinstance(current, pd.Series)
+        assert isinstance(hourly, pd.DataFrame)
+        assert isinstance(daily, pd.DataFrame)
 
-        # Verifies the index/columns of the resultant pandas.Series/DataFrame.
-        assert (
-            current.index.tolist()
-            == hourly.columns.tolist()
-            == daily.columns.tolist()
-            == atmolib.constants.MARINE_WEATHER_SUMMARY_PARAMS
-        )
+        # Verifies the index and columns lables of the
+        # resultant pandas.Series and DataFrame objects.
+        assert current.index.tolist() == constants.MARINE_WEATHER_SUMMARY_PARAMS
+        assert hourly.index.tolist() == constants.MARINE_WEATHER_SUMMARY_PARAMS
+        assert daily.columns.tolist() == constants.MARINE_WEATHER_SUMMARY_PARAMS
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
     def test_current_marine_weather_methods(self, wave_type: str) -> None:
