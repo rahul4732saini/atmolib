@@ -25,7 +25,7 @@ class TestMarineWeather:
         for lat, long in valid_marine_coordinates:
             atmolib.MarineWeather(lat, long)
 
-    @pytest.mark.parametrize("type_", constants.WAVE_TYPES)
+    @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
     def test_object_intialization_wave_type_parameter(self, wave_type: str) -> None:
         """
         Tests the `atmolib.MarineWeather` object initialization
