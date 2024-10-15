@@ -1,5 +1,6 @@
 """
-Tests the objects and methods defined within `atmolib/meteorology/marine.py` file.
+Tests the classes and methods defined
+within `atmolib/meteorology/marine.py`.
 """
 
 from types import NoneType
@@ -40,15 +41,13 @@ class TestMarineWeather:
 
         with pytest.raises(ValueError):
 
-            # Expects a ValueError upon initialization with invalid `wave_type` argument.
+            # Expects a ValueError upon initialization with invalid wave types.
             for days in (0, -1, 9):
                 atmolib.MarineWeather(0, 0, forecast_days=days)
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
     def test_marine_weather_summary_methods(self, wave_type: str) -> None:
-        """
-        Test the marine weather summary extraction methods.
-        """
+        """Test the marine weather summary extraction methods."""
 
         marine_weather = atmolib.MarineWeather(
             0, 0, wave_type=wave_type, forecast_days=2
@@ -74,9 +73,7 @@ class TestMarineWeather:
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
     def test_current_marine_weather_methods(self, wave_type: str) -> None:
-        """
-        Test the marine weather summary extraction methods.
-        """
+        """Test the marine weather summary extraction methods."""
 
         marine_weather = atmolib.MarineWeather(
             0, 0, wave_type=wave_type, forecast_days=2
@@ -94,9 +91,7 @@ class TestMarineWeather:
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
     def test_hourly_marine_weather_methods(self, wave_type: str) -> None:
-        """
-        Test the marine weather summary extraction methods.
-        """
+        """Test the marine weather summary extraction methods."""
 
         marine_weather = atmolib.MarineWeather(
             0, 0, wave_type=wave_type, forecast_days=2
@@ -114,9 +109,7 @@ class TestMarineWeather:
 
     @pytest.mark.parametrize("wave_type", ("composite", "wind", "swell"))
     def test_daily_marine_weather_methods(self, wave_type: str) -> None:
-        """
-        Test the marine weather summary extraction methods.
-        """
+        """Test the marine weather summary extraction methods."""
 
         marine_weather = atmolib.MarineWeather(
             0, 0, wave_type=wave_type, forecast_days=2
