@@ -107,7 +107,9 @@ class TestAirQuality:
         assert current is None or current >= 0
         assert all((hourly.to_numpy() >= 0) | hourly.isna())
 
-    def test_dust_conc_extraction_methods(self, air_quality: atmolib.AirQuality):
+    def test_dust_conc_extraction_methods(
+        self, air_quality: atmolib.AirQuality
+    ) -> None:
         """
         Tests the current and hourly dust concentration extraction methods.
         """
@@ -119,6 +121,21 @@ class TestAirQuality:
 
         assert current >= 0
         assert all(hourly.to_numpy() >= 0)
+
+    def test_ammonia_conc_extraction_methods(
+        self, air_quality: atmolib.AirQuality
+    ) -> None:
+        """
+        Tests the current and hourly ammonia concentration extraction methods.
+        """
+
+        current = air_quality.get_current_ammonia_conc()
+        hourly = air_quality.get_hourly_ammonia_conc()
+
+        assert isinstance(hourly, pd.Series)
+
+        assert current is None or current >= 0
+        assert all((hourly.to_numpy() >= 0) | hourly.isna())
 
     def test_current_ammonia_and_dust_conc_methods(
         self, air_quality: atmolib.AirQuality
