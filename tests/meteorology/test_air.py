@@ -24,8 +24,8 @@ class TestAirQuality:
         Test the `atmolib.AirQuality` object initialization with valid parameters.
         """
 
-        for i in valid_coordinates:
-            atmolib.AirQuality(*i)
+        for lat, long in valid_coordinates:
+            atmolib.AirQuality(lat, long)
 
         # Tests the object initialization with different `forecast_days` arguments.
         for days in (1, 4, 7):
@@ -41,8 +41,8 @@ class TestAirQuality:
         with pytest.raises(ValueError):
 
             # Expects an ValueError upon initialization with invalid coorindates.
-            for i in invalid_coordinates:
-                atmolib.AirQuality(*i)
+            for lat, long in invalid_coordinates:
+                atmolib.AirQuality(lat, long)
 
             # Expects an ValueError upon initialization with
             # invalid `forecast_days` argument.
