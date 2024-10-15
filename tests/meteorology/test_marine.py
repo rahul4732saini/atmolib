@@ -74,10 +74,10 @@ class TestMarineWeather:
         hourly = marine.get_hourly_wave_height()
         daily = marine.get_daily_max_wave_height()
 
-        assert current is None or current >= 0
         assert isinstance(hourly, pd.Series)
         assert isinstance(daily, pd.Series)
 
+        assert current is None or current >= 0
         assert all((hourly >= 0) | hourly.isna())
         assert all((daily >= 0) | daily.isna())
 
@@ -93,10 +93,10 @@ class TestMarineWeather:
         hourly = marine.get_hourly_wave_direction()
         daily = marine.get_daily_dominant_wave_direction()
 
-        assert current is None or current >= 0
         assert isinstance(hourly, pd.Series)
         assert isinstance(daily, pd.Series)
 
+        assert current is None or current >= 0
         assert all((hourly >= 0) | hourly.isna())
         assert all((daily >= 0) | daily.isna())
 
@@ -112,9 +112,9 @@ class TestMarineWeather:
         hourly = marine.get_hourly_wave_period()
         daily = marine.get_daily_max_wave_period()
 
-        assert current is None or current >= 0
         assert isinstance(hourly, pd.Series)
         assert isinstance(daily, pd.Series)
 
+        assert current is None or current >= 0
         assert all((hourly >= 0) | hourly.isna())
         assert all((daily >= 0) | daily.isna())
