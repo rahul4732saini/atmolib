@@ -62,7 +62,7 @@ class TestAirQuality:
         assert current.index.tolist() == constants.CURRENT_AIR_QUALITY_SUMMARY_PARAMS
         assert hourly.columns.tolist() == constants.HOURLY_AIR_QUALITY_SUMMARY_PARAMS
 
-    @pytest.mark.parametrize("source", ("european", "us"))
+    @pytest.mark.parametrize("source", constants.AQI_SOURCES)
     def test_current_aqi_method(
         self, air_quality: atmolib.AirQuality, source: str
     ) -> None:
@@ -75,9 +75,7 @@ class TestAirQuality:
         assert isinstance(aqi, int)
         assert 0 <= aqi <= 500
 
-    @pytest.mark.parametrize(
-        "gas", ("ozone", "carbon_monoxide", "nitrogen_dioxide", "sulphur_dioxide")
-    )
+    @pytest.mark.parametrize("gas", constants.GASES)
     def test_gaseous_conc_methods(
         self, air_quality: atmolib.AirQuality, gas: str
     ) -> None:
@@ -92,9 +90,7 @@ class TestAirQuality:
         assert current >= 0
         assert all((hourly.to_numpy() >= 0) | hourly.isna())
 
-    @pytest.mark.parametrize(
-        "plant", ("alder", "birch", "grass", "mugwort", "olive", "ragweed")
-    )
+    @pytest.mark.parametrize("plant", constants.PLANTS)
     def test_pollen_conc_methods(
         self, air_quality: atmolib.AirQuality, plant: str
     ) -> None:
