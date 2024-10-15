@@ -1,5 +1,6 @@
 """
-Tests objects and methods defined within `atmolib/meteorology/air.py` file.
+Tests the classes and methods defined
+within `atmolib/meteorology/air.py`.
 """
 
 from types import NoneType
@@ -33,33 +34,30 @@ class TestAirQuality:
         self, invalid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
         """
-        Test the `atmolib.AirQuality` object initialization with valid parameters.
+        Test the `atmolib.AirQuality` object initialization with invalid parameters.
         """
 
         with pytest.raises(ValueError):
 
-            # Expects an AssertionError upon initialization with invalid coorindates.
+            # Expects an ValueError upon initialization with invalid coorindates.
             for i in invalid_coordinates:
                 atmolib.AirQuality(*i)
 
-            # Expects an AssertionError upon initialization with invalid `forecast_days` argument.
+            # Expects an ValueError upon initialization with
+            # invalid `forecast_days` argument.
             for days in (0, -1, 9):
                 atmolib.AirQuality(0, 0, forecast_days=days)
 
-    def test_air_quality_summary_methods(
-        self,
-        air_quality: atmolib.AirQuality,
-    ) -> None:
-        """
-        Tests the air quality summary extraction methods.
-        """
+    def test_air_quality_summary_methods(self, air_quality: atmolib.AirQuality) -> None:
+        """Tests the air quality summary extraction methods."""
 
         current = air_quality.get_current_summary()
         hourly = air_quality.get_hourly_summary()
 
         assert isinstance(current, pd.Series) and isinstance(hourly, pd.DataFrame)
 
-        # Verifies the index/columns of the resultant pandas.Series/DataFrame.
+        # Verifies the indices and columns of the resultant
+        # pandas.Series and DataFrame objects.
         assert (
             current.index.tolist()
             == atmolib.constants.CURRENT_AIR_QUALITY_SUMMARY_PARAMS
@@ -72,7 +70,7 @@ class TestAirQuality:
         self, air_quality: atmolib.AirQuality, source: str
     ) -> None:
         """
-        Tests the `AirQuality.get_current_aqi` method with different sources.
+        Tests the `AirQuality.get_current_aqi` method with different AQI sources.
         """
 
         aqi = air_quality.get_current_aqi(source)
