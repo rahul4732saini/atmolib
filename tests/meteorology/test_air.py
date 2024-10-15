@@ -9,6 +9,7 @@ import pytest
 import pandas as pd
 
 import atmolib
+from atmolib import constants
 
 
 class TestAirQuality:
@@ -58,12 +59,8 @@ class TestAirQuality:
 
         # Verifies the indices and columns of the resultant
         # pandas.Series and DataFrame objects.
-        assert (
-            current.index.tolist()
-            == atmolib.constants.CURRENT_AIR_QUALITY_SUMMARY_PARAMS
-            and hourly.columns.tolist()
-            == atmolib.constants.HOURLY_AIR_QUALITY_SUMMARY_PARAMS
-        )
+        assert current.index.tolist() == constants.CURRENT_AIR_QUALITY_SUMMARY_PARAMS
+        assert hourly.columns.tolist() == constants.HOURLY_AIR_QUALITY_SUMMARY_PARAMS
 
     @pytest.mark.parametrize("source", ("european", "us"))
     def test_current_aqi_method(
