@@ -152,6 +152,19 @@ class TestAirQuality:
         )
         assert pm2_5_conc >= 0 and pm10_conc >= 0
 
+    def test_uv_index_extraction_methods(self, air_quality: atmolib.AirQuality) -> None:
+        """
+        Tests the current and hourly UV index extraction methods.
+        """
+
+        current = air_quality.get_current_uv_index()
+        hourly = air_quality.get_hourly_uv_index()
+
+        assert isinstance(hourly, pd.Series)
+
+        assert current >= 0
+        assert all(hourly.to_numpy() >= 0)
+
     def test_current_optical_methods(self, air_quality: atmolib.AirQuality) -> None:
         """
         Tests the current optical related extraction methods.
