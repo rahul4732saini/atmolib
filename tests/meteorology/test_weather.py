@@ -1,5 +1,6 @@
 """
-Tests the objects and methods defined within `atmolib/meteorology/weather.py` file.
+Tests the `Weather` class and its weather data extraction
+methods defined within `atmolib/meteorology/weather.py`.
 """
 
 from datetime import datetime
@@ -38,11 +39,11 @@ class TestWeather:
 
         with pytest.raises(ValueError):
 
-            # Expects an AssertionError upon initialization with invalid coordinates.
+            # Expects an ValueError upon initialization with invalid coordinates.
             for i in invalid_coordinates:
                 atmolib.Weather(*i)
 
-            # Expects an AssertionError upon initialization with invalid `forecast_days` argument.
+            # Expects an ValueError upon initialization with invalid forecast days.
             for i in (0, -1, 17):
                 atmolib.Weather(0, 0, forecast_days=i)
 
