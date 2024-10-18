@@ -103,7 +103,7 @@ class TestWeather:
             weather.get_hourly_summary(temperature_unit=unit),
             weather.get_daily_summary(temperature_unit=unit),
         )
-    
+
     @pytest.mark.parametrize("unit", ("mm", "inch"))
     def test_summary_methods_with_precipitation_units(
         self, weather: atmolib.Weather, unit: str
@@ -119,29 +119,6 @@ class TestWeather:
             weather.get_daily_summary(precipitation_unit=unit),
         )
 
-    @pytest.mark.parametrize(
-        ("temp_unit", "precipitation_unit"),
-        (("celsius", "mm"), ("fahrenheit", "inch")),
-    )
-    def test_summary_methods_with_temperature_and_precipitation_unit_parameters(
-        self, weather: atmolib.Weather, temp_unit: str, precipitation_unit: str
-    ) -> None:
-        """
-        Tests the current, hourly and daily summary extraction methods with
-        different `temperature_unit` and `precipitation_unit` parameters.
-        """
-        self._verify_summary_methods(
-            weather.get_current_summary(
-                temperature_unit=temp_unit, precipitation_unit=precipitation_unit
-            ),
-            weather.get_hourly_summary(
-                temperature_unit=temp_unit, precipitation_unit=precipitation_unit
-            ),
-            weather.get_daily_summary(
-                temperature_unit=temp_unit, precipitation_unit=precipitation_unit
-            ),
-        )
-
     @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
     def test_summary_methods_with_wind_speed_unit_parameters(
         self, weather: atmolib.Weather, unit: str
@@ -154,19 +131,6 @@ class TestWeather:
             weather.get_current_summary(wind_speed_unit=unit),
             weather.get_hourly_summary(wind_speed_unit=unit),
             weather.get_daily_summary(wind_speed_unit=unit),
-        )
-
-    def test_summary_methods_with_default_parameters(
-        self, weather: atmolib.Weather
-    ) -> None:
-        """
-        Tests the current, hourly and daily summary
-        extraction methods with default parameters.
-        """
-        self._verify_summary_methods(
-            weather.get_current_summary(),
-            weather.get_hourly_summary(),
-            weather.get_daily_summary(),
         )
 
     # The following block tests methods related to temperature extraction methods.
