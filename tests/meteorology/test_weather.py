@@ -100,7 +100,7 @@ class TestWeather:
             weather.get_daily_summary(**params),
         )
 
-    @pytest.mark.parametrize("unit", ("celsius", "fahrenheit"))
+    @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
     def test_summary_methods_with_temperature_units(
         self, weather: atmolib.Weather, unit: str
     ) -> None:
@@ -110,7 +110,7 @@ class TestWeather:
         """
         self._examine_summary_methods(weather, {"temperature_unit": unit})
 
-    @pytest.mark.parametrize("unit", ("mm", "inch"))
+    @pytest.mark.parametrize("unit", constants.PRECIPITATION_UNITS)
     def test_summary_methods_with_precipitation_units(
         self, weather: atmolib.Weather, unit: str
     ) -> None:
@@ -120,7 +120,7 @@ class TestWeather:
         """
         self._examine_summary_methods(weather, {"precipitation_unit": unit})
 
-    @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
+    @pytest.mark.parametrize("unit", constants.WIND_SPEED_UNITS)
     def test_summary_methods_with_wind_speed_units(
         self, weather: atmolib.Weather, unit: str
     ) -> None:
@@ -132,7 +132,7 @@ class TestWeather:
 
     # The following block tests methods related to temperature extraction methods.
 
-    @pytest.mark.parametrize("altitude", (2, 80, 120, 180))
+    @pytest.mark.parametrize("altitude", constants.TEMPERATURE_ALTITUDES)
     def test_temperature_methods_with_different_altitudes(
         self, weather: atmolib.Weather, altitude: int
     ) -> None:
@@ -147,7 +147,7 @@ class TestWeather:
         assert isinstance(current, int | float) and isinstance(hourly, pd.Series)
         assert issubclass(hourly.dtype.type, np.integer | np.floating)
 
-    @pytest.mark.parametrize("unit", ("celsius", "fahrenheit"))
+    @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
     def test_temperature_methods_with_different_units(
         self, weather: atmolib.Weather, unit: str
     ) -> None:
