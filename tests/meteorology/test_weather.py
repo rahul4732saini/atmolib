@@ -1,6 +1,6 @@
 """
-Tests the `Weather` class and its weather data extraction
-methods defined within `atmolib/meteorology/weather.py`.
+Tests the classes and methods defined
+within `atmolib/meteorology/weather.py`.
 """
 
 from datetime import datetime
