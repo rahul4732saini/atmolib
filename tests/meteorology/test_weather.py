@@ -114,7 +114,7 @@ class TestWeather:
         )
 
     @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
-    def test_summary_methods_with_wind_speed_unit_parameters(
+    def test_summary_methods_with_wind_speed_units(
         self, weather: atmolib.Weather, unit: str
     ) -> None:
         """
@@ -130,12 +130,12 @@ class TestWeather:
     # The following block tests methods related to temperature extraction methods.
 
     @pytest.mark.parametrize("altitude", (2, 80, 120, 180))
-    def test_temperature_methods_altitude_parameter(
+    def test_temperature_methods_with_different_altitudes(
         self, weather: atmolib.Weather, altitude: int
     ) -> None:
         """
         Tests the current and hourly temperature extraction
-        methods with different `altitude` arguments.
+        methods with different altitudes arguments.
         """
 
         current = weather.get_current_temperature(altitude=altitude)
