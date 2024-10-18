@@ -63,18 +63,14 @@ class TestWeather:
         assert daily.columns.tolist() == constants.DAILY_WEATHER_SUMMARY_LABELS
 
     @staticmethod
-    def _verify_temp_and_apparent_temp_methods(
-        temp: pd.Series, apparent_temp: pd.Series
-    ) -> None:
+    def _verify_temperature_data_series(series: pd.Series) -> None:
         """
-        Verifies the `Weather.get_hourly_temperature` and
-        `Weather.get_hourly_apparent_temperature` methods.
+        Verifies the temperature data with
+        the specified pandas Series object.
         """
 
-        assert isinstance(temp, pd.Series) and isinstance(apparent_temp, pd.Series)
-        assert issubclass(temp.dtype.type, np.integer | np.floating) and issubclass(
-            apparent_temp.dtype.type, np.integer | np.floating
-        )
+        assert isinstance(series, pd.Series)
+        assert issubclass(series.dtype.type, np.integer | np.floating)
 
     @staticmethod
     def _verify_cloud_cover_methods(current: int | float, hourly: pd.Series) -> None:
@@ -204,9 +200,9 @@ class TestWeather:
         """
         Tests the daily temperature extraction methods with different `unit` arguments.
         """
-        self._verify_temp_and_apparent_temp_methods(
-            weather.get_daily_temperature(), weather.get_daily_apparent_temperature()
-        )
+
+        self._verify_temperature_data_series(weather.get_daily_temperature())
+        self._verify_temperature_data_series(weather.get_daily_apparent_temperature())
 
     @pytest.mark.parametrize("metric", ("mean", "max", "min"))
     def test_daily_temperature_methods_metric_parameter(
@@ -216,9 +212,12 @@ class TestWeather:
         Tests the daily temperature extraction
         methods with different `metric` arguments.
         """
-        self._verify_temp_and_apparent_temp_methods(
-            weather.get_daily_temperature(metric=metric),
-            weather.get_daily_apparent_temperature(metric=metric),
+
+        self._verify_temperature_data_series(
+            weather.get_daily_temperature(metric=metric)
+        )
+        self._verify_temperature_data_series(
+            weather.get_daily_apparent_temperature(metric=metric)
         )
 
     # The following block tests precipitation extraction related methods.
