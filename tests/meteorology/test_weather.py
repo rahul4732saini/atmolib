@@ -103,6 +103,21 @@ class TestWeather:
             weather.get_hourly_summary(temperature_unit=unit),
             weather.get_daily_summary(temperature_unit=unit),
         )
+    
+    @pytest.mark.parametrize("unit", ("mm", "inch"))
+    def test_summary_methods_with_precipitation_units(
+        self, weather: atmolib.Weather, unit: str
+    ) -> None:
+        """
+        Test the current, hourly, and daily weather summary
+        extraction methods with different temperature units.
+        """
+
+        self._verify_summary_methods(
+            weather.get_current_summary(precipitation_unit=unit),
+            weather.get_hourly_summary(precipitation_unit=unit),
+            weather.get_daily_summary(precipitation_unit=unit),
+        )
 
     @pytest.mark.parametrize(
         ("temp_unit", "precipitation_unit"),
