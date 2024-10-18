@@ -189,17 +189,17 @@ class TestWeather:
         hourly = weather.get_hourly_soil_temperature(unit=unit)
         self._verify_temperature_data_series(hourly)
 
-    @pytest.mark.parametrize("depth", (0, 6, 18, 54))
+    @pytest.mark.parametrize("depth", constants.SOIL_TEMP_DEPTH)
     def test_hourly_soil_temperature_method_depth_parameter(
         self, weather: atmolib.Weather, depth: int
     ) -> None:
         """
-        Tests the `Weather.get_hourly_soil_temperature` with different `depth` arguments.
+        Tests the hourly soil temperature extraction
+        method with different soil depth parameters.
         """
-        temp = weather.get_hourly_soil_temperature(depth=depth)
 
-        assert isinstance(temp, pd.Series)
-        assert issubclass(temp.dtype.type, np.integer | np.floating)
+        hourly = weather.get_hourly_soil_temperature(depth=depth)
+        self._verify_temperature_data_series(hourly)
 
     @pytest.mark.parametrize("unit", ("celsius", "fahrenheit"))
     def test_daily_temperature_methods_unit_parameter(
