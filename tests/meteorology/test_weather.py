@@ -4,6 +4,7 @@ within `atmolib/meteorology/weather.py`.
 """
 
 from datetime import datetime
+from typing import Any
 
 import pytest
 import numpy as np
@@ -85,6 +86,20 @@ class TestWeather:
 
     # The following block tests methods related to summary extraction methods.
 
+    def _examine_summary_methods(
+        self, weather: atmolib.Weather, params: dict[str, Any]
+    ) -> None:
+        """
+        Examines the current, hourly, and daily weather summary
+        extraction methods with the specified parameters.
+        """
+
+        self._verify_summary_methods(
+            weather.get_current_summary(**params),
+            weather.get_hourly_summary(**params),
+            weather.get_daily_summary(**params),
+        )
+
     @pytest.mark.parametrize("unit", ("celsius", "fahrenheit"))
     def test_summary_methods_with_temperature_units(
         self, weather: atmolib.Weather, unit: str
@@ -93,11 +108,7 @@ class TestWeather:
         Test the current, hourly, and daily weather summary
         extraction methods with different temperature units.
         """
-        self._verify_summary_methods(
-            weather.get_current_summary(temperature_unit=unit),
-            weather.get_hourly_summary(temperature_unit=unit),
-            weather.get_daily_summary(temperature_unit=unit),
-        )
+        self._examine_summary_methods(weather, {"temperature_unit": unit})
 
     @pytest.mark.parametrize("unit", ("mm", "inch"))
     def test_summary_methods_with_precipitation_units(
@@ -107,11 +118,7 @@ class TestWeather:
         Test the current, hourly, and daily weather summary
         extraction methods with different precipitation units.
         """
-        self._verify_summary_methods(
-            weather.get_current_summary(precipitation_unit=unit),
-            weather.get_hourly_summary(precipitation_unit=unit),
-            weather.get_daily_summary(precipitation_unit=unit),
-        )
+        self._examine_summary_methods(weather, {"precipitation_unit": unit})
 
     @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
     def test_summary_methods_with_wind_speed_units(
@@ -121,11 +128,7 @@ class TestWeather:
         Test the current, hourly, and daily weather summary
         extraction methods with different wind speed units.
         """
-        self._verify_summary_methods(
-            weather.get_current_summary(wind_speed_unit=unit),
-            weather.get_hourly_summary(wind_speed_unit=unit),
-            weather.get_daily_summary(wind_speed_unit=unit),
-        )
+        self._examine_summary_methods(weather, {"wind_speed_unit": unit})
 
     # The following block tests methods related to temperature extraction methods.
 
