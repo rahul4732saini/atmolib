@@ -97,7 +97,6 @@ class TestWeather:
         Test the current, hourly, and daily weather summary
         extraction methods with different temperature units.
         """
-
         self._verify_summary_methods(
             weather.get_current_summary(temperature_unit=unit),
             weather.get_hourly_summary(temperature_unit=unit),
@@ -110,9 +109,8 @@ class TestWeather:
     ) -> None:
         """
         Test the current, hourly, and daily weather summary
-        extraction methods with different temperature units.
+        extraction methods with different precipitation units.
         """
-
         self._verify_summary_methods(
             weather.get_current_summary(precipitation_unit=unit),
             weather.get_hourly_summary(precipitation_unit=unit),
@@ -124,8 +122,8 @@ class TestWeather:
         self, weather: atmolib.Weather, unit: str
     ) -> None:
         """
-        Tests the current, hourly and daily summary extraction
-        methods with different `wind_speed` unit arguments.
+        Test the current, hourly, and daily weather summary
+        extraction methods with different wind speed units.
         """
         self._verify_summary_methods(
             weather.get_current_summary(wind_speed_unit=unit),
