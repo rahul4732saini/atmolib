@@ -178,6 +178,20 @@ class TestWeather:
         assert isinstance(hourly, pd.Series)
         assert issubclass(hourly.dtype.type, np.integer | np.floating)
 
+    @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
+    def test_soil_temperature_methods_with_different_units(
+        self, weather: atmolib.Weather, unit: str
+    ) -> None:
+        """
+        Tests the hourly soil temperature extraction
+        method with different temperture unit arguments.
+        """
+
+        hourly = weather.get_hourly_soil_temperature(unit=unit)
+
+        assert isinstance(hourly, pd.Series)
+        assert issubclass(hourly.dtype.type, np.integer | np.floating)
+
     @pytest.mark.parametrize("unit", ("celsius", "fahrenheit"))
     def test_hourly_temperature_methods_unit_parameter(
         self, weather: atmolib.Weather, unit: str
