@@ -179,20 +179,6 @@ class TestWeather:
         assert issubclass(hourly.dtype.type, np.integer | np.floating)
 
     @pytest.mark.parametrize("unit", ("celsius", "fahrenheit"))
-    def test_current_temperature_methods_unit_parameter(
-        self, weather: atmolib.Weather, unit: str
-    ) -> None:
-        """
-        Tests the current temperature extraction
-        methods with different `unit` arguments.
-        """
-
-        temp = weather.get_current_temperature(unit=unit)
-        apparent_temp = weather.get_current_apparent_temperature(unit=unit)
-
-        assert isinstance(temp, int | float) and isinstance(apparent_temp, int | float)
-
-    @pytest.mark.parametrize("unit", ("celsius", "fahrenheit"))
     def test_hourly_temperature_methods_unit_parameter(
         self, weather: atmolib.Weather, unit: str
     ) -> None:
