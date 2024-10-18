@@ -221,50 +221,6 @@ class TestWeather:
             weather.get_daily_apparent_temperature(metric=metric),
         )
 
-    def test_current_temperature_methods_with_default_parameters(
-        self, weather: atmolib.Weather
-    ) -> None:
-        """
-        Tests the current temperature extraction methods with default parameters.
-        """
-        temp = weather.get_current_temperature()
-        apparent_temp = weather.get_current_apparent_temperature()
-
-        assert isinstance(temp, int | float) and isinstance(apparent_temp, int | float)
-
-    def test_hourly_temperature_methods_with_default_parameters(
-        self, weather: atmolib.Weather
-    ) -> None:
-        """
-        Tests the hourly temperature extraction methods with default parameters.
-        """
-
-        temp = weather.get_hourly_temperature()
-        apparent_temp = weather.get_hourly_apparent_temperature()
-        soil_temp = weather.get_hourly_soil_temperature()
-
-        assert (
-            isinstance(temp, pd.Series)
-            and isinstance(apparent_temp, pd.Series)
-            and isinstance(soil_temp, pd.Series)
-        )
-
-        assert (
-            issubclass(temp.dtype.type, np.integer | np.floating)
-            and issubclass(apparent_temp.dtype.type, np.integer | np.floating)
-            and issubclass(soil_temp.dtype.type, np.integer | np.floating)
-        )
-
-    def test_daily_temperature_methods_with_default_parameters(
-        self, weather: atmolib.Weather
-    ) -> None:
-        """
-        Tests the daily temperature extraction methods with default parameters.
-        """
-        self._verify_temp_and_apparent_temp_methods(
-            weather.get_daily_temperature(), weather.get_daily_apparent_temperature()
-        )
-
     # The following block tests precipitation extraction related methods.
 
     @pytest.mark.parametrize("unit", ("mm", "inch"))
@@ -305,59 +261,6 @@ class TestWeather:
         )
         assert all(hourly_precipitation.to_numpy() >= 0) and all(
             hourly_rainfall.to_numpy() >= 0
-        )
-
-        # Tests the daily precipitation methods.
-        assert isinstance(daily_precipitation, pd.Series) and isinstance(
-            daily_rainfall, pd.Series
-        )
-        assert all(daily_precipitation.to_numpy() >= 0) and all(
-            daily_rainfall.to_numpy() >= 0
-        )
-
-    def test_current_percipitation_methods_with_default_parameters(
-        self, weather: atmolib.Weather
-    ) -> None:
-        """
-        Tests the precipitation extraction methods with default parameters.
-        """
-
-        precipitation = weather.get_current_precipitation()
-        rainfall = weather.get_current_rainfall()
-        snowfall = weather.get_current_snowfall()
-
-        assert (
-            isinstance(precipitation, int | float)
-            and isinstance(rainfall, int | float)
-            and isinstance(snowfall, int | float)
-        )
-
-        assert precipitation >= 0 and rainfall >= 0 and snowfall >= 0
-
-    def test_periodical_precipitation_methods_with_default_parameters(
-        self, weather: atmolib.Weather
-    ) -> None:
-        """
-        Tests the hourly and daily precipitation extraction methods with default parameters.
-        """
-
-        hourly_precipitation = weather.get_hourly_precipitation()
-        hourly_rainfall = weather.get_hourly_rainfall()
-        hourly_snowfall = weather.get_hourly_snowfall()
-
-        daily_precipitation = weather.get_daily_total_precipitation()
-        daily_rainfall = weather.get_daily_total_rainfall()
-
-        # Tests the hourly precipitation methods.
-        assert (
-            isinstance(hourly_precipitation, pd.Series)
-            and isinstance(hourly_rainfall, pd.Series)
-            and isinstance(hourly_snowfall, pd.Series)
-        )
-        assert (
-            all(hourly_precipitation.to_numpy() >= 0)
-            and all(hourly_rainfall.to_numpy() >= 0)
-            and all(hourly_snowfall.to_numpy() >= 0)
         )
 
         # Tests the daily precipitation methods.
@@ -409,18 +312,6 @@ class TestWeather:
         self._verify_cloud_cover_methods(
             weather.get_current_cloud_cover(level=level),
             weather.get_hourly_cloud_cover(level=level),
-        )
-
-    def test_cloud_cover_methods_with_default_parameters(
-        self, weather: atmolib.Weather
-    ) -> None:
-        """
-        Tests the current and hourly cloud cover
-        extraction methods with default parameters.
-        """
-        self._verify_cloud_cover_methods(
-            weather.get_current_cloud_cover(),
-            weather.get_hourly_cloud_cover(),
         )
 
     def test_total_cloud_cover_methods(self, weather: atmolib.Weather) -> None:
@@ -516,62 +407,6 @@ class TestWeather:
 
         assert isinstance(speed, pd.Series) and isinstance(gusts, pd.Series)
         assert all(speed.to_numpy() >= 0) and all(gusts.to_numpy() >= 0)
-
-    def test_current_wind_methods_with_default_parameters(
-        self, weather: atmolib.Weather
-    ) -> None:
-        """
-        Tests the current wind related extraction methods with default parameters.
-        """
-
-        speed = weather.get_current_wind_speed()
-        direction = weather.get_current_wind_direction()
-        gusts = weather.get_current_wind_gusts()
-
-        assert (
-            isinstance(speed, int | float)
-            and isinstance(direction, int | float)
-            and isinstance(gusts, int | float)
-        )
-
-        assert speed >= 0 and 0 <= direction <= 360 and gusts >= 0
-
-    def test_hourly_wind_methods_with_default_parameters(
-        self, weather: atmolib.Weather
-    ) -> None:
-        """
-        Tests the hourly wind related extraction methods with default parameters.
-        """
-
-        speed = weather.get_hourly_wind_speed()
-        direction = weather.get_hourly_wind_direction()
-
-        assert isinstance(speed, pd.Series) and isinstance(direction, pd.Series)
-        assert all(speed.to_numpy() >= 0) and all(
-            (direction.to_numpy() >= 0) & (direction.to_numpy() <= 360)
-        )
-
-    def test_daily_wind_methods_with_default_parameters(
-        self, weather: atmolib.Weather
-    ) -> None:
-        """
-        Tests the daily wind related extraction methods with default parameters.
-        """
-
-        speed = weather.get_daily_max_wind_speed()
-        direction = weather.get_daily_dominant_wind_direction()
-        gusts = weather.get_daily_max_wind_gusts()
-
-        assert (
-            isinstance(speed, pd.Series)
-            and isinstance(direction, pd.Series)
-            and isinstance(gusts, pd.Series)
-        )
-        assert (
-            all(speed.to_numpy() >= 0)
-            and all((direction.to_numpy() >= 0) & (direction.to_numpy() <= 360))
-            and all(gusts.to_numpy() >= 0)
-        )
 
     # The following block tests weather code extraction methods.
 
