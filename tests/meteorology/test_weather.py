@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 
 import atmolib
+from atmolib import constants
 
 
 class TestWeather:
@@ -51,26 +52,15 @@ class TestWeather:
     def _verify_summary_methods(
         current: pd.Series, hourly: pd.DataFrame, daily: pd.DataFrame
     ) -> None:
-        """
-        Verifies the execution of summary extraction methods.
-        """
+        """Verifies the execution of summary extraction methods."""
 
-        assert (
-            isinstance(current, pd.Series)
-            and isinstance(hourly, pd.DataFrame)
-            and isinstance(daily, pd.DataFrame)
-        )
+        assert isinstance(current, pd.Series)
+        assert isinstance(hourly, pd.DataFrame)
+        assert isinstance(daily, pd.DataFrame)
 
-        assert (
-            (current.index.tolist() == atmolib.constants.CURRENT_WEATHER_SUMMARY_LABELS)
-            and (
-                hourly.columns.tolist()
-                == atmolib.constants.HOURLY_WEATHER_SUMMARY_LABELS
-            )
-            and (
-                daily.columns.tolist() == atmolib.constants.DAILY_WEATHER_SUMMARY_LABELS
-            )
-        )
+        assert current.index.tolist() == constants.CURRENT_WEATHER_SUMMARY_LABELS
+        assert hourly.columns.tolist() == constants.HOURLY_WEATHER_SUMMARY_LABELS
+        assert daily.columns.tolist() == constants.DAILY_WEATHER_SUMMARY_LABELS
 
     @staticmethod
     def _verify_temp_and_apparent_temp_methods(
