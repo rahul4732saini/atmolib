@@ -144,8 +144,8 @@ class TestWeather:
         current = weather.get_current_temperature(altitude=altitude)
         hourly = weather.get_hourly_temperature(altitude=altitude)
 
-        assert isinstance(current, int | float) and isinstance(hourly, pd.Series)
-        assert issubclass(hourly.dtype.type, np.integer | np.floating)
+        assert isinstance(current, int | float)
+        self._verify_temperature_data_series(hourly)
 
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
     def test_temperature_methods_with_different_units(
@@ -159,8 +159,8 @@ class TestWeather:
         current = weather.get_current_temperature(unit=unit)
         hourly = weather.get_hourly_temperature(unit=unit)
 
-        assert isinstance(current, int | float) and isinstance(hourly, pd.Series)
-        assert issubclass(hourly.dtype.type, np.integer | np.floating)
+        assert isinstance(current, int | float)
+        self._verify_temperature_data_series(hourly)
 
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
     def test_apparent_temperature_methods_with_different_units(
@@ -175,8 +175,7 @@ class TestWeather:
         hourly = weather.get_hourly_apparent_temperature(unit=unit)
 
         assert isinstance(current, int | float)
-        assert isinstance(hourly, pd.Series)
-        assert issubclass(hourly.dtype.type, np.integer | np.floating)
+        self._verify_temperature_data_series(hourly)
 
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
     def test_soil_temperature_methods_with_different_units(
@@ -188,9 +187,7 @@ class TestWeather:
         """
 
         hourly = weather.get_hourly_soil_temperature(unit=unit)
-
-        assert isinstance(hourly, pd.Series)
-        assert issubclass(hourly.dtype.type, np.integer | np.floating)
+        self._verify_temperature_data_series(hourly)
 
     @pytest.mark.parametrize("depth", (0, 6, 18, 54))
     def test_hourly_soil_temperature_method_depth_parameter(
