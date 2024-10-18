@@ -162,6 +162,22 @@ class TestWeather:
         assert isinstance(current, int | float) and isinstance(hourly, pd.Series)
         assert issubclass(hourly.dtype.type, np.integer | np.floating)
 
+    @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
+    def test_apparent_temperature_methods_with_different_units(
+        self, weather: atmolib.Weather, unit: str
+    ) -> None:
+        """
+        Tests the current and hourly apparent temperature extraction
+        methods with different temperature unit arguments.
+        """
+
+        current = weather.get_current_apparent_temperature(unit=unit)
+        hourly = weather.get_hourly_apparent_temperature(unit=unit)
+
+        assert isinstance(current, int | float)
+        assert isinstance(hourly, pd.Series)
+        assert issubclass(hourly.dtype.type, np.integer | np.floating)
+
     @pytest.mark.parametrize("unit", ("celsius", "fahrenheit"))
     def test_current_temperature_methods_unit_parameter(
         self, weather: atmolib.Weather, unit: str
