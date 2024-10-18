@@ -7,7 +7,6 @@ of marine weather data from Open-Meteo's Marine Weather API.
 """
 
 import atexit
-from types import NoneType
 
 import requests
 import pandas as pd
@@ -157,15 +156,15 @@ class MarineWeather(BaseForecast):
             constants.MARINE_WEATHER_SUMMARY_PARAMS,
         )
 
-    def get_current_wave_height(self) -> int | float | NoneType:
+    def get_current_wave_height(self) -> int | float | None:
         """Extracts current wave height in meters(m)."""
         return self._get_current_data({"current": f"{self._type}wave_height"})
 
-    def get_current_wave_direction(self) -> int | float | NoneType:
+    def get_current_wave_direction(self) -> int | float | None:
         """Extracts current wave direction in degrees."""
         return self._get_current_data({"current": f"{self._type}wave_direction"})
 
-    def get_current_wave_period(self) -> int | float | NoneType:
+    def get_current_wave_period(self) -> int | float | None:
         """
         Extracts current wave period in seconds(s).
 
