@@ -178,7 +178,7 @@ class TestWeather:
         self._verify_temperature_data_series(hourly)
 
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
-    def test_soil_temperature_methods_with_different_units(
+    def test_hourly_soild_temperature_method_with_different_units(
         self, weather: atmolib.Weather, unit: str
     ) -> None:
         """
@@ -190,7 +190,7 @@ class TestWeather:
         self._verify_temperature_data_series(hourly)
 
     @pytest.mark.parametrize("depth", constants.SOIL_TEMP_DEPTH)
-    def test_hourly_soil_temperature_method_depth_parameter(
+    def test_hourly_soil_temperature_method_with_different_depths(
         self, weather: atmolib.Weather, depth: int
     ) -> None:
         """
@@ -201,8 +201,8 @@ class TestWeather:
         hourly = weather.get_hourly_soil_temperature(depth=depth)
         self._verify_temperature_data_series(hourly)
 
-    @pytest.mark.parametrize("unit", ("celsius", "fahrenheit"))
-    def test_daily_temperature_methods_unit_parameter(
+    @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
+    def test_daily_temperature_methods_with_different_units(
         self, weather: atmolib.Weather, unit: str
     ) -> None:
         """
@@ -212,8 +212,8 @@ class TestWeather:
         self._verify_temperature_data_series(weather.get_daily_temperature())
         self._verify_temperature_data_series(weather.get_daily_apparent_temperature())
 
-    @pytest.mark.parametrize("metric", ("mean", "max", "min"))
-    def test_daily_temperature_methods_metric_parameter(
+    @pytest.mark.parametrize("metric", constants.DAILY_WEATHER_STATISTICAL_METRICS)
+    def test_daily_temperature_methods_with_different_metrics(
         self, weather: atmolib.Weather, metric: str
     ) -> None:
         """
