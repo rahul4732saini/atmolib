@@ -24,11 +24,11 @@ class TestWeather:
         Test the `atmolib.Weather` object initialization with valid parameters.
         """
 
-        for i in valid_coordinates:
-            atmolib.Weather(*i)
+        for lat, long in valid_coordinates:
+            atmolib.Weather(lat, long)
 
-        for i in (1, 10, 16):
-            atmolib.Weather(0, 0, forecast_days=i)
+        for days in (1, 10, 16):
+            atmolib.Weather(0, 0, days)
 
     def test_object_initialization_with_invalid_parameters(
         self, invalid_coordinates: tuple[tuple[float, float], ...]
@@ -40,12 +40,12 @@ class TestWeather:
         with pytest.raises(ValueError):
 
             # Expects an ValueError upon initialization with invalid coordinates.
-            for i in invalid_coordinates:
-                atmolib.Weather(*i)
+            for lat, long in invalid_coordinates:
+                atmolib.Weather(lat, long)
 
             # Expects an ValueError upon initialization with invalid forecast days.
-            for i in (0, -1, 17):
-                atmolib.Weather(0, 0, forecast_days=i)
+            for days in (0, -1, 17):
+                atmolib.Weather(0, 0, days)
 
     @staticmethod
     def _verify_summary_methods(
