@@ -74,16 +74,6 @@ class TestWeather:
         assert issubclass(series.dtype.type, np.integer | np.floating)
 
     @staticmethod
-    def _verify_precipitation_data_series(series: pd.Series) -> None:
-        """
-        Verifies the precipitation data within
-        the specified pandas Series object.
-        """
-
-        assert isinstance(series, pd.Series)
-        assert all(series.to_numpy() >= 0)
-
-    @staticmethod
     def _verify_positive_data_series(series: pd.Series) -> None:
         """
         Verifies that all the values stored within the
@@ -268,8 +258,8 @@ class TestWeather:
         assert isinstance(current, int | float)
         assert current >= 0
 
-        self._verify_precipitation_data_series(hourly)
-        self._verify_precipitation_data_series(daily)
+        self._verify_positive_data_series(hourly)
+        self._verify_positive_data_series(daily)
 
     @pytest.mark.parametrize("unit", ("mm", "inch"))
     def test_rainfall_methods_with_different_units(
@@ -287,8 +277,8 @@ class TestWeather:
         assert isinstance(current, int | float)
         assert current >= 0
 
-        self._verify_precipitation_data_series(hourly)
-        self._verify_precipitation_data_series(daily)
+        self._verify_positive_data_series(hourly)
+        self._verify_positive_data_series(daily)
 
     def test_precipitation_probability_methods(self, weather: atmolib.Weather) -> None:
         """Tests the hourly and daily precipitation probability extraction methods"""
