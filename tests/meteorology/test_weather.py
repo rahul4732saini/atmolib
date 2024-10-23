@@ -305,10 +305,9 @@ class TestWeather:
         hourly = weather.get_hourly_pressure(level=level)
 
         assert isinstance(current, int | float)
-        assert isinstance(hourly, pd.Series)
-
         assert current >= 0
-        assert all(hourly.to_numpy() >= 0)
+
+        self._verify_positive_data_series(hourly)
 
     # The following block tests cloud coverage data extraction methods.
 
@@ -351,12 +350,10 @@ class TestWeather:
         daily = weather.get_daily_max_wind_speed(unit=unit)
 
         assert isinstance(current, int | float)
-        assert isinstance(daily, pd.Series)
-        assert isinstance(hourly, pd.Series)
-
         assert current >= 0
-        assert all(hourly.to_numpy() >= 0)
-        assert all(daily.to_numpy() >= 0)
+
+        self._verify_positive_data_series(hourly)
+        self._verify_positive_data_series(daily)
 
     @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
     def test_current_wind_methods_unit_parameter(
