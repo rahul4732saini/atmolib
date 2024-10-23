@@ -84,6 +84,16 @@ class TestWeather:
         assert all(series.to_numpy() >= 0)
 
     @staticmethod
+    def _verify_positive_data_series(series: pd.Series) -> None:
+        """
+        Verifies that all the values stored within the
+        specified pandas Series object are greater than 0.
+        """
+
+        assert isinstance(series, pd.Series)
+        assert all(series.to_numpy() >= 0)
+
+    @staticmethod
     def _verify_cloud_cover_methods(current: int | float, hourly: pd.Series) -> None:
         """Verifies the current and hourly cloud coverage extraction methods."""
 
