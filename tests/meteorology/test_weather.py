@@ -210,8 +210,10 @@ class TestWeather:
         with different temperature units.
         """
 
-        self._verify_temperature_data_series(weather.get_daily_temperature())
-        self._verify_temperature_data_series(weather.get_daily_apparent_temperature())
+        self._verify_temperature_data_series(weather.get_daily_temperature(unit=unit))
+        self._verify_temperature_data_series(
+            weather.get_daily_apparent_temperature(unit=unit)
+        )
 
     @pytest.mark.parametrize("metric", constants.DAILY_WEATHER_STATISTICAL_METRICS)
     def test_daily_temperature_methods_with_different_metrics(
