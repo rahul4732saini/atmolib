@@ -403,7 +403,7 @@ class TestWeather:
         assert str(code[0]) in atmolib.constants.WEATHER_CODES
         assert code[1] in atmolib.constants.WEATHER_CODES.values()
 
-    @pytest.mark.parametrize("frequency", ("hourly", "daily"))
+    @pytest.mark.parametrize("frequency", constants.FREQUENCIES)
     def test_periodical_weather_code_method(
         self, weather: atmolib.Weather, frequency: str
     ) -> None:
@@ -413,13 +413,13 @@ class TestWeather:
 
         code = weather.get_periodical_weather_code(frequency)
 
-        # Converting integers into strings in the `data` column to be used for
-        # verification with the `atmolib.constants.WEATHER_CODES` dictionary.
-        code["data"] = code["data"].astype(np.object_)
-        code["data"] = code["data"].map(lambda x: str(x))
+        # Converts the values stored in the 'data' column into strings to verify
+        # them with the keys of the `atmolib.constants.WEATHER_CODES` dictionary.
+        code["data"] = code["data"].astype(str)
 
         assert isinstance(code, pd.DataFrame)
-        assert code["data"].isin(atmolib.constants.WEATHER_CODES.keys()).all()
+
+        assert code["data"].isin(atmolib.constants.WEATHER_CODES).all()
         assert code["description"].isin(atmolib.constants.WEATHER_CODES.values()).all()
 
     # All other types of weather data extraction
