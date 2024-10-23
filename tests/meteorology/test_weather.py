@@ -282,17 +282,16 @@ class TestWeather:
         self._verify_precipitation_data_series(daily)
 
     def test_precipitation_probability_methods(self, weather: atmolib.Weather) -> None:
-        """
-        Tests the precipitation probability extraction methods.
-        """
+        """Tests the hourly and daily precipitation probability extraction methods"""
 
         hourly = weather.get_hourly_precipitation_probability()
         daily = weather.get_daily_max_precipitation_probability()
 
-        assert isinstance(hourly, pd.Series) and isinstance(daily, pd.Series)
-        assert all((hourly.to_numpy() >= 0) & (hourly.to_numpy() <= 100)) and all(
-            (daily.to_numpy() >= 0) & (daily.to_numpy() <= 100)
-        )
+        assert isinstance(hourly, pd.Series)
+        assert isinstance(daily, pd.Series)
+
+        assert all((hourly.to_numpy() >= 0) & (hourly.to_numpy() <= 100))
+        assert all((daily.to_numpy() >= 0) & (daily.to_numpy() <= 100))
 
     @pytest.mark.parametrize("level", ("surface", "sealevel"))
     def test_atmospheric_pressure_extraction_methods(
