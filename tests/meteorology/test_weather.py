@@ -242,7 +242,7 @@ class TestWeather:
 
     # The following block tests precipitation and pressure data extraction methods.
 
-    @pytest.mark.parametrize("unit", ("mm", "inch"))
+    @pytest.mark.parametrize("unit", constants.PRECIPITATION_UNITS)
     def test_precipitation_methods_with_different_units(
         self, weather: atmolib.Weather, unit: str
     ) -> None:
@@ -261,7 +261,7 @@ class TestWeather:
         self._verify_positive_data_series(hourly)
         self._verify_positive_data_series(daily)
 
-    @pytest.mark.parametrize("unit", ("mm", "inch"))
+    @pytest.mark.parametrize("unit", constants.PRECIPITATION_UNITS)
     def test_rainfall_methods_with_different_units(
         self, weather: atmolib.Weather, unit: str
     ) -> None:
@@ -292,7 +292,7 @@ class TestWeather:
         assert (hourly.to_numpy() <= 100).all()
         assert (daily.to_numpy() <= 100).all()
 
-    @pytest.mark.parametrize("level", ("surface", "sealevel"))
+    @pytest.mark.parametrize("level", constants.PRESSURE_LEVELS)
     def test_atmospheric_pressure_extraction_methods(
         self, weather: atmolib.Weather, level: str
     ) -> None:
@@ -311,7 +311,7 @@ class TestWeather:
 
     # The following block tests cloud coverage data extraction methods.
 
-    @pytest.mark.parametrize("level", ("low", "mid", "high"))
+    @pytest.mark.parametrize("level", constants.CLOUD_COVER_LEVELS)
     def test_cloud_cover_methods_level_parameter(
         self, weather: atmolib.Weather, level: str
     ) -> None:
