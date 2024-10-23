@@ -130,7 +130,7 @@ class TestWeather:
         """
         self._examine_summary_methods(weather, {"wind_speed_unit": unit})
 
-    # The following block tests methods related to temperature extraction methods.
+    # The following block tests temperature data extraction methods.
 
     @pytest.mark.parametrize("altitude", constants.TEMPERATURE_ALTITUDES)
     def test_temperature_methods_with_different_altitudes(
@@ -231,7 +231,7 @@ class TestWeather:
             weather.get_daily_apparent_temperature(metric=metric)
         )
 
-    # The following block tests precipitation extraction related methods.
+    # The following block tests precipitation data extraction methods.
 
     @pytest.mark.parametrize("unit", ("mm", "inch"))
     def test_current_precipitation_methods_unit_parameter(
@@ -309,7 +309,7 @@ class TestWeather:
         assert isinstance(current, int | float) and isinstance(hourly, pd.Series)
         assert current >= 0 and all(hourly.to_numpy() >= 0)
 
-    # The following block tests cloud coverage extraction related methods.
+    # The following block tests cloud coverage data extraction methods.
 
     @pytest.mark.parametrize("level", ("low", "mid", "high"))
     def test_cloud_cover_methods_level_parameter(
@@ -333,7 +333,7 @@ class TestWeather:
             weather.get_hourly_total_cloud_cover(),
         )
 
-    # The following block tests wind related extraction methods.
+    # The following block tests wind data extraction methods.
 
     @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
     def test_current_wind_methods_unit_parameter(
