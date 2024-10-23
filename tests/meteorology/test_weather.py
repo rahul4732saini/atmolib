@@ -286,11 +286,11 @@ class TestWeather:
         hourly = weather.get_hourly_precipitation_probability()
         daily = weather.get_daily_max_precipitation_probability()
 
-        assert isinstance(hourly, pd.Series)
-        assert isinstance(daily, pd.Series)
+        self._verify_positive_data_series(hourly)
+        self._verify_positive_data_series(daily)
 
-        assert all((hourly.to_numpy() >= 0) & (hourly.to_numpy() <= 100))
-        assert all((daily.to_numpy() >= 0) & (daily.to_numpy() <= 100))
+        assert (hourly.to_numpy() <= 100).all()
+        assert (daily.to_numpy() <= 100).all()
 
     @pytest.mark.parametrize("level", ("surface", "sealevel"))
     def test_atmospheric_pressure_extraction_methods(
@@ -430,10 +430,10 @@ class TestWeather:
         hourly = weather.get_hourly_relative_humidity()
 
         assert isinstance(current, int | float)
-        assert isinstance(hourly, pd.Series)
-
         assert 0 <= current <= 100
-        assert ((hourly >= 0) & (hourly <= 100)).all()
+
+        self._verify_positive_data_series(hourly)
+        assert (hourly <= 100).all()
 
     @pytest.mark.parametrize("depth", constants.SOIL_MOISTURE_DEPTH)
     def test_hourly_soil_moisture_method(
