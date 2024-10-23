@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Loads the `weather_codes.json` file comprising weather
 # codes mapped with their corresponding descriptions.
 with open(BASE_DIR / "weather_codes.json") as file:
-    WEATHER_CODES = json.load(file)
+    WEATHER_CODES: dict[str, str] = json.load(file)
 
 AQI_SOURCES = "european", "us"
 
