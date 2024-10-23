@@ -234,6 +234,27 @@ class TestWeather:
     # The following block tests precipitation data extraction methods.
 
     @pytest.mark.parametrize("unit", ("mm", "inch"))
+    def test_precipitation_methods_with_different_units(
+        self, weather: atmolib.Weather, unit: str
+    ) -> None:
+        """
+        Tests the current, hourly and daily precipitaion
+        extraction methods with different temperature units.
+        """
+
+        current = weather.get_current_precipitation(unit=unit)
+        hourly = weather.get_hourly_precipitation(unit=unit)
+        daily = weather.get_daily_total_precipitation(unit=unit)
+
+        assert isinstance(current, int | float)
+        assert isinstance(hourly, pd.Series)
+        assert isinstance(daily, pd.Series)
+
+        assert current >= 0
+        assert hourly.to_numpy() >= 0
+        assert daily.to_numpy() >= 0
+
+    @pytest.mark.parametrize("unit", ("mm", "inch"))
     def test_current_precipitation_methods_unit_parameter(
         self, weather: atmolib.Weather, unit: str
     ) -> None:
