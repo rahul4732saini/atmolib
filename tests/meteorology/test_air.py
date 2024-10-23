@@ -91,7 +91,7 @@ class TestAirQuality:
         assert isinstance(hourly, pd.Series)
 
         assert current >= 0
-        assert all((hourly.to_numpy() >= 0) | hourly.isna())
+        assert ((hourly >= 0) | hourly.isna()).all()
 
     @pytest.mark.parametrize("plant", constants.PLANTS)
     def test_pollen_conc_extraction_methods(
@@ -108,7 +108,7 @@ class TestAirQuality:
         assert isinstance(hourly, pd.Series)
 
         assert current is None or current >= 0
-        assert all((hourly.to_numpy() >= 0) | hourly.isna())
+        assert ((hourly >= 0) | hourly.isna()).all()
 
     def test_dust_conc_extraction_methods(
         self, air_quality: atmolib.AirQuality
@@ -123,7 +123,7 @@ class TestAirQuality:
         assert isinstance(hourly, pd.Series)
 
         assert current >= 0
-        assert all(hourly.to_numpy() >= 0)
+        assert (hourly >= 0).all()
 
     def test_ammonia_conc_extraction_methods(
         self, air_quality: atmolib.AirQuality
@@ -138,7 +138,7 @@ class TestAirQuality:
         assert isinstance(hourly, pd.Series)
 
         assert current is None or current >= 0
-        assert all((hourly.to_numpy() >= 0) | hourly.isna())
+        assert ((hourly >= 0) | hourly.isna()).all()
 
     def test_current_particulate_matter_extraction_methods(
         self, air_quality: atmolib.AirQuality
@@ -168,8 +168,8 @@ class TestAirQuality:
         assert isinstance(pm2_5_conc, pd.Series)
         assert isinstance(pm10_conc, pd.Series)
 
-        assert all(pm2_5_conc.to_numpy() >= 0)
-        assert all(pm10_conc.to_numpy() >= 0)
+        assert (pm2_5_conc >= 0).all()
+        assert (pm10_conc >= 0).all()
 
     def test_uv_index_extraction_methods(self, air_quality: atmolib.AirQuality) -> None:
         """
@@ -182,7 +182,7 @@ class TestAirQuality:
         assert isinstance(hourly, pd.Series)
 
         assert current >= 0
-        assert all(hourly.to_numpy() >= 0)
+        assert (hourly >= 0).all()
 
     def test_aerosol_optial_depth_extraction_methods(
         self, air_quality: atmolib.AirQuality
@@ -195,4 +195,4 @@ class TestAirQuality:
         assert isinstance(hourly, pd.Series)
 
         assert current >= 0
-        assert all(hourly.to_numpy() >= 0)
+        assert (hourly >= 0).all()
