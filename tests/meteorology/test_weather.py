@@ -81,7 +81,7 @@ class TestWeather:
         """
 
         assert isinstance(series, pd.Series)
-        assert all(series.to_numpy() >= 0)
+        assert (series >= 0).all()
 
     @staticmethod
     def _verify_cloud_cover_methods(current: int | float, hourly: pd.Series) -> None:
@@ -289,8 +289,8 @@ class TestWeather:
         self._verify_positive_data_series(hourly)
         self._verify_positive_data_series(daily)
 
-        assert (hourly.to_numpy() <= 100).all()
-        assert (daily.to_numpy() <= 100).all()
+        assert (hourly <= 100).all()
+        assert (daily <= 100).all()
 
     @pytest.mark.parametrize("level", constants.PRESSURE_LEVELS)
     def test_atmospheric_pressure_extraction_methods(
