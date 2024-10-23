@@ -241,7 +241,7 @@ class TestWeather:
             weather.get_daily_apparent_temperature(metric=metric)
         )
 
-    # The following block tests precipitation data extraction methods.
+    # The following block tests precipitation and pressure data extraction methods.
 
     @pytest.mark.parametrize("unit", ("mm", "inch"))
     def test_precipitation_methods_with_different_units(
@@ -298,15 +298,18 @@ class TestWeather:
         self, weather: atmolib.Weather, level: str
     ) -> None:
         """
-        Tests the current and hourly atmospheric pressure
-        extraction methods with different `level` arguments.
+        Tests the current and hourly atmospheirc pressure
+        extraction methods with different measurement levels.
         """
 
         current = weather.get_current_pressure(level=level)
         hourly = weather.get_hourly_pressure(level=level)
 
-        assert isinstance(current, int | float) and isinstance(hourly, pd.Series)
-        assert current >= 0 and all(hourly.to_numpy() >= 0)
+        assert isinstance(current, int | float)
+        assert isinstance(hourly, pd.Series)
+
+        assert current >= 0
+        assert all(hourly.to_numpy() >= 0)
 
     # The following block tests cloud coverage data extraction methods.
 
