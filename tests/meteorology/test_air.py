@@ -55,7 +55,8 @@ class TestAirQuality:
         current = air_quality.get_current_summary()
         hourly = air_quality.get_hourly_summary()
 
-        assert isinstance(current, pd.Series) and isinstance(hourly, pd.DataFrame)
+        assert isinstance(current, pd.Series)
+        assert isinstance(hourly, pd.DataFrame)
 
         # Verifies the indices and columns of the resultant
         # pandas.Series and DataFrame objects.
@@ -86,7 +87,9 @@ class TestAirQuality:
         current = air_quality.get_current_gaseous_conc(gas)
         hourly = air_quality.get_hourly_gaseous_conc(gas)
 
-        assert isinstance(current, int | float) and isinstance(hourly, pd.Series)
+        assert isinstance(current, int | float)
+        assert isinstance(hourly, pd.Series)
+
         assert current >= 0
         assert all((hourly.to_numpy() >= 0) | hourly.isna())
 
@@ -101,9 +104,9 @@ class TestAirQuality:
         current = air_quality.get_current_pollen_conc(plant)
         hourly = air_quality.get_hourly_pollen_conc(plant)
 
-        assert isinstance(current, int | float | NoneType) and isinstance(
-            hourly, pd.Series
-        )
+        assert isinstance(current, int | float | NoneType)
+        assert isinstance(hourly, pd.Series)
+
         assert current is None or current >= 0
         assert all((hourly.to_numpy() >= 0) | hourly.isna())
 
@@ -147,9 +150,9 @@ class TestAirQuality:
         pm2_5_conc = air_quality.get_current_pm2_5_conc()
         pm10_conc = air_quality.get_current_pm10_conc()
 
-        assert isinstance(pm2_5_conc, int | float) and isinstance(
-            pm10_conc, int | float
-        )
+        assert isinstance(pm2_5_conc, int | float)
+        assert isinstance(pm10_conc, int | float)
+
         assert pm2_5_conc >= 0 and pm10_conc >= 0
 
     def test_hourly_particulate_matter_extraction_methods(
@@ -162,8 +165,11 @@ class TestAirQuality:
         pm2_5_conc = air_quality.get_hourly_pm2_5_conc()
         pm10_conc = air_quality.get_hourly_pm10_conc()
 
-        assert isinstance(pm2_5_conc, pd.Series) and isinstance(pm10_conc, pd.Series)
-        assert all(pm2_5_conc.to_numpy() >= 0) and all(pm10_conc.to_numpy() >= 0)
+        assert isinstance(pm2_5_conc, pd.Series)
+        assert isinstance(pm10_conc, pd.Series)
+
+        assert all(pm2_5_conc.to_numpy() >= 0)
+        assert all(pm10_conc.to_numpy() >= 0)
 
     def test_uv_index_extraction_methods(self, air_quality: atmolib.AirQuality) -> None:
         """
