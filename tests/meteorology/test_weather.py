@@ -317,8 +317,8 @@ class TestWeather:
         self, weather: atmolib.Weather, level: str
     ) -> None:
         """
-        Tests the current and hourly cloud cover extraction
-        methods with different `level` arguments.
+        Test the current and hourly cloud cover extraction
+        methods with different altitude levels.
         """
         self._verify_cloud_cover_methods(
             weather.get_current_cloud_cover(level=level),
@@ -327,7 +327,8 @@ class TestWeather:
 
     def test_total_cloud_cover_methods(self, weather: atmolib.Weather) -> None:
         """
-        Tests the current and hourly total cloud cover extraction methods.
+        Test the current and hourly total cloud cover
+        extraction methods with different altitude levels.
         """
         self._verify_cloud_cover_methods(
             weather.get_current_total_cloud_cover(),
