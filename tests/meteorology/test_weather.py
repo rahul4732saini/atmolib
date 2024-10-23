@@ -492,7 +492,7 @@ class TestWeather:
         assert isinstance(sunrise, pd.Series)
         assert isinstance(sunset, pd.Series)
 
-        # Maps the `sunrise` and `sunset` Series to verify
-        # the datetime format of the resultant Series.
-        sunrise.map(lambda x: datetime.strptime(x, datetime_format))
-        sunset.map(lambda x: datetime.strptime(x, datetime_format))
+        # Iteratres through the pandas Series objects and
+        # verifies the datetime format at each iteration.
+        for time in pd.concat([sunrise, sunset], ignore_index=True):
+            datetime.strptime(time, datetime_format)
