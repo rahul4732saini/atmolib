@@ -445,58 +445,52 @@ class TestWeather:
         self._verify_positive_data_series(moisture)
 
     def test_daily_max_uv_index_method(self, weather: atmolib.Weather) -> None:
-        """
-        Tests the `atmolib.get_daily_max_uv_index` method.
-        """
-        daily = weather.get_daily_max_uv_index()
-        assert isinstance(daily, pd.Series) and all(daily.to_numpy() >= 0)
+        """Tests the daily maximum UV index extraction method."""
+
+        uv = weather.get_daily_max_uv_index()
+        self._verify_positive_data_series(uv)
 
     def test_is_day_or_night_method(self, weather: atmolib.Weather) -> None:
-        """
-        Tests the `atmolib.is_day_or_night` method.
-        """
+        """Test the boolean day or night extraction method."""
+
         is_day_or_night = weather.is_day_or_night()
         assert is_day_or_night in (1, 0)
 
     def test_visibility_methods(self, weather: atmolib.Weather) -> None:
-        """
-        Tests the current and hourly visibility extraction methods.
-        """
+        """Tests the current and hourly visibility extraction methods."""
 
         current = weather.get_current_visibility()
         hourly = weather.get_hourly_visibility()
 
-        assert isinstance(current, int | float) and isinstance(hourly, pd.Series)
-        assert current >= 0 and all(hourly.to_numpy() >= 0)
+        assert isinstance(current, int | float)
+        assert current >= 0
+
+        self._verify_positive_data_series(hourly)
 
     def test_daylight_and_sunlight_duration_methods(
         self, weather: atmolib.Weather
     ) -> None:
-        """
-        Tests the `Weather.get_daily_daylight_duration` and
-        `Weather.get_sunshine_duration` methods.
-        """
+        """Test the daily daylight and sunshine duration extraction methods."""
 
         daylight = weather.get_daily_daylight_duration()
         sunshine = weather.get_daily_sunshine_duration()
 
-        assert isinstance(daylight, pd.Series) and isinstance(sunshine, pd.Series)
-        assert all(
-            (daylight.to_numpy() >= 0) & (daylight.to_numpy() <= 86_400)
-        ) and all((sunshine.to_numpy() >= 0) & (sunshine.to_numpy() <= 86_400))
+        self._verify_positive_data_series(daylight)
+        self._verify_positive_data_series(sunshine)
+
+        assert (daylight <= 86_400).all()
+        assert (sunshine <= 86_400).all()
 
     def test_sunrise_and_sunset_time_methods(self, weather: atmolib.Weather) -> None:
-        """
-        Tests the `Weather.get_daily_sunrise_time` and
-        `Weather.get_daily_sunset_time` methods.
-        """
+        """Tests the daily sunrise and sunset time extraction methods."""
 
         sunrise = weather.get_daily_sunrise_time()
         sunset = weather.get_daily_sunset_time()
 
         datetime_format = r"%Y-%m-%dT%H:%M"
 
-        assert isinstance(sunrise, pd.Series) and isinstance(sunset, pd.Series)
+        assert isinstance(sunrise, pd.Series)
+        assert isinstance(sunset, pd.Series)
 
         # Maps the `sunrise` and `sunset` Series to verify
         # the datetime format of the resultant Series.
