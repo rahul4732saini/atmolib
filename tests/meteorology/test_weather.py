@@ -435,15 +435,14 @@ class TestWeather:
         assert 0 <= current <= 100
         assert ((hourly >= 0) & (hourly <= 100)).all()
 
-    @pytest.mark.parametrize("depth", (0, 2, 8, 26, 57, 81))
+    @pytest.mark.parametrize("depth", constants.SOIL_MOISTURE_DEPTH)
     def test_hourly_soil_moisture_method(
         self, weather: atmolib.Weather, depth: int
     ) -> None:
-        """
-        Tests the hourly soil moisture extractions methods.
-        """
+        """Tests the hourly soil moisture extractions method."""
+
         moisture = weather.get_hourly_soil_moisture(depth=depth)
-        assert isinstance(moisture, pd.Series) and all(moisture.to_numpy() >= 0)
+        self._verify_positive_data_series(moisture)
 
     def test_daily_max_uv_index_method(self, weather: atmolib.Weather) -> None:
         """
