@@ -435,7 +435,7 @@ class TestWeather:
         self._verify_positive_data_series(hourly)
         assert (hourly <= 100).all()
 
-    @pytest.mark.parametrize("depth", constants.SOIL_MOISTURE_DEPTH)
+    @pytest.mark.parametrize("depth", (0, 10, 18, 78, 81))
     def test_hourly_soil_moisture_method(
         self, weather: atmolib.Weather, depth: int
     ) -> None:
