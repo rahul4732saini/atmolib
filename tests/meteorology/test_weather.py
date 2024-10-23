@@ -66,7 +66,7 @@ class TestWeather:
     @staticmethod
     def _verify_temperature_data_series(series: pd.Series) -> None:
         """
-        Verifies the temperature data with
+        Verifies the temperature data within
         the specified pandas Series object.
         """
 
@@ -138,7 +138,7 @@ class TestWeather:
     ) -> None:
         """
         Tests the current and hourly temperature extraction
-        methods with different altitudes arguments.
+        methods with different altitudes levels.
         """
 
         current = weather.get_current_temperature(altitude=altitude)
@@ -153,7 +153,7 @@ class TestWeather:
     ) -> None:
         """
         Tests the current and hourly temperature extraction
-        methods with different temperature unit arguments.
+        methods with different temperature units.
         """
 
         current = weather.get_current_temperature(unit=unit)
@@ -167,8 +167,8 @@ class TestWeather:
         self, weather: atmolib.Weather, unit: str
     ) -> None:
         """
-        Tests the current and hourly apparent temperature extraction
-        methods with different temperature unit arguments.
+        Tests the current and hourly apparent temperature
+        extraction methods with different temperature units.
         """
 
         current = weather.get_current_apparent_temperature(unit=unit)
@@ -183,7 +183,7 @@ class TestWeather:
     ) -> None:
         """
         Tests the hourly soil temperature extraction
-        method with different temperture unit arguments.
+        method with different temperture units.
         """
 
         hourly = weather.get_hourly_soil_temperature(unit=unit)
@@ -195,7 +195,7 @@ class TestWeather:
     ) -> None:
         """
         Tests the hourly soil temperature extraction
-        method with different soil depth parameters.
+        method with different soil depths.
         """
 
         hourly = weather.get_hourly_soil_temperature(depth=depth)
@@ -206,7 +206,8 @@ class TestWeather:
         self, weather: atmolib.Weather, unit: str
     ) -> None:
         """
-        Tests the daily temperature extraction methods with different `unit` arguments.
+        Tests the daily temperature extraction methods
+        with different temperature units.
         """
 
         self._verify_temperature_data_series(weather.get_daily_temperature())
@@ -217,8 +218,8 @@ class TestWeather:
         self, weather: atmolib.Weather, metric: str
     ) -> None:
         """
-        Tests the daily temperature extraction
-        methods with different `metric` arguments.
+        Tests the daily temperature extraction methods
+        with different weather statistical metrices.
         """
 
         self._verify_temperature_data_series(
