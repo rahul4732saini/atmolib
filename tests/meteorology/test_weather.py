@@ -337,6 +337,27 @@ class TestWeather:
 
     # The following block tests wind data extraction methods.
 
+    @pytest.mark.parametrize("unit", constants.WIND_SPEED_UNITS)
+    def test_wind_speed_methods_with_different_units(
+        self, weather: atmolib.Weather, unit: str
+    ) -> None:
+        """
+        Tests the current, hourly, and daily wind speed
+        extraction methods with different wind speed units.
+        """
+
+        current = weather.get_current_wind_speed(unit=unit)
+        hourly = weather.get_hourly_wind_speed(unit=unit)
+        daily = weather.get_daily_max_wind_speed(unit=unit)
+
+        assert isinstance(current, int | float)
+        assert isinstance(daily, pd.Series)
+        assert isinstance(hourly, pd.Series)
+
+        assert current >= 0
+        assert all(hourly.to_numpy() >= 0)
+        assert all(daily.to_numpy() >= 0)
+
     @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
     def test_current_wind_methods_unit_parameter(
         self, weather: atmolib.Weather, unit: str
