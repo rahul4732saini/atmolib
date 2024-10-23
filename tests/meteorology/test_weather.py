@@ -429,10 +429,11 @@ class TestWeather:
         current = weather.get_current_relative_humidity()
         hourly = weather.get_hourly_relative_humidity()
 
-        assert isinstance(current, int | float) and isinstance(hourly, pd.Series)
-        assert 0 <= current <= 100 and all(
-            (hourly.to_numpy() >= 0) & (hourly.to_numpy() <= 100)
-        )
+        assert isinstance(current, int | float)
+        assert isinstance(hourly, pd.Series)
+
+        assert 0 <= current <= 100
+        assert ((hourly >= 0) & (hourly <= 100)).all()
 
     @pytest.mark.parametrize("depth", (0, 2, 8, 26, 57, 81))
     def test_hourly_soil_moisture_method(
