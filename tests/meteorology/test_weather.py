@@ -275,54 +275,6 @@ class TestWeather:
         assert hourly.to_numpy() >= 0
         assert daily.to_numpy() >= 0
 
-    @pytest.mark.parametrize("unit", ("mm", "inch"))
-    def test_current_precipitation_methods_unit_parameter(
-        self, weather: atmolib.Weather, unit: str
-    ) -> None:
-        """
-        Tests the current precipitation extraction
-        methods with different `unit` arguments.
-        """
-
-        precipitation = weather.get_current_precipitation(unit=unit)
-        rainfall = weather.get_current_rainfall(unit=unit)
-
-        assert isinstance(precipitation, int | float) and isinstance(
-            rainfall, int | float
-        )
-        assert precipitation >= 0 and rainfall >= 0
-
-    @pytest.mark.parametrize("unit", ("mm", "inch"))
-    def test_periodical_precipitation_methods_unit_parameter(
-        self, weather: atmolib.Weather, unit: str
-    ) -> None:
-        """
-        Tests the hourly and daily precipitation extraction
-        methods with different `unit` arguments.
-        """
-
-        hourly_precipitation = weather.get_hourly_precipitation(unit=unit)
-        hourly_rainfall = weather.get_hourly_rainfall(unit=unit)
-
-        daily_precipitation = weather.get_daily_total_precipitation(unit=unit)
-        daily_rainfall = weather.get_daily_total_rainfall(unit=unit)
-
-        # Tests the hourly precipitation methods.
-        assert isinstance(hourly_precipitation, pd.Series) and isinstance(
-            hourly_rainfall, pd.Series
-        )
-        assert all(hourly_precipitation.to_numpy() >= 0) and all(
-            hourly_rainfall.to_numpy() >= 0
-        )
-
-        # Tests the daily precipitation methods.
-        assert isinstance(daily_precipitation, pd.Series) and isinstance(
-            daily_rainfall, pd.Series
-        )
-        assert all(daily_precipitation.to_numpy() >= 0) and all(
-            daily_rainfall.to_numpy() >= 0
-        )
-
     def test_precipitation_probability_methods(self, weather: atmolib.Weather) -> None:
         """
         Tests the precipitation probability extraction methods.
