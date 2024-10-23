@@ -355,6 +355,41 @@ class TestWeather:
         self._verify_positive_data_series(hourly)
         self._verify_positive_data_series(daily)
 
+    def test_wind_direction_methods(self, weather: atmolib.Weather) -> None:
+        """
+        Tests the current, hourly, and daily
+        wind direction extraction methods.
+        """
+
+        current = weather.get_current_wind_direction()
+        hourly = weather.get_hourly_wind_direction()
+        daily = weather.get_daily_dominant_wind_direction()
+
+        assert isinstance(current, int | float)
+        assert current >= 0
+
+        self._verify_positive_data_series(hourly)
+        self._verify_positive_data_series(daily)
+
+    @pytest.mark.parametrize("unit", constants.WIND_SPEED_UNITS)
+    def test_winds_gust_methods_with_different_units(
+        self, weather: atmolib.Weather, unit: str
+    ) -> None:
+        """
+        Tests the current, hourly, and daily wind gusts
+        extraction methods with different wind speed units.
+        """
+
+        current = weather.get_current_wind_gusts(unit=unit)
+        hourly = weather.get_hourly_wind_gusts(unit=unit)
+        daily = weather.get_daily_max_wind_gusts(unit=unit)
+
+        assert isinstance(current, int | float)
+        assert current >= 0
+
+        self._verify_positive_data_series(hourly)
+        self._verify_positive_data_series(daily)
+
     @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
     def test_current_wind_methods_unit_parameter(
         self, weather: atmolib.Weather, unit: str
