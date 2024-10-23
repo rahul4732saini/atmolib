@@ -81,7 +81,7 @@ class TestWeather:
         """
 
         assert isinstance(series, pd.Series)
-        assert all(series >= 0)
+        assert all(series.to_numpy() >= 0)
 
     @staticmethod
     def _verify_cloud_cover_methods(current: int | float, hourly: pd.Series) -> None:
@@ -257,12 +257,10 @@ class TestWeather:
         daily = weather.get_daily_total_precipitation(unit=unit)
 
         assert isinstance(current, int | float)
-        assert isinstance(hourly, pd.Series)
-        assert isinstance(daily, pd.Series)
-
         assert current >= 0
-        assert hourly.to_numpy() >= 0
-        assert daily.to_numpy() >= 0
+
+        self._verify_precipitation_data_series(hourly)
+        self._verify_precipitation_data_series(daily)
 
     @pytest.mark.parametrize("unit", ("mm", "inch"))
     def test_rainfall_methods_with_different_units(
@@ -278,12 +276,10 @@ class TestWeather:
         daily = weather.get_daily_total_rainfall(unit=unit)
 
         assert isinstance(current, int | float)
-        assert isinstance(hourly, pd.Series)
-        assert isinstance(daily, pd.Series)
-
         assert current >= 0
-        assert hourly.to_numpy() >= 0
-        assert daily.to_numpy() >= 0
+
+        self._verify_precipitation_data_series(hourly)
+        self._verify_precipitation_data_series(daily)
 
     def test_precipitation_probability_methods(self, weather: atmolib.Weather) -> None:
         """
