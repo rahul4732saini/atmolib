@@ -85,14 +85,13 @@ class TestWeather:
 
     @staticmethod
     def _verify_cloud_cover_methods(current: int | float, hourly: pd.Series) -> None:
-        """
-        Verifies the cloud cover extraction methods.
-        """
+        """Verifies the current and hourly cloud coverage extraction methods."""
 
-        assert isinstance(current, int | float) and isinstance(hourly, pd.Series)
-        assert 0 <= current <= 100 and all(
-            (hourly.to_numpy() >= 0) & (hourly.to_numpy() <= 100)
-        )
+        assert isinstance(current, int | float)
+        assert isinstance(hourly, pd.Series)
+
+        assert 0 <= current <= 100
+        assert ((hourly >= 0) & (hourly <= 100)).all()
 
     # The following block tests methods related to summary extraction methods.
 
