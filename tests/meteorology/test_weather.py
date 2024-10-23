@@ -393,9 +393,7 @@ class TestWeather:
     # The following block tests weather code extraction methods.
 
     def test_current_weather_code_method(self, weather: atmolib.Weather) -> None:
-        """
-        Tests the `Weather.get_current_weather_code` method.
-        """
+        """Tests the weather code extraction method."""
 
         code = weather.get_current_weather_code()
 
@@ -407,9 +405,7 @@ class TestWeather:
     def test_periodical_weather_code_method(
         self, weather: atmolib.Weather, frequency: str
     ) -> None:
-        """
-        Tests the `Weather.get_periodical_weather_code` method with different `frequency` arguments.
-        """
+        """Tests the periodical weather code extraction method."""
 
         code = weather.get_periodical_weather_code(frequency)
 
