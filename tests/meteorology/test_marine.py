@@ -78,8 +78,8 @@ class TestMarineWeather:
         assert isinstance(daily, pd.Series)
 
         assert current is None or current >= 0
-        assert all((hourly >= 0) | hourly.isna())
-        assert all((daily >= 0) | daily.isna())
+        assert ((hourly >= 0) | hourly.isna()).all()
+        assert ((daily >= 0) | daily.isna()).all()
 
     @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
     def test_wave_direction_extraction_methods(self, wave_type: str) -> None:
@@ -97,8 +97,8 @@ class TestMarineWeather:
         assert isinstance(daily, pd.Series)
 
         assert current is None or current >= 0
-        assert all((hourly >= 0) | hourly.isna())
-        assert all((daily >= 0) | daily.isna())
+        assert ((hourly >= 0) | hourly.isna()).all()
+        assert ((daily >= 0) | daily.isna()).all()
 
     @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
     def test_wave_period_extraction_methods(self, wave_type: str) -> None:
@@ -116,5 +116,5 @@ class TestMarineWeather:
         assert isinstance(daily, pd.Series)
 
         assert current is None or current >= 0
-        assert all((hourly >= 0) | hourly.isna())
-        assert all((daily >= 0) | daily.isna())
+        assert ((hourly >= 0) | hourly.isna()).all()
+        assert ((daily >= 0) | daily.isna()).all()
