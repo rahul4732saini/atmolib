@@ -74,6 +74,16 @@ class TestWeather:
         assert issubclass(series.dtype.type, np.integer | np.floating)
 
     @staticmethod
+    def _verify_precipitation_data_series(series: pd.Series) -> None:
+        """
+        Verifies the precipitation data within
+        the specified pandas Series object.
+        """
+
+        assert isinstance(series, pd.Series)
+        assert all(series >= 0)
+
+    @staticmethod
     def _verify_cloud_cover_methods(current: int | float, hourly: pd.Series) -> None:
         """
         Verifies the cloud cover extraction methods.
