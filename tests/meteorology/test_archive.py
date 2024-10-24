@@ -1,5 +1,6 @@
 """
-Tests the objects and methods defined within `atmolib/meteorology/archive.py` file.
+Tests the classes and methods defined
+within `atmolib/meteorology/archive.py`.
 """
 
 from datetime import datetime
@@ -42,21 +43,21 @@ class TestWeatherArchive:
 
         with pytest.raises(ValueError):
 
-            # Expects an AssertionError upon initialization with invalid coordinates.
+            # Expects a ValueError upon initialization with invalid coordinates.
             for i in invalid_coordinates:
                 atmolib.WeatherArchive(
                     *i, start_date="2020-01-01", end_date="2020-01-10"
                 )
 
-            # Expects an AssertionError upon initialization with
-            # invalid `start_date` and `end_date` argument.
+            # Expects a ValueError upon initialization with
+            # invalid state end date for the archive data.
             for dates in invalid_archive_dates:
                 atmolib.WeatherArchive(0, 0, *dates)
 
     @staticmethod
     def _verify_summary_methods(hourly: pd.DataFrame, daily: pd.DataFrame) -> None:
         """
-        Verifies the execution of hourly and daily summary extraction methods.
+        Verifies the hourly anda daily summary extraction methods.
         """
 
         assert isinstance(hourly, pd.DataFrame) and isinstance(daily, pd.DataFrame)
