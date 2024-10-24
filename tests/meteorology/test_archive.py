@@ -84,11 +84,10 @@ class TestWeatherArchive:
 
     @staticmethod
     def _verify_cloud_cover_methods(hourly: pd.Series) -> None:
-        """
-        Verifies the cloud cover extraction methods.
-        """
+        """Verifies the cloud cover extraction methods."""
+
         assert isinstance(hourly, pd.Series)
-        assert all((hourly.to_numpy() >= 0) & (hourly.to_numpy() <= 100))
+        assert ((hourly >= 0) & (hourly <= 100)).all()
 
     @staticmethod
     def _verify_hourly_temperature_methods(
