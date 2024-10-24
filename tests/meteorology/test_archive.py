@@ -135,9 +135,7 @@ class TestWeatherArchive:
         """
 
         hourly = archive.get_hourly_temperature(altitude=altitude)
-
-        assert isinstance(hourly, pd.Series)
-        assert issubclass(hourly.dtype.type, np.integer | np.floating)
+        self._verify_temperature_data_series(hourly)
 
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
     def test_tempeature_methods_with_different_units(
@@ -151,11 +149,8 @@ class TestWeatherArchive:
         hourly = archive.get_hourly_temperature(unit=unit)
         daily = archive.get_daily_temperature(unit=unit)
 
-        assert isinstance(hourly, pd.Series)
-        assert isinstance(daily, pd.Series)
-
-        assert issubclass(hourly.dtype.type, np.integer | np.floating)
-        assert issubclass(daily.dtype.type, np.integer | np.floating)
+        self._verify_temperature_data_series(hourly)
+        self._verify_temperature_data_series(daily)
 
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
     def test_apparent_temperature_methods_with_different_units(
@@ -169,11 +164,8 @@ class TestWeatherArchive:
         hourly = archive.get_hourly_apparent_temperature(unit=unit)
         daily = archive.get_daily_apparent_temperature(unit=unit)
 
-        assert isinstance(hourly, pd.Series)
-        assert isinstance(daily, pd.Series)
-
-        assert issubclass(hourly.dtype.type, np.integer | np.floating)
-        assert issubclass(daily.dtype.type, np.integer | np.floating)
+        self._verify_temperature_data_series(hourly)
+        self._verify_temperature_data_series(daily)
 
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
     def test_hourly_soil_temperature_method_with_different_units(
@@ -185,9 +177,7 @@ class TestWeatherArchive:
         """
 
         hourly = archive.get_hourly_soil_temperature(unit=unit)
-
-        assert (hourly, pd.Series)
-        assert issubclass(hourly.dtype.type, np.integer | np.floating)
+        self._verify_temperature_data_series(hourly)
 
     @pytest.mark.parametrize("metric", constants.DAILY_WEATHER_STATISTICAL_METRICS)
     def test_daily_temperature_methods_with_different_metrics(
@@ -201,11 +191,8 @@ class TestWeatherArchive:
         temp = archive.get_daily_temperature(metric=metric)
         apparent_temp = archive.get_daily_apparent_temperature(metric=metric)
 
-        assert isinstance(temp, pd.Series)
-        assert isinstance(apparent_temp, pd.Series)
-
-        assert issubclass(temp.dtype.type, np.integer | np.floating)
-        assert issubclass(apparent_temp.dtype.type, np.integer | np.floating)
+        self._verify_temperature_data_series(temp)
+        self._verify_temperature_data_series(apparent_temp)
 
     # The following block tests precipitation data extraction methods.
 
