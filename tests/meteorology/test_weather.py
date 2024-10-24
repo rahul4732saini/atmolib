@@ -51,9 +51,16 @@ class TestWeather:
 
     @staticmethod
     def _verify_summary_methods(
-        current: pd.Series, hourly: pd.DataFrame, daily: pd.DataFrame
+        weather: atmolib.Weather, params: dict[str, Any]
     ) -> None:
-        """Verifies the execution of summary extraction methods."""
+        """
+        Verifies the current, hourly, and daily summary
+        extraction methods with the specified parameters.
+        """
+
+        current = weather.get_current_summary(**params)
+        daily = weather.get_daily_summary(**params)
+        hourly = weather.get_hourly_summary(**params)
 
         assert isinstance(current, pd.Series)
         assert isinstance(hourly, pd.DataFrame)
@@ -95,20 +102,6 @@ class TestWeather:
 
     # The following block tests methods related to summary extraction methods.
 
-    def _examine_summary_methods(
-        self, weather: atmolib.Weather, params: dict[str, Any]
-    ) -> None:
-        """
-        Examines the current, hourly, and daily weather summary
-        extraction methods with the specified parameters.
-        """
-
-        self._verify_summary_methods(
-            weather.get_current_summary(**params),
-            weather.get_hourly_summary(**params),
-            weather.get_daily_summary(**params),
-        )
-
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
     def test_summary_methods_with_temperature_units(
         self, weather: atmolib.Weather, unit: str
@@ -117,7 +110,7 @@ class TestWeather:
         Test the current, hourly, and daily weather summary
         extraction methods with different temperature units.
         """
-        self._examine_summary_methods(weather, {"temperature_unit": unit})
+        self._verify_summary_methods(weather, {"temperature_unit": unit})
 
     @pytest.mark.parametrize("unit", constants.PRECIPITATION_UNITS)
     def test_summary_methods_with_precipitation_units(
@@ -127,7 +120,7 @@ class TestWeather:
         Test the current, hourly, and daily weather summary
         extraction methods with different precipitation units.
         """
-        self._examine_summary_methods(weather, {"precipitation_unit": unit})
+        self._verify_summary_methods(weather, {"precipitation_unit": unit})
 
     @pytest.mark.parametrize("unit", constants.WIND_SPEED_UNITS)
     def test_summary_methods_with_wind_speed_units(
@@ -137,7 +130,7 @@ class TestWeather:
         Test the current, hourly, and daily weather summary
         extraction methods with different wind speed units.
         """
-        self._examine_summary_methods(weather, {"wind_speed_unit": unit})
+        self._verify_summary_methods(weather, {"wind_speed_unit": unit})
 
     # The following block tests temperature data extraction methods.
 
