@@ -148,13 +148,13 @@ class TestWeatherArchive:
 
     # The following block tests temperature data extraction methods.
 
-    @pytest.mark.parametrize("altitude", (2, 80, 120, 180))
-    def test_temperature_methods_altitude_parameter(
-        self, archive: atmolib.WeatherArchive, altitude
+    @pytest.mark.parametrize("altitude", constants.TEMPERATURE_ALTITUDES)
+    def test_hourly_temperature_method_with_different_altitudes(
+        self, archive: atmolib.WeatherArchive, altitude: int
     ) -> None:
         """
-        Tests the `WeatherArchive.get_hourly_temperature`
-        method with different `altitude` arguments.
+        Tests the hourly temperature data extraction
+        method with different atltitude levels.
         """
 
         hourly = archive.get_hourly_temperature(altitude=altitude)
