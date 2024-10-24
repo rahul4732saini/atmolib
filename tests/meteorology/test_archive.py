@@ -114,7 +114,7 @@ class TestWeatherArchive:
             and issubclass(soil_temp.dtype.type, np.integer | np.floating)
         )
 
-    # The following block tests methods related to summary extraction methods.
+    # The following block tests summary data extraction methods.
 
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
     def test_summary_methods_with_different_temperature_units(
@@ -146,7 +146,7 @@ class TestWeatherArchive:
         """
         self._verify_summary_methods(archive, {"wind_speed_unit": unit})
 
-    # The following block tests methods related to temperature extraction methods.
+    # The following block tests temperature data extraction methods.
 
     @pytest.mark.parametrize("altitude", (2, 80, 120, 180))
     def test_temperature_methods_altitude_parameter(
@@ -215,7 +215,7 @@ class TestWeatherArchive:
             archive.get_daily_apparent_temperature(metric=metric),
         )
 
-    # The following block tests precipitation extraction related methods.
+    # The following block tests precipitation data extraction methods.
 
     @pytest.mark.parametrize("unit", ("mm", "inch"))
     def test_periodical_precipitation_methods_unit_parameter(
@@ -258,7 +258,7 @@ class TestWeatherArchive:
         hourly = archive.get_hourly_pressure(level=level)
         assert isinstance(hourly, pd.Series) and all(hourly.to_numpy() >= 0)
 
-    # The following block tests cloud coverage extraction related methods.
+    # The following block tests cloud coverage extraction methods.
 
     @pytest.mark.parametrize("level", ("low", "mid", "high"))
     def test_cloud_cover_methods_level_parameter(
@@ -270,7 +270,7 @@ class TestWeatherArchive:
         """
         self._verify_cloud_cover_methods(weather.get_hourly_cloud_cover(level=level))
 
-    # The following block tests wind related extraction methods.
+    # The following block tests wind related data extraction methods.
 
     @pytest.mark.parametrize("altitude", (10, 100))
     def test_hourly_wind_methods_altitude_parameter(
