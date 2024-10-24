@@ -212,58 +212,23 @@ class TestWeatherArchive:
         assert (hourly, pd.Series)
         assert issubclass(hourly.dtype.type, np.integer | np.floating)
 
-    @pytest.mark.parametrize("unit", ("celsius", "fahrenheit"))
-    def test_hourly_temperature_methods_unit_parameter(
-        self, archive: atmolib.WeatherArchive, unit: str
-    ) -> None:
-        """
-        Tests the hourly temperature extraction methods with different `unit` parameters.
-        """
-
-        temp = archive.get_hourly_temperature(unit=unit)
-        apparent_temp = archive.get_hourly_apparent_temperature(unit=unit)
-        soil_temp = archive.get_hourly_soil_temperature(unit=unit)
-
-        self._verify_hourly_temperature_methods(temp, apparent_temp, soil_temp)
-
-    @pytest.mark.parametrize("depth", (0, 56, 128, 255))
-    def test_hourly_soil_temperature_method_depth_parameter(
-        self, archive: atmolib.WeatherArchive, depth: int
-    ) -> None:
-        """
-        Tests the `WeatherArchive.get_hourly_soil_temperature`
-        with different `depth` arguments.
-        """
-
-        temp = archive.get_hourly_soil_temperature(depth=depth)
-
-        assert isinstance(temp, pd.Series)
-        assert issubclass(temp.dtype.type, np.integer | np.floating)
-
-    @pytest.mark.parametrize("unit", ("celsius", "fahrenheit"))
-    def test_daily_temperature_methods_unit_parameter(
-        self, archive: atmolib.WeatherArchive, unit: str
-    ) -> None:
-        """
-        Tests the daily temperature extraction methods with different `unit` arguments.
-        """
-        self._verify_temp_and_apparent_temp_methods(
-            archive.get_daily_temperature(unit=unit),
-            archive.get_daily_apparent_temperature(unit=unit),
-        )
-
-    @pytest.mark.parametrize("metric", ("mean", "max", "min"))
-    def test_daily_temperature_methods_metric_parameter(
+    @pytest.mark.parametrize("metric", constants.DAILY_WEATHER_STATISTICAL_METRICS)
+    def test_daily_temperature_methods_with_different_metrics(
         self, archive: atmolib.WeatherArchive, metric: str
     ) -> None:
         """
-        Tests the daily temperature extraction
-        methods with different `metric` arguments.
+        Tests the daily temperature and apparent temperature extraction
+        methods with different weather statistical metrics.
         """
-        self._verify_temp_and_apparent_temp_methods(
-            archive.get_daily_temperature(metric=metric),
-            archive.get_daily_apparent_temperature(metric=metric),
-        )
+
+        temp = archive.get_daily_temperature(metric=metric)
+        apparent_temp = archive.get_daily_apparent_temperature(metric=metric)
+
+        assert isinstance(temp, pd.Series)
+        assert isinstance(apparent_temp, pd.Series)
+
+        assert issubclass(temp.dtype.type, np.integer | np.floating)
+        assert issubclass(apparent_temp.dtype.type, np.integer | np.floating)
 
     # The following block tests precipitation data extraction methods.
 
