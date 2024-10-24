@@ -100,7 +100,7 @@ class TestWeather:
         assert 0 <= current <= 100
         assert ((hourly >= 0) & (hourly <= 100)).all()
 
-    # The following block tests methods related to summary extraction methods.
+    # The following block tests summary data extraction methods.
 
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
     def test_summary_methods_with_temperature_units(
