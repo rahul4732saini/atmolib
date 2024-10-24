@@ -26,11 +26,13 @@ class TestWeatherArchive:
         Test the `atmolib.WeatherArchive` object initialization with valid parameters.
         """
 
-        for i in valid_coordinates:
-            atmolib.WeatherArchive(*i, start_date="2020-01-01", end_date="2020-01-10")
+        for lat, long in valid_coordinates:
+            atmolib.WeatherArchive(
+                lat, long, start_date="2020-01-01", end_date="2020-01-10"
+            )
 
-        for dates in valid_archive_dates:
-            atmolib.WeatherArchive(0, 0, *dates)
+        for start, end in valid_archive_dates:
+            atmolib.WeatherArchive(0, 0, start, end)
 
     def test_object_initialization_with_invalid_parameters(
         self,
@@ -44,28 +46,27 @@ class TestWeatherArchive:
         with pytest.raises(ValueError):
 
             # Expects a ValueError upon initialization with invalid coordinates.
-            for i in invalid_coordinates:
+            for lat, long in invalid_coordinates:
                 atmolib.WeatherArchive(
-                    *i, start_date="2020-01-01", end_date="2020-01-10"
+                    lat, long, start_date="2020-01-01", end_date="2020-01-10"
                 )
 
             # Expects a ValueError upon initialization with
             # invalid state end date for the archive data.
-            for dates in invalid_archive_dates:
-                atmolib.WeatherArchive(0, 0, *dates)
+            for start, end in invalid_archive_dates:
+                atmolib.WeatherArchive(0, 0, start, end)
 
     @staticmethod
     def _verify_summary_methods(hourly: pd.DataFrame, daily: pd.DataFrame) -> None:
-        """
-        Verifies the hourly anda daily summary extraction methods.
-        """
+        """Verifies the hourly anda daily summary extraction methods."""
 
-        assert isinstance(hourly, pd.DataFrame) and isinstance(daily, pd.DataFrame)
+        assert isinstance(hourly, pd.DataFrame)
+        assert isinstance(daily, pd.DataFrame)
 
         assert (
             hourly.columns.tolist() == atmolib.constants.HOURLY_ARCHIVE_SUMMARY_LABELS
-            and daily.columns.tolist() == atmolib.constants.DAILY_ARCHIVE_SUMMARY_LABELS
         )
+        assert daily.columns.tolist() == atmolib.constants.DAILY_ARCHIVE_SUMMARY_LABELS
 
     @staticmethod
     def _verify_temp_and_apparent_temp_methods(
