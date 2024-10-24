@@ -76,43 +76,11 @@ class TestWeatherArchive:
         assert daily.columns.tolist() == atmolib.constants.DAILY_ARCHIVE_SUMMARY_LABELS
 
     @staticmethod
-    def _verify_temp_and_apparent_temp_methods(
-        temp: pd.Series, apparent_temp: pd.Series
-    ) -> None:
-        """
-        Verifies the `Weather.get_hourly_temperature` and
-        `Weather.get_hourly_apparent_temperature` methods.
-        """
-
-        assert isinstance(temp, pd.Series) and isinstance(apparent_temp, pd.Series)
-        assert issubclass(temp.dtype.type, np.integer | np.floating) and issubclass(
-            apparent_temp.dtype.type, np.integer | np.floating
-        )
-
-    @staticmethod
     def _verify_cloud_cover_methods(hourly: pd.Series) -> None:
         """Verifies the cloud cover extraction methods."""
 
         assert isinstance(hourly, pd.Series)
         assert ((hourly >= 0) & (hourly <= 100)).all()
-
-    @staticmethod
-    def _verify_hourly_temperature_methods(
-        temp: pd.Series, apparent_temp: pd.Series, soil_temp: pd.Series
-    ) -> None:
-        """
-        Verifies the hourly temperature extraction methods.
-        """
-        assert (
-            isinstance(temp, pd.Series)
-            and isinstance(apparent_temp, pd.Series)
-            and isinstance(soil_temp, pd.Series)
-        )
-        assert (
-            issubclass(temp.dtype.type, np.integer | np.floating)
-            and issubclass(apparent_temp.dtype.type, np.integer | np.floating)
-            and issubclass(soil_temp.dtype.type, np.integer | np.floating)
-        )
 
     # The following block tests summary data extraction methods.
 
