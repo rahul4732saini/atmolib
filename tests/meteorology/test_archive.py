@@ -152,46 +152,6 @@ class TestWeatherArchive:
             archive.get_daily_summary(wind_speed_unit=unit),
         )
 
-    @pytest.mark.parametrize(
-        ("temp_unit", "precipitation_unit"),
-        (("celsius", "mm"), ("fahrenheit", "inch")),
-    )
-    def test_summary_methods_with_temperature_and_precipitation_unit_parameters(
-        self, archive: atmolib.WeatherArchive, temp_unit: str, precipitation_unit: str
-    ) -> None:
-        """
-        Tests the hourly and daily summary extraction methods with
-        different `temperature_unit` and `precipitation_unit` parameters.
-        """
-        self._verify_summary_methods(
-            archive.get_hourly_summary(temp_unit, precipitation_unit),
-            archive.get_daily_summary(temp_unit, precipitation_unit),
-        )
-
-    @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
-    def test_summary_methods_with_wind_speed_unit_parameters(
-        self, archive: atmolib.WeatherArchive, unit: str
-    ) -> None:
-        """
-        Tests the hourly and daily summary extraction
-        methods with different `wind_speed` unit arguments.
-        """
-        self._verify_summary_methods(
-            archive.get_hourly_summary(wind_speed_unit=unit),
-            archive.get_daily_summary(wind_speed_unit=unit),
-        )
-
-    def test_summary_methods_with_default_parameters(
-        self, archive: atmolib.WeatherArchive
-    ) -> None:
-        """
-        Tests the hourly and daily summary
-        extraction methods with default parameters.
-        """
-        self._verify_summary_methods(
-            archive.get_hourly_summary(), archive.get_daily_summary()
-        )
-
     # The following block tests methods related to temperature extraction methods.
 
     @pytest.mark.parametrize("altitude", (2, 80, 120, 180))
