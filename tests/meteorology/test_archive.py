@@ -180,6 +180,24 @@ class TestWeatherArchive:
         assert issubclass(hourly.dtype.type, np.integer | np.floating)
         assert issubclass(daily.dtype.type, np.integer | np.floating)
 
+    @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
+    def test_apparent_temperature_methods_with_different_units(
+        self, archive: atmolib.WeatherArchive, unit: str
+    ) -> None:
+        """
+        Tests the hourly and daily apparent temperature
+        extraction methods with different temperature units.
+        """
+
+        hourly = archive.get_hourly_apparent_temperature(unit=unit)
+        daily = archive.get_daily_apparent_temperature(unit=unit)
+
+        assert isinstance(hourly, pd.Series)
+        assert isinstance(daily, pd.Series)
+
+        assert issubclass(hourly.dtype.type, np.integer | np.floating)
+        assert issubclass(daily.dtype.type, np.integer | np.floating)
+
     @pytest.mark.parametrize("unit", ("celsius", "fahrenheit"))
     def test_hourly_temperature_methods_unit_parameter(
         self, archive: atmolib.WeatherArchive, unit: str
