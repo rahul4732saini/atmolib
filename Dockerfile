@@ -1,4 +1,4 @@
-FROM python:3.13.0rc2-slim AS base
+FROM python:3.13-slim AS base
 
 RUN apt-get update && apt-get install -y build-essential \
  && apt-get clean \
