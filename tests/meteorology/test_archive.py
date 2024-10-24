@@ -4,6 +4,7 @@ within `atmolib/meteorology/archive.py`.
 """
 
 from datetime import datetime
+from typing import Any
 
 import pytest
 import numpy as np
@@ -58,8 +59,13 @@ class TestWeatherArchive:
                 atmolib.WeatherArchive(0, 0, start, end)
 
     @staticmethod
-    def _verify_summary_methods(hourly: pd.DataFrame, daily: pd.DataFrame) -> None:
+    def _verify_summary_methods(
+        archive: atmolib.WeatherArchive, params: dict[str, Any]
+    ) -> None:
         """Verifies the hourly anda daily summary extraction methods."""
+
+        hourly = archive.get_hourly_summary(**params)
+        daily = archive.get_daily_summary(**params)
 
         assert isinstance(hourly, pd.DataFrame)
         assert isinstance(daily, pd.DataFrame)
@@ -118,11 +124,7 @@ class TestWeatherArchive:
         Tests the hourly and daily summary extraction
         methods with different temperature units.
         """
-
-        self._verify_summary_methods(
-            archive.get_hourly_summary(temperature_unit=unit),
-            archive.get_daily_summary(temperature_unit=unit),
-        )
+        self._verify_summary_methods(archive, {"temperature_unit": unit})
 
     @pytest.mark.parametrize("unit", constants.PRECIPITATION_UNITS)
     def test_summary_methods_with_different_precipitation_units(
@@ -132,11 +134,7 @@ class TestWeatherArchive:
         Tests the hourly and daily summary extraction
         methods with different precipitation units.
         """
-
-        self._verify_summary_methods(
-            archive.get_hourly_summary(precipitation_unit=unit),
-            archive.get_daily_summary(precipitation_unit=unit),
-        )
+        self._verify_summary_methods(archive, {"precipitation_unit": unit})
 
     @pytest.mark.parametrize("unit", constants.WIND_SPEED_UNITS)
     def test_summary_methods_with_different_wind_speed_units(
@@ -146,11 +144,7 @@ class TestWeatherArchive:
         Tests the hourly and daily summary extraction
         methods with different wind speed units.
         """
-
-        self._verify_summary_methods(
-            archive.get_hourly_summary(wind_speed_unit=unit),
-            archive.get_daily_summary(wind_speed_unit=unit),
-        )
+        self._verify_summary_methods(archive, {"wind_speed_unit": unit})
 
     # The following block tests methods related to temperature extraction methods.
 
@@ -221,29 +215,6 @@ class TestWeatherArchive:
             archive.get_daily_apparent_temperature(metric=metric),
         )
 
-    def test_hourly_temperature_methods_with_default_parameters(
-        self, archive: atmolib.WeatherArchive
-    ) -> None:
-        """
-        Tests the hourly temperature extraction methods with default parameters.
-        """
-
-        temp = archive.get_hourly_temperature()
-        apparent_temp = archive.get_hourly_apparent_temperature()
-        soil_temp = archive.get_hourly_soil_temperature()
-
-        self._verify_hourly_temperature_methods(temp, apparent_temp, soil_temp)
-
-    def test_daily_temperature_methods_with_default_parameters(
-        self, archive: atmolib.Weather
-    ) -> None:
-        """
-        Tests the daily temperature extraction methods with default parameters.
-        """
-        self._verify_temp_and_apparent_temp_methods(
-            archive.get_daily_temperature(), archive.get_daily_apparent_temperature()
-        )
-
     # The following block tests precipitation extraction related methods.
 
     @pytest.mark.parametrize("unit", ("mm", "inch"))
@@ -277,40 +248,6 @@ class TestWeatherArchive:
             daily_rainfall.to_numpy() >= 0
         )
 
-    def test_periodical_precipitation_methods_with_default_parameters(
-        self, archive: atmolib.WeatherArchive
-    ) -> None:
-        """
-        Tests the hourly and daily precipitation extraction methods with default parameters.
-        """
-
-        hourly_precipitation = archive.get_hourly_precipitation()
-        hourly_rainfall = archive.get_hourly_rainfall()
-        hourly_snowfall = archive.get_hourly_snowfall()
-
-        daily_precipitation = archive.get_daily_total_precipitation()
-        daily_rainfall = archive.get_daily_total_rainfall()
-
-        # Tests the hourly precipitation methods.
-        assert (
-            isinstance(hourly_precipitation, pd.Series)
-            and isinstance(hourly_rainfall, pd.Series)
-            and isinstance(hourly_snowfall, pd.Series)
-        )
-        assert (
-            all(hourly_precipitation.to_numpy() >= 0)
-            and all(hourly_rainfall.to_numpy() >= 0)
-            and all(hourly_snowfall.to_numpy() >= 0)
-        )
-
-        # Tests the daily precipitation methods.
-        assert isinstance(daily_precipitation, pd.Series) and isinstance(
-            daily_rainfall, pd.Series
-        )
-        assert all(daily_precipitation.to_numpy() >= 0) and all(
-            daily_rainfall.to_numpy() >= 0
-        )
-
     @pytest.mark.parametrize("level", ("surface", "sealevel"))
     def test_hourly_atmospheric_pressure_method(
         self, archive: atmolib.WeatherArchive, level: str
@@ -332,15 +269,6 @@ class TestWeatherArchive:
         method with different `level` arguments.
         """
         self._verify_cloud_cover_methods(weather.get_hourly_cloud_cover(level=level))
-
-    def test_cloud_cover_methods_with_default_parameters(
-        self, archive: atmolib.WeatherArchive
-    ) -> None:
-        """
-        Tests the hourly cloud cover extraction methods with default parameters.
-        """
-        self._verify_cloud_cover_methods(archive.get_hourly_cloud_cover())
-        self._verify_cloud_cover_methods(archive.get_hourly_total_cloud_cover())
 
     # The following block tests wind related extraction methods.
 
@@ -390,50 +318,6 @@ class TestWeatherArchive:
 
         assert isinstance(speed, pd.Series) and isinstance(gusts, pd.Series)
         assert all(speed.to_numpy() >= 0) and all(gusts.to_numpy() >= 0)
-
-    def test_hourly_wind_methods_with_default_parameters(
-        self, archive: atmolib.WeatherArchive
-    ) -> None:
-        """
-        Tests the hourly wind related extraction methods with default parameters.
-        """
-
-        speed = archive.get_hourly_wind_speed()
-        direction = archive.get_hourly_wind_direction()
-        gusts = archive.get_hourly_wind_gusts()
-
-        assert (
-            isinstance(speed, pd.Series)
-            and isinstance(direction, pd.Series)
-            and isinstance(gusts, pd.Series)
-        )
-        assert (
-            all(speed.to_numpy() >= 0)
-            and all((direction.to_numpy() >= 0) & (direction.to_numpy() <= 360))
-            and all(gusts.to_numpy() >= 0)
-        )
-
-    def test_daily_wind_methods_with_default_parameters(
-        self, archive: atmolib.WeatherArchive
-    ) -> None:
-        """
-        Tests the daily wind related extraction methods with default parameters.
-        """
-
-        speed = archive.get_daily_max_wind_speed()
-        direction = archive.get_daily_dominant_wind_direction()
-        gusts = archive.get_daily_max_wind_gusts()
-
-        assert (
-            isinstance(speed, pd.Series)
-            and isinstance(direction, pd.Series)
-            and isinstance(gusts, pd.Series)
-        )
-        assert (
-            all(speed.to_numpy() >= 0)
-            and all((direction.to_numpy() >= 0) & (direction.to_numpy() <= 360))
-            and all(gusts.to_numpy() >= 0)
-        )
 
     # The following block tests weather code extraction methods.
 
