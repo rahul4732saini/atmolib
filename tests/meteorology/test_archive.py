@@ -76,6 +76,15 @@ class TestWeatherArchive:
         assert daily.columns.tolist() == atmolib.constants.DAILY_ARCHIVE_SUMMARY_LABELS
 
     @staticmethod
+    def _verify_temperature_data_series(series: pd.Series) -> None:
+        """
+        Verifies the temperature data within the specified pandas Series object.
+        """
+
+        assert isinstance(series, pd.Series)
+        assert issubclass(series.dtype.type, np.integer | np.floating)
+
+    @staticmethod
     def _verify_cloud_cover_methods(hourly: pd.Series) -> None:
         """Verifies the cloud cover extraction methods."""
 
