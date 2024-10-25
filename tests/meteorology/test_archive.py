@@ -232,7 +232,7 @@ class TestWeatherArchive:
 
     # The following block tests cloud coverage extraction methods.
 
-    @pytest.mark.parametrize("leve", constants.CLOUD_COVER_LEVELS)
+    @pytest.mark.parametrize("level", constants.CLOUD_COVER_LEVELS)
     def test_cloud_cover_methods_with_different_levels(
         self, archive: atmolib.WeatherArchive, level: str
     ) -> None:
@@ -246,6 +246,21 @@ class TestWeatherArchive:
         assert (hourly <= 100).all()
 
     # The following block tests wind related data extraction methods.
+
+    @pytest.mark.parametrize("unit", constants.WIND_SPEED_UNITS)
+    def test_wind_speed_methods_with_different_units(
+        self, archive: atmolib.WeatherArchive, unit: str
+    ) -> None:
+        """
+        Tests the hourly and daily wind speed extraction
+        methods with different wind speed units.
+        """
+
+        hourly = archive.get_hourly_wind_speed(unit=unit)
+        daily = archive.get_daily_max_wind_speed(unit=unit)
+
+        utils.verify_positive_data_series(hourly)
+        utils.verify_positive_data_series(daily)
 
     @pytest.mark.parametrize("altitude", (10, 100))
     def test_hourly_wind_methods_altitude_parameter(
