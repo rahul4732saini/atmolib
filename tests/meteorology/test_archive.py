@@ -322,23 +322,23 @@ class TestWeatherArchive:
 
     # The following block tests weather code extraction methods.
 
-    @pytest.mark.parametrize("frequency", ("hourly", "daily"))
+    @pytest.mark.parametrize("frequency", constants.FREQUENCIES)
     def test_periodical_weather_code_method(
         self, archive: atmolib.WeatherArchive, frequency: str
     ) -> None:
         """
-        Tests the `WeatherArchive.get_periodical_weather_code`
-        method with different `frequency` arguments.
+        Tests the periodical weather code extraction
+        method with different data frequencies.
         """
 
         code = archive.get_periodical_weather_code(frequency)
 
-        # Converting integers into strings in the `data` column to be used for
-        # verification with the `atmolib.constants.WEATHER_CODES` dictionary.
-        code["data"] = code["data"].astype(np.object_)
-        code["data"] = code["data"].map(lambda x: str(x))
+        # Converts the values stored in the 'data' column into strings to verify
+        # them with the keys of the `atmolib.constants.WEATHER_CODES` dictionary.
+        code["data"] = code["data"].astype(str)
 
         assert isinstance(code, pd.DataFrame)
+
         assert code["data"].isin(atmolib.constants.WEATHER_CODES).all()
         assert code["description"].isin(atmolib.constants.WEATHER_CODES.values()).all()
 
