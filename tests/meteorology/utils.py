@@ -6,6 +6,7 @@ This module comprises utility functions specifically designed
 to support test functions and methods defined within the project.
 """
 
+import numpy as np
 import pandas as pd
 
 
@@ -17,3 +18,13 @@ def verify_positive_data_series(series: pd.Series) -> None:
 
     assert isinstance(series, pd.Series)
     assert (series >= 0).all()
+
+
+def verify_temperature_data_series(series: pd.Series) -> None:
+    """
+    Verifies the temperature data stored within
+    the specified pandas Series object.
+    """
+
+    assert isinstance(series, pd.Series)
+    assert issubclass(series.dtype.type, np.integer | np.floating)
