@@ -291,7 +291,6 @@ class TestWeatherArchive:
         utils.verify_positive_data_series(hourly)
         utils.verify_positive_data_series(daily)
 
-    @pytest.mark.parametrize("altitude", constants.ARCHIVE_WIND_ALTITUDES)
     def test_wind_gusts_methods(self, archive: atmolib.WeatherArchive) -> None:
         """Tests the hourly and daily wind gusts extraction methods."""
 
