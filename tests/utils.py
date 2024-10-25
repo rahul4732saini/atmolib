@@ -28,3 +28,13 @@ def verify_temperature_data_series(series: pd.Series) -> None:
 
     assert isinstance(series, pd.Series)
     assert issubclass(series.dtype.type, np.integer | np.floating)
+
+
+def verify_positive_range_data_series(series: pd.Series, end: int) -> None:
+    """
+    Verifies that all the values stored within the specified data
+    series are greater than 0 and less than the specified end.
+    """
+
+    verify_positive_data_series(series)
+    assert (series <= end).all()
