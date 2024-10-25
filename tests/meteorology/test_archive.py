@@ -345,13 +345,13 @@ class TestWeatherArchive:
     # All other types of weather data extraction
     # methods are tested in the following block.
 
-    def test_relative_humidity_methods(self, weather: atmolib.Weather) -> None:
-        """
-        Tests the `WeatherArchive.get_hourly_relative_humidity` method.
-        """
-        hourly = weather.get_hourly_relative_humidity()
-        assert isinstance(hourly, pd.Series)
-        assert all((hourly.to_numpy() >= 0) & (hourly.to_numpy() <= 100))
+    def test_relative_humidity_methods(self, archive: atmolib.WeatherArchive) -> None:
+        """Tests the relative humidity extraction methods."""
+
+        hourly = archive.get_hourly_relative_humidity()
+
+        utils.verify_positive_data_series(hourly)
+        assert (hourly <= 100).all()
 
     @pytest.mark.parametrize("depth", (0, 56, 128, 255))
     def test_hourly_soil_moisture_method(
