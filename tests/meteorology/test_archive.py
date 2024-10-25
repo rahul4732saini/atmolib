@@ -240,9 +240,7 @@ class TestWeatherArchive:
         """
 
         hourly = archive.get_hourly_cloud_cover(level=level)
-
-        utils.verify_positive_data_series(hourly)
-        assert (hourly <= 100).all()
+        utils.verify_positive_range_data_series(hourly, 100)
 
     # The following block tests wind related data extraction methods.
 
@@ -312,11 +310,8 @@ class TestWeatherArchive:
         hourly = archive.get_hourly_wind_direction(altitude=altitude)
         daily = archive.get_daily_dominant_wind_direction()
 
-        utils.verify_positive_data_series(hourly)
-        utils.verify_positive_data_series(daily)
-
-        assert (hourly <= 360).all()
-        assert (daily <= 360).all()
+        utils.verify_positive_range_data_series(hourly, 360)
+        utils.verify_positive_range_data_series(daily, 360)
 
     # The following block tests weather code extraction methods.
 
@@ -347,9 +342,7 @@ class TestWeatherArchive:
         """Tests the relative humidity extraction methods."""
 
         hourly = archive.get_hourly_relative_humidity()
-
-        utils.verify_positive_data_series(hourly)
-        assert (hourly <= 100).all()
+        utils.verify_positive_range_data_series(hourly, 100)
 
     @pytest.mark.parametrize("depth", (0, 26, 182, 255))
     def test_hourly_soil_moisture_method(
@@ -372,11 +365,8 @@ class TestWeatherArchive:
         daylight = archive.get_daily_daylight_duration()
         sunshine = archive.get_daily_sunshine_duration()
 
-        utils.verify_positive_data_series(daylight)
-        utils.verify_positive_data_series(sunshine)
-
-        assert (daylight <= 86_400).all()
-        assert (sunshine <= 86_400).all()
+        utils.verify_positive_range_data_series(daylight, 86_400)
+        utils.verify_positive_range_data_series(sunshine, 86_400)
 
     def test_sunrise_and_sunset_time_methods(
         self, archive: atmolib.WeatherArchive
