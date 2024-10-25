@@ -3,8 +3,6 @@ Tests the classes and methods defined
 within `atmolib/meteorology/air.py`.
 """
 
-from types import NoneType
-
 import pytest
 import pandas as pd
 
@@ -102,10 +100,8 @@ class TestAirQuality:
         current = air_quality.get_current_pollen_conc(plant)
         hourly = air_quality.get_hourly_pollen_conc(plant)
 
-        assert isinstance(hourly, pd.Series)
-
         assert current is None or current >= 0
-        assert ((hourly >= 0) | hourly.isna()).all()
+        utils.verify_positive_or_null_data_series(hourly)
 
     def test_dust_conc_extraction_methods(
         self, air_quality: atmolib.AirQuality
@@ -130,10 +126,8 @@ class TestAirQuality:
         current = air_quality.get_current_ammonia_conc()
         hourly = air_quality.get_hourly_ammonia_conc()
 
-        assert isinstance(hourly, pd.Series)
-
         assert current is None or current >= 0
-        assert ((hourly >= 0) | hourly.isna()).all()
+        utils.verify_positive_or_null_data_series(hourly)
 
     def test_current_particulate_matter_extraction_methods(
         self, air_quality: atmolib.AirQuality
