@@ -20,6 +20,16 @@ def verify_positive_data_series(series: pd.Series) -> None:
     assert (series >= 0).all()
 
 
+def verify_positive_or_null_data_series(series: pd.Series) -> None:
+    """
+    Verifies that all the values stored within the specified data
+    series are greater than 0 and less than the specified end.
+    """
+
+    assert isinstance(series, pd.Series)
+    assert ((series >= 0) | series.isna()).all()
+
+
 def verify_temperature_data_series(series: pd.Series) -> None:
     """
     Verifies the temperature data stored within
