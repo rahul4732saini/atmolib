@@ -8,6 +8,7 @@ from types import NoneType
 import pytest
 import pandas as pd
 
+from .. import utils
 import atmolib
 from atmolib import constants
 
@@ -87,11 +88,8 @@ class TestAirQuality:
         current = air_quality.get_current_gaseous_conc(gas)
         hourly = air_quality.get_hourly_gaseous_conc(gas)
 
-        assert isinstance(current, int | float)
-        assert isinstance(hourly, pd.Series)
-
         assert current >= 0
-        assert ((hourly >= 0) | hourly.isna()).all()
+        utils.verify_positive_data_series(hourly)
 
     @pytest.mark.parametrize("plant", constants.PLANTS)
     def test_pollen_conc_extraction_methods(
@@ -120,10 +118,8 @@ class TestAirQuality:
         current = air_quality.get_current_dust_conc()
         hourly = air_quality.get_hourly_dust_conc()
 
-        assert isinstance(hourly, pd.Series)
-
         assert current >= 0
-        assert (hourly >= 0).all()
+        utils.verify_positive_data_series(hourly)
 
     def test_ammonia_conc_extraction_methods(
         self, air_quality: atmolib.AirQuality
@@ -165,11 +161,8 @@ class TestAirQuality:
         pm2_5_conc = air_quality.get_hourly_pm2_5_conc()
         pm10_conc = air_quality.get_hourly_pm10_conc()
 
-        assert isinstance(pm2_5_conc, pd.Series)
-        assert isinstance(pm10_conc, pd.Series)
-
-        assert (pm2_5_conc >= 0).all()
-        assert (pm10_conc >= 0).all()
+        utils.verify_positive_data_series(pm2_5_conc)
+        utils.verify_positive_data_series(pm10_conc)
 
     def test_uv_index_extraction_methods(self, air_quality: atmolib.AirQuality) -> None:
         """
@@ -179,10 +172,8 @@ class TestAirQuality:
         current = air_quality.get_current_uv_index()
         hourly = air_quality.get_hourly_uv_index()
 
-        assert isinstance(hourly, pd.Series)
-
         assert current >= 0
-        assert (hourly >= 0).all()
+        utils.verify_positive_data_series(hourly)
 
     def test_aerosol_optial_depth_extraction_methods(
         self, air_quality: atmolib.AirQuality
@@ -192,7 +183,5 @@ class TestAirQuality:
         current = air_quality.get_current_aerosol_optical_depth()
         hourly = air_quality.get_hourly_aerosol_optical_depth()
 
-        assert isinstance(hourly, pd.Series)
-
         assert current >= 0
-        assert (hourly >= 0).all()
+        utils.verify_positive_data_series(hourly)
