@@ -75,13 +75,6 @@ class TestWeatherArchive:
         )
         assert daily.columns.tolist() == atmolib.constants.DAILY_ARCHIVE_SUMMARY_LABELS
 
-    @staticmethod
-    def _verify_cloud_cover_methods(hourly: pd.Series) -> None:
-        """Verifies the cloud cover extraction methods."""
-
-        assert isinstance(hourly, pd.Series)
-        assert ((hourly >= 0) & (hourly <= 100)).all()
-
     # The following block tests summary data extraction methods.
 
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
