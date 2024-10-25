@@ -10,6 +10,7 @@ import pytest
 import numpy as np
 import pandas as pd
 
+from .. import utils
 import atmolib
 from atmolib import constants
 
@@ -135,7 +136,7 @@ class TestWeatherArchive:
         """
 
         hourly = archive.get_hourly_temperature(altitude=altitude)
-        self._verify_temperature_data_series(hourly)
+        utils.verify_temperature_data_series(hourly)
 
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
     def test_tempeature_methods_with_different_units(
@@ -149,8 +150,8 @@ class TestWeatherArchive:
         hourly = archive.get_hourly_temperature(unit=unit)
         daily = archive.get_daily_temperature(unit=unit)
 
-        self._verify_temperature_data_series(hourly)
-        self._verify_temperature_data_series(daily)
+        utils.verify_temperature_data_series(hourly)
+        utils.verify_temperature_data_series(daily)
 
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
     def test_apparent_temperature_methods_with_different_units(
@@ -164,8 +165,8 @@ class TestWeatherArchive:
         hourly = archive.get_hourly_apparent_temperature(unit=unit)
         daily = archive.get_daily_apparent_temperature(unit=unit)
 
-        self._verify_temperature_data_series(hourly)
-        self._verify_temperature_data_series(daily)
+        utils.verify_temperature_data_series(hourly)
+        utils.verify_temperature_data_series(daily)
 
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
     def test_hourly_soil_temperature_method_with_different_units(
@@ -177,7 +178,7 @@ class TestWeatherArchive:
         """
 
         hourly = archive.get_hourly_soil_temperature(unit=unit)
-        self._verify_temperature_data_series(hourly)
+        utils.verify_temperature_data_series(hourly)
 
     @pytest.mark.parametrize("metric", constants.DAILY_WEATHER_STATISTICAL_METRICS)
     def test_daily_temperature_methods_with_different_metrics(
@@ -191,8 +192,8 @@ class TestWeatherArchive:
         temp = archive.get_daily_temperature(metric=metric)
         apparent_temp = archive.get_daily_apparent_temperature(metric=metric)
 
-        self._verify_temperature_data_series(temp)
-        self._verify_temperature_data_series(apparent_temp)
+        utils.verify_temperature_data_series(temp)
+        utils.verify_temperature_data_series(apparent_temp)
 
     # The following block tests precipitation data extraction methods.
 
