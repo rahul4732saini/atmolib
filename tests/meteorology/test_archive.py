@@ -353,38 +353,38 @@ class TestWeatherArchive:
         utils.verify_positive_data_series(hourly)
         assert (hourly <= 100).all()
 
-    @pytest.mark.parametrize("depth", (0, 56, 128, 255))
+    @pytest.mark.parametrize("depth", constants.ARCHIVE_SOIL_DEPTH)
     def test_hourly_soil_moisture_method(
         self, archive: atmolib.WeatherArchive, depth: int
     ) -> None:
         """
-        Tests the hourly soil moisture extractions methods.
+        Test the soil moisture extraction methods with different depth levels.
         """
+
         moisture = archive.get_hourly_soil_moisture(depth=depth)
-        assert isinstance(moisture, pd.Series) and all(moisture.to_numpy() >= 0)
+        utils.verify_positive_data_series(moisture)
 
     def test_daylight_and_sunlight_duration_methods(
         self, archive: atmolib.WeatherArchive
     ) -> None:
         """
-        Tests the `WeatherArchive.get_daily_daylight_duration` and
-        `WeatherArchive.get_sunshine_duration` methods.
+        Tests the daily daylight and sunshine duration extraction methods.
         """
 
         daylight = archive.get_daily_daylight_duration()
         sunshine = archive.get_daily_sunshine_duration()
 
-        assert isinstance(daylight, pd.Series) and isinstance(sunshine, pd.Series)
-        assert all(
-            (daylight.to_numpy() >= 0) & (daylight.to_numpy() <= 86_400)
-        ) and all((sunshine.to_numpy() >= 0) & (sunshine.to_numpy() <= 86_400))
+        utils.verify_positive_data_series(daylight)
+        utils.verify_positive_data_series(sunshine)
+
+        assert (daylight <= 86_400).all()
+        assert (sunshine <= 86_400).all()
 
     def test_sunrise_and_sunset_time_methods(
         self, archive: atmolib.WeatherArchive
     ) -> None:
         """
-        Tests the `WeatherArchive.get_daily_sunrise_time` and
-        `WeatherArchive.get_daily_sunset_time` methods.
+        Tests the daily sunrise and sunset time extraction methods.
         """
 
         sunrise = archive.get_daily_sunrise_time()
@@ -392,9 +392,8 @@ class TestWeatherArchive:
 
         datetime_format = r"%Y-%m-%dT%H:%M"
 
-        assert isinstance(sunrise, pd.Series) and isinstance(sunset, pd.Series)
+        assert isinstance(sunrise, pd.Series)
+        assert isinstance(sunset, pd.Series)
 
-        # Maps the `sunrise` and `sunset` Series to verify
-        # the datetime format of the resultant Series.
-        sunrise.map(lambda x: datetime.strptime(x, datetime_format))
-        sunset.map(lambda x: datetime.strptime(x, datetime_format))
+        for time in pd.concat([sunrise, sunset], ignore_index=True):
+            assert datetime.strptime(time, datetime_format)
