@@ -200,11 +200,8 @@ class TestWeatherArchive:
         hourly = archive.get_hourly_precipitation(unit=unit)
         daily = archive.get_daily_total_precipitation(unit=unit)
 
-        assert isinstance(hourly, pd.Series)
-        assert isinstance(daily, pd.Series)
-
-        assert (hourly >= 0).all()
-        assert (daily >= 0).all()
+        utils.verify_positive_data_series(hourly)
+        utils.verify_positive_data_series(daily)
 
     @pytest.mark.parametrize("unit", constants.PRECIPITATION_UNITS)
     def test_rainfall_methods_with_different_units(
@@ -218,11 +215,8 @@ class TestWeatherArchive:
         hourly = archive.get_hourly_rainfall(unit=unit)
         daily = archive.get_daily_total_rainfall(unit=unit)
 
-        assert isinstance(hourly, pd.Series)
-        assert isinstance(daily, pd.Series)
-
-        assert (hourly >= 0).all()
-        assert (daily >= 0).all()
+        utils.verify_positive_data_series(hourly)
+        utils.verify_positive_data_series(daily)
 
     @pytest.mark.parametrize("level", constants.PRESSURE_LEVELS)
     def test_pressure_methods_with_different_levels(
@@ -234,9 +228,7 @@ class TestWeatherArchive:
         """
 
         hourly = archive.get_hourly_pressure(level=level)
-
-        assert isinstance(hourly, pd.Series)
-        assert (hourly >= 0).all()
+        utils.verify_positive_data_series(hourly)
 
     # The following block tests cloud coverage extraction methods.
 
