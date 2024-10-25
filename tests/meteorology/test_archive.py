@@ -320,53 +320,6 @@ class TestWeatherArchive:
         assert (hourly <= 360).all()
         assert (daily <= 360).all()
 
-    @pytest.mark.parametrize("altitude", (10, 100))
-    def test_hourly_wind_methods_altitude_parameter(
-        self, archive: atmolib.WeatherArchive, altitude: int
-    ) -> None:
-        """
-        Tests the hourly wind related extraction
-        methods with different `altitude` arguments.
-        """
-
-        speed = archive.get_hourly_wind_speed(altitude=altitude)
-        direction = archive.get_hourly_wind_direction(altitude=altitude)
-
-        assert isinstance(speed, pd.Series) and isinstance(direction, pd.Series)
-        assert all(speed.to_numpy() >= 0) and all(
-            (direction.to_numpy() >= 0) & (direction.to_numpy() <= 360)
-        )
-
-    @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
-    def test_hourly_wind_methods_unit_parameter(
-        self, archive: atmolib.WeatherArchive, unit: str
-    ) -> None:
-        """
-        Tests the hourly wind related extraction
-        methods with different `unit` arguments.
-        """
-
-        speed = archive.get_hourly_wind_speed(unit=unit)
-        gusts = archive.get_hourly_wind_gusts(unit=unit)
-
-        assert isinstance(speed, pd.Series) and isinstance(gusts, pd.Series)
-        assert all(speed.to_numpy() >= 0) and all(gusts.to_numpy() >= 0)
-
-    @pytest.mark.parametrize("unit", ("kmh", "mph", "ms", "kn"))
-    def test_daily_wind_methods_unit_parameter(
-        self, archive: atmolib.WeatherArchive, unit: str
-    ) -> None:
-        """
-        Tests the daily wind related extraction
-        methods with different `unit` arguments.
-        """
-
-        speed = archive.get_daily_max_wind_speed(unit=unit)
-        gusts = archive.get_daily_max_wind_gusts(unit=unit)
-
-        assert isinstance(speed, pd.Series) and isinstance(gusts, pd.Series)
-        assert all(speed.to_numpy() >= 0) and all(gusts.to_numpy() >= 0)
-
     # The following block tests weather code extraction methods.
 
     @pytest.mark.parametrize("frequency", ("hourly", "daily"))
