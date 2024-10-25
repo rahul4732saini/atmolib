@@ -214,6 +214,24 @@ class TestWeatherArchive:
         assert (hourly >= 0).all()
         assert (daily >= 0).all()
 
+    @pytest.mark.parametrize("unit", constants.PRECIPITATION_UNITS)
+    def test_rainfall_methods_with_different_units(
+        self, archive: atmolib.WeatherArchive, unit: str
+    ) -> None:
+        """
+        Tests the hourly and daily rainfall extraction
+        methods with different precipitation units.
+        """
+
+        hourly = archive.get_hourly_rainfall(unit=unit)
+        daily = archive.get_daily_total_rainfall(unit=unit)
+
+        assert isinstance(hourly, pd.Series)
+        assert isinstance(daily, pd.Series)
+
+        assert (hourly >= 0).all()
+        assert (daily >= 0).all()
+
     @pytest.mark.parametrize("unit", ("mm", "inch"))
     def test_periodical_precipitation_methods_unit_parameter(
         self, archive: atmolib.WeatherArchive, unit: str
