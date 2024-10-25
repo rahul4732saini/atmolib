@@ -259,11 +259,8 @@ class TestWeather:
         hourly = weather.get_hourly_precipitation_probability()
         daily = weather.get_daily_max_precipitation_probability()
 
-        utils.verify_positive_data_series(hourly)
-        utils.verify_positive_data_series(daily)
-
-        assert (hourly <= 100).all()
-        assert (daily <= 100).all()
+        utils.verify_positive_range_data_series(hourly, 100)
+        utils.verify_positive_range_data_series(daily, 100)
 
     @pytest.mark.parametrize("level", constants.PRESSURE_LEVELS)
     def test_atmospheric_pressure_extraction_methods(
@@ -341,8 +338,8 @@ class TestWeather:
         assert isinstance(current, int | float)
         assert current >= 0
 
-        utils.verify_positive_data_series(hourly)
-        utils.verify_positive_data_series(daily)
+        utils.verify_positive_range_data_series(hourly, 360)
+        utils.verify_positive_range_data_series(daily, 360)
 
     @pytest.mark.parametrize("unit", constants.WIND_SPEED_UNITS)
     def test_winds_gust_methods_with_different_units(
@@ -405,8 +402,7 @@ class TestWeather:
         assert isinstance(current, int | float)
         assert 0 <= current <= 100
 
-        utils.verify_positive_data_series(hourly)
-        assert (hourly <= 100).all()
+        utils.verify_positive_range_data_series(hourly, 100)
 
     @pytest.mark.parametrize("depth", (0, 10, 18, 78, 81))
     def test_hourly_soil_moisture_method(
@@ -448,11 +444,8 @@ class TestWeather:
         daylight = weather.get_daily_daylight_duration()
         sunshine = weather.get_daily_sunshine_duration()
 
-        utils.verify_positive_data_series(daylight)
-        utils.verify_positive_data_series(sunshine)
-
-        assert (daylight <= 86_400).all()
-        assert (sunshine <= 86_400).all()
+        utils.verify_positive_range_data_series(daylight, 86_400)
+        utils.verify_positive_range_data_series(sunshine, 86_400)
 
     def test_sunrise_and_sunset_time_methods(self, weather: atmolib.Weather) -> None:
         """Tests the daily sunrise and sunset time extraction methods."""
