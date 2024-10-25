@@ -262,6 +262,64 @@ class TestWeatherArchive:
         utils.verify_positive_data_series(hourly)
         utils.verify_positive_data_series(daily)
 
+    @pytest.mark.parametrize("altitude", constants.ARCHIVE_WIND_ALTITUDES)
+    def test_wind_speed_methods_with_different_altitudes(
+        self, archive: atmolib.WeatherArchive, altitude: int
+    ) -> None:
+        """
+        Tests the hourly and daily wind speed extraction
+        methods with different altitude levels.
+        """
+
+        hourly = archive.get_hourly_wind_speed(altitude=altitude)
+        daily = archive.get_daily_max_wind_speed()
+
+        utils.verify_positive_data_series(hourly)
+        utils.verify_positive_data_series(daily)
+
+    @pytest.mark.parametrize("unit", constants.WIND_SPEED_UNITS)
+    def test_wind_gusts_methods_with_different_units(
+        self, archive: atmolib.WeatherArchive, unit: str
+    ) -> None:
+        """
+        Tests the wind gusts extraction methods
+        with different wind speed units.
+        """
+
+        hourly = archive.get_hourly_wind_speed(unit=unit)
+        daily = archive.get_daily_max_wind_speed(unit=unit)
+
+        utils.verify_positive_data_series(hourly)
+        utils.verify_positive_data_series(daily)
+
+    @pytest.mark.parametrize("altitude", constants.ARCHIVE_WIND_ALTITUDES)
+    def test_wind_gusts_methods(self, archive: atmolib.WeatherArchive) -> None:
+        """Tests the hourly and daily wind gusts extraction methods."""
+
+        hourly = archive.get_hourly_wind_gusts()
+        daily = archive.get_daily_max_wind_gusts()
+
+        utils.verify_positive_data_series(hourly)
+        utils.verify_positive_data_series(daily)
+
+    @pytest.mark.parametrize("altitude", constants.ARCHIVE_WIND_ALTITUDES)
+    def test_wind_direction_methods_with_different_altitudes(
+        self, archive: atmolib.WeatherArchive, altitude: int
+    ) -> None:
+        """
+        Tests the hourly and daily wind direction extraction
+        methods with different altitude levels.
+        """
+
+        hourly = archive.get_hourly_wind_direction(altitude=altitude)
+        daily = archive.get_daily_dominant_wind_direction()
+
+        utils.verify_positive_data_series(hourly)
+        utils.verify_positive_data_series(daily)
+
+        assert (hourly <= 360).all()
+        assert (daily <= 360).all()
+
     @pytest.mark.parametrize("altitude", (10, 100))
     def test_hourly_wind_methods_altitude_parameter(
         self, archive: atmolib.WeatherArchive, altitude: int
