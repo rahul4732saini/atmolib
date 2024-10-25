@@ -10,6 +10,7 @@ import pytest
 import numpy as np
 import pandas as pd
 
+from .. import utils
 import atmolib
 from atmolib import constants
 
@@ -147,7 +148,7 @@ class TestWeather:
         hourly = weather.get_hourly_temperature(altitude=altitude)
 
         assert isinstance(current, int | float)
-        self._verify_temperature_data_series(hourly)
+        utils.verify_temperature_data_series(hourly)
 
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
     def test_temperature_methods_with_different_units(
@@ -162,7 +163,7 @@ class TestWeather:
         hourly = weather.get_hourly_temperature(unit=unit)
 
         assert isinstance(current, int | float)
-        self._verify_temperature_data_series(hourly)
+        utils.verify_temperature_data_series(hourly)
 
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
     def test_apparent_temperature_methods_with_different_units(
@@ -177,7 +178,7 @@ class TestWeather:
         hourly = weather.get_hourly_apparent_temperature(unit=unit)
 
         assert isinstance(current, int | float)
-        self._verify_temperature_data_series(hourly)
+        utils.verify_temperature_data_series(hourly)
 
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
     def test_hourly_soild_temperature_method_with_different_units(
@@ -189,7 +190,7 @@ class TestWeather:
         """
 
         hourly = weather.get_hourly_soil_temperature(unit=unit)
-        self._verify_temperature_data_series(hourly)
+        utils.verify_temperature_data_series(hourly)
 
     @pytest.mark.parametrize("depth", constants.SOIL_TEMP_DEPTH)
     def test_hourly_soil_temperature_method_with_different_depths(
@@ -201,7 +202,7 @@ class TestWeather:
         """
 
         hourly = weather.get_hourly_soil_temperature(depth=depth)
-        self._verify_temperature_data_series(hourly)
+        utils.verify_temperature_data_series(hourly)
 
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
     def test_daily_temperature_methods_with_different_units(
@@ -212,8 +213,8 @@ class TestWeather:
         with different temperature units.
         """
 
-        self._verify_temperature_data_series(weather.get_daily_temperature(unit=unit))
-        self._verify_temperature_data_series(
+        utils.verify_temperature_data_series(weather.get_daily_temperature(unit=unit))
+        utils.verify_temperature_data_series(
             weather.get_daily_apparent_temperature(unit=unit)
         )
 
@@ -226,10 +227,10 @@ class TestWeather:
         with different weather statistical metrices.
         """
 
-        self._verify_temperature_data_series(
+        utils.verify_temperature_data_series(
             weather.get_daily_temperature(metric=metric)
         )
-        self._verify_temperature_data_series(
+        utils.verify_temperature_data_series(
             weather.get_daily_apparent_temperature(metric=metric)
         )
 
@@ -251,8 +252,8 @@ class TestWeather:
         assert isinstance(current, int | float)
         assert current >= 0
 
-        self._verify_positive_data_series(hourly)
-        self._verify_positive_data_series(daily)
+        utils.verify_positive_data_series(hourly)
+        utils.verify_positive_data_series(daily)
 
     @pytest.mark.parametrize("unit", constants.PRECIPITATION_UNITS)
     def test_rainfall_methods_with_different_units(
@@ -270,8 +271,8 @@ class TestWeather:
         assert isinstance(current, int | float)
         assert current >= 0
 
-        self._verify_positive_data_series(hourly)
-        self._verify_positive_data_series(daily)
+        utils.verify_positive_data_series(hourly)
+        utils.verify_positive_data_series(daily)
 
     def test_precipitation_probability_methods(self, weather: atmolib.Weather) -> None:
         """Tests the hourly and daily precipitation probability extraction methods"""
@@ -279,8 +280,8 @@ class TestWeather:
         hourly = weather.get_hourly_precipitation_probability()
         daily = weather.get_daily_max_precipitation_probability()
 
-        self._verify_positive_data_series(hourly)
-        self._verify_positive_data_series(daily)
+        utils.verify_positive_data_series(hourly)
+        utils.verify_positive_data_series(daily)
 
         assert (hourly <= 100).all()
         assert (daily <= 100).all()
@@ -300,7 +301,7 @@ class TestWeather:
         assert isinstance(current, int | float)
         assert current >= 0
 
-        self._verify_positive_data_series(hourly)
+        utils.verify_positive_data_series(hourly)
 
     # The following block tests cloud coverage data extraction methods.
 
@@ -345,8 +346,8 @@ class TestWeather:
         assert isinstance(current, int | float)
         assert current >= 0
 
-        self._verify_positive_data_series(hourly)
-        self._verify_positive_data_series(daily)
+        utils.verify_positive_data_series(hourly)
+        utils.verify_positive_data_series(daily)
 
     def test_wind_direction_methods(self, weather: atmolib.Weather) -> None:
         """
@@ -361,8 +362,8 @@ class TestWeather:
         assert isinstance(current, int | float)
         assert current >= 0
 
-        self._verify_positive_data_series(hourly)
-        self._verify_positive_data_series(daily)
+        utils.verify_positive_data_series(hourly)
+        utils.verify_positive_data_series(daily)
 
     @pytest.mark.parametrize("unit", constants.WIND_SPEED_UNITS)
     def test_winds_gust_methods_with_different_units(
@@ -380,8 +381,8 @@ class TestWeather:
         assert isinstance(current, int | float)
         assert current >= 0
 
-        self._verify_positive_data_series(hourly)
-        self._verify_positive_data_series(daily)
+        utils.verify_positive_data_series(hourly)
+        utils.verify_positive_data_series(daily)
 
     # The following block tests weather code extraction methods.
 
@@ -425,7 +426,7 @@ class TestWeather:
         assert isinstance(current, int | float)
         assert 0 <= current <= 100
 
-        self._verify_positive_data_series(hourly)
+        utils.verify_positive_data_series(hourly)
         assert (hourly <= 100).all()
 
     @pytest.mark.parametrize("depth", (0, 10, 18, 78, 81))
@@ -435,13 +436,13 @@ class TestWeather:
         """Tests the hourly soil moisture extractions method."""
 
         moisture = weather.get_hourly_soil_moisture(depth=depth)
-        self._verify_positive_data_series(moisture)
+        utils.verify_positive_data_series(moisture)
 
     def test_daily_max_uv_index_method(self, weather: atmolib.Weather) -> None:
         """Tests the daily maximum UV index extraction method."""
 
         uv = weather.get_daily_max_uv_index()
-        self._verify_positive_data_series(uv)
+        utils.verify_positive_data_series(uv)
 
     def test_is_day_or_night_method(self, weather: atmolib.Weather) -> None:
         """Test the boolean day or night extraction method."""
@@ -458,7 +459,7 @@ class TestWeather:
         assert isinstance(current, int | float)
         assert current >= 0
 
-        self._verify_positive_data_series(hourly)
+        utils.verify_positive_data_series(hourly)
 
     def test_daylight_and_sunlight_duration_methods(
         self, weather: atmolib.Weather
@@ -468,8 +469,8 @@ class TestWeather:
         daylight = weather.get_daily_daylight_duration()
         sunshine = weather.get_daily_sunshine_duration()
 
-        self._verify_positive_data_series(daylight)
-        self._verify_positive_data_series(sunshine)
+        utils.verify_positive_data_series(daylight)
+        utils.verify_positive_data_series(sunshine)
 
         assert (daylight <= 86_400).all()
         assert (sunshine <= 86_400).all()
