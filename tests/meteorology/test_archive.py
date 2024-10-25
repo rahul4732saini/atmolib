@@ -232,15 +232,19 @@ class TestWeatherArchive:
         assert (hourly >= 0).all()
         assert (daily >= 0).all()
 
-    @pytest.mark.parametrize("level", ("surface", "sealevel"))
-    def test_hourly_atmospheric_pressure_method(
+    @pytest.mark.parametrize("level", constants.PRESSURE_LEVELS)
+    def test_pressure_methods_with_different_levels(
         self, archive: atmolib.WeatherArchive, level: str
     ) -> None:
         """
-        Tests the `WeatherArchive.get_hourly_pressure` with different `level` arguments.
+        Tests the hourly atmospheric pressure extraction
+        method with different measurement levels.
         """
+
         hourly = archive.get_hourly_pressure(level=level)
-        assert isinstance(hourly, pd.Series) and all(hourly.to_numpy() >= 0)
+
+        assert isinstance(hourly, pd.Series)
+        assert (hourly >= 0).all()
 
     # The following block tests cloud coverage extraction methods.
 
