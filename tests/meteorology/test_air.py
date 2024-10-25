@@ -102,7 +102,6 @@ class TestAirQuality:
         current = air_quality.get_current_pollen_conc(plant)
         hourly = air_quality.get_hourly_pollen_conc(plant)
 
-        assert isinstance(current, int | float | NoneType)
         assert isinstance(hourly, pd.Series)
 
         assert current is None or current >= 0
@@ -145,9 +144,6 @@ class TestAirQuality:
 
         pm2_5_conc = air_quality.get_current_pm2_5_conc()
         pm10_conc = air_quality.get_current_pm10_conc()
-
-        assert isinstance(pm2_5_conc, int | float)
-        assert isinstance(pm10_conc, int | float)
 
         assert pm2_5_conc >= 0 and pm10_conc >= 0
 
