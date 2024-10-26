@@ -70,16 +70,6 @@ class TestWeather:
         assert hourly.columns.tolist() == constants.HOURLY_WEATHER_SUMMARY_LABELS
         assert daily.columns.tolist() == constants.DAILY_WEATHER_SUMMARY_LABELS
 
-    @staticmethod
-    def _verify_cloud_cover_methods(current: int | float, hourly: pd.Series) -> None:
-        """Verifies the current and hourly cloud coverage extraction methods."""
-
-        assert isinstance(current, int | float)
-        assert isinstance(hourly, pd.Series)
-
-        assert 0 <= current <= 100
-        assert ((hourly >= 0) & (hourly <= 100)).all()
-
     # The following block tests summary data extraction methods.
 
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
