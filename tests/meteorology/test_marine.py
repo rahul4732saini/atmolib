@@ -6,6 +6,7 @@ within `atmolib/meteorology/marine.py`.
 import pytest
 import pandas as pd
 
+from .. import utils
 import atmolib
 from atmolib import constants
 
@@ -74,12 +75,9 @@ class TestMarineWeather:
         hourly = marine.get_hourly_wave_height()
         daily = marine.get_daily_max_wave_height()
 
-        assert isinstance(hourly, pd.Series)
-        assert isinstance(daily, pd.Series)
-
         assert current is None or current >= 0
-        assert ((hourly >= 0) | hourly.isna()).all()
-        assert ((daily >= 0) | daily.isna()).all()
+        utils.verify_positive_or_null_data_series(hourly)
+        utils.verify_positive_or_null_data_series(daily)
 
     @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
     def test_wave_direction_extraction_methods(self, wave_type: str) -> None:
@@ -93,12 +91,9 @@ class TestMarineWeather:
         hourly = marine.get_hourly_wave_direction()
         daily = marine.get_daily_dominant_wave_direction()
 
-        assert isinstance(hourly, pd.Series)
-        assert isinstance(daily, pd.Series)
-
         assert current is None or current >= 0
-        assert ((hourly >= 0) | hourly.isna()).all()
-        assert ((daily >= 0) | daily.isna()).all()
+        utils.verify_positive_or_null_data_series(hourly)
+        utils.verify_positive_or_null_data_series(daily)
 
     @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
     def test_wave_period_extraction_methods(self, wave_type: str) -> None:
@@ -112,9 +107,6 @@ class TestMarineWeather:
         hourly = marine.get_hourly_wave_period()
         daily = marine.get_daily_max_wave_period()
 
-        assert isinstance(hourly, pd.Series)
-        assert isinstance(daily, pd.Series)
-
         assert current is None or current >= 0
-        assert ((hourly >= 0) | hourly.isna()).all()
-        assert ((daily >= 0) | daily.isna()).all()
+        utils.verify_positive_or_null_data_series(hourly)
+        utils.verify_positive_or_null_data_series(daily)
