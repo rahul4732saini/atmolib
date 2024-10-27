@@ -129,6 +129,24 @@ class TestAirQuality:
         assert current is None or current >= 0
         utils.verify_positive_or_null_data_series(hourly)
 
+    def test_pm2_5_extraction_methods(self, air_quality: atmolib.AirQuality) -> None:
+        """Tests the particulate matter 2.5 extraction methods."""
+
+        current = air_quality.get_current_pm2_5_conc()
+        hourly = air_quality.get_hourly_pm10_conc()
+
+        assert current >= 0
+        utils.verify_positive_data_series(hourly)
+
+    def test_pm10_extraction_methods(self, air_quality: atmolib.AirQuality) -> None:
+        """Tests the particulate matter 10 extraction methods."""
+
+        current = air_quality.get_current_pm10_conc()
+        hourly = air_quality.get_hourly_pm10_conc()
+
+        assert current >= 0
+        utils.verify_positive_data_series(hourly)
+
     def test_current_particulate_matter_extraction_methods(
         self, air_quality: atmolib.AirQuality
     ) -> None:
