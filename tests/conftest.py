@@ -30,3 +30,8 @@ def cities() -> tuple[str]:
         "los angeles",
         "seoul",
     )
+
+
+@pytest.fixture
+def invalid_city_counts() -> tuple[int | float]:
+    return (21, 0, -1, 2.5, 20.9)
