@@ -60,9 +60,7 @@ class TestAirQuality:
         assert hourly.columns.tolist() == constants.HOURLY_AIR_QUALITY_SUMMARY_PARAMS
 
     @pytest.mark.parametrize("source", constants.AQI_SOURCES)
-    def test_current_aqi_extraction_method(
-        self, air_quality: AirQuality, source: str
-    ) -> None:
+    def test_current_aqi_method(self, air_quality: AirQuality, source: str) -> None:
         """
         Tests the `AirQuality.get_current_aqi` method with different AQI sources.
         """
@@ -73,9 +71,7 @@ class TestAirQuality:
         assert 0 <= aqi <= 500
 
     @pytest.mark.parametrize("gas", constants.GASES)
-    def test_gaseous_conc_extraction_methods(
-        self, air_quality: AirQuality, gas: str
-    ) -> None:
+    def test_gaseous_conc_methods(self, air_quality: AirQuality, gas: str) -> None:
         """Test the gaseous concentration extraction methods."""
 
         current = air_quality.get_current_gaseous_conc(gas)
@@ -85,9 +81,7 @@ class TestAirQuality:
         utils.verify_positive_data_series(hourly)
 
     @pytest.mark.parametrize("plant", constants.PLANTS)
-    def test_pollen_conc_extraction_methods(
-        self, air_quality: AirQuality, plant: str
-    ) -> None:
+    def test_pollen_conc_methods(self, air_quality: AirQuality, plant: str) -> None:
         """Tests the pollen grains concentration extraction methods."""
 
         current = air_quality.get_current_pollen_conc(plant)
@@ -96,7 +90,7 @@ class TestAirQuality:
         assert current is None or current >= 0
         utils.verify_positive_or_null_data_series(hourly)
 
-    def test_dust_conc_extraction_methods(self, air_quality: AirQuality) -> None:
+    def test_dust_conc_methods(self, air_quality: AirQuality) -> None:
         """Tests the dust concentration extraction methods."""
 
         current = air_quality.get_current_dust_conc()
@@ -105,7 +99,7 @@ class TestAirQuality:
         assert current >= 0
         utils.verify_positive_data_series(hourly)
 
-    def test_ammonia_conc_extraction_methods(self, air_quality: AirQuality) -> None:
+    def test_ammonia_conc_methods(self, air_quality: AirQuality) -> None:
         """Tests the ammonia concentration extraction methods."""
 
         current = air_quality.get_current_ammonia_conc()
@@ -114,7 +108,7 @@ class TestAirQuality:
         assert current is None or current >= 0
         utils.verify_positive_or_null_data_series(hourly)
 
-    def test_pm2_5_extraction_methods(self, air_quality: AirQuality) -> None:
+    def test_pm2_5_methods(self, air_quality: AirQuality) -> None:
         """Tests the particulate matter 2.5 extraction methods."""
 
         current = air_quality.get_current_pm2_5_conc()
@@ -123,7 +117,7 @@ class TestAirQuality:
         assert current >= 0
         utils.verify_positive_data_series(hourly)
 
-    def test_pm10_extraction_methods(self, air_quality: AirQuality) -> None:
+    def test_pm10_methods(self, air_quality: AirQuality) -> None:
         """Tests the particulate matter 10 extraction methods."""
 
         current = air_quality.get_current_pm10_conc()
@@ -132,7 +126,7 @@ class TestAirQuality:
         assert current >= 0
         utils.verify_positive_data_series(hourly)
 
-    def test_uv_index_extraction_methods(self, air_quality: AirQuality) -> None:
+    def test_uv_index_methods(self, air_quality: AirQuality) -> None:
         """Tests the UV index extraction methods."""
 
         current = air_quality.get_current_uv_index()
@@ -141,9 +135,7 @@ class TestAirQuality:
         assert current >= 0
         utils.verify_positive_data_series(hourly)
 
-    def test_aerosol_optial_depth_extraction_methods(
-        self, air_quality: AirQuality
-    ) -> None:
+    def test_aerosol_optial_depth_methods(self, air_quality: AirQuality) -> None:
         """Tests the optical depth extraction methods."""
 
         current = air_quality.get_current_aerosol_optical_depth()
