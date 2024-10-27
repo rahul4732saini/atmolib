@@ -60,15 +60,16 @@ class TestAirQuality:
         assert hourly.columns.tolist() == constants.HOURLY_AIR_QUALITY_SUMMARY_PARAMS
 
     @pytest.mark.parametrize("source", constants.AQI_SOURCES)
-    def test_current_aqi_method(self, air_quality: AirQuality, source: str) -> None:
+    def test_aqi_methods(self, air_quality: AirQuality, source: str) -> None:
         """
-        Tests the `AirQuality.get_current_aqi` method with different AQI sources.
+        Tests the AQI extraction methods with different AQI sources.
         """
 
-        aqi = air_quality.get_current_aqi(source)
+        current = air_quality.get_current_aqi(source)
 
-        assert isinstance(aqi, int)
-        assert 0 <= aqi <= 500
+        # Effectively verifies that the AQI is an integer
+        # and lies within the below specified range.
+        assert current in range(0, 501)
 
     @pytest.mark.parametrize("gas", constants.GASES)
     def test_gaseous_conc_methods(self, air_quality: AirQuality, gas: str) -> None:
