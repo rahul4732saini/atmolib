@@ -31,16 +31,18 @@ def test_get_elevation_function_with_invalid_coordinates(
             tools.get_elevation(lat, long)
 
 
-def test_city_details_function() -> None:
+def test_city_details_function(cities: tuple[str]) -> None:
     """
     Tests the `atmolib.tools.get_city_details` function with different city names.
     """
 
-    for city in ("delhi", "moscow", "tokyo", "los angeles", "seoul"):
+    for city in cities:
         assert isinstance(tools.get_city_details(city), list)
 
 
-def test_city_details_function_with_invalid_count() -> None:
+def test_city_details_function_with_invalid_count(
+    invalid_city_counts: tuple[int | float],
+) -> None:
     """
     Tests the `atmolib.tools.get_city_details` function
     with invalid result count arguments.
@@ -49,5 +51,5 @@ def test_city_details_function_with_invalid_count() -> None:
     with pytest.raises(ValueError):
 
         # Expects a ValueError with invalid `count` argument.
-        for city, count in (("delhi", 21), ("washington", 0), ("moscow", -10)):
-            tools.get_city_details(city, count)
+        for count in invalid_city_counts:
+            tools.get_city_details("delhi", count)
