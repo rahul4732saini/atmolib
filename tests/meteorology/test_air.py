@@ -1,6 +1,6 @@
 """
 Tests the classes and methods defined
-within `atmolib/meteorology/air.py`.
+within atmolib/meteorology/air.py.
 """
 
 import pytest
@@ -43,8 +43,8 @@ class TestAirQuality:
             for lat, long in invalid_coordinates:
                 atmolib.AirQuality(lat, long)
 
-            # Expects an ValueError upon initialization with
-            # invalid `forecast_days` argument.
+            # Expects an ValueError upon initialization
+            # with invalid forecast days specifications.
             for days in (0, -1, 9):
                 atmolib.AirQuality(0, 0, forecast_days=days)
 
@@ -80,7 +80,7 @@ class TestAirQuality:
         self, air_quality: atmolib.AirQuality, gas: str
     ) -> None:
         """
-        Test the current and hourly gaseous concentration extraction methods.
+        Test the gaseous concentration extraction methods.
         """
 
         current = air_quality.get_current_gaseous_conc(gas)
@@ -94,7 +94,7 @@ class TestAirQuality:
         self, air_quality: atmolib.AirQuality, plant: str
     ) -> None:
         """
-        Tests the current and hourly pollen grains concentration extraction methods.
+        Tests the pollen grains concentration extraction methods.
         """
 
         current = air_quality.get_current_pollen_conc(plant)
@@ -107,7 +107,7 @@ class TestAirQuality:
         self, air_quality: atmolib.AirQuality
     ) -> None:
         """
-        Tests the current and hourly dust concentration extraction methods.
+        Tests the dust concentration extraction methods.
         """
 
         current = air_quality.get_current_dust_conc()
@@ -120,7 +120,7 @@ class TestAirQuality:
         self, air_quality: atmolib.AirQuality
     ) -> None:
         """
-        Tests the current and hourly ammonia concentration extraction methods.
+        Tests the ammonia concentration extraction methods.
         """
 
         current = air_quality.get_current_ammonia_conc()
@@ -156,7 +156,7 @@ class TestAirQuality:
 
     def test_uv_index_extraction_methods(self, air_quality: atmolib.AirQuality) -> None:
         """
-        Tests the current and hourly UV index extraction methods.
+        Tests the UV index extraction methods.
         """
 
         current = air_quality.get_current_uv_index()
@@ -168,7 +168,7 @@ class TestAirQuality:
     def test_aerosol_optial_depth_extraction_methods(
         self, air_quality: atmolib.AirQuality
     ) -> None:
-        "Tests the current and hourly optical depth extraction methods."
+        "Tests the optical depth extraction methods."
 
         current = air_quality.get_current_aerosol_optical_depth()
         hourly = air_quality.get_hourly_aerosol_optical_depth()
