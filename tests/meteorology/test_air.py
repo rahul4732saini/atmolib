@@ -12,9 +12,7 @@ from atmolib import constants
 
 
 class TestAirQuality:
-    """
-    Tests the `atmolib.AirQuality` class and its defined methods.
-    """
+    """Tests the `atmolib.AirQuality` class and its defined methods."""
 
     def test_object_initialization(
         self, valid_coordinates: tuple[tuple[float, float], ...]
@@ -79,9 +77,7 @@ class TestAirQuality:
     def test_gaseous_conc_extraction_methods(
         self, air_quality: atmolib.AirQuality, gas: str
     ) -> None:
-        """
-        Test the gaseous concentration extraction methods.
-        """
+        """Test the gaseous concentration extraction methods."""
 
         current = air_quality.get_current_gaseous_conc(gas)
         hourly = air_quality.get_hourly_gaseous_conc(gas)
@@ -93,9 +89,7 @@ class TestAirQuality:
     def test_pollen_conc_extraction_methods(
         self, air_quality: atmolib.AirQuality, plant: str
     ) -> None:
-        """
-        Tests the pollen grains concentration extraction methods.
-        """
+        """Tests the pollen grains concentration extraction methods."""
 
         current = air_quality.get_current_pollen_conc(plant)
         hourly = air_quality.get_hourly_pollen_conc(plant)
@@ -106,9 +100,7 @@ class TestAirQuality:
     def test_dust_conc_extraction_methods(
         self, air_quality: atmolib.AirQuality
     ) -> None:
-        """
-        Tests the dust concentration extraction methods.
-        """
+        """Tests the dust concentration extraction methods."""
 
         current = air_quality.get_current_dust_conc()
         hourly = air_quality.get_hourly_dust_conc()
@@ -119,9 +111,7 @@ class TestAirQuality:
     def test_ammonia_conc_extraction_methods(
         self, air_quality: atmolib.AirQuality
     ) -> None:
-        """
-        Tests the ammonia concentration extraction methods.
-        """
+        """Tests the ammonia concentration extraction methods."""
 
         current = air_quality.get_current_ammonia_conc()
         hourly = air_quality.get_hourly_ammonia_conc()
@@ -148,9 +138,7 @@ class TestAirQuality:
         utils.verify_positive_data_series(hourly)
 
     def test_uv_index_extraction_methods(self, air_quality: atmolib.AirQuality) -> None:
-        """
-        Tests the UV index extraction methods.
-        """
+        """Tests the UV index extraction methods."""
 
         current = air_quality.get_current_uv_index()
         hourly = air_quality.get_hourly_uv_index()
@@ -161,7 +149,7 @@ class TestAirQuality:
     def test_aerosol_optial_depth_extraction_methods(
         self, air_quality: atmolib.AirQuality
     ) -> None:
-        "Tests the optical depth extraction methods."
+        """Tests the optical depth extraction methods."""
 
         current = air_quality.get_current_aerosol_optical_depth()
         hourly = air_quality.get_hourly_aerosol_optical_depth()
