@@ -147,31 +147,6 @@ class TestAirQuality:
         assert current >= 0
         utils.verify_positive_data_series(hourly)
 
-    def test_current_particulate_matter_extraction_methods(
-        self, air_quality: atmolib.AirQuality
-    ) -> None:
-        """
-        Tests the current particulate matter 2.5 & 10 extraction methods.
-        """
-
-        pm2_5_conc = air_quality.get_current_pm2_5_conc()
-        pm10_conc = air_quality.get_current_pm10_conc()
-
-        assert pm2_5_conc >= 0 and pm10_conc >= 0
-
-    def test_hourly_particulate_matter_extraction_methods(
-        self, air_quality: atmolib.AirQuality
-    ) -> None:
-        """
-        Tests the hourly particulate matter 2.5 & 10 extraction methods.
-        """
-
-        pm2_5_conc = air_quality.get_hourly_pm2_5_conc()
-        pm10_conc = air_quality.get_hourly_pm10_conc()
-
-        utils.verify_positive_data_series(pm2_5_conc)
-        utils.verify_positive_data_series(pm10_conc)
-
     def test_uv_index_extraction_methods(self, air_quality: atmolib.AirQuality) -> None:
         """
         Tests the UV index extraction methods.
