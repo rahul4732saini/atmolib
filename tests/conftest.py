@@ -19,3 +19,14 @@ def invalid_coordinates() -> tuple[tuple[float, float], ...]:
         (90.1, 154.44),
         (75.54, 180.1),
     )
+
+
+@pytest.fixture
+def cities() -> tuple[str]:
+    return (
+        "delhi",
+        "moscow",
+        "tokyo",
+        "los angeles",
+        "seoul",
+    )
