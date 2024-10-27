@@ -23,7 +23,7 @@ class TestAirQuality:
         for lat, long in valid_coordinates:
             AirQuality(lat, long)
 
-        # Tests the object initialization with different `forecast_days` arguments.
+        # Tests the object initialization with different forecast days.
         for days in (1, 4, 7):
             AirQuality(0, 0, forecast_days=days)
 
@@ -61,9 +61,7 @@ class TestAirQuality:
 
     @pytest.mark.parametrize("source", constants.AQI_SOURCES)
     def test_aqi_methods(self, air_quality: AirQuality, source: str) -> None:
-        """
-        Tests the AQI extraction methods with different AQI sources.
-        """
+        """Tests the AQI extraction methods with different AQI sources."""
 
         current = air_quality.get_current_aqi(source)
 
