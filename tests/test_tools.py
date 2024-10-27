@@ -45,11 +45,11 @@ def test_city_details_function_with_invalid_count(
 ) -> None:
     """
     Tests the `atmolib.tools.get_city_details` function
-    with invalid result count arguments.
+    with invalid city count arguments.
     """
 
     with pytest.raises(ValueError):
 
-        # Expects a ValueError with invalid `count` argument.
+        # Expects a ValueError with invalid city count arguments.
         for count in invalid_city_counts:
             tools.get_city_details("delhi", count)
