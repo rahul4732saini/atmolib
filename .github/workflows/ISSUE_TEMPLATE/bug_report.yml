@@ -1,0 +1,69 @@
+name: Bug report
+description: Report a bug in atmolib
+labels: ["bug"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Thank you for taking the time to report a bug!**  
+        Please follow the steps below to ensure we can reproduce and address the issue effectively.
+
+  - type: checkboxes
+    id: preliminary_checks
+    attributes:
+      label: "Preliminary Checks"
+      description: "Please confirm the following:"
+      options:
+        - label: "I have upgraded to the latest version of atmolib."
+        - label: "I have searched the issues section and this issue does not already exist."
+
+  - type: textarea
+    id: bug_description
+    attributes:
+      label: "Describe the Bug"
+      description: "Provide a concise description of the bug. What did you expect to happen, and what actually happened?"
+      placeholder: "Describe the bug here..."
+
+  - type: textarea
+    id: reproduction_steps
+    attributes:
+      label: "Code to Reproduce"
+      description: "Provide a minimal code example that reproduces the issue. Format as Python code for easy copying and testing."
+      value: |
+        ```python
+        # Example code that reproduces the bug
+        ```
+
+  - type: textarea
+    id: error_traceback
+    attributes:
+      label: "Error Traceback (if applicable)"
+      description: "Include the full error traceback if an error is raised."
+      placeholder: "Paste the traceback here..."
+
+  - type: input
+    id: atmolib_version
+    attributes:
+      label: "atmolib Version"
+      description: "Confirm the version of atmolib you are using."
+      placeholder: "e.g., 1.0.0"
+
+  - type: input
+    id: python_version
+    attributes:
+      label: "Python Version"
+      description: "Confirm the Python version you are using."
+      placeholder: "e.g., 3.9.7"
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: "Operating System"
+      description: "Select the OS where the issue occurs."
+      options:
+        - Windows
+        - macOS
+        - Linux
+        - BSD
+        - Other
