@@ -10,7 +10,7 @@ def test_get_elevation_function_with_valid_coordinates(
     valid_coordinates: tuple[tuple[float, float], ...]
 ) -> None:
     """
-    Tests the `tools.get_elevation` function with valid coorindates.
+    Tests the `tools.get_elevation` function with valid coordinates.
     """
 
     for lat, long in valid_coordinates:

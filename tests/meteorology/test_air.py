@@ -36,7 +36,7 @@ class TestAirQuality:
 
         with pytest.raises(ValueError):
 
-            # Expects an ValueError upon initialization with invalid coorindates.
+            # Expects an ValueError upon initialization with invalid coordinates.
             for lat, long in invalid_coordinates:
                 AirQuality(lat, long)
 
@@ -133,7 +133,7 @@ class TestAirQuality:
         assert current >= 0
         utils.verify_positive_data_series(hourly)
 
-    def test_aerosol_optial_depth_methods(self, air_quality: AirQuality) -> None:
+    def test_aerosol_optical_depth_methods(self, air_quality: AirQuality) -> None:
         """Tests the optical depth extraction methods."""
 
         current = air_quality.get_current_aerosol_optical_depth()
