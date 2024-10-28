@@ -41,8 +41,7 @@ class TestMarineWeather:
 
         with pytest.raises(ValueError):
 
-            # Expects a ValueError upon initialization
-            # with invalid forecast days specifications.
+            # Expects a ValueError upon initialization with invalid forecast day.
             for days in (0, -1, 9):
                 atmolib.MarineWeather(0, 0, forecast_days=days)
 

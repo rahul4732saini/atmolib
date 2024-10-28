@@ -1,6 +1,6 @@
 """
 Tests the classes and methods defined
-within `atmolib/meteorology/weather.py`.
+within atmolib/meteorology/weather.py.
 """
 
 from datetime import datetime
@@ -49,13 +49,14 @@ class TestWeather:
             for days in (0, -1, 17):
                 atmolib.Weather(0, 0, days)
 
+    # The following block comprises test verification methods.
+
     @staticmethod
     def _verify_summary_methods(
         weather: atmolib.Weather, params: dict[str, Any]
     ) -> None:
         """
-        Verifies the current, hourly, and daily summary
-        extraction methods with the specified parameters.
+        Verifies the summary extraction methods with the specified parameters.
         """
 
         current = weather.get_current_summary(**params)
@@ -77,8 +78,8 @@ class TestWeather:
         self, weather: atmolib.Weather, unit: str
     ) -> None:
         """
-        Test the current, hourly, and daily weather summary
-        extraction methods with different temperature units.
+        Test the weather summary extraction methods
+        with different temperature units.
         """
         self._verify_summary_methods(weather, {"temperature_unit": unit})
 
@@ -87,8 +88,8 @@ class TestWeather:
         self, weather: atmolib.Weather, unit: str
     ) -> None:
         """
-        Test the current, hourly, and daily weather summary
-        extraction methods with different precipitation units.
+        Test the weather summary extraction methods
+        with different precipitation units.
         """
         self._verify_summary_methods(weather, {"precipitation_unit": unit})
 
@@ -97,8 +98,8 @@ class TestWeather:
         self, weather: atmolib.Weather, unit: str
     ) -> None:
         """
-        Test the current, hourly, and daily weather summary
-        extraction methods with different wind speed units.
+        Test the weather summary extraction methods
+        with different wind speed units.
         """
         self._verify_summary_methods(weather, {"wind_speed_unit": unit})
 
@@ -109,8 +110,8 @@ class TestWeather:
         self, weather: atmolib.Weather, altitude: int
     ) -> None:
         """
-        Tests the current and hourly temperature extraction
-        methods with different altitudes levels.
+        Tests the temperature extraction methods
+        with different altitudes levels.
         """
 
         current = weather.get_current_temperature(altitude=altitude)
@@ -124,8 +125,8 @@ class TestWeather:
         self, weather: atmolib.Weather, unit: str
     ) -> None:
         """
-        Tests the current and hourly temperature extraction
-        methods with different temperature units.
+        Tests the temperature extraction methods
+        with different temperature units.
         """
 
         current = weather.get_current_temperature(unit=unit)
@@ -139,8 +140,8 @@ class TestWeather:
         self, weather: atmolib.Weather, unit: str
     ) -> None:
         """
-        Tests the current and hourly apparent temperature
-        extraction methods with different temperature units.
+        Tests the apparent temperature extraction
+        methods with different temperature units.
         """
 
         current = weather.get_current_apparent_temperature(unit=unit)
@@ -154,8 +155,8 @@ class TestWeather:
         self, weather: atmolib.Weather, unit: str
     ) -> None:
         """
-        Tests the hourly soil temperature extraction
-        method with different temperture units.
+        Tests the soil temperature extraction
+        methods with different temperture units.
         """
 
         hourly = weather.get_hourly_soil_temperature(unit=unit)
@@ -166,8 +167,8 @@ class TestWeather:
         self, weather: atmolib.Weather, depth: int
     ) -> None:
         """
-        Tests the hourly soil temperature extraction
-        method with different soil depths.
+        Tests the soil temperature extraction
+        methods with different soil depths.
         """
 
         hourly = weather.get_hourly_soil_temperature(depth=depth)

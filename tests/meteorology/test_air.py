@@ -40,8 +40,7 @@ class TestAirQuality:
             for lat, long in invalid_coordinates:
                 AirQuality(lat, long)
 
-            # Expects a ValueError upon initialization
-            # with invalid forecast days specifications.
+            # Expects a ValueError upon initialization with invalid forecast days.
             for days in (0, -1, 9):
                 AirQuality(0, 0, forecast_days=days)
 
