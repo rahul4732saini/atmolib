@@ -148,9 +148,12 @@ class TestWeather:
         """
 
         current = weather.get_current_apparent_temperature(unit=unit)
+        daily = weather.get_daily_apparent_temperature(unit=unit)
         hourly = weather.get_hourly_apparent_temperature(unit=unit)
 
         assert isinstance(current, int | float)
+
+        utils.verify_temperature_data_series(daily)
         utils.verify_temperature_data_series(hourly)
 
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
