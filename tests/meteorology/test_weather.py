@@ -151,7 +151,7 @@ class TestWeather:
         utils.verify_temperature_data_series(hourly)
 
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
-    def test_hourly_soild_temperature_method_with_different_units(
+    def test_soil_temperature_methods_with_different_units(
         self, weather: atmolib.Weather, unit: str
     ) -> None:
         """
@@ -163,7 +163,7 @@ class TestWeather:
         utils.verify_temperature_data_series(hourly)
 
     @pytest.mark.parametrize("depth", constants.SOIL_TEMP_DEPTH)
-    def test_hourly_soil_temperature_method_with_different_depths(
+    def test_soil_temperature_methods_with_different_depths(
         self, weather: atmolib.Weather, depth: int
     ) -> None:
         """
