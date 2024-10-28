@@ -372,9 +372,7 @@ class TestWeather:
         utils.verify_positive_range_data_series(hourly, 100)
 
     @pytest.mark.parametrize("depth", (0, 10, 18, 78, 81))
-    def test_hourly_soil_moisture_method(
-        self, weather: atmolib.Weather, depth: int
-    ) -> None:
+    def test_soil_moisture_methods(self, weather: atmolib.Weather, depth: int) -> None:
         """Tests the soil moisture extraction methods."""
 
         moisture = weather.get_hourly_soil_moisture(depth=depth)
