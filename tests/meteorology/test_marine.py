@@ -7,49 +7,47 @@ import pytest
 import pandas as pd
 
 from .. import utils
-import atmolib
-from atmolib import constants
+from atmolib import MarineWeather, constants
 
 
 class TestMarineWeather:
     """
-    Tests the `atmolib.MarineWeather` class and its defined methods.
+    Tests the `MarineWeather` class and its defined methods.
     """
 
     def test_object_initialization(
         self, valid_marine_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
         """
-        Test the `atmolib.MarineWeather` object initialization with valid parameters.
+        Test the `MarineWeather` object initialization with valid parameters.
         """
 
         for lat, long in valid_marine_coordinates:
-            atmolib.MarineWeather(lat, long)
+            MarineWeather(lat, long)
 
     @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
     def test_object_intialization_wave_type_parameter(self, wave_type: str) -> None:
         """
-        Tests the `atmolib.MarineWeather` object
-        initialization with different wave types.
+        Tests the `MarineWeather` object initialization with different wave types.
         """
-        atmolib.MarineWeather(0, 0, wave_type)
+        MarineWeather(0, 0, wave_type)
 
     def test_object_initialization_with_invalid_parameters(self) -> None:
         """
-        Tests the `atmolib.MarineWeather` object initialization with invalid parameters.
+        Tests the `MarineWeather` object initialization with invalid parameters.
         """
 
         with pytest.raises(ValueError):
 
             # Expects a ValueError upon initialization with invalid forecast day.
             for days in (0, -1, 9):
-                atmolib.MarineWeather(0, 0, forecast_days=days)
+                MarineWeather(0, 0, forecast_days=days)
 
     @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
     def test_marine_weather_summary_methods(self, wave_type: str) -> None:
         """Test the marine weather summary extraction methods."""
 
-        marine_weather = atmolib.MarineWeather(0, 0, wave_type, forecast_days=2)
+        marine_weather = MarineWeather(0, 0, wave_type, forecast_days=2)
 
         current = marine_weather.get_current_summary()
         daily = marine_weather.get_daily_summary()
@@ -69,7 +67,7 @@ class TestMarineWeather:
     def test_wave_height_methods(self, wave_type: str) -> None:
         """Tests the wave height extraction methods."""
 
-        marine = atmolib.MarineWeather(0, 0, wave_type, forecast_days=2)
+        marine = MarineWeather(0, 0, wave_type, forecast_days=2)
 
         current = marine.get_current_wave_height()
         hourly = marine.get_hourly_wave_height()
@@ -83,7 +81,7 @@ class TestMarineWeather:
     def test_wave_direction_methods(self, wave_type: str) -> None:
         """Tests the wave direction extraction methods."""
 
-        marine = atmolib.MarineWeather(0, 0, wave_type, forecast_days=2)
+        marine = MarineWeather(0, 0, wave_type, forecast_days=2)
 
         current = marine.get_current_wave_direction()
         hourly = marine.get_hourly_wave_direction()
@@ -97,7 +95,7 @@ class TestMarineWeather:
     def test_wave_period_methods(self, wave_type: str) -> None:
         """Tests the wave period extraction methods."""
 
-        marine = atmolib.MarineWeather(0, 0, wave_type, forecast_days=2)
+        marine = MarineWeather(0, 0, wave_type, forecast_days=2)
 
         current = marine.get_current_wave_period()
         hourly = marine.get_hourly_wave_period()
