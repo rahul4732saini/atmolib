@@ -51,15 +51,17 @@ class TestWeatherArchive:
                 )
 
             # Expects a ValueError upon initialization with
-            # invalid state end date for the archive data.
+            # invalid start and end date for the archive data.
             for start, end in invalid_archive_dates:
                 WeatherArchive(0, 0, start, end)
+
+    # The following block comprises test verification methods.
 
     @staticmethod
     def _verify_summary_methods(
         archive: WeatherArchive, params: dict[str, Any]
     ) -> None:
-        """Verifies the hourly anda daily summary extraction methods."""
+        """Verifies the summary extraction methods."""
 
         hourly = archive.get_hourly_summary(**params)
         daily = archive.get_daily_summary(**params)
@@ -77,8 +79,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, unit: str
     ) -> None:
         """
-        Tests the hourly and daily summary extraction
-        methods with different temperature units.
+        Tests the summary extraction methods
+        with different temperature units.
         """
         self._verify_summary_methods(archive, {"temperature_unit": unit})
 
@@ -87,8 +89,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, unit: str
     ) -> None:
         """
-        Tests the hourly and daily summary extraction
-        methods with different precipitation units.
+        Tests the summary extraction methods
+        with different precipitation units.
         """
         self._verify_summary_methods(archive, {"precipitation_unit": unit})
 
@@ -97,8 +99,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, unit: str
     ) -> None:
         """
-        Tests the hourly and daily summary extraction
-        methods with different wind speed units.
+        Tests the summary extraction methods
+        with different wind speed units.
         """
         self._verify_summary_methods(archive, {"wind_speed_unit": unit})
 
@@ -109,7 +111,7 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, altitude: int
     ) -> None:
         """
-        Tests the hourly temperature data extraction
+        Tests the temperature data extraction
         method with different atltitude levels.
         """
 
@@ -121,8 +123,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, unit: str
     ) -> None:
         """
-        Tests the hourly and daily temperature extraction
-        methods with different temperature units.
+        Tests the temperature extraction methods
+        with different temperature units.
         """
 
         hourly = archive.get_hourly_temperature(unit=unit)
@@ -136,8 +138,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, unit: str
     ) -> None:
         """
-        Tests the hourly and daily apparent temperature
-        extraction methods with different temperature units.
+        Tests the apparent temperature extraction
+        methods with different temperature units.
         """
 
         hourly = archive.get_hourly_apparent_temperature(unit=unit)
@@ -151,7 +153,7 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, unit: str
     ) -> None:
         """
-        Tests the hourly soil temperature extraction
+        Tests the soil temperature extraction
         method with different temperature units.
         """
 
