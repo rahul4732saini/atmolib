@@ -200,9 +200,7 @@ class AirQuality(BaseForecast):
         return self._get_current_data({"current": f"{plant}_pollen"})
 
     def get_current_uv_index(self) -> int | float:
-        """
-        Extracts current Ultra-Violet(UV) radiation index.
-        """
+        """Extracts current Ultra-Violet(UV) radiation index."""
         return self._get_current_data({"current": "uv_index"})
 
     def get_current_aerosol_optical_depth(self) -> int | float:
@@ -227,9 +225,7 @@ class AirQuality(BaseForecast):
         return self._get_periodical_data({"hourly": "dust"})
 
     def get_hourly_uv_index(self) -> pd.Series:
-        """
-        Extracts hourly Ultra-Violet(UV) radiation index data.
-        """
+        """Extracts hourly Ultra-Violet(UV) radiation index data."""
         return self._get_periodical_data({"hourly": "uv_index"})
 
     def get_hourly_pm2_5_conc(self) -> pd.Series:
