@@ -189,12 +189,11 @@ class TestWeather:
         with different weather statistical metrices.
         """
 
-        utils.verify_temperature_data_series(
-            weather.get_daily_temperature(metric=metric)
-        )
-        utils.verify_temperature_data_series(
-            weather.get_daily_apparent_temperature(metric=metric)
-        )
+        temp = weather.get_daily_temperature(metric=metric)
+        apparent_temp = weather.get_daily_apparent_temperature(metric=metric)
+
+        utils.verify_temperature_data_series(temp)
+        utils.verify_temperature_data_series(apparent_temp)
 
     # The following block tests precipitation and pressure data extraction methods.
 
