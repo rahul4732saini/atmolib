@@ -1,6 +1,6 @@
 # Security Policy
 
-Thank you for your interest in the security of AtmoLib! We are committed to maintaining the security and privacy of our users. This document outlines our security policies and how you can report vulnerabilities responsibly.
+Thank you for your interest in the security of atmoLib! We are committed to maintaining the security and privacy of our users. This document outlines our security policies and how you can report vulnerabilities responsibly.
 
 ## Supported Versions
 
@@ -37,4 +37,4 @@ Upon receiving a report, we aim to:
 
 We will document any security patches in the repository's changelog, and contributors are encouraged to keep their dependencies up-to-date to ensure security compliance.
 
-Thank you for helping us keep AtmoLib secure!
+Thank you for helping us keep atmoLib secure!
