@@ -255,9 +255,7 @@ class Weather(BaseForecast, BaseWeather):
         return weather_code, description
 
     def get_current_total_cloud_cover(self) -> int | float:
-        """
-        Extracts current total cloud cover percentage(%).
-        """
+        """Extracts current total cloud cover percentage(%)."""
         return self._get_current_data({"current": "cloud_cover"})
 
     def get_current_cloud_cover(self, level: str = "low") -> int | float:
@@ -398,8 +396,7 @@ class Weather(BaseForecast, BaseWeather):
 
     def get_current_rainfall(self, unit: str = "mm") -> int | float:
         """
-        Extracts the current rainfall in
-        the specified precipitation unit.
+        Extracts the current rainfall in the specified precipitation unit.
 
         #### Params:
         - unit: Precipitation unit; must be `mm` or `inch`. Defaults to `mm`.
@@ -408,15 +405,11 @@ class Weather(BaseForecast, BaseWeather):
         return self._get_current_data({"current": "rain", "precipitation_unit": unit})
 
     def get_current_snowfall(self) -> int | float:
-        """
-        Extracts current snowfall in centimeters(m).
-        """
+        """Extracts current snowfall in centimeters(m)."""
         return self._get_current_data({"current": "snowfall"})
 
     def get_current_visibility(self) -> int | float:
-        """
-        Extracts current visibility in meters(m).
-        """
+        """Extracts current visibility in meters(m)."""
         return self._get_current_data({"current": "visibility"})
 
     def is_day_or_night(self) -> int:
@@ -427,15 +420,12 @@ class Weather(BaseForecast, BaseWeather):
         return int(self._get_current_data({"current": "is_day"}))
 
     def get_hourly_visibility(self) -> pd.Series:
-        """
-        Extracts hourly visibility data in meters(m).
-        """
+        """Extracts hourly visibility data in meters(m)."""
         return self._get_periodical_data({"hourly": "visibility"}, dtype=np.int32)
 
     def get_hourly_precipitation_probability(self) -> pd.Series:
         """
-        Extracts hourly precipitation (rain
-        + showers + snowfall) percentage(%).
+        Extracts hourly precipitation (rain + showers + snowfall) percentage(%).
         """
         return self._get_periodical_data({"hourly": "precipitation_probability"})
 
@@ -469,7 +459,7 @@ class Weather(BaseForecast, BaseWeather):
 
         #### Params:
         - altitude (int): Altitude from the ground level;
-        must be 10, 80, 120 or 180. Defaults to 10.
+        must be 10, 80, 120 or 180. Defaults to 10. Defaults to 10.
         """
         self._verify_wind_altitude(altitude)
         return self._get_periodical_data({"hourly": f"wind_direction_{altitude}m"})
@@ -482,13 +472,15 @@ class Weather(BaseForecast, BaseWeather):
         the specified depth and coordinates in the specified unit.
 
         #### Params:
-        - depth: Depth below the ground level at which soil temperature data is
-        desired to be extracted in centimeters(cm); must be 0, 6, 18 or 54.
+        - depth: Depth below the ground level at which soil temperature
+        data is desired to be extracted in centimeters(cm); must be 0, 6,
+        18 or 54. Defaults to 0.
         - unit (str): Temperature unit; must be 'celsius' or 'fahrenheit'.
+        Defaults to `celsius`.
         """
 
-        if depth not in (0, 6, 18, 54):
-            raise ValueError(f"Expected `depth` to be 0, 6, 18 or 54; got {depth}.")
+        if depth not in constants.SOIL_TEMP_DEPTH:
+            raise ValueError(f"Invalid depth value specified: {depth}.")
 
         self._verify_temperature_unit(unit)
 
@@ -504,22 +496,20 @@ class Weather(BaseForecast, BaseWeather):
         #### Params:
         - depth (int): Desired depth of the soil moisture data within the ground level in
         centimeters(m). Moisture data is extracted as a part of a range of depth. Available
-        depth ranges are 0-1cm, 1-3cmd, 3-9cm, 9-27cm, 27-81cm. The supplied depth must fall
-        in the range of 0 and 81.
+        depth ranges are 0-1cm, 1-3cm, 3-9cm, 9-27cm, 27-81cm. The supplied depth must fall
+        in the range of 0 and 81. Defaults to 7.
         """
 
         for key, value in constants.SOIL_MOISTURE_DEPTH.items():
             if depth in key:
 
-                # The range is represented in a string format as being
-                # a supported type for requesting the API.
+                # The range is represented in a string format as
+                # being a supported type for requesting the API.
                 depth_range: str = value
                 break
 
         else:
-            raise ValueError(
-                f"Expected `depth` to be in the range of 0 and 81; got {depth}."
-            )
+            raise ValueError(f"Invalid depth value specified: {depth}")
 
         return self._get_periodical_data({"hourly": f"soil_moisture_{depth_range}cm"})
 
