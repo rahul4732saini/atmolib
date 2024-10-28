@@ -66,7 +66,7 @@ class TestMarineWeather:
         assert daily.columns.tolist() == constants.MARINE_WEATHER_SUMMARY_PARAMS
 
     @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
-    def test_wave_height_extraction_methods(self, wave_type: str) -> None:
+    def test_wave_height_methods(self, wave_type: str) -> None:
         """Tests the wave height extraction methods."""
 
         marine = atmolib.MarineWeather(0, 0, wave_type, forecast_days=2)
@@ -80,7 +80,7 @@ class TestMarineWeather:
         utils.verify_positive_or_null_data_series(daily)
 
     @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
-    def test_wave_direction_extraction_methods(self, wave_type: str) -> None:
+    def test_wave_direction_methods(self, wave_type: str) -> None:
         """Tests the wave direction extraction methods."""
 
         marine = atmolib.MarineWeather(0, 0, wave_type, forecast_days=2)
@@ -94,7 +94,7 @@ class TestMarineWeather:
         utils.verify_positive_or_null_data_series(daily)
 
     @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
-    def test_wave_period_extraction_methods(self, wave_type: str) -> None:
+    def test_wave_period_methods(self, wave_type: str) -> None:
         """Tests the wave period extraction methods."""
 
         marine = atmolib.MarineWeather(0, 0, wave_type, forecast_days=2)
