@@ -107,12 +107,12 @@ class TestWeatherArchive:
     # The following block tests temperature data extraction methods.
 
     @pytest.mark.parametrize("altitude", constants.TEMPERATURE_ALTITUDES)
-    def test_hourly_temperature_method_with_different_altitudes(
+    def test_temperature_methods_with_different_altitudes(
         self, archive: WeatherArchive, altitude: int
     ) -> None:
         """
         Tests the temperature data extraction
-        method with different atltitude levels.
+        methods with different atltitude levels.
         """
 
         hourly = archive.get_hourly_temperature(altitude=altitude)
@@ -149,12 +149,12 @@ class TestWeatherArchive:
         utils.verify_temperature_data_series(daily)
 
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
-    def test_hourly_soil_temperature_method_with_different_units(
+    def test_soil_temperature_method_with_different_units(
         self, archive: WeatherArchive, unit: str
     ) -> None:
         """
         Tests the soil temperature extraction
-        method with different temperature units.
+        methods with different temperature units.
         """
 
         hourly = archive.get_hourly_soil_temperature(unit=unit)
