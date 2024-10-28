@@ -269,7 +269,7 @@ class TestWeather:
         current = weather.get_current_cloud_cover(level=level)
         hourly = weather.get_hourly_cloud_cover(level=level)
 
-        assert isinstance(current, int | float)
+        assert 0 <= current <= 100
         utils.verify_positive_range_data_series(hourly, 100)
 
     def test_total_cloud_cover_methods(self, weather: atmolib.Weather) -> None:
@@ -281,7 +281,7 @@ class TestWeather:
         current = weather.get_current_total_cloud_cover()
         hourly = weather.get_hourly_total_cloud_cover()
 
-        assert isinstance(current, int | float)
+        assert 0 <= current <= 100
         utils.verify_positive_range_data_series(hourly, 100)
 
     # The following block tests wind data extraction methods.
