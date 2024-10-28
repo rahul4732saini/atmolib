@@ -160,7 +160,7 @@ class TestWeatherArchive:
         hourly = archive.get_hourly_soil_temperature(unit=unit)
         utils.verify_temperature_data_series(hourly)
 
-    @pytest.mark.parametrize("unit", (0, 18, 255, 157))
+    @pytest.mark.parametrize("depth", (0, 18, 255, 157))
     def test_soil_temperature_methods_with_different_depth(
         self, archive: WeatherArchive, depth: int
     ) -> None:
