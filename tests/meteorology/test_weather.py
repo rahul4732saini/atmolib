@@ -192,7 +192,7 @@ class TestWeather:
         hourly = weather.get_hourly_soil_temperature(depth=depth)
         utils.verify_temperature_data_series(hourly)
 
-    # The following block tests precipitation and pressure data extraction methods.
+    # The following block tests precipitation data extraction methods.
 
     @pytest.mark.parametrize("unit", constants.PRECIPITATION_UNITS)
     def test_precipitation_methods_with_different_units(
@@ -236,21 +236,6 @@ class TestWeather:
 
         utils.verify_positive_range_data_series(hourly, 100)
         utils.verify_positive_range_data_series(daily, 100)
-
-    @pytest.mark.parametrize("level", constants.PRESSURE_LEVELS)
-    def test_atmospheric_pressure_extraction_methods(
-        self, weather: Weather, level: str
-    ) -> None:
-        """
-        Tests the atmospheirc pressure extraction
-        methods with different measurement levels.
-        """
-
-        current = weather.get_current_pressure(level=level)
-        hourly = weather.get_hourly_pressure(level=level)
-
-        assert current >= 0
-        utils.verify_positive_data_series(hourly)
 
     # The following block tests cloud coverage data extraction methods.
 
@@ -358,6 +343,21 @@ class TestWeather:
 
     # All other types of weather data extraction
     # methods are tested in the following block.
+
+    @pytest.mark.parametrize("level", constants.PRESSURE_LEVELS)
+    def test_atmospheric_pressure_extraction_methods(
+        self, weather: Weather, level: str
+    ) -> None:
+        """
+        Tests the atmospheirc pressure extraction
+        methods with different measurement levels.
+        """
+
+        current = weather.get_current_pressure(level=level)
+        hourly = weather.get_hourly_pressure(level=level)
+
+        assert current >= 0
+        utils.verify_positive_data_series(hourly)
 
     def test_relative_humidity_methods(self, weather: Weather) -> None:
         """Tests the relative humidity extraction methods."""
