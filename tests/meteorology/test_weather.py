@@ -105,21 +105,6 @@ class TestWeather:
 
     # The following block tests temperature data extraction methods.
 
-    @pytest.mark.parametrize("altitude", constants.TEMPERATURE_ALTITUDES)
-    def test_temperature_methods_with_different_altitudes(
-        self, weather: atmolib.Weather, altitude: int
-    ) -> None:
-        """
-        Tests the temperature extraction methods
-        with different altitudes levels.
-        """
-
-        current = weather.get_current_temperature(altitude=altitude)
-        hourly = weather.get_hourly_temperature(altitude=altitude)
-
-        assert isinstance(current, int | float)
-        utils.verify_temperature_data_series(hourly)
-
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
     def test_temperature_methods_with_different_units(
         self, weather: atmolib.Weather, unit: str
@@ -136,6 +121,21 @@ class TestWeather:
         assert isinstance(current, int | float)
 
         utils.verify_temperature_data_series(daily)
+        utils.verify_temperature_data_series(hourly)
+
+    @pytest.mark.parametrize("altitude", constants.TEMPERATURE_ALTITUDES)
+    def test_temperature_methods_with_different_altitudes(
+        self, weather: atmolib.Weather, altitude: int
+    ) -> None:
+        """
+        Tests the temperature extraction methods
+        with different altitudes levels.
+        """
+
+        current = weather.get_current_temperature(altitude=altitude)
+        hourly = weather.get_hourly_temperature(altitude=altitude)
+
+        assert isinstance(current, int | float)
         utils.verify_temperature_data_series(hourly)
 
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
@@ -155,6 +155,21 @@ class TestWeather:
 
         utils.verify_temperature_data_series(daily)
         utils.verify_temperature_data_series(hourly)
+
+    @pytest.mark.parametrize("metric", constants.DAILY_WEATHER_STATISTICAL_METRICS)
+    def test_daily_temperature_methods_with_different_metrics(
+        self, weather: atmolib.Weather, metric: str
+    ) -> None:
+        """
+        Tests the daily temperature extraction methods
+        with different weather statistical metrices.
+        """
+
+        temp = weather.get_daily_temperature(metric=metric)
+        apparent_temp = weather.get_daily_apparent_temperature(metric=metric)
+
+        utils.verify_temperature_data_series(temp)
+        utils.verify_temperature_data_series(apparent_temp)
 
     @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
     def test_soil_temperature_methods_with_different_units(
@@ -179,21 +194,6 @@ class TestWeather:
 
         hourly = weather.get_hourly_soil_temperature(depth=depth)
         utils.verify_temperature_data_series(hourly)
-
-    @pytest.mark.parametrize("metric", constants.DAILY_WEATHER_STATISTICAL_METRICS)
-    def test_daily_temperature_methods_with_different_metrics(
-        self, weather: atmolib.Weather, metric: str
-    ) -> None:
-        """
-        Tests the daily temperature extraction methods
-        with different weather statistical metrices.
-        """
-
-        temp = weather.get_daily_temperature(metric=metric)
-        apparent_temp = weather.get_daily_apparent_temperature(metric=metric)
-
-        utils.verify_temperature_data_series(temp)
-        utils.verify_temperature_data_series(apparent_temp)
 
     # The following block tests precipitation and pressure data extraction methods.
 
