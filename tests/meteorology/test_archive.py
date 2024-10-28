@@ -187,15 +187,15 @@ class TestWeatherArchive:
         utils.verify_temperature_data_series(temp)
         utils.verify_temperature_data_series(apparent_temp)
 
-    # The following block tests precipitation data extraction methods.
+    # The following block tests precipitation and pressure data extraction methods.
 
     @pytest.mark.parametrize("unit", constants.PRECIPITATION_UNITS)
     def test_precipitation_methods_with_different_units(
         self, archive: WeatherArchive, unit: str
     ) -> None:
         """
-        Tests the hourly and daily precipitation extraction
-        methods with different precipitation units.
+        Tests the precipitation extraction methods
+        with different precipitation units.
         """
 
         hourly = archive.get_hourly_precipitation(unit=unit)
@@ -209,8 +209,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, unit: str
     ) -> None:
         """
-        Tests the hourly and daily rainfall extraction
-        methods with different precipitation units.
+        Tests the rainfall extraction methods
+        with different precipitation units.
         """
 
         hourly = archive.get_hourly_rainfall(unit=unit)
@@ -224,7 +224,7 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, level: str
     ) -> None:
         """
-        Tests the hourly atmospheric pressure extraction
+        Tests the atmospheric pressure extraction
         method with different measurement levels.
         """
 
@@ -238,7 +238,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, level: str
     ) -> None:
         """
-        Tests the cloud coverage extraction methods with different altitude levels.
+        Tests the cloud coverage extraction
+        methods with different altitude levels.
         """
 
         hourly = archive.get_hourly_cloud_cover(level=level)
@@ -251,8 +252,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, unit: str
     ) -> None:
         """
-        Tests the hourly and daily wind speed extraction
-        methods with different wind speed units.
+        Tests the wind speed extraction methods
+        with different wind speed units.
         """
 
         hourly = archive.get_hourly_wind_speed(unit=unit)
@@ -266,8 +267,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, altitude: int
     ) -> None:
         """
-        Tests the hourly and daily wind speed extraction
-        methods with different altitude levels.
+        Tests the wind speed extraction methods
+        with different altitude levels.
         """
 
         hourly = archive.get_hourly_wind_speed(altitude=altitude)
@@ -296,8 +297,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, altitude: int
     ) -> None:
         """
-        Tests the hourly and daily wind direction extraction
-        methods with different altitude levels.
+        Tests the wind direction extraction methods
+        with different altitude levels.
         """
 
         hourly = archive.get_hourly_wind_direction(altitude=altitude)
@@ -342,7 +343,7 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, depth: int
     ) -> None:
         """
-        Test the soil moisture extraction methods with different depth levels.
+        Test the soil moisture extraction methods with different soil depths.
         """
 
         moisture = archive.get_hourly_soil_moisture(depth=depth)
