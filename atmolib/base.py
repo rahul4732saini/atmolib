@@ -16,9 +16,7 @@ from .common import tools, constants
 
 
 class BaseMeteor:
-    """
-    Base class for all meteorology classes.
-    """
+    """Base class for all meteorology classes."""
 
     # The following class attributes are essential for operation and
     # must be explicitly defined by child classes as per requirements.
@@ -85,9 +83,7 @@ class BaseMeteor:
 
 
 class BaseForecast(BaseMeteor):
-    """
-    Base class for all meteorological forecast classes.
-    """
+    """Base class for all meteorological forecast classes."""
 
     # This class attribute is essential for operation and must be
     # explicitly defined by child classes as per requirements.
@@ -126,9 +122,7 @@ class BaseForecast(BaseMeteor):
 
 
 class BaseWeather(BaseMeteor):
-    """
-    Baseclass for all weather classes.
-    """
+    """Baseclass for all weather classes."""
 
     @staticmethod
     def _verify_temperature_unit(unit: str) -> None:
@@ -138,7 +132,7 @@ class BaseWeather(BaseMeteor):
         """
 
         if unit not in constants.TEMPERATURE_UNITS:
-            raise ValueError(f"Invalid temperature unit {unit!r}")
+            raise ValueError(f"Invalid temperature unit specified: {unit!r}")
 
     @staticmethod
     def _verify_precipitation_unit(unit: str) -> None:
@@ -148,7 +142,7 @@ class BaseWeather(BaseMeteor):
         """
 
         if unit not in constants.PRECIPITATION_UNITS:
-            raise ValueError(f"Invalid precipitation unit {unit!r}")
+            raise ValueError(f"Invalid precipitation unit specified: {unit!r}")
 
     @staticmethod
     def _verify_wind_speed_unit(unit: str) -> None:
@@ -158,7 +152,7 @@ class BaseWeather(BaseMeteor):
         """
 
         if unit not in constants.WIND_SPEED_UNITS:
-            raise ValueError(f"Invalid wind speed unit {unit!r}")
+            raise ValueError(f"Invalid wind speed unit specified: {unit!r}")
 
     def _verify_units(
         self, temperature_unit: str, precipitation_unit: str, wind_speed_unit: str
@@ -270,9 +264,7 @@ class BaseWeather(BaseMeteor):
         return self._get_periodical_data({"hourly": "rain", "precipitation_unit": unit})
 
     def get_hourly_snowfall(self) -> pd.Series:
-        """
-        Extracts hourly snowfall data in centimeters(cm).
-        """
+        """Extracts hourly snowfall data in centimeters(cm)."""
         return self._get_periodical_data({"hourly": "rain"})
 
     def get_hourly_pressure(self, level: str = "surface") -> pd.Series:
@@ -294,9 +286,7 @@ class BaseWeather(BaseMeteor):
         return self._get_periodical_data({"hourly": metric})
 
     def get_hourly_total_cloud_cover(self) -> pd.Series:
-        """
-        Extracts hourly total cloud cover percentage(%) data.
-        """
+        """Extracts hourly total cloud cover percentage(%) data."""
         return self._get_periodical_data({"hourly": "cloud_cover"})
 
     def get_hourly_cloud_cover(self, level: str = "low") -> pd.Series:
@@ -468,9 +458,7 @@ class BaseWeather(BaseMeteor):
         )
 
     def get_daily_total_snowfall(self) -> pd.Series:
-        """
-        Extracts daily total snowfall data in centimeters(cm).
-        """
+        """Extracts daily total snowfall data in centimeters(cm)."""
         return self._get_periodical_data({"daily": "snowfall_sum"})
 
     def get_daily_sunrise_time(self) -> pd.Series:
@@ -488,15 +476,11 @@ class BaseWeather(BaseMeteor):
         return self._get_periodical_data({"daily": "sunset"}, dtype=np.object_)
 
     def get_daily_daylight_duration(self) -> pd.Series:
-        """
-        Extracts daily daylight duration time in seconds(s)
-        """
+        """Extracts daily daylight duration time in seconds(s)"""
         return self._get_periodical_data({"daily": "daylight_duration"})
 
     def get_daily_sunshine_duration(self) -> pd.Series:
-        """
-        Extracts daily sunlight duration time in seconds(s).
-        """
+        """Extracts daily sunlight duration time in seconds(s)."""
         return self._get_periodical_data({"daily": "sunshine_duration"})
 
     def get_daily_total_shortwave_radiation(self) -> pd.Series:
