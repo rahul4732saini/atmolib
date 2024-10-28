@@ -12,6 +12,7 @@ setup(
     name="atmolib",
     version=VERSION,
     author="rahul4732saini",
+    author_email="rahul4732saini@gmail.com",
     license="MIT",
     description="Versatile weather package for effortless meteorology data extraction.",
     long_description=LONG_DESCRIPTION,
