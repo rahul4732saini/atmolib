@@ -1,6 +1,6 @@
 """
 Tests the classes and methods defined
-within `atmolib/meteorology/marine.py`.
+within atmolib/meteorology/marine.py.
 """
 
 import pytest
@@ -29,8 +29,8 @@ class TestMarineWeather:
     @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
     def test_object_intialization_wave_type_parameter(self, wave_type: str) -> None:
         """
-        Tests the `atmolib.MarineWeather` object initialization
-        with different `wave_type` arguments.
+        Tests the `atmolib.MarineWeather` object
+        initialization with different wave types.
         """
         atmolib.MarineWeather(0, 0, wave_type)
 
@@ -41,7 +41,8 @@ class TestMarineWeather:
 
         with pytest.raises(ValueError):
 
-            # Expects a ValueError upon initialization with invalid wave types.
+            # Expects a ValueError upon initialization
+            # with invalid forecast days specifications.
             for days in (0, -1, 9):
                 atmolib.MarineWeather(0, 0, forecast_days=days)
 
@@ -59,15 +60,15 @@ class TestMarineWeather:
         assert isinstance(hourly, pd.DataFrame)
         assert isinstance(daily, pd.DataFrame)
 
-        # Verifies the index and columns lables of the
-        # resultant pandas.Series and DataFrame objects.
+        # Verifies the indices and columns of the resultant
+        # pandas Series and DataFrame objects.
         assert current.index.tolist() == constants.MARINE_WEATHER_SUMMARY_PARAMS
         assert hourly.columns.tolist() == constants.MARINE_WEATHER_SUMMARY_PARAMS
         assert daily.columns.tolist() == constants.MARINE_WEATHER_SUMMARY_PARAMS
 
     @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
     def test_wave_height_extraction_methods(self, wave_type: str) -> None:
-        """Tests the current, hourly and daily wave height extraction methods."""
+        """Tests the wave height extraction methods."""
 
         marine = atmolib.MarineWeather(0, 0, wave_type, forecast_days=2)
 
@@ -81,9 +82,7 @@ class TestMarineWeather:
 
     @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
     def test_wave_direction_extraction_methods(self, wave_type: str) -> None:
-        """
-        Tests the current, hourly and daily wave direction extraction methods.
-        """
+        """Tests the wave direction extraction methods."""
 
         marine = atmolib.MarineWeather(0, 0, wave_type, forecast_days=2)
 
@@ -97,9 +96,7 @@ class TestMarineWeather:
 
     @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
     def test_wave_period_extraction_methods(self, wave_type: str) -> None:
-        """
-        Tests the current, hourly, and daily wave period extraction methods.
-        """
+        """Tests the wave period extraction methods."""
 
         marine = atmolib.MarineWeather(0, 0, wave_type, forecast_days=2)
 

@@ -40,7 +40,7 @@ class TestAirQuality:
             for lat, long in invalid_coordinates:
                 AirQuality(lat, long)
 
-            # Expects an ValueError upon initialization
+            # Expects a ValueError upon initialization
             # with invalid forecast days specifications.
             for days in (0, -1, 9):
                 AirQuality(0, 0, forecast_days=days)
@@ -55,7 +55,7 @@ class TestAirQuality:
         assert isinstance(hourly, pd.DataFrame)
 
         # Verifies the indices and columns of the resultant
-        # pandas.Series and DataFrame objects.
+        # pandas Series and DataFrame objects.
         assert current.index.tolist() == constants.CURRENT_AIR_QUALITY_SUMMARY_PARAMS
         assert hourly.columns.tolist() == constants.HOURLY_AIR_QUALITY_SUMMARY_PARAMS
 
