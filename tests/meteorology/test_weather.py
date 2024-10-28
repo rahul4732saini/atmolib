@@ -262,8 +262,7 @@ class TestWeather:
         self, weather: atmolib.Weather, level: str
     ) -> None:
         """
-        Test the current and hourly cloud cover extraction
-        methods with different altitude levels.
+        Test the cloud cover extraction methods with different altitude levels.
         """
 
         current = weather.get_current_cloud_cover(level=level)
@@ -274,8 +273,8 @@ class TestWeather:
 
     def test_total_cloud_cover_methods(self, weather: atmolib.Weather) -> None:
         """
-        Test the current and hourly total cloud cover
-        extraction methods with different altitude levels.
+        Test the total cloud cover extraction
+        methods with different altitude levels.
         """
 
         current = weather.get_current_total_cloud_cover()
@@ -291,31 +290,25 @@ class TestWeather:
         self, weather: atmolib.Weather, unit: str
     ) -> None:
         """
-        Tests the current, hourly, and daily wind speed
-        extraction methods with different wind speed units.
+        Tests the wind speed extraction methods with different wind speed units.
         """
 
         current = weather.get_current_wind_speed(unit=unit)
         hourly = weather.get_hourly_wind_speed(unit=unit)
         daily = weather.get_daily_max_wind_speed(unit=unit)
 
-        assert isinstance(current, int | float)
         assert current >= 0
 
         utils.verify_positive_data_series(hourly)
         utils.verify_positive_data_series(daily)
 
     def test_wind_direction_methods(self, weather: atmolib.Weather) -> None:
-        """
-        Tests the current, hourly, and daily
-        wind direction extraction methods.
-        """
+        """Tests wind direction extraction methods."""
 
         current = weather.get_current_wind_direction()
         hourly = weather.get_hourly_wind_direction()
         daily = weather.get_daily_dominant_wind_direction()
 
-        assert isinstance(current, int | float)
         assert current >= 0
 
         utils.verify_positive_range_data_series(hourly, 360)
@@ -326,15 +319,13 @@ class TestWeather:
         self, weather: atmolib.Weather, unit: str
     ) -> None:
         """
-        Tests the current, hourly, and daily wind gusts
-        extraction methods with different wind speed units.
+        Tests the wind gusts extraction methods with different wind speed units.
         """
 
         current = weather.get_current_wind_gusts(unit=unit)
         hourly = weather.get_hourly_wind_gusts(unit=unit)
         daily = weather.get_daily_max_wind_gusts(unit=unit)
 
-        assert isinstance(current, int | float)
         assert current >= 0
 
         utils.verify_positive_data_series(hourly)
@@ -343,7 +334,7 @@ class TestWeather:
     # The following block tests weather code extraction methods.
 
     def test_current_weather_code_method(self, weather: atmolib.Weather) -> None:
-        """Tests the weather code extraction method."""
+        """Tests the current weather code extraction method."""
 
         code = weather.get_current_weather_code()
 
@@ -372,41 +363,37 @@ class TestWeather:
     # methods are tested in the following block.
 
     def test_relative_humidity_methods(self, weather: atmolib.Weather) -> None:
-        """
-        Tests the current and hourly relative humidity extraction methods.
-        """
+        """Tests the relative humidity extraction methods."""
 
         current = weather.get_current_relative_humidity()
         hourly = weather.get_hourly_relative_humidity()
 
-        assert isinstance(current, int | float)
         assert 0 <= current <= 100
-
         utils.verify_positive_range_data_series(hourly, 100)
 
     @pytest.mark.parametrize("depth", (0, 10, 18, 78, 81))
     def test_hourly_soil_moisture_method(
         self, weather: atmolib.Weather, depth: int
     ) -> None:
-        """Tests the hourly soil moisture extractions method."""
+        """Tests the soil moisture extraction methods."""
 
         moisture = weather.get_hourly_soil_moisture(depth=depth)
         utils.verify_positive_data_series(moisture)
 
     def test_daily_max_uv_index_method(self, weather: atmolib.Weather) -> None:
-        """Tests the daily maximum UV index extraction method."""
+        """Tests the `Weather.get_daily_max_uv_index` method."""
 
         uv = weather.get_daily_max_uv_index()
         utils.verify_positive_data_series(uv)
 
     def test_is_day_or_night_method(self, weather: atmolib.Weather) -> None:
-        """Test the boolean day or night extraction method."""
+        """Test the `Weather.is_day_or_night` method."""
 
         is_day_or_night = weather.is_day_or_night()
         assert is_day_or_night in (1, 0)
 
     def test_visibility_methods(self, weather: atmolib.Weather) -> None:
-        """Tests the current and hourly visibility extraction methods."""
+        """Tests the visibility extraction methods."""
 
         current = weather.get_current_visibility()
         hourly = weather.get_hourly_visibility()
