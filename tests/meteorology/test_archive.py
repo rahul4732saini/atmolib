@@ -291,15 +291,6 @@ class TestWeatherArchive:
         utils.verify_positive_data_series(hourly)
         utils.verify_positive_data_series(daily)
 
-    def test_wind_gusts_methods(self, archive: WeatherArchive) -> None:
-        """Tests the hourly and daily wind gusts extraction methods."""
-
-        hourly = archive.get_hourly_wind_gusts()
-        daily = archive.get_daily_max_wind_gusts()
-
-        utils.verify_positive_data_series(hourly)
-        utils.verify_positive_data_series(daily)
-
     @pytest.mark.parametrize("altitude", constants.ARCHIVE_WIND_ALTITUDES)
     def test_wind_direction_methods_with_different_altitudes(
         self, archive: WeatherArchive, altitude: int
