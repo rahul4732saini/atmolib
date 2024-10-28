@@ -159,7 +159,7 @@ class TestWeather:
     ) -> None:
         """
         Tests the daily temperature extraction methods
-        with different weather statistical metrices.
+        with different weather statistical metrics.
         """
 
         temp = weather.get_daily_temperature(metric=metric)
@@ -174,7 +174,7 @@ class TestWeather:
     ) -> None:
         """
         Tests the soil temperature extraction
-        methods with different temperture units.
+        methods with different temperature units.
         """
 
         hourly = weather.get_hourly_soil_temperature(unit=unit)
@@ -199,7 +199,7 @@ class TestWeather:
         self, weather: Weather, unit: str
     ) -> None:
         """
-        Tests the precipitaion extraction methods with different temperature units.
+        Tests the precipitation extraction methods with different temperature units.
         """
 
         current = weather.get_current_precipitation(unit=unit)
@@ -349,7 +349,7 @@ class TestWeather:
         self, weather: Weather, level: str
     ) -> None:
         """
-        Tests the atmospheirc pressure extraction
+        Tests the atmospheric pressure extraction
         methods with different measurement levels.
         """
 
@@ -418,7 +418,7 @@ class TestWeather:
         assert isinstance(sunrise, pd.Series)
         assert isinstance(sunset, pd.Series)
 
-        # Iteratres through the pandas Series objects and
+        # Iterates through the pandas Series objects and
         # verifies the datetime format at each iteration.
         for time in pd.concat([sunrise, sunset], ignore_index=True):
             datetime.strptime(time, datetime_format)

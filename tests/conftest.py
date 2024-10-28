@@ -22,7 +22,7 @@ def invalid_coordinates() -> tuple[tuple[float, float], ...]:
 
 
 @pytest.fixture
-def cities() -> tuple[str]:
+def cities() -> tuple[str, ...]:
     return (
         "delhi",
         "moscow",
@@ -33,5 +33,5 @@ def cities() -> tuple[str]:
 
 
 @pytest.fixture
-def invalid_city_counts() -> tuple[int | float]:
-    return (21, 0, -1, 2.5, 20.9)
+def invalid_city_counts() -> tuple[int | float, ...]:
+    return 21, 0, -1, 2.5, 20.9
