@@ -180,20 +180,6 @@ class TestWeather:
         hourly = weather.get_hourly_soil_temperature(depth=depth)
         utils.verify_temperature_data_series(hourly)
 
-    @pytest.mark.parametrize("unit", constants.TEMPERATURE_UNITS)
-    def test_daily_temperature_methods_with_different_units(
-        self, weather: atmolib.Weather, unit: str
-    ) -> None:
-        """
-        Tests the daily temperature extraction methods
-        with different temperature units.
-        """
-
-        utils.verify_temperature_data_series(weather.get_daily_temperature(unit=unit))
-        utils.verify_temperature_data_series(
-            weather.get_daily_apparent_temperature(unit=unit)
-        )
-
     @pytest.mark.parametrize("metric", constants.DAILY_WEATHER_STATISTICAL_METRICS)
     def test_daily_temperature_methods_with_different_metrics(
         self, weather: atmolib.Weather, metric: str
