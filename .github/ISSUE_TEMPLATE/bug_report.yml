@@ -20,11 +20,11 @@ body:
 
   - type: textarea
     id: bug_description
-    required: true
     attributes:
       label: "Describe the Bug"
       description: "Provide a concise description of the bug. What did you expect to happen, and what actually happened?"
       placeholder: "Describe the bug here..."
+      required: true
 
   - type: textarea
     id: reproduction_steps
@@ -45,19 +45,19 @@ body:
 
   - type: input
     id: atmolib_version
-    required: true
     attributes:
       label: "atmolib Version"
       description: "Confirm the version of atmolib you are using."
       placeholder: "e.g., 1.0.0"
+      required: true
 
   - type: input
     id: python_version
-    required: true
     attributes:
       label: "Python Version"
       description: "Confirm the Python version you are using."
       placeholder: "e.g., 3.9.7"
+      required: true
 
   - type: dropdown
     id: os
