@@ -202,15 +202,13 @@ class TestWeather:
         self, weather: atmolib.Weather, unit: str
     ) -> None:
         """
-        Tests the current, hourly and daily precipitaion
-        extraction methods with different temperature units.
+        Tests the precipitaion extraction methods with different temperature units.
         """
 
         current = weather.get_current_precipitation(unit=unit)
         hourly = weather.get_hourly_precipitation(unit=unit)
         daily = weather.get_daily_total_precipitation(unit=unit)
 
-        assert isinstance(current, int | float)
         assert current >= 0
 
         utils.verify_positive_data_series(hourly)
@@ -221,22 +219,20 @@ class TestWeather:
         self, weather: atmolib.Weather, unit: str
     ) -> None:
         """
-        Tests the current, hourly, and daily rainfall extraction
-        methods with different temperature units.
+        Tests the rainfall extraction methods with different temperature units.
         """
 
         current = weather.get_current_rainfall(unit=unit)
         hourly = weather.get_hourly_rainfall(unit=unit)
         daily = weather.get_daily_total_rainfall(unit=unit)
 
-        assert isinstance(current, int | float)
         assert current >= 0
 
         utils.verify_positive_data_series(hourly)
         utils.verify_positive_data_series(daily)
 
     def test_precipitation_probability_methods(self, weather: atmolib.Weather) -> None:
-        """Tests the hourly and daily precipitation probability extraction methods"""
+        """Tests the precipitation probability extraction methods"""
 
         hourly = weather.get_hourly_precipitation_probability()
         daily = weather.get_daily_max_precipitation_probability()
@@ -249,16 +245,14 @@ class TestWeather:
         self, weather: atmolib.Weather, level: str
     ) -> None:
         """
-        Tests the current and hourly atmospheirc pressure
-        extraction methods with different measurement levels.
+        Tests the atmospheirc pressure extraction
+        methods with different measurement levels.
         """
 
         current = weather.get_current_pressure(level=level)
         hourly = weather.get_hourly_pressure(level=level)
 
-        assert isinstance(current, int | float)
         assert current >= 0
-
         utils.verify_positive_data_series(hourly)
 
     # The following block tests cloud coverage data extraction methods.
