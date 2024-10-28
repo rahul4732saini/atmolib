@@ -26,7 +26,7 @@ class TestMarineWeather:
             MarineWeather(lat, long)
 
     @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
-    def test_object_intialization_wave_type_parameter(self, wave_type: str) -> None:
+    def test_object_initialization_wave_type_parameter(self, wave_type: str) -> None:
         """
         Tests the `MarineWeather` object initialization with different wave types.
         """
