@@ -31,7 +31,7 @@ def test_get_elevation_function_with_invalid_coordinates(
             tools.get_elevation(lat, long)
 
 
-def test_city_details_function(cities: tuple[str]) -> None:
+def test_city_details_function(cities: tuple[str, ...]) -> None:
     """
     Tests the `atmolib.tools.get_city_details` function with different city names.
     """
@@ -41,7 +41,7 @@ def test_city_details_function(cities: tuple[str]) -> None:
 
 
 def test_city_details_function_with_invalid_count(
-    invalid_city_counts: tuple[int | float],
+    invalid_city_counts: tuple[int | float, ...],
 ) -> None:
     """
     Tests the `atmolib.tools.get_city_details` function
