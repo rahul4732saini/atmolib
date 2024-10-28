@@ -339,15 +339,13 @@ class TestWeatherArchive:
         utils.verify_positive_range_data_series(hourly, 100)
 
     @pytest.mark.parametrize("depth", (0, 26, 182, 255))
-    def test_hourly_soil_moisture_method(
-        self, archive: WeatherArchive, depth: int
-    ) -> None:
+    def test_soil_moisture_methods(self, archive: WeatherArchive, depth: int) -> None:
         """
         Test the soil moisture extraction methods with different soil depths.
         """
 
-        moisture = archive.get_hourly_soil_moisture(depth=depth)
-        utils.verify_positive_data_series(moisture)
+        hourly = archive.get_hourly_soil_moisture(depth=depth)
+        utils.verify_positive_data_series(hourly)
 
     def test_daylight_and_sunlight_duration_methods(
         self, archive: WeatherArchive
