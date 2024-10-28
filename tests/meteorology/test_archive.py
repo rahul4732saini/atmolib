@@ -187,7 +187,7 @@ class TestWeatherArchive:
         utils.verify_temperature_data_series(temp)
         utils.verify_temperature_data_series(apparent_temp)
 
-    # The following block tests precipitation and pressure data extraction methods.
+    # The following block tests precipitation data extraction methods.
 
     @pytest.mark.parametrize("unit", constants.PRECIPITATION_UNITS)
     def test_precipitation_methods_with_different_units(
@@ -218,18 +218,6 @@ class TestWeatherArchive:
 
         utils.verify_positive_data_series(hourly)
         utils.verify_positive_data_series(daily)
-
-    @pytest.mark.parametrize("level", constants.PRESSURE_LEVELS)
-    def test_pressure_methods_with_different_levels(
-        self, archive: WeatherArchive, level: str
-    ) -> None:
-        """
-        Tests the atmospheric pressure extraction
-        method with different measurement levels.
-        """
-
-        hourly = archive.get_hourly_pressure(level=level)
-        utils.verify_positive_data_series(hourly)
 
     # The following block tests cloud coverage extraction methods.
 
@@ -337,6 +325,18 @@ class TestWeatherArchive:
 
         hourly = archive.get_hourly_relative_humidity()
         utils.verify_positive_range_data_series(hourly, 100)
+
+    @pytest.mark.parametrize("level", constants.PRESSURE_LEVELS)
+    def test_pressure_methods_with_different_levels(
+        self, archive: WeatherArchive, level: str
+    ) -> None:
+        """
+        Tests the atmospheric pressure extraction
+        method with different measurement levels.
+        """
+
+        hourly = archive.get_hourly_pressure(level=level)
+        utils.verify_positive_data_series(hourly)
 
     @pytest.mark.parametrize("depth", (0, 26, 182, 255))
     def test_soil_moisture_methods(self, archive: WeatherArchive, depth: int) -> None:
