@@ -10,7 +10,7 @@ def test_get_elevation_function_with_valid_coordinates(
     valid_coordinates: tuple[tuple[float, float], ...]
 ) -> None:
     """
-    Tests the `atmolib.tools.get_elevation` function with valid coorindates.
+    Tests the `tools.get_elevation` function with valid coorindates.
     """
 
     for lat, long in valid_coordinates:
@@ -21,7 +21,7 @@ def test_get_elevation_function_with_invalid_coordinates(
     invalid_coordinates: tuple[tuple[float, float], ...]
 ) -> None:
     """
-    Tests the `atmolib.tools.get_elevation` function with invalid coordinates.
+    Tests the `tools.get_elevation` function with invalid coordinates.
     """
 
     with pytest.raises(ValueError):
@@ -33,7 +33,7 @@ def test_get_elevation_function_with_invalid_coordinates(
 
 def test_city_details_function(cities: tuple[str, ...]) -> None:
     """
-    Tests the `atmolib.tools.get_city_details` function with different city names.
+    Tests the `tools.get_city_details` function with different city names.
     """
 
     for city in cities:
@@ -44,7 +44,7 @@ def test_city_details_function_with_invalid_count(
     invalid_city_counts: tuple[int | float, ...],
 ) -> None:
     """
-    Tests the `atmolib.tools.get_city_details` function
+    Tests the `tools.get_city_details` function
     with invalid city count arguments.
     """
 
