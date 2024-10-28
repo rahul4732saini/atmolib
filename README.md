@@ -16,17 +16,7 @@
 <a href="https://www.twitter.com/rahulsaini4732"><img src="https://img.shields.io/twitter/follow/rahulsaini4732?style=social&label=Follow&maxAge=60" alt="Twitter"></a>
 <a href="https://www.linkedin.com/in/rahul-saini-9191a5286/)"><img src="https://img.shields.io/badge/LinkedIn-Connect-blue?style=social&logo=linkedin&maxAge=60" alt="Linkedin"></a>
 
-<table border=1 cellpadding=10><tr><td>
-
-<h3 align=center>*** Important Legal Disclaimer ***</h3>
-
----
-
-<b>atmolib</b> is not affiliated, endorsed, or vetted by <b>Open-Meteo</b>. It's an open-source tool that uses Open-Meteo's publicly available APIs, and is intended for <b>research and educational purposes only</b>.
-
-</td></tr></table>
-
-<h3 align=center>Package Description</h3>
+## Package Description
 
 <b>atmolib</b> is a weather package that offers an easy and flexible way to its users to access and parse weather data in a pythonic way. The package uses the Open-Meteo Web APIs to fetch the weather data in its backend.
 
@@ -34,7 +24,7 @@
 
 Install `atmolib` using `pip`:
 
-```
+```bash
 $ python -m pip install -U atmolib --no-cache-dir
 ```
 
@@ -47,13 +37,13 @@ $ python -m pip install -U atmolib --no-cache-dir
 The classes along with their corresponding descriptions are mentioned as follows:
 
 - `Weather`<br>
-  Offers comprehensive extraction of current, hourly, and daily weather forecast data, encompassing temperature, dew point, weather code, soil temperature, visibility, etc.
+  Provides extensive access to current, hourly, and daily forecast data, including temperature, dew point, weather conditions, soil temperature, visibility, and more.
 - `WeatherArchive`<br>
   Enables retrieval of historical weather data, spanning hourly and daily records from 1940 till the present day.
 - `MarineWeather`<br>
-  Empowers users to access current, hourly, and daily marine weather forecast data, including wave height, wave direction, and wave period within a resolution of 5 kilometers(km).
+  Grants access to current, hourly, and daily marine weather forecast data, covering wave height, direction, and period, with a resolution of up to 5 kilometers.
 - `AirQuality`<br>
-  Provides access to current and hourly air quality forecast data, encompassing AQI, atmospheric gas concentrations, UV index, etc.
+  Supplies current and hourly forecasts for air quality metrics, including AQI, atmospheric gas concentrations, and UV index.
 
 The package also provides users with some useful functions as a part of the package as mentioned below:
 
@@ -66,7 +56,7 @@ The package also provides users with some useful functions as a part of the pack
 ## Basic Usage
 
 This guide provides the basic usage of the atmolib package and highlights some of the generally used methods. All the methods in the package are designed to be used with minimal arguments with default
-arguments already being specified in all of them.
+arguments primarily specified in all of them.
 
 - `Weather` class usage:
 
@@ -171,7 +161,9 @@ air.get_hourly_aerosol_optical_depth()
 
 <b>atmolib</b> is distributed under the MIT License. Refer to the [LICENSE](./LICENSE) for more details.
 
-AGAIN: <b>atmolib</b> is not affiliated, endorsed, or vetted by <b>Open-Meteo</b>. It's an open-source tool that uses Open-Meteo's publicly available meteorology APIs, and is intended for research and educational purposes only.
+#### NOTE:
+
+<b>atmolib</b> is not affiliated, endorsed, or vetted by <b>Open-Meteo</b>. It's an open-source tool that uses Open-Meteo's publicly available meteorology APIs, and is intended for <b>research and educational purposes only</b>.
 
 ## Call for Contributions
 
