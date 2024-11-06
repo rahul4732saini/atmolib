@@ -109,9 +109,13 @@ class BaseForecast(BaseMeteor):
     __slots__ = "_lat", "_long", "_params", "_forecast_days"
 
     def __init__(
-        self, lat: int | float, long: int | float, forecast_days: int = 7
+        self,
+        lat: int | float,
+        long: int | float,
+        forecast_days: int = 7,
+        timeout: int | float | None = None,
     ) -> None:
-        super().__init__(lat, long)
+        super().__init__(lat, long, timeout)
         self.forecast_days = forecast_days
 
     @property
