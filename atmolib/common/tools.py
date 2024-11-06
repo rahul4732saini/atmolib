@@ -37,10 +37,10 @@ def _request_json(
     #### Params:
     - api (str): Absolute URL of the API endpoint.
     - params (dict[str, Any]): API request parameters.
-    - session (requests.Session | None): A `requests.Session` object for making API
-    requests. If not specified, the `requests` module as the fallback.
-    - timeout (int | float | None): Maximum duration to wait for a response from
-    the API endpoint. Must be a number greater than 0 or `None`.
+    - session (requests.Session | None): A `requests.Session` object for making
+    API requests. If not specified, the `requests` module as the fallback.
+    - timeout (int | float | None): Maximum duration to wait for a response
+    from the API endpoint. Must be a number greater than 0 or `None`.
     """
 
     # Verifies the specified timeout value.
@@ -63,8 +63,8 @@ def _request_json(
 
 def _verify_keys(params: dict[str, Any], keys: tuple[str, ...]) -> None:
     """
-    Looks up for the specified keys in the parameters
-    mapping and raises a `KeyError` if any are missing.
+    Looks up for the specified keys in the specified parameters
+    mapping and raises a `KeyError` if any are found missing.
 
     #### Params:
     - params (dict[str, Any]): API request parameters.
@@ -100,9 +100,9 @@ def get_current_data(
     _verify_keys(params, ("latitude", "longitude", "current"))
     results: dict[str, Any] = _request_json(api, params, session, timeout)
 
-    # Extracts the request current meteorology data metrics from
-    # the 'results' mapping. It is mapped with the name of the requested
-    # metric within the dictionary mapped with the 'current' key.
+    # Extracts the current meteorology data metrics from the 'results'
+    # mapping. It is mapped with the name of the requested metric within
+    # the dictionary mapped with the 'current' key.
     return results["current"][params["current"]]
 
 
@@ -145,7 +145,7 @@ def get_periodical_data(
         frequency = "daily"
 
     else:
-        raise KeyError("frequency parameter not found in the reuqest parameters.")
+        raise KeyError("frequency parameter not found in the request parameters.")
 
     results: dict[str, Any] = _request_json(api, params, session, timeout)
 
@@ -257,15 +257,15 @@ def get_elevation(
     latitude and longitude from the Open-meteo's elevation API.
 
     #### Params:
-        - lat (int | float): latitudinal coordinates of the location.
-        - long (int | float): longitudinal coordinates of the location.
-        - timeout (int | float | None): Maximum duration to wait for a response from
-        the API endpoint. Must be a number greater than 0 or `None`.
+    - lat (int | float): latitudinal coordinates of the location.
+    - long (int | float): longitudinal coordinates of the location.
+    - timeout (int | float | None): Maximum duration to wait for a response from
+    the API endpoint. Must be a number greater than 0 or `None`.
 
     #### Example:
-        >>> altitude = get_elevation(26.91, 32.89)
-        >>> print(altitude)
-        300.0  # Example elevation value in meters
+    >>> altitude = get_elevation(26.91, 32.89)
+    >>> print(altitude)
+    300.0  # Example elevation value in meters
     """
 
     if not -90 <= lat <= 90:
@@ -294,11 +294,11 @@ def get_city_details(
     Retrieves the city details from Open-meteo geocoding API based on the city name.
 
     #### Params:
-        - name (str): The name of the city to retrieve details for.
-        - count (int): Maximum number of matching city records to be extracted;
-        must be an integer between 1 and 20.
-        - timeout (int | float | None): Maximum duration to wait for a response from
-        the API endpoint. Must be a number greater than 0 or `None`.
+    - name (str): The name of the city to retrieve details for.
+    - count (int): Maximum number of matching city records to be extracted;
+    must be an integer between 1 and 20.
+    - timeout (int | float | None): Maximum duration to wait for a response from
+    the API endpoint. Must be a number greater than 0 or `None`.
     """
 
     if not isinstance(count, int) or count not in range(1, 21):
