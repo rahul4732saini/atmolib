@@ -17,6 +17,13 @@ from . import constants
 from ..errors import RequestError
 
 
+def verify_timeout(timeout: int | float | None) -> None:
+    """Verifies the specified timeout value."""
+
+    if timeout is not None and timeout <= 0:
+        raise ValueError("'timeout' must be greater than 0 or None.")
+
+
 def _request_json(
     api: str, params: dict[str, Any], session: requests.Session | None = None
 ) -> dict[str, Any]:
