@@ -9,6 +9,9 @@ various classes and functions defined within the package.
 import json
 from pathlib import Path
 
+# Default timeout for requesting data from API endpoints in seconds(s).
+DEFAULT_REQUEST_TIMEOUT = 30
+
 # API endpoint URLs.
 WEATHER_API = "https://api.open-meteo.com/v1/forecast"
 WEATHER_ARCHIVE_API = "https://archive-api.open-meteo.com/v1/archive"
