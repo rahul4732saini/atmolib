@@ -25,7 +25,10 @@ def verify_timeout(timeout: int | float | None) -> None:
 
 
 def _request_json(
-    api: str, params: dict[str, Any], session: requests.Session | None = None
+    api: str,
+    params: dict[str, Any],
+    session: requests.Session | None = None,
+    timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
 ) -> dict[str, Any]:
     """
     Sends a GET request to the specified API endpoint,
@@ -36,11 +39,16 @@ def _request_json(
     - params (dict[str, Any]): API request parameters.
     - session (requests.Session | None): A `requests.Session` object for making API
     requests. If not specified, the `requests` module as the fallback.
+    - timeout (int | float | None): Maximum duration to wait for a response from
+    the API endpoint. Must be a number greater than 0 or `None`.
     """
+
+    # Verifies the specified timeout value.
+    verify_timeout(timeout)
 
     request_handler: requests.Session | ModuleType = session if session else requests
 
-    with request_handler.get(api, params=params) as response:
+    with request_handler.get(api, params=params, timeout=timeout) as response:
         results: dict[str, Any] = response.json()
 
         # Raises a request error if the response
