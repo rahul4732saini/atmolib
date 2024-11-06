@@ -23,15 +23,21 @@ class BaseMeteor:
     _session: requests.Session
     _api: str
 
-    __slots__ = "_lat", "_long", "_params"
+    __slots__ = "_lat", "_long", "_timeout", "_params"
 
-    def __init__(self, lat: int | float, long: int | float) -> None:
+    def __init__(
+        self,
+        lat: int | float,
+        long: int | float,
+        timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
+    ) -> None:
 
         # 'params' dictionary to store parameters for API requests.
         self._params: dict[str, Any] = {}
 
         self.lat = lat
         self.long = long
+        self._timeout = timeout
 
     @property
     def lat(self) -> int | float:
