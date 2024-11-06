@@ -61,6 +61,15 @@ class BaseMeteor:
 
         self._long = self._params["longitude"] = __value
 
+    @property
+    def timeout(self) -> int | float | None:
+        return self._timeout
+
+    @timeout.setter
+    def timeout(self, __value: int | float | None) -> None:
+        tools.verify_timeout(__value)
+        self._timeout = __value
+
     def _get_current_data(self, params: dict[str, Any]) -> int | float:
         """
         Extracts current meteorology data from Open-Meteo's
