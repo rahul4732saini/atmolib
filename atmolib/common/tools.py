@@ -81,7 +81,10 @@ def _verify_keys(params: dict[str, Any], keys: tuple[str, ...]) -> None:
 
 
 def get_current_data(
-    session: requests.Session, api: str, params: dict[str, Any]
+    session: requests.Session,
+    api: str,
+    params: dict[str, Any],
+    timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
 ) -> int | float:
     """
     Extracts current meteorology data from the specified API endpoint.
@@ -90,10 +93,12 @@ def get_current_data(
     - session (requests.Session): A `requests.Session` object for making API requests.
     - api (str): Absolute URL of the API endpoint.
     - params (dict[str, Any]): API request parameters.
+    - timeout (int | float | None): Maximum duration to wait for a response from
+    the API endpoint. Must be a number greater than 0 or `None`.
     """
 
     _verify_keys(params, ("latitude", "longitude", "current"))
-    results: dict[str, Any] = _request_json(api, params, session)
+    results: dict[str, Any] = _request_json(api, params, session, timeout)
 
     # Extracts the request current meteorology data metrics from
     # the 'results' mapping. It is mapped with the name of the requested
@@ -102,7 +107,11 @@ def get_current_data(
 
 
 def get_periodical_data(
-    session: requests.Session, api: str, params: dict[str, Any], dtype=np.float32
+    session: requests.Session,
+    api: str,
+    params: dict[str, Any],
+    dtype=np.float32,
+    timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
 ) -> pd.Series:
     """
     Extracts periodical (hourly/daily) meteorology
@@ -115,6 +124,8 @@ def get_periodical_data(
     - params (dict[str, Any]): API request parameters.
     - dtype: numpy datatype for meteorology data storage.
     Defaults to float32 (32-bit floating point number).
+    - timeout (int | float | None): Maximum duration to wait for a response from
+    the API endpoint. Must be a number greater than 0 or `None`.
 
     #### Returns:
     - pd.Series: Returns a pandas Series comprising the datetime and periodical meteorology
@@ -136,7 +147,7 @@ def get_periodical_data(
     else:
         raise KeyError("frequency parameter not found in the reuqest parameters.")
 
-    results: dict[str, Any] = _request_json(api, params, session)
+    results: dict[str, Any] = _request_json(api, params, session, timeout)
 
     # Extracts meteorology data mapped with the key corresponding to the
     # name of the specified 'frequency' within the 'results' mapping.
@@ -151,7 +162,11 @@ def get_periodical_data(
 
 
 def get_current_summary(
-    session: requests.Session, api: str, params: dict[str, Any], labels: list[str]
+    session: requests.Session,
+    api: str,
+    params: dict[str, Any],
+    labels: list[str],
+    timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
 ) -> pd.Series:
     """
     Extracts current meteorology summary
@@ -163,10 +178,12 @@ def get_current_summary(
     - params (dict[str, Any]): API request parameters.
     - labels (list[str]): List of strings representing the index labels for
     the resultant pandas Series object.
+    - timeout (int | float | None): Maximum duration to wait for a response from
+    the API endpoint. Must be a number greater than 0 or `None`.
     """
 
     _verify_keys(params, ("latitude", "longitude", "current"))
-    results: dict[str, Any] = _request_json(api, params, session)
+    results: dict[str, Any] = _request_json(api, params, session, timeout)
 
     # Extracts current meteorology data from the 'current' key in the 'results' mapping.
     data: dict[str, Any] = results["current"]
@@ -178,7 +195,11 @@ def get_current_summary(
 
 
 def get_periodical_summary(
-    session: requests.Session, api: str, params: dict[str, Any], labels: list[str]
+    session: requests.Session,
+    api: str,
+    params: dict[str, Any],
+    labels: list[str],
+    timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
 ) -> pd.DataFrame:
     """
     Extracts periodical meteorology summary
@@ -190,6 +211,8 @@ def get_periodical_summary(
     - params (dict[str, Any]): API request parameters.
     - labels (list[str]): List of strings representing the index labels
     for the resultant pandas Series object.
+    - timeout (int | float | None): Maximum duration to wait for a response from
+    the API endpoint. Must be a number greater than 0 or `None`.
     """
 
     _verify_keys(params, ("latitude", "longitude"))
@@ -206,7 +229,7 @@ def get_periodical_summary(
     else:
         raise KeyError("frequency parameter not found in the request parameters.")
 
-    results: dict[str, Any] = _request_json(api, params, session)
+    results: dict[str, Any] = _request_json(api, params, session, timeout)
 
     # Extracts summary data mapped with the key corresponding to the
     # name of the specified 'frequency' within the 'results' mapping.
@@ -224,7 +247,11 @@ def get_periodical_summary(
     return dataframe
 
 
-def get_elevation(lat: int | float, long: int | float) -> float:
+def get_elevation(
+    lat: int | float,
+    long: int | float,
+    timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
+) -> float:
     """
     Extracts elevation in meters(m) from the sea-level at the specified
     latitude and longitude from the Open-meteo's elevation API.
@@ -232,6 +259,8 @@ def get_elevation(lat: int | float, long: int | float) -> float:
     #### Params:
         - lat (int | float): latitudinal coordinates of the location.
         - long (int | float): longitudinal coordinates of the location.
+        - timeout (int | float | None): Maximum duration to wait for a response from
+        the API endpoint. Must be a number greater than 0 or `None`.
 
     #### Example:
         >>> altitude = get_elevation(26.91, 32.89)
@@ -246,7 +275,9 @@ def get_elevation(lat: int | float, long: int | float) -> float:
         raise ValueError("'long' must be a number between -180 and 180.")
 
     params: dict[str, int | float] = {"latitude": lat, "longitude": long}
-    results: dict[str, Any] = _request_json(constants.ELEVATION_API, params)
+    results: dict[str, Any] = _request_json(
+        constants.ELEVATION_API, params, timeout=timeout
+    )
 
     # Extracts and returns the elevation data from the API response mapping.
     (elevation,) = results["elevation"]
@@ -254,7 +285,11 @@ def get_elevation(lat: int | float, long: int | float) -> float:
     return elevation
 
 
-def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
+def get_city_details(
+    name: str,
+    count: int = 5,
+    timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
+) -> list[dict[str, Any]] | None:
     """
     Retrieves the city details from Open-meteo geocoding API based on the city name.
 
@@ -262,13 +297,17 @@ def get_city_details(name: str, count: int = 5) -> list[dict[str, Any]] | None:
         - name (str): The name of the city to retrieve details for.
         - count (int): Maximum number of matching city records to be extracted;
         must be an integer between 1 and 20.
+        - timeout (int | float | None): Maximum duration to wait for a response from
+        the API endpoint. Must be a number greater than 0 or `None`.
     """
 
     if not isinstance(count, int) or count not in range(1, 21):
         raise ValueError("'count' must be an integer between 1 and 20.")
 
     params: dict[str, str | int] = {"name": name, "count": count}
-    results: dict[str, Any] = _request_json(constants.GEOCODING_API, params)
+    results: dict[str, Any] = _request_json(
+        constants.GEOCODING_API, params, timeout=timeout
+    )
 
     # Extracts the city details from the 'results' key in the API response
     # mapping. `None` is returned if no cities with the specified name are
