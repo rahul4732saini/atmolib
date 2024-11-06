@@ -78,7 +78,9 @@ class BaseMeteor:
         #### Params:
         - params (dict[str, Any]): API request parameters.
         """
-        return tools.get_current_data(self._session, self._api, params | self._params)
+        return tools.get_current_data(
+            self._session, self._api, params | self._params, self._timeout
+        )
 
     def _get_periodical_data(
         self, params: dict[str, Any], dtype=np.float32
@@ -93,7 +95,7 @@ class BaseMeteor:
         Defaults to float32 (32-bit floating point number).
         """
         return tools.get_periodical_data(
-            self._session, self._api, params | self._params, dtype
+            self._session, self._api, params | self._params, dtype, self._timeout
         )
 
 
