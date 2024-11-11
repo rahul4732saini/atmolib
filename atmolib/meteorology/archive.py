@@ -39,6 +39,7 @@ class WeatherArchive(BaseWeather):
         long: int | float,
         start_date: str | date | datetime,
         end_date: str | date | datetime,
+        timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
     ) -> None:
         """
         Creates an instance of the WeatherArchive class.
@@ -53,7 +54,7 @@ class WeatherArchive(BaseWeather):
         formatted in the ISO-8601 date format (YYYY-MM-DD).
         """
 
-        super().__init__(lat, long)
+        super().__init__(lat, long, timeout)
 
         self.set_start_date(start_date)
         self.set_end_date(end_date)
