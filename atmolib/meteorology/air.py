@@ -35,7 +35,11 @@ class AirQuality(BaseForecast):
     atexit.register(_session.close)
 
     def __init__(
-        self, lat: int | float, long: int | float, forecast_days: int = 7
+        self,
+        lat: int | float,
+        long: int | float,
+        forecast_days: int = 7,
+        timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
     ) -> None:
         """
         Creates an instance of the AirQuality class.
@@ -46,7 +50,7 @@ class AirQuality(BaseForecast):
         - forecast_days (int): Number of days for which the forecast has to
         be extracted; must be in the range of 1 and 7. Defaults to 7.
         """
-        super().__init__(lat, long, forecast_days)
+        super().__init__(lat, long, forecast_days, timeout)
 
     @staticmethod
     def _verify_atmospheric_gas(gas: str) -> None:
