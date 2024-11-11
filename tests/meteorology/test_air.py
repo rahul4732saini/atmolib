@@ -27,6 +27,10 @@ class TestAirQuality:
         for days in (1, 4, 7):
             AirQuality(0, 0, forecast_days=days)
 
+        # Tests object initialization with different request timeouts.
+        for timeout in (10, 2.5, 30, 0.1, None):
+            AirQuality(0, 0, timeout=timeout)
+
     def test_object_initialization_with_invalid_parameters(
         self, invalid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
@@ -43,6 +47,9 @@ class TestAirQuality:
             # Expects a ValueError upon initialization with invalid forecast days.
             for days in (0, -1, 9):
                 AirQuality(0, 0, forecast_days=days)
+
+            for timeout in (0, -1):
+                AirQuality(0, 0, timeout=timeout)
 
     def test_air_quality_summary_methods(self, air_quality: AirQuality) -> None:
         """Tests the air quality summary extraction methods."""
