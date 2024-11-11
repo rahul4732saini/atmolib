@@ -32,7 +32,7 @@ class BaseMeteor:
         timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
     ) -> None:
 
-        # 'params' dictionary to store parameters for API requests.
+        # Stores parameters for API requests.
         self._params: dict[str, Any] = {}
 
         self.lat = lat
