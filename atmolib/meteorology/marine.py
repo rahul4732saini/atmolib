@@ -41,6 +41,7 @@ class MarineWeather(BaseForecast):
         long: int | float,
         wave_type: str = "composite",
         forecast_days: int = 7,
+        timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
     ) -> None:
         """
         Creates an instance of the MarineWeather class.
@@ -57,7 +58,7 @@ class MarineWeather(BaseForecast):
         - forecast_days (int): Number of days for which the forecast has to
         be extracted; must be in the range of 1 and 8. Defaults to 7.
         """
-        super().__init__(lat, long, forecast_days)
+        super().__init__(lat, long, forecast_days, timeout)
         self.wave_type = wave_type
 
     @property
