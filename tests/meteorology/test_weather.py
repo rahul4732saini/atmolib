@@ -18,33 +18,45 @@ class TestWeather:
     Tests the `Weather` class and its defined methods.
     """
 
-    def test_object_initialization(
+    def test_object_initialization_with_valid_coorindates(
         self, valid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
         """
-        Test the `Weather` object initialization with valid parameters.
+        Tests the `Weather` object initialization
+        with valid coordinates.
         """
 
         for lat, long in valid_coordinates:
             Weather(lat, long)
 
+    def test_object_initialization_with_valid_forecast_days(self) -> None:
+        """
+        Tests the `Weather` object initialization
+        with valid forecast days.
+        """
+
         for days in (1, 10, 16):
             Weather(0, 0, days)
 
-    def test_object_initialization_with_invalid_parameters(
+    def test_object_initialization_with_invalid_coordinates(
         self, invalid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
         """
-        Tests the `Weather` object initialization with invalid parameters.
+        Tests the `Weather` object initialization
+        with invalid coordinates.
         """
 
         with pytest.raises(ValueError):
-
-            # Expects an ValueError upon initialization with invalid coordinates.
             for lat, long in invalid_coordinates:
                 Weather(lat, long)
 
-            # Expects an ValueError upon initialization with invalid forecast days.
+    def test_object_initialization_with_invalid_forecast_days(self) -> None:
+        """
+        Tests the `Weather` object initialization
+        with invalid forecast days.
+        """
+
+        with pytest.raises(ValueError):
             for days in (0, -1, 17):
                 Weather(0, 0, days)
 
