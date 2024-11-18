@@ -35,3 +35,13 @@ def cities() -> tuple[str, ...]:
 @pytest.fixture
 def invalid_city_counts() -> tuple[int | float, ...]:
     return 21, 0, -1, 2.5, 20.9
+
+
+@pytest.fixture
+def valid_timeouts() -> tuple[int | float | None, ...]:
+    return 5.5, 10, 3.7, None
+
+
+@pytest.fixture
+def invalid_timeouts() -> tuple[int | float | None, ...]:
+    return 0, -1, -5.5
