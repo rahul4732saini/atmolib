@@ -2,6 +2,7 @@
 Tests the public functions defined within atmolib/common/tools.py.
 """
 
+import requests
 import pytest
 from atmolib import tools
 
@@ -31,6 +32,31 @@ def test_get_elevation_function_with_invalid_coordinates(
             tools.get_elevation(lat, long)
 
 
+def test_get_elevation_function_with_valid_timeouts(
+    valid_timeouts: tuple[int | float | None, ...]
+) -> None:
+    """
+    Tests the `tools.get_elevation` function with valid request timeouts.
+    """
+
+    for timeout in valid_timeouts:
+        tools.get_elevation(0, 0, timeout)
+
+
+def test_get_elevation_function_with_invalid_timeouts(
+    invalid_timeouts: tuple[int | float | None, ...]
+) -> None:
+    """
+    Tests the `tools.get_evevation` function with invliad request timeouts.
+    """
+
+    # Expects a ConnectionError with invalid timeout.
+    with pytest.raises(requests.ConnectionError):
+
+        for timeout in invalid_timeouts:
+            tools.get_elevation(0, 0, timeout)
+
+
 def test_city_details_function(cities: tuple[str, ...]) -> None:
     """
     Tests the `tools.get_city_details` function with different city names.
@@ -53,3 +79,30 @@ def test_city_details_function_with_invalid_count(
         # Expects a ValueError with invalid city count arguments.
         for count in invalid_city_counts:
             tools.get_city_details("delhi", count)
+
+
+def test_city_details_function_with_valid_timeouts(
+    valid_timeouts: tuple[int | float | None, ...]
+) -> None:
+    """
+    Tests the `tools.get_city_details`
+    function with valid request timeouts.
+    """
+
+    for timeout in valid_timeouts:
+        tools.get_city_details(0, 0, timeout)
+
+
+def test_city_details_function_with_invalid_timeouts(
+    invalid_timeouts: tuple[int | float | None],
+) -> None:
+    """
+    Tests the `tools.get_city_details`
+    function with invliad request timeouts.
+    """
+
+    with pytest.raises(requests.ConnectionError):
+
+        # Expects a ConnectionError with an invalid timeout.
+        for timeout in invalid_timeouts:
+            tools.get_city_details(0, 0, timeout)
