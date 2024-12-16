@@ -113,7 +113,7 @@ class BaseForecast(BaseMeteor):
         lat: int | float,
         long: int | float,
         forecast_days: int = 7,
-        timeout: int | float | None = None,
+        timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
     ) -> None:
         super().__init__(lat, long, timeout)
         self.forecast_days = forecast_days
