@@ -127,8 +127,8 @@ class BaseForecast(BaseMeteor):
 
         if __value not in range(1, self._max_forecast_days + 1):
             raise ValueError(
-                "'forecast_days' must be an integer between 1 "
-                f"and {self._max_forecast_days}."
+                "'forecast_days' must be an integer between"
+                f" 1 and {self._max_forecast_days}."
             )
 
         # Also updates the request parameters mapping with
@@ -137,8 +137,8 @@ class BaseForecast(BaseMeteor):
 
     def __repr__(self) -> str:
         return (
-            f"{self.__class__.__name__}(lat={self._lat}, long={self._long}, "
-            f"forecast_days={self._forecast_days})"
+            f"{self.__class__.__name__}(lat={self._lat}, long={self._long},"
+            f" forecast_days={self._forecast_days})"
         )
 
 
