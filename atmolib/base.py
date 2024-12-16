@@ -37,7 +37,7 @@ class BaseMeteor:
 
         self.lat = lat
         self.long = long
-        self._timeout = timeout
+        self.timeout = timeout
 
     @property
     def lat(self) -> int | float:
