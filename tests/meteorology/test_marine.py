@@ -29,6 +29,14 @@ class TestMarineWeather:
         for days in (1, 4, 8):
             MarineWeather(0, 0, forecast_days=days)
 
+    def test_object_initialization_with_valid_timeouts(
+        self, valid_timeouts: tuple[int | float | None, ...]
+    ) -> None:
+        """Tests the object initialization with valid request timeouts."""
+
+        for timeout in valid_timeouts:
+            MarineWeather(0, 0, timeout=timeout)
+
     def test_object_initialization_with_invalid_forecast_days(self) -> None:
         """Tests the object initialization with invalid forecast days."""
 
@@ -41,6 +49,17 @@ class TestMarineWeather:
 
         for type_ in constants.WAVE_TYPES:
             MarineWeather(0, 0, type_)
+
+    def test_object_initialization_with_invalid_timeouts(
+        self, invalid_timeouts: tuple[int | float | None, ...]
+    ) -> None:
+        """
+        Tests the object initialization with invalid request timeouts.
+        """
+
+        with pytest.raises(ValueError):
+            for timeout in invalid_timeouts:
+                MarineWeather(0, 0, timeout=timeout)
 
     @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
     def test_marine_weather_summary_methods(self, wave_type: str) -> None:
