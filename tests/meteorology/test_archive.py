@@ -18,40 +18,39 @@ class TestWeatherArchive:
     Tests the `WeatherArchive` class and its defined methods.
     """
 
-    def test_object_initialization(
-        self,
-        valid_coordinates: tuple[tuple[float, float], ...],
-        valid_archive_dates: tuple[tuple[str, str], ...],
+    def test_object_initialization_with_valid_coordinates(
+        self, valid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
-        """
-        Test the `WeatherArchive` object initialization with valid parameters.
-        """
+        """Tests the object initialization with valid coordinates."""
 
         for lat, long in valid_coordinates:
-            WeatherArchive(lat, long, start_date="2020-01-01", end_date="2020-01-10")
+            WeatherArchive(lat, long, start_date="2020-01-01", end_date="2020-01-05")
+
+    def test_object_initialization_with_valid_dates(
+        self, valid_archive_dates: tuple[tuple[str, str], ...]
+    ) -> None:
+        """Tests the object initialization with valid archive dates."""
 
         for start, end in valid_archive_dates:
-            WeatherArchive(0, 0, start, end)
+            WeatherArchive(0, 0, start_date=start, end_date=end)
 
-    def test_object_initialization_with_invalid_parameters(
-        self,
-        invalid_coordinates: tuple[tuple[float, float], ...],
-        invalid_archive_dates: tuple[tuple[str, str], ...],
+    def test_object_initialization_with_invalid_coordinates(
+        self, invalid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
-        """
-        Tests the `WeatherArchive` object initialization with invalid parameters.
-        """
+        """Test the object initialization with invalid coordinates."""
 
         with pytest.raises(ValueError):
-
-            # Expects a ValueError upon initialization with invalid coordinates.
             for lat, long in invalid_coordinates:
                 WeatherArchive(
-                    lat, long, start_date="2020-01-01", end_date="2020-01-10"
+                    lat, long, start_date="2020-01-01", end_date="2020-01-05"
                 )
 
-            # Expects a ValueError upon initialization with
-            # invalid start and end date for the archive data.
+    def test_object_initialization_with_invalid_dates(
+        self, invalid_archive_dates: tuple[tuple[str, str], ...]
+    ) -> None:
+        """Tests the object initialization with invalid archive dates."""
+
+        with pytest.raises(ValueError):
             for start, end in invalid_archive_dates:
                 WeatherArchive(0, 0, start, end)
 
