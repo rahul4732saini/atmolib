@@ -15,33 +15,32 @@ class TestMarineWeather:
     Tests the `MarineWeather` class and its defined methods.
     """
 
-    def test_object_initialization(
+    def test_object_initialization_with_valid_coordinates(
         self, valid_marine_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
-        """
-        Test the `MarineWeather` object initialization with valid parameters.
-        """
+        """Test the object initialization with valid coordinates."""
 
         for lat, long in valid_marine_coordinates:
             MarineWeather(lat, long)
 
-    @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
-    def test_object_initialization_wave_type_parameter(self, wave_type: str) -> None:
-        """
-        Tests the `MarineWeather` object initialization with different wave types.
-        """
-        MarineWeather(0, 0, wave_type)
+    def test_object_initialization_with_valid_forecast_days(self) -> None:
+        """Test the object initialization with valid forecast days."""
 
-    def test_object_initialization_with_invalid_parameters(self) -> None:
-        """
-        Tests the `MarineWeather` object initialization with invalid parameters.
-        """
+        for days in (1, 4, 8):
+            MarineWeather(0, 0, forecast_days=days)
+
+    def test_object_initialization_with_invalid_forecast_days(self) -> None:
+        """Tests the object initialization with invalid forecast days."""
 
         with pytest.raises(ValueError):
-
-            # Expects a ValueError upon initialization with invalid forecast day.
             for days in (0, -1, 9):
                 MarineWeather(0, 0, forecast_days=days)
+
+    def test_object_initialization_wave_type_parameter(self) -> None:
+        """Tests the object initialization with different wave types."""
+
+        for type_ in constants.WAVE_TYPES:
+            MarineWeather(0, 0, type_)
 
     @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
     def test_marine_weather_summary_methods(self, wave_type: str) -> None:
