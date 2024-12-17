@@ -34,6 +34,16 @@ class TestWeatherArchive:
         for start, end in valid_archive_dates:
             WeatherArchive(0, 0, start_date=start, end_date=end)
 
+    def test_object_initialization_with_valid_timeouts(
+        self, valid_timeouts: tuple[int | float | None, ...]
+    ) -> None:
+        """Test the object initialization with valid request timeouts."""
+
+        for timeout in valid_timeouts:
+            WeatherArchive(
+                0, 0, start_date="2020-01-01", end_date="2020-01-05", timeout=timeout
+            )
+
     def test_object_initialization_with_invalid_coordinates(
         self, invalid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
@@ -53,6 +63,21 @@ class TestWeatherArchive:
         with pytest.raises(ValueError):
             for start, end in invalid_archive_dates:
                 WeatherArchive(0, 0, start, end)
+
+    def test_object_initialization_with_invalid_timeouts(
+        self, invalid_timeouts: tuple[int | float | None, ...]
+    ) -> None:
+        """Test the object initilization with invalid request timeouts."""
+
+        with pytest.raises(ValueError):
+            for timeout in invalid_timeouts:
+                WeatherArchive(
+                    0,
+                    0,
+                    start_date="2020-01-01",
+                    end_date="2020-01-05",
+                    timeout=timeout,
+                )
 
     # The following block comprises test verification methods.
 
