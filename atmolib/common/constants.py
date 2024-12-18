@@ -12,6 +12,9 @@ from pathlib import Path
 # Default timeout for requesting data from API endpoints in seconds(s).
 DEFAULT_REQUEST_TIMEOUT = 30
 
+MAX_PAST_DAYS = 92
+DEFAULT_PAST_DAYS = 0
+
 # API endpoint URLs.
 WEATHER_API = "https://api.open-meteo.com/v1/forecast"
 WEATHER_ARCHIVE_API = "https://archive-api.open-meteo.com/v1/archive"
