@@ -94,17 +94,20 @@ class BaseForecast(BaseMeteor):
     # explicitly defined by child classes as per requirements.
     _max_forecast_days: int
 
-    __slots__ = "_lat", "_long", "_params", "_forecast_days"
+    __slots__ = "_lat", "_long", "_params", "_forecast_days", "_past_days"
 
     def __init__(
         self,
         lat: int | float,
         long: int | float,
         forecast_days: int = 7,
+        past_days: int = constants.DEFAULT_PAST_DAYS,
         timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
     ) -> None:
         super().__init__(lat, long, timeout)
+
         self.forecast_days = forecast_days
+        self.past_days = past_days
 
     @property
     def forecast_days(self) -> int:
@@ -122,6 +125,23 @@ class BaseForecast(BaseMeteor):
         # Also updates the request parameters mapping with
         # the forecast days value for usage in API requests.
         self._forecast_days = self._params["forecast_days"] = __value
+
+    @property
+    def past_days(self) -> int:
+        return self._past_days
+
+    @past_days.setter
+    def past_days(self, __value: int) -> None:
+
+        if __value not in range(constants.MAX_PAST_DAYS + 1):
+            raise ValueError(
+                "'past_days' must be an integer between"
+                f" 0 and {constants.MAX_PAST_DAYS}."
+            )
+
+        # Also updates the request parameters mapping with
+        # the past days value for usage in API requests.
+        self._past_days = self._params["past_days"] = __value
 
     def __repr__(self) -> str:
         return (
