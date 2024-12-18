@@ -70,18 +70,6 @@ class BaseMeteor:
         tools.verify_timeout(__value)
         self._timeout = __value
 
-    def _get_current_data(self, params: dict[str, Any]) -> int | float:
-        """
-        Extracts current meteorology data from Open-Meteo's
-        API endpoints based on the specified parameters.
-
-        #### Params:
-        - params (dict[str, Any]): API request parameters.
-        """
-        return tools.get_current_data(
-            self._session, self._api, params | self._params, self._timeout
-        )
-
     def _get_periodical_data(
         self, params: dict[str, Any], dtype=np.float32
     ) -> pd.Series:
@@ -139,6 +127,18 @@ class BaseForecast(BaseMeteor):
         return (
             f"{self.__class__.__name__}(lat={self._lat}, long={self._long},"
             f" forecast_days={self._forecast_days})"
+        )
+
+    def _get_current_data(self, params: dict[str, Any]) -> int | float:
+        """
+        Extracts current meteorology data from Open-Meteo's
+        API endpoints based on the specified parameters.
+
+        #### Params:
+        - params (dict[str, Any]): API request parameters.
+        """
+        return tools.get_current_data(
+            self._session, self._api, params | self._params, self._timeout
         )
 
 
