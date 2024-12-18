@@ -24,7 +24,15 @@ class MarineWeather(BaseForecast):
     resolution of 5 kilometers(km).
     """
 
-    __slots__ = "_lat", "_long", "_wave_type", "_type", "_params", "_forecast_days"
+    __slots__ = (
+        "_lat",
+        "_long",
+        "_wave_type",
+        "_type",
+        "_params",
+        "_forecast_days",
+        "_past_days",
+    )
 
     _session = requests.Session()
     _api = constants.MARINE_API
@@ -41,6 +49,7 @@ class MarineWeather(BaseForecast):
         long: int | float,
         wave_type: str = "composite",
         forecast_days: int = 7,
+        past_days: int = constants.DEFAULT_PAST_DAYS,
         timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
     ) -> None:
         """
@@ -57,8 +66,10 @@ class MarineWeather(BaseForecast):
             Defaults to `composite`.
         - forecast_days (int): Number of days for which the forecast has to
         be extracted; must be in the range of 1 and 8. Defaults to 7.
+        - past_days (int): Number of days for which past data has to be
+        extracted; must be in the range of 0 and 92. Defaults to 0.
         """
-        super().__init__(lat, long, forecast_days, timeout)
+        super().__init__(lat, long, forecast_days, past_days, timeout)
         self.wave_type = wave_type
 
     @property

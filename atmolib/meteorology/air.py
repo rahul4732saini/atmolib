@@ -23,7 +23,7 @@ class AirQuality(BaseForecast):
     hourly air quality forecast data.
     """
 
-    __slots__ = "_lat", "_long", "_forecast_days"
+    __slots__ = "_lat", "_long", "_params", "_forecast_days", "_past_days"
 
     _session = requests.Session()
     _api = constants.AIR_QUALITY_API
@@ -39,6 +39,7 @@ class AirQuality(BaseForecast):
         lat: int | float,
         long: int | float,
         forecast_days: int = 7,
+        past_days: int = constants.DEFAULT_PAST_DAYS,
         timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
     ) -> None:
         """
@@ -47,10 +48,12 @@ class AirQuality(BaseForecast):
         #### Params:
         - lat (int | float): Latitudinal coordinates of the location.
         - long (int | float): Longitudinal coordinates of the location.
-        - forecast_days (int): Number of days for which the forecast has to
+        - forecast_days (int): Number of days for which forecast has to
         be extracted; must be in the range of 1 and 7. Defaults to 7.
+        - past_days (int): Number of days for which past data has to be
+        extracted; must be in the range of 0 and 92. Defaults to 0.
         """
-        super().__init__(lat, long, forecast_days, timeout)
+        super().__init__(lat, long, forecast_days, past_days, timeout)
 
     @staticmethod
     def _verify_atmospheric_gas(gas: str) -> None:
