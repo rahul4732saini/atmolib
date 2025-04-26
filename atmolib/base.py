@@ -67,7 +67,10 @@ class BaseMeteor:
 
     @timeout.setter
     def timeout(self, __value: int | float | None) -> None:
-        tools.verify_timeout(__value)
+
+        if __value is not None and __value <= 0:
+            raise ValueError("'timeout' must be a greater than 0 or None.")
+
         self._timeout = __value
 
     def _get_periodical_data(
