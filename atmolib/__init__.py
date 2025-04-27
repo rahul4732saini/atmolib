@@ -22,7 +22,7 @@ forecast weather data for any location based on the coordinates.
 13.9
 >>> weather.get_current_wind_speed()
 10.7
-        
+
 ### WeatherArchive Class:
 The WeatherArchive class defines mechansim for extracting
 past weather data since 1940 for analysis and reporting.
