@@ -7,8 +7,8 @@ Open-Meteo APIs. It enables developers to extract weather, historical weather, a
 and marine weather data effortlessly, empowering them to integrate accurate meteorological
 information seamlessly into their python code.
 
-A short overview of all meteorology data extraction classes
-has been defined below for quick user reference:
+A brief overview of all meteorology data extraction
+classes is provided below for quick user reference:
 
 ### Weather Class
 The Weather class defines mechanism for extracting current and
@@ -74,7 +74,7 @@ Time71  Val71
 Time72  Val72
 Length: 72, dtype: float32
 
-The methods available for meteorological data extraction extend well beyong
+The methods available for meteorological data extraction extend well beyond
 those mentioned above. For a comprehensive overview, please refer to the package
 documentation at https://www.github.com/rahul4732saini/atmolib.
 
