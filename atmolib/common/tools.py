@@ -209,17 +209,13 @@ def get_periodical_summary(
     """
 
     _verify_keys(params, ("latitude", "longitude"))
-    frequency: str
 
-    # Looks up for the frequency of the requested periodical data
-    # in the parameters mapping and raises an error if not found.
-    if "hourly" in params:
-        frequency = "hourly"
+    # Sets the frequency to 'daily' if the 'hourly' key is not found
+    # in the parameters dictionary. This is later verified under the
+    # following conditional statement.
+    frequency: str = "hourly" if "hourly" in params else "daily"
 
-    elif "daily" in params:
-        frequency = "daily"
-
-    else:
+    if frequency not in params:
         raise KeyError("frequency parameter not found in the request parameters.")
 
     results: dict[str, Any] = _request_json(api, params, session, timeout)
