@@ -54,11 +54,11 @@ def _request_json(
 def _verify_keys(params: dict[str, Any], keys: tuple[str, ...]) -> None:
     """
     Looks up for the specified keys in the specified parameters
-    mapping and raises a `KeyError` if any are found missing.
+    dictionary and raises a `KeyError` if any are found missing.
 
     #### Params:
     - params (dict[str, Any]): API request parameters.
-    - keys (tuple[str]): Keys to look up for in the parameters mapping.
+    - keys (tuple[str]): Keys to look up for in the parameters dictionary.
     """
 
     for key in keys:
@@ -85,14 +85,19 @@ def get_current_data(
     - params (dict[str, Any]): API request parameters.
     - timeout (int | float | None): Maximum duration to wait for a response from
     the API endpoint. Must be a number greater than 0 or `None`.
+
+    #### Returns:
+    - An integer or floating-point number signifying the current
+    meteorology data associated with the specified metric.
     """
 
     _verify_keys(params, ("latitude", "longitude", "current"))
     results: dict[str, Any] = _request_json(api, params, session, timeout)
 
-    # Extracts the current meteorology data metrics from the 'results'
-    # mapping. It is mapped with the name of the requested metric within
-    # the dictionary mapped with the 'current' key.
+    # Extracts the current meteorology data from the 'results' dictionary.
+    # The data value is mapped to the name of the specified metric within
+    # the dictionary mapped to the 'current' key. The name of the metric is
+    # mapped to the 'current' key within the request parameters dictionary.
     return results["current"][params["current"]]
 
 
@@ -110,7 +115,6 @@ def get_periodical_data(
     #### Params:
     - session (requests.Session): A `requests.Session` object for making API requests.
     - api (str): Absolute URL of the API endpoint.
-    - frequency (str): Frequency of the meteorology data (hourly/daily).
     - params (dict[str, Any]): API request parameters.
     - dtype: numpy datatype for meteorology data storage.
     Defaults to float32 (32-bit floating point number).
@@ -118,9 +122,9 @@ def get_periodical_data(
     the API endpoint. Must be a number greater than 0 or `None`.
 
     #### Returns:
-    - pd.Series: Returns a pandas Series comprising the datetime and periodical meteorology
-    data. The index comprises the datetime/date of the corresponding data depending upon the
-    frequency in ISO-8601 format (YYYY-MM-DDTHH:MM) or (YYYY-MM-DD).
+    - pd.Series: Returns a pandas Series object comprising the periodical
+    meteorology data. The index comprises the date or datetime depending
+    upon the frequency in ISO-8601 format (YYYY-MM-DDTHH:MM) or (YYYY-MM-DD).
     """
 
     _verify_keys(params, ("latitude", "longitude"))
@@ -135,12 +139,15 @@ def get_periodical_data(
 
     results: dict[str, Any] = _request_json(api, params, session, timeout)
 
-    # Extracts meteorology data mapped with the key corresponding to the
-    # name of the specified 'frequency' within the 'results' mapping.
+    # Extracts the meteorology data mapped to the name
+    # of the frequency within the 'results' dictionary.
     data: dict[str, Any] = results[frequency]
 
-    # Extracts meteorology data mapped with the name of the requested metric
-    # from the 'data' mapping and initializes the pandas Series object.
+    # Extracts the meteorology data mapped to the name of the requested
+    # metric from the 'data' dictionary and initializes a pandas Series
+    # object for storing the data along with their associated timestamps.
+    # The metric name is mapped to the name of the frequency within the
+    # request parameters dictionary.
     series = pd.Series(data[params[frequency]], index=data["time"], dtype=dtype)
     series.index.name = "Date" if frequency == "daily" else "Datetime"
 
