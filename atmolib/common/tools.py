@@ -36,9 +36,9 @@ def _request_json(
     from the API endpoint. Must be a number greater than 0 or `None`.
     """
 
-    request_handler: requests.Session | ModuleType = session if session else requests
+    handler: requests.Session | ModuleType = session if session else requests
 
-    with request_handler.get(api, params=params, timeout=timeout) as response:
+    with handler.get(api, params=params, timeout=timeout) as response:
         results: dict[str, Any] = response.json()
 
         # Raises a request error if the response
