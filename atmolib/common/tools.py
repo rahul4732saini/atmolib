@@ -202,10 +202,15 @@ def get_periodical_summary(
     - session (requests.Session): A `requests.Session` object for making API requests.
     - api (str): Absolute URL of the API endpoint.
     - params (dict[str, Any]): API request parameters.
-    - labels (list[str]): List of strings representing the index labels
-    for the resultant pandas Series object.
+    - labels (list[str]): List of strings representing the column labels
+    for the resultant pandas DataFrame object.
     - timeout (int | float | None): Maximum duration to wait for a response from
     the API endpoint. Must be a number greater than 0 or `None`.
+
+    #### Returns:
+    - pd.DataFrame: A pandas DataFrame object comprising the periodical
+    meteorology summary data, with each individual column representing the
+    data associated with a specific metric.
     """
 
     _verify_keys(params, ("latitude", "longitude"))
@@ -220,20 +225,16 @@ def get_periodical_summary(
 
     results: dict[str, Any] = _request_json(api, params, session, timeout)
 
-    # Extracts summary data mapped with the key corresponding to the
-    # name of the specified 'frequency' within the 'results' mapping.
+    # Extracts the summary data mapped to the name of
+    # the frequency within the 'results' dictioanary.
     data: dict[str, Any] = results[frequency]
 
-    # Pops the data timeline array mapped with 'time' key within the 'data'
-    # mapping to be used as index labels in the resultant pandas DataFrame.
+    # Pops the data timeline array mapped to the 'time' key within the
+    # 'data' dictionary to use the datetime labels as the index of the
+    # resultant pandas DataFrame object.
     timeline: list[str] = data.pop("time")
 
-    # Initializes a pandas DataFrame for the summary data and alters the
-    # column labels with the specified labels within the `labels` array.
-    dataframe: pd.DataFrame = pd.DataFrame(data, index=timeline)
-    dataframe.columns = pd.Index(labels)
-
-    return dataframe
+    return pd.DataFrame(data, index=timeline, columns=labels)
 
 
 def get_elevation(
