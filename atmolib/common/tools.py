@@ -87,8 +87,8 @@ def get_current_data(
     the API endpoint. Must be a number greater than 0 or `None`.
 
     #### Returns:
-    - An integer or floating-point number signifying the current
-    meteorology data associated with the specified metric.
+    - int | float: An integer or floating-point number signifying the
+    current meteorology data associated with the specified metric.
     """
 
     _verify_keys(params, ("latitude", "longitude", "current"))
@@ -109,7 +109,7 @@ def get_periodical_data(
     timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
 ) -> pd.Series:
     """
-    Extracts periodical (hourly/daily) meteorology
+    Extracts periodical (hourly or daily) meteorology
     data from the specified API endpoint.
 
     #### Params:
@@ -163,7 +163,7 @@ def get_current_summary(
 ) -> pd.Series:
     """
     Extracts current meteorology summary
-    data from the supplied API endpoint.
+    data from the specified API endpoint.
 
     #### Params:
     - session (requests.Session): A `requests.Session` object for making API requests.
@@ -173,15 +173,21 @@ def get_current_summary(
     the resultant pandas Series object.
     - timeout (int | float | None): Maximum duration to wait for a response from
     the API endpoint. Must be a number greater than 0 or `None`.
+
+    #### Returns:
+    - pd.Series: A pandas Series object comprising the current
+    meteorology summary data, indexed by the specified data labels.
     """
 
     _verify_keys(params, ("latitude", "longitude", "current"))
     results: dict[str, Any] = _request_json(api, params, session, timeout)
 
-    # Extracts current meteorology data from the 'current' key in the 'results' mapping.
+    # Extracts the current meteorology data mapped to the
+    # 'current' key within from the 'results' dictionary.
     data: dict[str, Any] = results["current"]
 
-    # Removing redundant key-values pairs from summary data.
+    # Removes redundant key-values pairs from the dictionary as the same
+    # object is used for initializing the resultant pandas Series object.
     del data["time"], data["interval"]
 
     return pd.Series(data.values(), index=labels)
@@ -269,7 +275,7 @@ def get_elevation(
         constants.ELEVATION_API, params, timeout=timeout
     )
 
-    # Extracts and returns the elevation data from the API response mapping.
+    # Extracts the elevation data from the 'results' dictionary.
     (elevation,) = results["elevation"]
 
     return elevation
@@ -281,7 +287,8 @@ def get_city_details(
     timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
 ) -> list[dict[str, Any]] | None:
     """
-    Retrieves the city details from Open-meteo geocoding API based on the city name.
+    Extracts the details of the city from Open-meteo's
+    geocoding API based on the specified city name.
 
     #### Params:
     - name (str): The name of the city to retrieve details for.
@@ -299,7 +306,7 @@ def get_city_details(
         constants.GEOCODING_API, params, timeout=timeout
     )
 
-    # Extracts the city details from the 'results' key in the API response
-    # mapping. `None` is returned if no cities with the specified name are
-    # found in the Open-Meteo database.
+    # Extracts the city details from the 'results' key in the 'results'
+    # dictionary. 'None' is returned if no cities with the specified name
+    # are found in the API's database.
     return results.get("results")
