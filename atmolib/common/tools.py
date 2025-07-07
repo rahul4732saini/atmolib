@@ -250,7 +250,7 @@ def get_elevation(
 ) -> float:
     """
     Extracts elevation in meters(m) from the sea-level at the specified
-    latitude and longitude from the Open-meteo's elevation API.
+    latitude and longitude from Open-meteo's elevation API.
 
     #### Params:
     - lat (int | float): latitudinal coordinates of the location.
@@ -287,8 +287,7 @@ def get_city_details(
     timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
 ) -> list[dict[str, Any]] | None:
     """
-    Extracts the details of the city from Open-meteo's
-    geocoding API based on the specified city name.
+    Extracts the details of the specified city from Open-meteo's geocoding API.
 
     #### Params:
     - name (str): The name of the city to retrieve details for.
@@ -306,7 +305,6 @@ def get_city_details(
         constants.GEOCODING_API, params, timeout=timeout
     )
 
-    # Extracts the city details from the 'results' key in the 'results'
-    # dictionary. 'None' is returned if no cities with the specified name
-    # are found in the API's database.
+    # Returns 'None' if the 'results' key is not present in the dictionary
+    # indicating that no cities with the specified name were found.
     return results.get("results")
