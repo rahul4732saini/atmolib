@@ -31,9 +31,12 @@ def _request_json(
     - api (str): Absolute URL of the API endpoint.
     - params (dict[str, Any]): API request parameters.
     - session (requests.Session | None): A `requests.Session` object for making
-    API requests. If not specified, the `requests` module as the fallback.
+    API requests. If not specified, the `requests` module is used as the fallback.
     - timeout (int | float | None): Maximum duration to wait for a response
     from the API endpoint. Must be a number greater than 0 or `None`.
+
+    #### Returns:
+    - dict[str, Any]: A dictionary comprising the API response data.
     """
 
     handler: requests.Session | ModuleType = session if session else requests
@@ -41,8 +44,8 @@ def _request_json(
     with handler.get(api, params=params, timeout=timeout) as response:
         results: dict[str, Any] = response.json()
 
-        # Raises a request error if the response
-        # status code does not indicate a success.
+        # Extracts the reason from the API response and raises a request
+        # error if the status code does not indicate a success.
         if response.status_code // 100 != 2:
             message = results["reason"]
 
