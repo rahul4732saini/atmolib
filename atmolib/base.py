@@ -97,7 +97,14 @@ class BaseForecast(BaseMeteor):
     # explicitly defined by child classes as per requirements.
     _max_forecast_days: int
 
-    __slots__ = "_lat", "_long", "_params", "_forecast_days", "_past_days"
+    __slots__ = (
+        "_lat",
+        "_long",
+        "_timeout",
+        "_params",
+        "_forecast_days",
+        "_past_days",
+    )
 
     def __init__(
         self,
