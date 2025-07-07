@@ -90,18 +90,17 @@ def get_current_data(
     the API endpoint. Must be a number greater than 0 or `None`.
 
     #### Returns:
-    - int | float: An integer or floating-point number signifying the
-    current meteorology data associated with the specified metric.
+    - int | float: An integer or floating-point number representing
+    the current meteorology data for the specified metric.
     """
 
     _verify_keys(params, ("latitude", "longitude", "current"))
+
     results: dict[str, Any] = _request_json(api, params, session, timeout)
+    metric: str = params["current"]
 
     # Extracts the current meteorology data from the 'results' dictionary.
-    # The data value is mapped to the name of the specified metric within
-    # the dictionary mapped to the 'current' key. The name of the metric is
-    # mapped to the 'current' key within the request parameters dictionary.
-    return results["current"][params["current"]]
+    return results["current"][metric]
 
 
 def get_periodical_data(
@@ -112,22 +111,21 @@ def get_periodical_data(
     timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
 ) -> pd.Series:
     """
-    Extracts periodical (hourly or daily) meteorology
-    data from the specified API endpoint.
+    Extracts periodical (hourly or daily) meteorology data from
+    the specified API endpoint.
 
     #### Params:
     - session (requests.Session): A `requests.Session` object for making API requests.
     - api (str): Absolute URL of the API endpoint.
     - params (dict[str, Any]): API request parameters.
-    - dtype: numpy datatype for meteorology data storage.
-    Defaults to float32 (32-bit floating point number).
+    - dtype: Numpy datatype for meteorology data storage. Defaults to float32.
     - timeout (int | float | None): Maximum duration to wait for a response from
     the API endpoint. Must be a number greater than 0 or `None`.
 
     #### Returns:
-    - pd.Series: Returns a pandas Series object comprising the periodical
-    meteorology data. The index comprises the date or datetime depending
-    upon the frequency in ISO-8601 format (YYYY-MM-DDTHH:MM) or (YYYY-MM-DD).
+    - pd.Series: A pandas Series object comprising the periodical meteorology
+    data. The index comprises the date or datetime depending upon the frequency
+    in ISO-8601 format (YYYY-MM-DDTHH:MM) or (YYYY-MM-DD).
     """
 
     _verify_keys(params, ("latitude", "longitude"))
@@ -141,17 +139,15 @@ def get_periodical_data(
         raise KeyError("frequency parameter not found in the request parameters.")
 
     results: dict[str, Any] = _request_json(api, params, session, timeout)
+    metric: str = params[frequency]
 
     # Extracts the meteorology data mapped to the name
     # of the frequency within the 'results' dictionary.
     data: dict[str, Any] = results[frequency]
 
-    # Extracts the meteorology data mapped to the name of the requested
-    # metric from the 'data' dictionary and initializes a pandas Series
-    # object for storing the data along with their associated timestamps.
-    # The metric name is mapped to the name of the frequency within the
-    # request parameters dictionary.
-    series = pd.Series(data[params[frequency]], index=data["time"], dtype=dtype)
+    # Initializes a pandas Series object from the extracted
+    # meteorology data and their associated timestamps.
+    series = pd.Series(data[metric], index=data["time"], dtype=dtype)
     series.index.name = "Date" if frequency == "daily" else "Datetime"
 
     return series
@@ -165,8 +161,7 @@ def get_current_summary(
     timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
 ) -> pd.Series:
     """
-    Extracts current meteorology summary
-    data from the specified API endpoint.
+    Extracts current meteorology summary data from the specified API endpoint.
 
     #### Params:
     - session (requests.Session): A `requests.Session` object for making API requests.
@@ -179,7 +174,7 @@ def get_current_summary(
 
     #### Returns:
     - pd.Series: A pandas Series object comprising the current
-    meteorology summary data, indexed by the specified data labels.
+    meteorology summary data, indexed by the specified labels.
     """
 
     _verify_keys(params, ("latitude", "longitude", "current"))
@@ -193,6 +188,9 @@ def get_current_summary(
     # object is used for initializing the resultant pandas Series object.
     del data["time"], data["interval"]
 
+    # The position of the values is guaranteed as the API responds back
+    # with the data in the exact order as specified in the parameters,
+    # and the dictionary too holds them in order.
     return pd.Series(data.values(), index=labels)
 
 
@@ -204,8 +202,8 @@ def get_periodical_summary(
     timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
 ) -> pd.DataFrame:
     """
-    Extracts periodical meteorology summary
-    data from the specified API endpoint.
+    Extracts periodical (hourly or daily)meteorology summary data
+    from the specified API endpoint.
 
     #### Params:
     - session (requests.Session): A `requests.Session` object for making API requests.
@@ -238,9 +236,8 @@ def get_periodical_summary(
     # the frequency within the 'results' dictioanary.
     data: dict[str, Any] = results[frequency]
 
-    # Pops the data timeline array mapped to the 'time' key within the
-    # 'data' dictionary to use the datetime labels as the index of the
-    # resultant pandas DataFrame object.
+    # Extracts the timeline array to use the datetime labels
+    # as indices for the resultant DataFrame object.
     timeline: list[str] = data.pop("time")
 
     return pd.DataFrame(data, index=timeline, columns=labels)
