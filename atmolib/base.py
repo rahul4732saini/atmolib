@@ -132,8 +132,6 @@ class BaseForecast(BaseMeteor):
                 f" 1 and {self._max_forecast_days}."
             )
 
-        # Also updates the request parameters mapping with
-        # the forecast days value for usage in API requests.
         self._forecast_days = self._params["forecast_days"] = __value
 
     @property
@@ -149,8 +147,6 @@ class BaseForecast(BaseMeteor):
                 f" 0 and {constants.MAX_PAST_DAYS}."
             )
 
-        # Also updates the request parameters mapping with
-        # the past days value for usage in API requests.
         self._past_days = self._params["past_days"] = __value
 
     def __repr__(self) -> str:
