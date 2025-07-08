@@ -25,7 +25,14 @@ class WeatherArchive(BaseWeather):
     the present.
     """
 
-    __slots__ = "_lat", "_long", "_params", "_start_date", "_end_date"
+    __slots__ = (
+        "_lat",
+        "_long",
+        "_timeout",
+        "_params",
+        "_start_date",
+        "_end_date",
+    )
 
     _session = requests.Session()
     _api = constants.WEATHER_ARCHIVE_API

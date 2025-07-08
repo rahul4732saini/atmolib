@@ -29,6 +29,7 @@ class MarineWeather(BaseForecast):
         "_long",
         "_wave_type",
         "_type",
+        "_timeout",
         "_params",
         "_forecast_days",
         "_past_days",

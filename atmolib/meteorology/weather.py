@@ -25,7 +25,14 @@ class Weather(BaseForecast, BaseWeather):
     and daily weather forecast data.
     """
 
-    __slots__ = "_lat", "_long", "_params", "_forecast_days", "_past_days"
+    __slots__ = (
+        "_lat",
+        "_long",
+        "_params",
+        "_timeout",
+        "_forecast_days",
+        "_past_days",
+    )
 
     _api = constants.WEATHER_API
     _session = requests.Session()
