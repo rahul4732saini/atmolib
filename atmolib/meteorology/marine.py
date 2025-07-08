@@ -17,11 +17,9 @@ from ..common import constants, tools
 
 class MarineWeather(BaseForecast):
     """
-    MarineWeather class defines mechanism for extraction of marine weather
-    data based on the latitudinal and longitudinal coordinates of the location.
-    It interactrs with Open-Meteo's Marine Weather API to fetech the current or
-    upto upcoming 8-days hourly and daily marine weather forecast data with a
-    resolution of 5 kilometers(km).
+    MarineWeather class defines methods for the extraction of marine weather
+    data based on the latitudinal and longitudinal coordinates of the location
+    with a resolution of 5 kilometers (km).
     """
 
     __slots__ = (
@@ -69,6 +67,8 @@ class MarineWeather(BaseForecast):
         be extracted; must be in the range of 1 and 8. Defaults to 7.
         - past_days (int): Number of days for which past data has to be
         extracted; must be in the range of 0 and 92. Defaults to 0.
+        - timeout (int | float | None): Maximum duration to wait for a response
+        from the API endpoint. Must be a number greater than 0 or `None`.
         """
         super().__init__(lat, long, forecast_days, past_days, timeout)
         self.wave_type = wave_type
