@@ -19,10 +19,8 @@ from ..base import BaseForecast, BaseWeather
 
 class Weather(BaseForecast, BaseWeather):
     """
-    Weather class defines mechanism for extraction of weather data based on the
-    latitudinal and longitudinal coordinates of the location. It interacts with
-    Open-Meteo's Weather API to fetch the current or upto upcoming 16-days hourly
-    and daily weather forecast data.
+    Weather class defines methods for the extraction of weather data based
+    on the latitudinal and longitudinal coordinates of the location.
     """
 
     __slots__ = (
@@ -63,6 +61,12 @@ class Weather(BaseForecast, BaseWeather):
         be extracted; must be in the range of 1 and 16. Defaults to 7.
         - past_days (int): Number of days for which past data has to be
         extracted; must be in the range of 0 and 92. Defaults to 0.
+        - timefmt (str): Format of the date & time labels in periodic data
+        tables; must be one of the following:
+            - `iso8601` (ISO 8601 date & time format)
+            - `unixtime` (Unix timestamp)
+        - timeout (int | float | None): Maximum duration to wait for a response
+        from the API endpoint. Must be a number greater than 0 or `None`.
         """
         super().__init__(lat, long, forecast_days, past_days, timefmt, timeout)
 
