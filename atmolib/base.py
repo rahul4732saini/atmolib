@@ -2,8 +2,8 @@
 Base Module
 -----------
 
-This module comprises classes serving as foundational components
-for the various other classes and functions within the package.
+This module defines classes serving as the foundation for the
+various other classes and functions defined within the package.
 """
 
 from typing import Any
