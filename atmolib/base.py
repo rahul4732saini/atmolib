@@ -23,12 +23,13 @@ class BaseMeteor:
     _session: requests.Session
     _api: str
 
-    __slots__ = "_lat", "_long", "_timeout", "_params"
+    __slots__ = "_lat", "_long", "_timeout", "_timefmt", "_params"
 
     def __init__(
         self,
         lat: int | float,
         long: int | float,
+        timefmt: str = "iso8601",
         timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
     ) -> None:
 
@@ -37,6 +38,7 @@ class BaseMeteor:
 
         self.lat = lat
         self.long = long
+        self.timefmt = timefmt
         self.timeout = timeout
 
     @property
@@ -62,6 +64,18 @@ class BaseMeteor:
             raise ValueError(f"'long' must be a number between -180 and 180.")
 
         self._long = self._params["longitude"] = __value
+
+    @property
+    def timefmt(self) -> str:
+        return self._timeout
+
+    @timeout.setter
+    def timefmt(self, __value: str) -> None:
+
+        if __value not in constants.TIME_FORMATS:
+            raise ValueError(f"{__value!r} is not a valid time format.")
+
+        self._timefmt = self._params["timeformat"] = __value
 
     @property
     def timeout(self) -> int | float | None:
