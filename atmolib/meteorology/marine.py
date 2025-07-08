@@ -97,7 +97,8 @@ class MarineWeather(BaseForecast):
     def __repr__(self) -> str:
         return (
             f"MarineWeather(lat={self._lat}, long={self._long}, "
-            f"wave_type={self._wave_type!r}, forecast_days={self._forecast_days})"
+            f"wave_type={self._wave_type!r}, forecast_days={self._forecast_days}, "
+            f"past_days={self._past_days})"
         )
 
     def get_current_summary(self) -> pd.Series:
