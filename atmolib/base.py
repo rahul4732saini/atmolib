@@ -117,6 +117,7 @@ class BaseForecast(BaseMeteor):
         "_long",
         "_timeout",
         "_params",
+        "_timefmt",
         "_forecast_days",
         "_past_days",
     )
@@ -127,9 +128,10 @@ class BaseForecast(BaseMeteor):
         long: int | float,
         forecast_days: int = 7,
         past_days: int = constants.DEFAULT_PAST_DAYS,
+        timefmt: str = constants.DEFAULT_TIME_FORMAT,
         timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
     ) -> None:
-        super().__init__(lat, long, timeout)
+        super().__init__(lat, long, timefmt, timeout)
 
         self.forecast_days = forecast_days
         self.past_days = past_days
