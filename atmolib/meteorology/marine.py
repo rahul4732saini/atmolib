@@ -29,6 +29,7 @@ class MarineWeather(BaseForecast):
         "_type",
         "_timeout",
         "_params",
+        "_timefmt",
         "_forecast_days",
         "_past_days",
     )
@@ -49,6 +50,7 @@ class MarineWeather(BaseForecast):
         wave_type: str = "composite",
         forecast_days: int = 7,
         past_days: int = constants.DEFAULT_PAST_DAYS,
+        timefmt: str = constants.DEFAULT_TIME_FORMAT,
         timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
     ) -> None:
         """
@@ -67,10 +69,14 @@ class MarineWeather(BaseForecast):
         be extracted; must be in the range of 1 and 8. Defaults to 7.
         - past_days (int): Number of days for which past data has to be
         extracted; must be in the range of 0 and 92. Defaults to 0.
+        - timefmt (str): Format of the date & time labels in periodic data
+        tables; must be one of the following:
+            - `iso8601` (ISO 8601 date & time format)
+            - `unixtime` (Unix timestamp)
         - timeout (int | float | None): Maximum duration to wait for a response
         from the API endpoint. Must be a number greater than 0 or `None`.
         """
-        super().__init__(lat, long, forecast_days, past_days, timeout)
+        super().__init__(lat, long, forecast_days, past_days, timefmt, timeout)
         self.wave_type = wave_type
 
     @property
