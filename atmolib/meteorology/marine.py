@@ -39,7 +39,7 @@ class MarineWeather(BaseForecast):
     _api = constants.MARINE_API
 
     # Maximum number of days for which forecast data can be extracted.
-    _max_forecast_days = 8
+    _max_forecast_days = 16
 
     # Closes the request session upon exit.
     atexit.register(_session.close)
