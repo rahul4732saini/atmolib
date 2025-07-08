@@ -123,7 +123,7 @@ class BaseForecast(BaseMeteor):
     def __repr__(self) -> str:
         return (
             f"{self.__class__.__name__}(lat={self._lat}, long={self._long},"
-            f" forecast_days={self._forecast_days})"
+            f" forecast_days={self._forecast_days}, past_days={self._past_days})"
         )
 
     @property
