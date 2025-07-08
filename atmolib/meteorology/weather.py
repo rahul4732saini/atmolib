@@ -77,7 +77,7 @@ class Weather(BaseForecast, BaseWeather):
         and raises a ValueError if found invalid.
         """
 
-        if altitude not in (10, 80, 120, 180):
+        if altitude not in constants.WIND_ALTITUDES:
             raise ValueError(f"Invalid altitude value specified: {altitude!r}")
 
     def get_current_summary(
