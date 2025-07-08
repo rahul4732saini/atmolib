@@ -92,7 +92,7 @@ class BaseMeteor:
 
 
 class BaseForecast(BaseMeteor):
-    """Base class for all meteorological forecast classes."""
+    """Base class of all meteorological forecast classes."""
 
     # This class attribute is essential for operation and must be
     # explicitly defined by child classes as per requirements.
@@ -170,7 +170,7 @@ class BaseForecast(BaseMeteor):
 
 
 class BaseWeather(BaseMeteor):
-    """Baseclass for all weather classes."""
+    """Baseclass of all weather classes."""
 
     @staticmethod
     def _verify_temperature_unit(unit: str) -> None:
@@ -286,7 +286,7 @@ class BaseWeather(BaseMeteor):
             raise ValueError(f"Invalid frequency specified: {frequency!r}")
 
         data: pd.Series = self._get_periodical_data(
-            {frequency: "weather_code"}, dtype=np.uint8
+            {frequency: "weather_code"}, np.uint8
         )
 
         # Converting the Series into a pandas.DataFrame object
@@ -309,7 +309,10 @@ class BaseWeather(BaseMeteor):
         - unit (str): Precipitation unit; must be `mm` or `inch`. Defaults to `mm`.
         """
         self._verify_precipitation_unit(unit)
-        return self._get_periodical_data({"hourly": "rain", "precipitation_unit": unit})
+
+        return self._get_periodical_data(
+            {"hourly": "rain", "precipitation_unit": unit},
+        )
 
     def get_hourly_snowfall(self) -> pd.Series:
         """Extracts hourly snowfall data in centimeters(cm)."""
