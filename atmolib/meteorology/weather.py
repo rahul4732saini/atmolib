@@ -30,6 +30,7 @@ class Weather(BaseForecast, BaseWeather):
         "_long",
         "_params",
         "_timeout",
+        "_timefmt",
         "_forecast_days",
         "_past_days",
     )
@@ -49,6 +50,7 @@ class Weather(BaseForecast, BaseWeather):
         long: int | float,
         forecast_days: int = 7,
         past_days: int = constants.DEFAULT_PAST_DAYS,
+        timefmt: str = constants.DEFAULT_TIME_FORMAT,
         timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
     ) -> None:
         """
@@ -62,7 +64,7 @@ class Weather(BaseForecast, BaseWeather):
         - past_days (int): Number of days for which past data has to be
         extracted; must be in the range of 0 and 92. Defaults to 0.
         """
-        super().__init__(lat, long, forecast_days, past_days, timeout)
+        super().__init__(lat, long, forecast_days, past_days, timefmt, timeout)
 
     @staticmethod
     def _verify_wind_altitude(altitude: int) -> None:
