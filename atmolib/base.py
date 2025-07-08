@@ -69,7 +69,7 @@ class BaseMeteor:
     def timefmt(self) -> str:
         return self._timeout
 
-    @timeout.setter
+    @timefmt.setter
     def timefmt(self, __value: str) -> None:
 
         if __value not in constants.TIME_FORMATS:
