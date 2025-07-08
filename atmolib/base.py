@@ -16,7 +16,7 @@ from .common import tools, constants
 
 
 class BaseMeteor:
-    """Base class for all meteorology classes."""
+    """Base class of all meteorology classes."""
 
     # The following class attributes are essential for operation and
     # must be explicitly defined by child classes as per requirements.
@@ -45,6 +45,7 @@ class BaseMeteor:
 
     @lat.setter
     def lat(self, __value: int | float) -> None:
+
         if __value < -90 or __value > 90:
             raise ValueError(f"'lat' must be a number between -90 and 90.")
 
@@ -56,6 +57,7 @@ class BaseMeteor:
 
     @long.setter
     def long(self, __value: int | float) -> None:
+
         if __value < -180 or __value > 180:
             raise ValueError(f"'long' must be a number between -180 and 180.")
 
@@ -77,13 +79,12 @@ class BaseMeteor:
         self, params: dict[str, Any], dtype=np.float32
     ) -> pd.Series:
         """
-        Extracts periodical meteorology data from Open-Meteo's
-        API endpoints based on the specified parameters.
+        Extracts periodical meteorology data from Open-Meteo's API
+        endpoints based on the specified parameters.
 
         #### Params:
         - params (dict[str, Any]): API request parameters.
-        - dtype: numpy datatype for meteorology data storage.
-        Defaults to float32 (32-bit floating point number).
+        - dtype: numpy datatype for meteorology data storage. Defaults to float32.
         """
         return tools.get_periodical_data(
             self._session, self._api, params | self._params, dtype, self._timeout
