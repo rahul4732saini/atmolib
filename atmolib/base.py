@@ -120,6 +120,12 @@ class BaseForecast(BaseMeteor):
         self.forecast_days = forecast_days
         self.past_days = past_days
 
+    def __repr__(self) -> str:
+        return (
+            f"{self.__class__.__name__}(lat={self._lat}, long={self._long},"
+            f" forecast_days={self._forecast_days})"
+        )
+
     @property
     def forecast_days(self) -> int:
         return self._forecast_days
@@ -149,12 +155,6 @@ class BaseForecast(BaseMeteor):
             )
 
         self._past_days = self._params["past_days"] = __value
-
-    def __repr__(self) -> str:
-        return (
-            f"{self.__class__.__name__}(lat={self._lat}, long={self._long},"
-            f" forecast_days={self._forecast_days})"
-        )
 
     def _get_current_data(self, params: dict[str, Any]) -> int | float:
         """
