@@ -118,6 +118,7 @@ class AirQuality(BaseForecast):
             self._api,
             self._params | {"current": data_types},
             constants.CURRENT_AIR_QUALITY_SUMMARY_PARAMS,
+            self._timeout,
         )
 
     def get_hourly_summary(self) -> pd.DataFrame:
@@ -145,6 +146,7 @@ class AirQuality(BaseForecast):
             self._api,
             self._params | {"hourly": data_types},
             constants.HOURLY_AIR_QUALITY_SUMMARY_PARAMS,
+            self._timeout,
         )
 
     def get_current_aqi(self, source: str = "european") -> int:
