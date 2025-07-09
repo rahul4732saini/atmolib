@@ -19,10 +19,9 @@ from ..base import BaseWeather
 
 class WeatherArchive(BaseWeather):
     """
-    WeatherArchive class defines mechanism for extraction of historical weather data
-    based on the latitudinal and longitudinal coordinates of the location. It interacts
-    with Open-Meteo's Weather History API to featch weather data ranging from 1940 till
-    the present.
+    WeatherArchive class defines methods for the extraction of historical
+    weather data ranging from 1940 till the present, based on the latitudinal
+    and longitudinal coordinates of the location.
     """
 
     __slots__ = (
@@ -56,6 +55,8 @@ class WeatherArchive(BaseWeather):
         - long (int | float): Longitudinal coordinates of the location.
         - start_date (str | date | datetime): Initial date for the weather data.
         - end_date (str | date | datetime): Final date for the weather data.
+        - timeout (int | float | None): Maximum duration to wait for a response
+        from the API endpoint. Must be a number greater than 0 or `None`.
 
         Date parameters must be date/datetime objects or strings
         formatted in the ISO-8601 date format (YYYY-MM-DD).
