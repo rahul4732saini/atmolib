@@ -29,7 +29,7 @@ class BaseMeteor:
         self,
         lat: int | float,
         long: int | float,
-        timefmt: str = "iso8601",
+        timefmt: str = constants.DEFAULT_TIME_FORMAT,
         timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
     ) -> None:
 
