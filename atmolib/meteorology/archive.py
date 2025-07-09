@@ -87,7 +87,7 @@ class WeatherArchive(BaseWeather):
         return (
             f"Archive(lat={self._lat}, long={self._long},"
             f"start_date={self._start_date}, end_date={self._end_date}, "
-            f"timefmt={self._timefmt})"
+            f"timefmt={self._timefmt!r})"
         )
 
     @staticmethod
