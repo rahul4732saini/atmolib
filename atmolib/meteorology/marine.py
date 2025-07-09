@@ -130,6 +130,7 @@ class MarineWeather(BaseForecast):
             self._api,
             self._params | {"current": data_types},
             constants.MARINE_WEATHER_SUMMARY_PARAMS,
+            self._timeout,
         )
 
     def get_hourly_summary(self) -> pd.DataFrame:
@@ -153,6 +154,7 @@ class MarineWeather(BaseForecast):
             self._api,
             self._params | {"hourly": data_types},
             constants.MARINE_WEATHER_SUMMARY_PARAMS,
+            self._timeout,
         )
 
     def get_daily_summary(self) -> pd.DataFrame:
@@ -176,6 +178,7 @@ class MarineWeather(BaseForecast):
             self._api,
             self._params | {"daily": data_types},
             constants.MARINE_WEATHER_SUMMARY_PARAMS,
+            self._timeout,
         )
 
     def get_current_wave_height(self) -> int | float | None:
