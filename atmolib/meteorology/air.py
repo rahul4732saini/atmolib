@@ -236,9 +236,7 @@ class AirQuality(BaseForecast):
 
         Aerosol optical depth (AOD) at 550 nm is a measure of the extinction of
         solar radiation at a wavelength of 550 nanometers (green-yellow region
-        of the visible spectrum) due to aerosol particles in the atmosphere. It
-        is commonly used as an indicator of haze or the presence of aerosols in
-        the atmosphere.
+        of the visible spectrum) due to aerosol particles in the atmosphere.
         """
         return self._get_current_data({"current": "aerosol_optical_depth"})
 
@@ -291,9 +289,7 @@ class AirQuality(BaseForecast):
 
         Aerosol optical depth (AOD) at 550 nm is a measure of the extinction of
         solar radiation at a wavelength of 550 nanometers (green-yellow region
-        of the visible spectrum) due to aerosol particles in the atmosphere. It
-        is commonly used as an indicator of haze or the presence of aerosols in
-        the atmosphere.
+        of the visible spectrum) due to aerosol particles in the atmosphere.
         """
         return self._get_periodical_data({"hourly": "aerosol_optical_depth"})
 
