@@ -27,10 +27,11 @@ class WeatherArchive(BaseWeather):
     __slots__ = (
         "_lat",
         "_long",
-        "_timeout",
         "_params",
         "_start_date",
         "_end_date",
+        "_timefmt",
+        "_timeout",
     )
 
     _session = requests.Session()
@@ -45,6 +46,7 @@ class WeatherArchive(BaseWeather):
         long: int | float,
         start_date: str | date | datetime,
         end_date: str | date | datetime,
+        timefmt: str = constants.DEFAULT_TIME_FORMAT,
         timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
     ) -> None:
         """
@@ -55,6 +57,12 @@ class WeatherArchive(BaseWeather):
         - long (int | float): Longitudinal coordinates of the location.
         - start_date (str | date | datetime): Initial date for the weather data.
         - end_date (str | date | datetime): Final date for the weather data.
+        - timefmt (str): Format of the date & time labels in periodic data
+        tables; must be one of the following:
+            - `iso8601` (ISO 8601 date & time format)
+            - `unixtime` (Unix timestamp)
+
+            Defaults to `iso8601`.
         - timeout (int | float | None): Maximum duration to wait for a response
         from the API endpoint. Must be a number greater than 0 or `None`.
 
@@ -62,7 +70,7 @@ class WeatherArchive(BaseWeather):
         formatted in the ISO-8601 date format (YYYY-MM-DD).
         """
 
-        super().__init__(lat, long, timeout)
+        super().__init__(lat, long, timefmt, timeout)
 
         self.set_start_date(start_date)
         self.set_end_date(end_date)
