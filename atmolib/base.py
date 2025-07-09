@@ -67,7 +67,7 @@ class BaseMeteor:
 
     @property
     def timefmt(self) -> str:
-        return self._timeout
+        return self._timefmt
 
     @timefmt.setter
     def timefmt(self, __value: str) -> None:
