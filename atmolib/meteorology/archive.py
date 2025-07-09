@@ -86,7 +86,8 @@ class WeatherArchive(BaseWeather):
     def __repr__(self) -> str:
         return (
             f"Archive(lat={self._lat}, long={self._long},"
-            f"start_date={self._start_date}, end_date={self._end_date})"
+            f"start_date={self._start_date}, end_date={self._end_date}, "
+            f"timefmt={self._timefmt})"
         )
 
     @staticmethod
