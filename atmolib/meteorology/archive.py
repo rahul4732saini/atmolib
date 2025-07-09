@@ -118,9 +118,6 @@ class WeatherArchive(BaseWeather):
             raise ValueError("'start_date' must be lower or equal to 'end_date'.")
 
         self._start_date: date = start_date
-
-        # Updates the parameters mapping with the start date for
-        # requesting weather history from the Weather History API.
         self._params["start_date"] = start_date.strftime(r"%Y-%m-%d")
 
     def set_end_date(self, /, __value: str | date | datetime) -> None:
@@ -132,9 +129,6 @@ class WeatherArchive(BaseWeather):
             raise ValueError("'end_date' must be greater or equal to 'start_date'.")
 
         self._end_date: date = end_date
-
-        # Updates the parameters mapping with the end date for
-        # requesting weather history from the Weather History API.
         self._params["end_date"] = end_date.strftime(r"%Y-%m-%d")
 
     @staticmethod
