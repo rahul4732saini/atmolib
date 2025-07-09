@@ -15,8 +15,12 @@ DEFAULT_REQUEST_TIMEOUT = 30
 MAX_PAST_DAYS = 92
 DEFAULT_PAST_DAYS = 0
 
-DEFAULT_TIME_FORMAT = "iso8601"
-TIME_FORMATS = "iso8601", "unixtime"
+# Time formats supported by the API for data extraction.
+TIME_FMT_UNIX = "unixtime"
+TIME_FMT_ISO = "iso8601"
+
+DEFAULT_TIME_FORMAT = TIME_FMT_ISO
+TIME_FORMATS = TIME_FMT_ISO, TIME_FMT_UNIX
 
 # API endpoint URLs.
 WEATHER_API = "https://api.open-meteo.com/v1/forecast"
