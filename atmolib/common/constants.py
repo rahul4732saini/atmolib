@@ -9,6 +9,8 @@ various classes and functions defined within the package.
 import json
 from pathlib import Path
 
+import numpy as np
+
 # Default timeout for requesting data from API endpoints in seconds(s).
 DEFAULT_REQUEST_TIMEOUT = 30
 
@@ -21,6 +23,12 @@ TIME_FMT_ISO = "iso8601"
 
 DEFAULT_TIME_FORMAT = TIME_FMT_ISO
 TIME_FORMATS = TIME_FMT_ISO, TIME_FMT_UNIX
+
+# Numpy data types for storing the associated time formats.
+TIME_FMT_DTYPES = {
+    TIME_FMT_ISO: np.object_,
+    TIME_FMT_UNIX: np.int32,
+}
 
 # API endpoint URLs.
 WEATHER_API = "https://api.open-meteo.com/v1/forecast"
