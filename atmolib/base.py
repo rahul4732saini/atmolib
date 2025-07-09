@@ -140,7 +140,7 @@ class BaseForecast(BaseMeteor):
         return (
             f"{self.__class__.__name__}(lat={self._lat}, long={self._long}, "
             f"forecast_days={self._forecast_days}, past_days={self._past_days}, "
-            f"timefmt={self._timefmt})"
+            f"timefmt={self._timefmt!r})"
         )
 
     @property
