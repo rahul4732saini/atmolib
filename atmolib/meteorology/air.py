@@ -17,10 +17,9 @@ from ..common import constants, tools
 
 class AirQuality(BaseForecast):
     """
-    AirQuality class defines the mechanism for extraction of air quality data based
-    on the latitudinal and longitudinal coordinates of the location. It interacts
-    with Open Meteo's Air Quality API to fetch the current or up to upcoming 7-days
-    hourly air quality forecast data.
+    AirQuality class defines methods for the extraction of air quality data
+    based on the latitudinal and longitudinal coordinates of the location with
+    a resolution of 11 kilometers (km).
     """
 
     __slots__ = (
@@ -59,6 +58,8 @@ class AirQuality(BaseForecast):
         be extracted; must be in the range of 1 and 7. Defaults to 7.
         - past_days (int): Number of days for which past data has to be
         extracted; must be in the range of 0 and 92. Defaults to 0.
+        - timeout (int | float | None): Maximum duration to wait for a response
+        from the API endpoint. Must be a number greater than 0 or `None`.
         """
         super().__init__(lat, long, forecast_days, past_days, timeout)
 
