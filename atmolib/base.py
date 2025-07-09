@@ -531,17 +531,25 @@ class BaseWeather(BaseMeteor):
 
     def get_daily_sunrise_time(self) -> pd.Series:
         """
-        Extracts daily sunrise time in the ISO-8601
-        datetime format (YYYY-MM-DDTHH:MM).
+        Extracts the daily sunrise time in the date & time
+        format specified at initialization.
         """
-        return self._get_periodical_data({"daily": "sunrise"}, dtype=np.object_)
+
+        return self._get_periodical_data(
+            {"daily": "sunrise"},
+            constants.TIME_FMT_DTYPES[self._timefmt],
+        )
 
     def get_daily_sunset_time(self) -> pd.Series:
         """
-        Extracts daily sunset time in the ISO-8601
-        datetime format (YYYY-MM-DDTHH:MM).
+        Extracts the daily sunset time in the date & time
+        format specified at initialization.
         """
-        return self._get_periodical_data({"daily": "sunset"}, dtype=np.object_)
+
+        return self._get_periodical_data(
+            {"daily": "sunset"},
+            constants.TIME_FMT_DTYPES[self._timefmt],
+        )
 
     def get_daily_daylight_duration(self) -> pd.Series:
         """Extracts daily daylight duration time in seconds(s)"""
