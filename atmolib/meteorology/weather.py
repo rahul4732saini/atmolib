@@ -133,6 +133,7 @@ class Weather(BaseForecast, BaseWeather):
             self._api,
             self._params | params,
             constants.CURRENT_WEATHER_SUMMARY_LABELS,
+            self._timeout,
         )
 
     def get_hourly_summary(
@@ -188,6 +189,7 @@ class Weather(BaseForecast, BaseWeather):
             self._api,
             self._params | params,
             constants.HOURLY_WEATHER_SUMMARY_LABELS,
+            self._timeout,
         )
 
     def get_daily_summary(
@@ -240,6 +242,7 @@ class Weather(BaseForecast, BaseWeather):
             self._api,
             self._params | params,
             constants.DAILY_WEATHER_SUMMARY_LABELS,
+            self._timeout,
         )
 
     def get_current_temperature(
