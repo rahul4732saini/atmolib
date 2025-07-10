@@ -6,9 +6,6 @@ This module defines the MarineWeather class facilitating extraction
 of marine weather data from Open-Meteo's Marine Weather API.
 """
 
-import atexit
-
-import requests
 import pandas as pd
 
 from ..base import BaseForecast
@@ -34,14 +31,10 @@ class MarineWeather(BaseForecast):
         "_past_days",
     )
 
-    _session = requests.Session()
     _api = constants.MARINE_API
 
     # Maximum number of days for which forecast data can be extracted.
     _max_forecast_days = 16
-
-    # Closes the request session upon exit.
-    atexit.register(_session.close)
 
     def __init__(
         self,

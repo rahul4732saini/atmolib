@@ -6,9 +6,6 @@ This module defines the AirQuality class facilitating extraction
 of air quality data from Open-Meteo's Air Quality API.
 """
 
-import atexit
-
-import requests
 import pandas as pd
 
 from ..base import BaseForecast
@@ -32,14 +29,10 @@ class AirQuality(BaseForecast):
         "_past_days",
     )
 
-    _session = requests.Session()
     _api = constants.AIR_QUALITY_API
 
     # Maximum number of days for which forecast data can be extracted.
     _max_forecast_days = 7
-
-    # Closes the request session upon exit.
-    atexit.register(_session.close)
 
     def __init__(
         self,

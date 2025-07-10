@@ -6,11 +6,9 @@ This module defines the WeatherArchive class facilitating extraction
 of historical weather data from Open-Meteo's Weather History API.
 """
 
-import atexit
 from typing import Any
 from datetime import date, datetime
 
-import requests
 import pandas as pd
 
 from ..common import constants, tools
@@ -34,11 +32,7 @@ class WeatherArchive(BaseWeather):
         "_timeout",
     )
 
-    _session = requests.Session()
     _api = constants.WEATHER_ARCHIVE_API
-
-    # Closes the request session upon exit.
-    atexit.register(_session.close)
 
     def __init__(
         self,

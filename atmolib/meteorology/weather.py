@@ -6,10 +6,8 @@ This module defines the Weather class facilitating extraction
 of weather data from Open-Meteo's Weather API.
 """
 
-import atexit
 from typing import Any
 
-import requests
 import numpy as np
 import pandas as pd
 
@@ -34,13 +32,9 @@ class Weather(BaseForecast, BaseWeather):
     )
 
     _api = constants.WEATHER_API
-    _session = requests.Session()
 
     # Maximum number of days for which forecast data can be extracted.
     _max_forecast_days = 16
-
-    # Closes the request session upon exit.
-    atexit.register(_session.close)
 
     def __init__(
         self,
