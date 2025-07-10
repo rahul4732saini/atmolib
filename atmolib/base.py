@@ -6,6 +6,7 @@ This module defines classes serving as the foundation for the
 various other classes and functions defined within the package.
 """
 
+import atexit
 from typing import Any
 
 import requests
@@ -18,12 +19,15 @@ from .common import tools, constants
 class BaseMeteor:
     """Base class of all meteorology classes."""
 
-    # The following class attributes are essential for operation and
-    # must be explicitly defined by child classes as per requirements.
-    _session: requests.Session
+    __slots__ = "_lat", "_long", "_timeout", "_timefmt", "_params"
+
+    # This class attributes is essential for operation and must
+    # be explicitly defined by child classes as per requirements.
     _api: str
 
-    __slots__ = "_lat", "_long", "_timeout", "_timefmt", "_params"
+    # Initializes a shared session and closes it upon exit.
+    _session = requests.Session()
+    atexit.register(_session.close)
 
     def __init__(
         self,
