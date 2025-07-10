@@ -134,12 +134,12 @@ class WeatherArchive(BaseWeather):
     @staticmethod
     def _get_soil_depth(depth: int) -> str:
         """
-        Extracts the string representation of the depth range associated
-        with the specified soil depth for requesting the Weather History API.
+        Extracts a string representation of the depth range associated
+        with the specified soil depth for requesting the API.
 
         #### Params:
         - depth (int): Desired depth for data extraction;
-        must be an integer between 0 and 256.
+        must be an integer between 0 and 255.
         """
 
         if depth not in range(256):
