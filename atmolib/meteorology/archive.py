@@ -203,6 +203,7 @@ class WeatherArchive(BaseWeather):
             self._api,
             self._params | params,
             constants.HOURLY_ARCHIVE_SUMMARY_LABELS,
+            self._timeout,
         )
 
     def get_daily_summary(
@@ -254,6 +255,7 @@ class WeatherArchive(BaseWeather):
             self._api,
             self._params | params,
             constants.DAILY_ARCHIVE_SUMMARY_LABELS,
+            self._timeout,
         )
 
     def get_hourly_wind_speed(self, altitude: int = 10, unit: str = "kmh") -> pd.Series:
