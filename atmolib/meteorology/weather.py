@@ -111,7 +111,7 @@ class Weather(BaseForecast, BaseWeather):
         - precipitation (sum of rain/showers/snowfall)
         - weather code
         - cloud cover percentage
-        - surface pressure in HPa (Hectopascal)
+        - surface pressure in Hectopascal(HPa)
         - wind speed (10m above ground level)
         - wind direction in degrees (10m above ground level)
         """
@@ -166,7 +166,7 @@ class Weather(BaseForecast, BaseWeather):
         - weather code
         - visibility in meters(m)
         - cloud cover percentage(%)
-        - surface pressure in HPa (Hectopascal)
+        - surface pressure in Hectopascal(HPa)
         - wind speed (10m above ground level)
         - surface soil temperature
         """
@@ -304,7 +304,7 @@ class Weather(BaseForecast, BaseWeather):
 
         #### Params:
         - unit (str): Temperature unit; must be `celsius`
-        or `fahrenhiet`. Defaults to `celsius`.
+        or `fahrenheit`. Defaults to `celsius`.
 
         #### Brief:
         Apparent temperature is the perceived feels-like temperature
@@ -343,7 +343,7 @@ class Weather(BaseForecast, BaseWeather):
 
     def get_current_wind_direction(self, altitude: int = 10) -> int | float:
         """
-        Extracts current wind direction in degress at
+        Extracts current wind direction in degrees at
         the specified altitude above the ground level.
 
         #### Params:

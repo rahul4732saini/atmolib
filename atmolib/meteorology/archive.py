@@ -180,7 +180,7 @@ class WeatherArchive(BaseWeather):
         - relative humidity (2m above ground level)
         - dew point (2m above ground level)
         - precipitation (sum of rain/showers/snowfall)
-        - surface pressure in HPa (Hectopascals)
+        - surface pressure in Hectopascal(HPa)
         - wind speed (10m above ground level)
         - surface soil temperature
         - weather code
@@ -233,7 +233,7 @@ class WeatherArchive(BaseWeather):
         - Mean temperature (2m above ground level)
         - precipitation (sum of rain/showers/snowfall)
         - Daylight duration in seconds
-        - surface pressure in HPa (Hectopascals)
+        - surface pressure in Hectopascal(HPa)
         - Mean wind speed (10m above ground level)
         - weather code
         """
