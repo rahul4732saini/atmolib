@@ -1,3 +1,6 @@
+# VS Code configuration files directory
+.vscode/
+
 # PyCharm configuration files directory
 .idea/
 
