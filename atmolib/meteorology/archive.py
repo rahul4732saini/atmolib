@@ -275,7 +275,7 @@ class WeatherArchive(BaseWeather):
             Defaults to `kmh`
         """
 
-        if altitude not in (10, 100):
+        if altitude not in constants.ARCHIVE_WIND_ALTITUDES:
             raise ValueError(f"Invalid altitude level specified: {altitude}")
 
         self._verify_wind_speed_unit(unit)
@@ -294,7 +294,7 @@ class WeatherArchive(BaseWeather):
         must be 10 or 100. Defaults to 10.
         """
 
-        if altitude not in (10, 100):
+        if altitude not in constants.ARCHIVE_WIND_ALTITUDES:
             raise ValueError(f"Invalid altitude level specified: {altitude}")
 
         return self._get_periodical_data({"hourly": f"wind_direction_{altitude}m"})
