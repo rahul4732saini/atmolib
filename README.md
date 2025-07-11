@@ -35,25 +35,19 @@ python -m pip install -U atmolib --no-cache-dir
 
 The classes along with their corresponding descriptions are mentioned as follows:
 
-- `Weather`<br>
-  Provides extensive access to current, hourly, and daily forecast data, including temperature, dew point, weather conditions, soil temperature, visibility, and more.
+- `Weather` provides extensive access to current, hourly, and daily forecast data, including temperature, dew point, weather conditions, soil temperature, visibility, and more.
 
-- `WeatherArchive`<br>
-  Enables retrieval of historical weather data, spanning hourly and daily records from 1940 till the present day.
+- `WeatherArchive` enables retrieval of historical weather data, spanning hourly and daily records from 1940 till the present day.
 
-- `MarineWeather`<br>
-  Grants access to current, hourly, and daily marine weather forecast data, covering wave height, direction, and period, with a resolution of up to 5 kilometers.
+- `MarineWeather` grants access to current, hourly, and daily marine weather forecast data, covering wave height, direction, and period, with a resolution of up to 5 kilometers.
 
-- `AirQuality`<br>
-  Supplies current and hourly forecasts for air quality metrics, including AQI, atmospheric gas concentrations, and UV index.
+- `AirQuality` provides current and hourly forecasts for air quality metrics, including AQI, atmospheric gas concentrations, and UV index.
 
 The package also provides users with some useful functions as mentioned below:
 
-- `get_elevation`<br>
-  Extracts the elevation in meters(m) at the specified coordinates.
+- `get_elevation` extracts the elevation in meters(m) at the specified coordinates.
 
-- `get_city_details`<br>
-  Extracts the city details such as coordinates, country, timezone, etc. based on the specified city name.
+- `get_city_details` extracts the city details such as coordinates, country, timezone, etc. based on the specified city name.
 
 ## Basic Usage
 
@@ -162,7 +156,7 @@ air.get_hourly_aerosol_optical_depth()
 
 **Atmolib** is distributed under the MIT License. Refer to the [LICENSE](./LICENSE) for more details.
 
-### NOTE:
+### NOTE
 
 **Atmolib** is an independent project and is not affiliated with, endorsed by, or sponsored by **Open-Meteo**. It's an open-source tool that uses its publicly available meteorology APIs, and is intended for **research and educational purposes only**.
 
