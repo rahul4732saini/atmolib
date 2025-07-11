@@ -17,34 +17,37 @@
 
 ## Package Description
 
-<b>atmolib</b> is a weather package that offers an easy and flexible way to its users to access and parse weather data in a pythonic way. The package uses the Open-Meteo Web APIs to fetch the weather data in its backend.
+**Atmolib** is a python package that offers an easy and flexible way to its users to access and parse meteorology data in a pythonic way. It uses Open-Meteo's Web APIs to fetch the data in its backend.
 
 ## Installation
 
 Install `atmolib` using `pip`:
 
 ```bash
-$ python -m pip install -U atmolib --no-cache-dir
+python -m pip install -U atmolib --no-cache-dir
 ```
 
 [Required Dependencies](./requirements.txt)
 
 ## Quick Guide
 
-<b>atmolib</b> offers a series of classes to its users which can be used for meteorology data extraction from Open-Meteo's Web APIs.
+**Atmolib** offers a series of classes to its users which can be used for meteorology data extraction from Open-Meteo's Web APIs.
 
 The classes along with their corresponding descriptions are mentioned as follows:
 
 - `Weather`<br>
   Provides extensive access to current, hourly, and daily forecast data, including temperature, dew point, weather conditions, soil temperature, visibility, and more.
+
 - `WeatherArchive`<br>
   Enables retrieval of historical weather data, spanning hourly and daily records from 1940 till the present day.
+
 - `MarineWeather`<br>
   Grants access to current, hourly, and daily marine weather forecast data, covering wave height, direction, and period, with a resolution of up to 5 kilometers.
+
 - `AirQuality`<br>
   Supplies current and hourly forecasts for air quality metrics, including AQI, atmospheric gas concentrations, and UV index.
 
-The package also provides users with some useful functions as a part of the package as mentioned below:
+The package also provides users with some useful functions as mentioned below:
 
 - `get_elevation`<br>
   Extracts the elevation in meters(m) at the specified coordinates.
@@ -54,8 +57,7 @@ The package also provides users with some useful functions as a part of the pack
 
 ## Basic Usage
 
-This guide provides the basic usage of the atmolib package and highlights some of the generally used methods. All the methods in the package are designed to be used with minimal arguments with default
-arguments primarily specified in all of them.
+This guide provides the basic usage of the package and highlights some of the generally used methods. All the methods in the package are designed to be used with minimal arguments with default arguments primarily specified in all of them.
 
 - `Weather` class usage:
 
@@ -96,7 +98,7 @@ weather.get_daily_total_precipitation()
 weather.get_daily_sunshine_duration()
 ```
 
-- `WeatherArchive` provides the same methods as `Weather` class as a part of a data range with slight modifications in some methods.
+- `WeatherArchive` provides the same methods as the `Weather` class with some exclusions.
 
 - `MarineWeather` class usage:
 
@@ -158,13 +160,13 @@ air.get_hourly_aerosol_optical_depth()
 
 ## Legals
 
-<b>atmolib</b> is distributed under the MIT License. Refer to the [LICENSE](./LICENSE) for more details.
+**Atmolib** is distributed under the MIT License. Refer to the [LICENSE](./LICENSE) for more details.
 
-#### NOTE:
+### NOTE:
 
-<b>atmolib</b> is not affiliated, endorsed, or vetted by <b>Open-Meteo</b>. It's an open-source tool that uses Open-Meteo's publicly available meteorology APIs, and is intended for <b>research and educational purposes only</b>.
+**Atmolib** is an independent project and is not affiliated with, endorsed by, or sponsored by **Open-Meteo**. It's an open-source tool that uses its publicly available meteorology APIs, and is intended for **research and educational purposes only**.
 
 ## Call for Contributions
 
-The <b>atmolib</b> project always welcomes your precious expertise and enthusiasm!
+The **Atmolib** project always welcomes your precious expertise and enthusiasm!
 The package relies on its community's wisdom and intelligence to investigate bugs and contribute code. We always appreciate improvements and contributions to this project.
