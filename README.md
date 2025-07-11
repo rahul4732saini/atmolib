@@ -1,20 +1,19 @@
-<h1 align=center>
+<div align=center>
 <img src="https://raw.githubusercontent.com/rahul4732saini/atmolib/main/assets/atmolib.png?raw=true" width=500>
-</h1>
+</div>
 
-<a href="https://www.codefactor.io/repository/github/rahul4732saini/atmolib"><img src="https://www.codefactor.io/repository/github/rahul4732saini/atmolib/badge" alt="CodeFactor" /></a>
-<a href="https://github.com/rahul4732saini/atmolib/actions/workflows/pytest.yml"><img src="https://github.com/rahul4732saini/atmolib/workflows/Pytest/badge.svg" alt="Pytest" /></a>
+[![CodeFactor](https://www.codefactor.io/repository/github/rahul4732saini/atmolib/badge)](https://www.codefactor.io/repository/github/rahul4732saini/atmolib)
+[![Pytest](https://github.com/rahul4732saini/atmolib/workflows/Pytest/badge.svg)](https://github.com/rahul4732saini/atmolib/actions/workflows/pytest.yml)
 
-<a href="https://www.github.com/rahul4732saini/atmolib"><img src="https://img.shields.io/badge/status-beta-yellow?maxAge=60" alt="projectStatus"></a>
-<a href="https://www.github.com/rahul4732saini/atmolib"><img src="https://img.shields.io/badge/python-3.10+-blue?label=Python&maxAge=60" alt="pythonVersion"></a>
-<a href="https://github.com/rahul4732saini/atmolib/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?maxAge=60" alt="License"></a>
+[![PythonVersion](https://img.shields.io/badge/python-3.10+-blue?label=Python)](https://www.github.com/rahul4732saini/atmolib)
+[![ProjectStatus](https://img.shields.io/badge/status-beta-yellow)](https://www.github.com/rahul4732saini/atmolib)
+[![License](https://img.shields.io/badge/License-MIT-green)](https://github.com/rahul4732saini/atmolib/blob/main/LICENSE)
 
-<a href="https://www.pypi.org/project/atmolib"><img src="https://img.shields.io/pypi/v/atmolib.svg?logo=pypi&logoColor=ffa07a&label=PyPI Version&maxAge=60" alt="PyPI-Version"></a>
-<a href="https://www.pypi.org/project/atmolib"><img src="https://img.shields.io/pypi/dm/atmolib.svg?label=PyPI Downloads" alt="PyPI-Downloads"></a>
+[![PyPI-Version](https://img.shields.io/pypi/v/atmolib.svg?logo=pypi&logoColor=ffa07a&label=PyPI-Version)](https://www.pypi.org/project/atmolib)
+[![PyPI-Downloads](https://img.shields.io/pypi/dm/atmolib.svg?label=PyPI-Downloads)](https://www.pypi.org/project/atmolib)
 
-<a href="https://www.github.com/rahul4732saini/atmolib"><img src="https://img.shields.io/github/stars/rahul4732saini/atmolib.svg?style=social&label=Star&maxAge=60" alt="StarProject"></a>
-<a href="https://www.twitter.com/rahulsaini4732"><img src="https://img.shields.io/twitter/follow/rahulsaini4732?style=social&label=Follow&maxAge=60" alt="Twitter"></a>
-<a href="https://www.linkedin.com/in/rahul-saini-9191a5286/)"><img src="https://img.shields.io/badge/LinkedIn-Connect-blue?style=social&logo=linkedin&maxAge=60" alt="Linkedin"></a>
+[![StarCount](https://img.shields.io/github/stars/rahul4732saini/atmolib.svg?style=social&label=Star)](https://www.github.com/rahul4732saini/atmolib)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=social&logo=linkedin)](https://www.linkedin.com/in/rahul4732saini)
 
 ## Package Description
 
