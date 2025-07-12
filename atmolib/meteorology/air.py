@@ -208,6 +208,7 @@ class AirQuality(BaseForecast):
         must be one of `alder`, `birch`, `grass`, `mugwort`, `olive`, `ragweed`.
         Defaults to `grass`.
         """
+
         self._verify_plant_species(plant)
         return self._get_current_data(f"{plant}_pollen")
 
@@ -265,6 +266,7 @@ class AirQuality(BaseForecast):
         must be one of `alder`, `birch`, `grass`, `mugwort`, `olive`, `ragweed`.
         Defaults to `grass`.
         """
+
         self._verify_plant_species(plant)
         return self._get_periodical_data({"hourly": f"{plant}_pollen"})
 
