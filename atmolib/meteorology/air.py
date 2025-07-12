@@ -160,13 +160,6 @@ class AirQuality(BaseForecast):
 
         return int(self._get_current_data("european_aqi"))
 
-    def get_current_ammonia_conc(self) -> int | float | None:
-        """
-        Extracts current aerial ammonia(NH3) concentration (micro g/m^3).
-        Only available for Europe. Returns None for Non-European regions.
-        """
-        return self._get_current_data("ammonia")
-
     def get_current_dust_conc(self) -> int | float:
         """
         Extracts current aerial dust concentration(micro g/m^3)
@@ -298,10 +291,3 @@ class AirQuality(BaseForecast):
         """
         self._verify_atmospheric_gas(gas)
         return self._get_periodical_data({"hourly": gas})
-
-    def get_hourly_ammonia_conc(self) -> pd.Series:
-        """
-        Extracts hourly aerial ammonia concentration(micro g/m^3) data.
-        Only available for Europe. Returns None for Non-European regions.
-        """
-        return self._get_periodical_data({"hourly": "ammonia"})
