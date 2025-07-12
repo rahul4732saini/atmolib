@@ -73,7 +73,15 @@ ARCHIVE_WIND_ALTITUDES = 10, 100
 
 # Available atmospheric gases and plant species for
 # corresponding aerial concentration data extraction.
-GASES = "ozone", "carbon_monoxide", "nitrogen_dioxide", "sulphur_dioxide"
+
+GASES = (
+    "ozone",
+    "carbon_monoxide",
+    "carbon_dioxide",
+    "nitrogen_dioxide",
+    "sulphur_dioxide",
+)
+
 PLANTS = "alder", "birch", "grass", "mugwort", "olive", "ragweed"
 
 # Available soil depths in centimeters(cm) for temperature data extraction.
