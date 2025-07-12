@@ -177,17 +177,18 @@ class BaseForecast(BaseMeteor):
 
         self._past_days = self._params["past_days"] = __value
 
-    def _get_current_data(self, params: dict[str, Any]) -> int | float:
+    def _get_current_data(self, metric: str, /, **kwargs: Any) -> int | float:
         """
         Extracts current meteorology data from Open-Meteo's
         API endpoints based on the specified parameters.
 
         #### Params:
-        - params (dict[str, Any]): API request parameters.
+        - metric (str): Name of the meteorology metric to retrieve.
+        - **kwargs (Any): Additional parameters to be passed to the API.
         """
-        return tools.get_current_data(
-            self._session, self._api, params | self._params, self._timeout
-        )
+
+        params: dict[str, Any] = self._params | {"current": metric, **kwargs}
+        return tools.get_current_data(self._session, self._api, params, self._timeout)
 
 
 class BaseWeather(BaseMeteor):
