@@ -93,6 +93,23 @@ class BaseMeteor:
 
         self._timeout = __value
 
+    def _get_hourly_data(
+        self, metric: str, dtype: np.generic = np.float32, /, **kwargs
+    ) -> pd.Series:
+        """
+        Extracts hourly meteorology data associated with the
+        specified metric from Open-Meteo's API endpoints.
+
+        #### Params:
+        - metric (str): Name of the meteorology metric to retrieve.
+        - **kwargs (Any): Additional parameters to be passed to the API.
+        """
+
+        params: dict[str, Any] = self._params | {"hourly": metric, **kwargs}
+        return tools.get_periodical_data(
+            self._session, self._api, params, dtype, self._timeout
+        )
+
     def _get_periodical_data(
         self, params: dict[str, Any], dtype=np.float32
     ) -> pd.Series:
