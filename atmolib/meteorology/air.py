@@ -158,21 +158,21 @@ class AirQuality(BaseForecast):
         if source not in constants.AQI_SOURCES:
             raise ValueError(f"Invalid AQI source specified: {source!r}")
 
-        return int(self._get_current_data({"current": "european_aqi"}))
+        return int(self._get_current_data("european_aqi"))
 
     def get_current_ammonia_conc(self) -> int | float | None:
         """
         Extracts current aerial ammonia(NH3) concentration (micro g/m^3).
         Only available for Europe. Returns None for Non-European regions.
         """
-        return self._get_current_data({"current": "ammonia"})
+        return self._get_current_data("ammonia")
 
     def get_current_dust_conc(self) -> int | float:
         """
         Extracts current aerial dust concentration(micro g/m^3)
         at 10 meters(m) above the ground level.
         """
-        return self._get_current_data({"current": "dust"})
+        return self._get_current_data("dust")
 
     def get_current_gaseous_conc(self, gas: str = "ozone") -> int | float:
         """
@@ -185,7 +185,7 @@ class AirQuality(BaseForecast):
         `nitrogen_dioxide`, or `sulphur_dioxide`. Defaults to `ozone`.
         """
         self._verify_atmospheric_gas(gas)
-        return self._get_current_data({"current": gas})
+        return self._get_current_data(gas)
 
     def get_current_pm2_5_conc(self) -> int | float:
         """
@@ -193,7 +193,7 @@ class AirQuality(BaseForecast):
         matter with a diameter smaller than 2.5 micro meter(m) at 10 meters(m)
         above the ground level.
         """
-        return self._get_current_data({"current": "pm2_5"})
+        return self._get_current_data("pm2_5")
 
     def get_current_pm10_conc(self) -> int | float:
         """
@@ -201,7 +201,7 @@ class AirQuality(BaseForecast):
         matter with a diameter smaller than 10 micro meter(m) at 10 meters(m)
         above the ground level.
         """
-        return self._get_current_data({"current": "pm10"})
+        return self._get_current_data("pm10")
 
     def get_current_pollen_conc(self, plant: str = "grass") -> int | float | None:
         """
@@ -215,11 +215,11 @@ class AirQuality(BaseForecast):
         Defaults to `grass`.
         """
         self._verify_plant_species(plant)
-        return self._get_current_data({"current": f"{plant}_pollen"})
+        return self._get_current_data(f"{plant}_pollen")
 
     def get_current_uv_index(self) -> int | float:
         """Extracts current Ultra-Violet(UV) radiation index."""
-        return self._get_current_data({"current": "uv_index"})
+        return self._get_current_data("uv_index")
 
     def get_current_aerosol_optical_depth(self) -> int | float:
         """
@@ -231,7 +231,7 @@ class AirQuality(BaseForecast):
         solar radiation at a wavelength of 550 nanometers (green-yellow region
         of the visible spectrum) due to aerosol particles in the atmosphere.
         """
-        return self._get_current_data({"current": "aerosol_optical_depth"})
+        return self._get_current_data("aerosol_optical_depth")
 
     def get_hourly_dust_conc(self) -> pd.Series:
         """
