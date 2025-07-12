@@ -176,11 +176,11 @@ class MarineWeather(BaseForecast):
 
     def get_current_wave_height(self) -> int | float | None:
         """Extracts current wave height in meters(m)."""
-        return self._get_current_data({"current": f"{self._type}wave_height"})
+        return self._get_current_data(f"{self._type}wave_height")
 
     def get_current_wave_direction(self) -> int | float | None:
         """Extracts current wave direction in degrees."""
-        return self._get_current_data({"current": f"{self._type}wave_direction"})
+        return self._get_current_data(f"{self._type}wave_direction")
 
     def get_current_wave_period(self) -> int | float | None:
         """
@@ -191,7 +191,7 @@ class MarineWeather(BaseForecast):
         Wave period refers to the time taken by two consecutive
         wave crests (or troughs) to pass through a fixed point.
         """
-        return self._get_current_data({"current": f"{self._type}wave_period"})
+        return self._get_current_data(f"{self._type}wave_period")
 
     def get_hourly_wave_height(self) -> pd.Series:
         """Extracts hourly wave height forecast in meters(m)."""
