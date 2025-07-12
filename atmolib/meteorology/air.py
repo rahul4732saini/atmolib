@@ -233,11 +233,11 @@ class AirQuality(BaseForecast):
         Extracts hourly aerial dust concentration(micro g/m^3)
         data at 10 meters(m) above the ground level.
         """
-        return self._get_periodical_data({"hourly": "dust"})
+        return self._get_hourly_data("dust")
 
     def get_hourly_uv_index(self) -> pd.Series:
         """Extracts hourly Ultra-Violet(UV) radiation index data."""
-        return self._get_periodical_data({"hourly": "uv_index"})
+        return self._get_hourly_data("uv_index")
 
     def get_hourly_pm2_5_conc(self) -> pd.Series:
         """
@@ -245,7 +245,7 @@ class AirQuality(BaseForecast):
         particulate matter with a diameter smaller than 2.5 micro meter(m)
         at 10 meters(m) above the ground level.
         """
-        return self._get_periodical_data({"hourly": "pm2_5"})
+        return self._get_hourly_data("pm2_5")
 
     def get_hourly_pm10_conc(self) -> pd.Series:
         """
@@ -253,7 +253,7 @@ class AirQuality(BaseForecast):
         particulate matter with a diameter smaller than 10 micro meter(m)
         at 10 meters(m) above the ground level.
         """
-        return self._get_periodical_data({"hourly": "pm10"})
+        return self._get_hourly_data("pm10")
 
     def get_hourly_pollen_conc(self, plant: str = "grass") -> pd.Series:
         """
@@ -268,7 +268,7 @@ class AirQuality(BaseForecast):
         """
 
         self._verify_plant_species(plant)
-        return self._get_periodical_data({"hourly": f"{plant}_pollen"})
+        return self._get_hourly_data(f"{plant}_pollen")
 
     def get_hourly_aerosol_optical_depth(self) -> pd.Series:
         """
@@ -280,7 +280,7 @@ class AirQuality(BaseForecast):
         solar radiation at a wavelength of 550 nanometers (green-yellow region
         of the visible spectrum) due to aerosol particles in the atmosphere.
         """
-        return self._get_periodical_data({"hourly": "aerosol_optical_depth"})
+        return self._get_hourly_data("aerosol_optical_depth")
 
     def get_hourly_gas_conc(self, gas: str = "ozone") -> pd.Series:
         """
@@ -294,4 +294,4 @@ class AirQuality(BaseForecast):
         """
 
         self._verify_atmospheric_gas(gas)
-        return self._get_periodical_data({"hourly": gas})
+        return self._get_hourly_data(gas)
