@@ -167,7 +167,7 @@ class AirQuality(BaseForecast):
         """
         return self._get_current_data("dust")
 
-    def get_current_gaseous_conc(self, gas: str = "ozone") -> int | float:
+    def get_current_gas_conc(self, gas: str = "ozone") -> int | float:
         """
         Extracts current aerial concentration(micro g/m^3) of the specified
         atmospheric gas at 10 meters(m) above the ground level.
@@ -282,7 +282,7 @@ class AirQuality(BaseForecast):
         """
         return self._get_periodical_data({"hourly": "aerosol_optical_depth"})
 
-    def get_hourly_gaseous_conc(self, gas: str = "ozone") -> pd.Series:
+    def get_hourly_gas_conc(self, gas: str = "ozone") -> pd.Series:
         """
         Extracts hourly aerial concentration(micro g/m^3) data of the
         specified atmospheric gas at 10 meters(m) above the ground level.
