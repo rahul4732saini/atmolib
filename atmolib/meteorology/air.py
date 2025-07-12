@@ -175,8 +175,9 @@ class AirQuality(BaseForecast):
         #### Params:
         - gas (str): Atmospheric gas whose concentration has to be extracted;
         must be one of `ozone`, `carbon_dioxide`, `carbon_monoxide`, `ammonia`,
-        `nitrogen_dioxide`, or `sulphur_dioxide`. Defaults to `ozone`.
+        `methane`, `nitrogen_dioxide`, or `sulphur_dioxide`. Defaults to `ozone`.
         """
+
         self._verify_atmospheric_gas(gas)
         return self._get_current_data(gas)
 
@@ -286,8 +287,9 @@ class AirQuality(BaseForecast):
 
         #### Params:
         - gas (str): Atmospheric gas whose concentration has to be extracted;
-        must be one of `ozone`, `carbon_dioxide`, `carbon_monoxide`, `ammonia`,
-        `nitrogen_dioxide`, or `sulphur_dioxide`. Defaults to `ozone`.
+        must be one of `ozone`, `carbon_dioxide`, `carbon_monoxide`, `methane`,
+        `ammonia`, `nitrogen_dioxide`, or `sulphur_dioxide`. Defaults to `ozone`.
         """
+
         self._verify_atmospheric_gas(gas)
         return self._get_periodical_data({"hourly": gas})
