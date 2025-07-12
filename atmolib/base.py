@@ -282,14 +282,13 @@ class BaseWeather(BaseMeteor):
         - unit (str): Temperature unit; must be `celsius` or `fahrenheit`.
         Defaults to `celsius`.
         """
+
         self._verify_temperature_unit(unit)
 
         if altitude not in constants.TEMPERATURE_ALTITUDES:
             raise ValueError(f"Invalid altitude level specified: {altitude}")
 
-        return self._get_periodical_data(
-            {"hourly": f"temperature_{altitude}m", "temperature_unit": unit}
-        )
+        return self._get_hourly_data(f"temperature_{altitude}m", temperature_unit=unit)
 
     def get_hourly_apparent_temperature(self, unit: str = "celsius") -> pd.Series:
         """
@@ -300,11 +299,9 @@ class BaseWeather(BaseMeteor):
         - unit (str): Temperature unit; must be `celsius` or `fahrenheit`.
         Defaults to `celsius`.
         """
-        self._verify_temperature_unit(unit)
 
-        return self._get_periodical_data(
-            {"hourly": "apparent_temperature", "temperature_unit": unit}
-        )
+        self._verify_temperature_unit(unit)
+        return self._get_hourly_data("apparent_temperature", temperature_unit=unit)
 
     def get_hourly_dew_point(self, unit: str = "celsius") -> pd.Series:
         """
@@ -315,18 +312,16 @@ class BaseWeather(BaseMeteor):
         - unit (str): Temperature unit; must be `celsius` or `fahrenheit`.
         Defaults to `celsius`.
         """
-        self._verify_temperature_unit(unit)
 
-        return self._get_periodical_data(
-            {"hourly": "dew_point_2m", "temperature_unit": unit}
-        )
+        self._verify_temperature_unit(unit)
+        return self._get_hourly_data("dew_point_2m", temperature_unit=unit)
 
     def get_hourly_relative_humidity(self) -> pd.Series:
         """
         Extracts hourly relative humidity percentage(%)
         data at 2 meters(m) above the ground level.
         """
-        return self._get_periodical_data({"hourly": "relative_humidity_2m"})
+        return self._get_hourly_data("relative_humidity_2m")
 
     def get_periodical_weather_code(self, frequency: str = "daily") -> pd.DataFrame:
         """
@@ -341,8 +336,12 @@ class BaseWeather(BaseMeteor):
         if frequency not in constants.FREQUENCIES:
             raise ValueError(f"Invalid frequency specified: {frequency!r}")
 
-        data: pd.Series = self._get_periodical_data(
-            {frequency: "weather_code"}, np.uint8
+        args: tuple[str, np.generic] = "weather_code", np.uint8
+
+        data: pd.Series = (
+            self._get_hourly_data(*args)
+            if frequency == "hourly"
+            else self._get_daily_data(*args)
         )
 
         # Converting the Series into a pandas.DataFrame object
@@ -364,15 +363,13 @@ class BaseWeather(BaseMeteor):
         #### Params:
         - unit (str): Precipitation unit; must be `mm` or `inch`. Defaults to `mm`.
         """
-        self._verify_precipitation_unit(unit)
 
-        return self._get_periodical_data(
-            {"hourly": "rain", "precipitation_unit": unit},
-        )
+        self._verify_precipitation_unit(unit)
+        return self._get_hourly_data("rain", precipitation_unit=unit)
 
     def get_hourly_snowfall(self) -> pd.Series:
         """Extracts hourly snowfall data in centimeters(cm)."""
-        return self._get_periodical_data({"hourly": "rain"})
+        return self._get_hourly_data("rain")
 
     def get_hourly_pressure(self, level: str = "surface") -> pd.Series:
         """
@@ -390,11 +387,11 @@ class BaseWeather(BaseMeteor):
         if metric is None:
             raise ValueError(f"Invalid measurement level specified: {level!r}")
 
-        return self._get_periodical_data({"hourly": metric})
+        return self._get_hourly_data(metric)
 
     def get_hourly_total_cloud_cover(self) -> pd.Series:
         """Extracts hourly total cloud cover percentage(%) data."""
-        return self._get_periodical_data({"hourly": "cloud_cover"})
+        return self._get_hourly_data("cloud_cover")
 
     def get_hourly_cloud_cover(self, level: str = "low") -> pd.Series:
         """
@@ -414,7 +411,7 @@ class BaseWeather(BaseMeteor):
         if level not in constants.CLOUD_COVER_LEVELS:
             raise ValueError(f"Invalid altitude level specified: {level!r}")
 
-        return self._get_periodical_data({"hourly": f"cloud_cover_{level}"})
+        return self._get_hourly_data(f"cloud_cover_{level}")
 
     def get_hourly_precipitation(self, unit: str = "mm") -> pd.Series:
         """
@@ -424,11 +421,9 @@ class BaseWeather(BaseMeteor):
         #### Params:
         - unit (str): Precipitation unit; must be `mm` or `inch`. Defaults to `mm`.
         """
-        self._verify_precipitation_unit(unit)
 
-        return self._get_periodical_data(
-            {"hourly": "precipitation", "precipitation_unit": unit}
-        )
+        self._verify_precipitation_unit(unit)
+        return self._get_hourly_data("precipitation", precipitation_unit=unit)
 
     def get_hourly_wind_gusts(self, unit: str = "kmh") -> pd.Series:
         """
@@ -444,11 +439,9 @@ class BaseWeather(BaseMeteor):
 
             Defaults to `kmh`.
         """
-        self._verify_wind_speed_unit(unit)
 
-        return self._get_periodical_data(
-            {"hourly": f"wind_gusts_10m", "wind_speed_unit": unit}
-        )
+        self._verify_wind_speed_unit(unit)
+        return self._get_hourly_data(f"wind_gusts_10m", wind_speed_unit=unit)
 
     def get_daily_temperature(
         self, metric: str = "mean", unit: str = "celsius"
@@ -468,10 +461,7 @@ class BaseWeather(BaseMeteor):
             raise ValueError(f"Invalid statistical metric specified: {metric!r}")
 
         self._verify_temperature_unit(unit)
-
-        return self._get_periodical_data(
-            {"daily": f"temperature_2m_{metric}", "temperature_unit": unit}
-        )
+        return self._get_daily_data(f"temperature_2m_{metric}", temperature_unit=unit)
 
     def get_daily_apparent_temperature(
         self, metric: str = "mean", unit: str = "celsius"
@@ -492,8 +482,8 @@ class BaseWeather(BaseMeteor):
 
         self._verify_temperature_unit(unit)
 
-        return self._get_periodical_data(
-            {"daily": f"apparent_temperature_{metric}", "temperature_unit": unit}
+        return self._get_daily_data(
+            f"apparent_temperature_{metric}", temperature_unit=unit
         )
 
     def get_daily_max_wind_speed(self, unit: str = "kmh") -> pd.Series:
@@ -510,15 +500,16 @@ class BaseWeather(BaseMeteor):
 
             Defaults to `kmh`.
         """
+
         self._verify_wind_speed_unit(unit)
-        return self._get_periodical_data({"daily": "wind_speed_10m_max"})
+        return self._get_daily_data("wind_speed_10m_max")
 
     def get_daily_dominant_wind_direction(self) -> pd.Series:
         """
         Extracts daily dominant wind direction data in
         degrees at 10 meters(m) above the ground level.
         """
-        return self._get_periodical_data({"daily": "wind_direction_10m_dominant"})
+        return self._get_daily_data("wind_direction_10m_dominant")
 
     def get_daily_max_wind_gusts(self, unit: str = "kmh") -> pd.Series:
         """
@@ -534,8 +525,9 @@ class BaseWeather(BaseMeteor):
 
             Defaults to `kmh`.
         """
+
         self._verify_wind_speed_unit(unit)
-        return self._get_periodical_data({"daily": "wind_gusts_10m_max"})
+        return self._get_daily_data("wind_gusts_10m_max")
 
     def get_daily_total_precipitation(self, unit: str = "mm") -> pd.Series:
         """
@@ -545,11 +537,9 @@ class BaseWeather(BaseMeteor):
         #### Params:
         - unit (str): Precipitation unit; must be `mm` or `inch`. Defaults to `mm`.
         """
-        self._verify_precipitation_unit(unit)
 
-        return self._get_periodical_data(
-            {"daily": "precipitation_sum", "precipitation_unit": unit}
-        )
+        self._verify_precipitation_unit(unit)
+        return self._get_daily_data("precipitation_sum", precipitation_unit=unit)
 
     def get_daily_total_rainfall(self, unit: str = "mm") -> pd.Series:
         """
@@ -558,49 +548,39 @@ class BaseWeather(BaseMeteor):
         #### Params:
         - unit (str): Precipitation unit; must be `mm` or `inch`. Defaults to `mm`.
         """
-        self._verify_precipitation_unit(unit)
 
-        return self._get_periodical_data(
-            {"daily": "rain_sum", "precipitation_unit": unit}
-        )
+        self._verify_precipitation_unit(unit)
+        return self._get_daily_data("rain_sum", precipitation_unit=unit)
 
     def get_daily_total_snowfall(self) -> pd.Series:
         """Extracts daily total snowfall data in centimeters(cm)."""
-        return self._get_periodical_data({"daily": "snowfall_sum"})
+        return self._get_daily_data("snowfall_sum")
 
     def get_daily_sunrise_time(self) -> pd.Series:
         """
         Extracts the daily sunrise time in the date & time
         format specified at initialization.
         """
-
-        return self._get_periodical_data(
-            {"daily": "sunrise"},
-            constants.TIME_FMT_DTYPES[self._timefmt],
-        )
+        return self._get_daily_data("sunrise", constants.TIME_FMT_DTYPES[self._timefmt])
 
     def get_daily_sunset_time(self) -> pd.Series:
         """
         Extracts the daily sunset time in the date & time
         format specified at initialization.
         """
-
-        return self._get_periodical_data(
-            {"daily": "sunset"},
-            constants.TIME_FMT_DTYPES[self._timefmt],
-        )
+        return self._get_daily_data("sunset", constants.TIME_FMT_DTYPES[self._timefmt])
 
     def get_daily_daylight_duration(self) -> pd.Series:
         """Extracts daily daylight duration time in seconds(s)"""
-        return self._get_periodical_data({"daily": "daylight_duration"})
+        return self._get_daily_data("daylight_duration")
 
     def get_daily_sunshine_duration(self) -> pd.Series:
         """Extracts daily sunlight duration time in seconds(s)."""
-        return self._get_periodical_data({"daily": "sunshine_duration"})
+        return self._get_daily_data("sunshine_duration")
 
     def get_daily_total_shortwave_radiation(self) -> pd.Series:
         """
         Extracts daily shortwave radiation sum
         in Mega Joules per square meter (MJ/m^2).
         """
-        return self._get_periodical_data({"daily": "shortwave_radiation_sum"})
+        return self._get_daily_data("shortwave_radiation_sum")
