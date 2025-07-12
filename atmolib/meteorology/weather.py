@@ -257,10 +257,7 @@ class Weather(BaseForecast, BaseWeather):
             raise ValueError(f"Invalid altitude level specified: {altitude}")
 
         self._verify_temperature_unit(unit)
-
-        return self._get_current_data(
-            {"current": f"temperature_{altitude}m", "temperature_unit": unit}
-        )
+        return self._get_current_data(f"temperature_{altitude}m", temperature_unit=unit)
 
     def get_current_weather_code(self) -> tuple[int, str]:
         """
@@ -268,14 +265,14 @@ class Weather(BaseForecast, BaseWeather):
         comprising it along with its string description.
         """
 
-        weather_code: int = int(self._get_current_data({"current": "weather_code"}))
+        weather_code: int = self._get_current_data("weather_code")
         description: str = constants.WEATHER_CODES[str(weather_code)]
 
         return weather_code, description
 
     def get_current_total_cloud_cover(self) -> int | float:
         """Extracts current total cloud cover percentage(%)."""
-        return self._get_current_data({"current": "cloud_cover"})
+        return self._get_current_data("cloud_cover")
 
     def get_current_cloud_cover(self, level: str = "low") -> int | float:
         """
@@ -293,7 +290,7 @@ class Weather(BaseForecast, BaseWeather):
         if level not in constants.CLOUD_COVER_LEVELS:
             raise ValueError(f"Invalid altitude level specified: {level!r}")
 
-        return self._get_current_data({"current": f"cloud_cover_{level}"})
+        return self._get_current_data(f"cloud_cover_{level}")
 
     def get_current_apparent_temperature(self, unit: str = "celsius") -> int | float:
         """
@@ -307,11 +304,9 @@ class Weather(BaseForecast, BaseWeather):
         Apparent temperature is the perceived feels-like temperature
         combining wind chill factor, relative humidity and solar radiation.
         """
-        self._verify_temperature_unit(unit)
 
-        return self._get_current_data(
-            {"current": "apparent_temperature", "temperature_unit": unit}
-        )
+        self._verify_temperature_unit(unit)
+        return self._get_current_data("apparent_temperature", temperature_unit=unit)
 
     def get_current_wind_speed(
         self, altitude: int = 10, unit: str = "kmh"
@@ -331,12 +326,11 @@ class Weather(BaseForecast, BaseWeather):
 
             Defaults to `kmh`.
         """
+
         self._verify_wind_altitude(altitude)
         self._verify_wind_speed_unit(unit)
 
-        return self._get_current_data(
-            {"current": f"wind_speed_{altitude}m", "wind_speed_unit": unit}
-        )
+        return self._get_current_data(f"wind_speed_{altitude}m", wind_speed_unit=unit)
 
     def get_current_wind_direction(self, altitude: int = 10) -> int | float:
         """
@@ -347,8 +341,9 @@ class Weather(BaseForecast, BaseWeather):
         - altitude (int): Altitude in meters(m) above the ground
         level; must be 10, 80, 120 or 180. Defaults to 10.
         """
+
         self._verify_wind_altitude(altitude)
-        return self._get_current_data({"current": f"wind_direction_{altitude}m"})
+        return self._get_current_data(f"wind_direction_{altitude}m")
 
     def get_current_wind_gusts(
         self, altitude: int = 10, unit: str = "kmh"
@@ -368,19 +363,18 @@ class Weather(BaseForecast, BaseWeather):
 
             Defaults to `kmh`.
         """
+
         self._verify_wind_altitude(altitude)
         self._verify_wind_speed_unit(unit)
 
-        return self._get_current_data(
-            {"current": "wind_gusts_10m", "wind_speed_unit": unit}
-        )
+        return self._get_current_data("wind_gusts_10m", wind_speed_unit=unit)
 
     def get_current_relative_humidity(self) -> int | float:
         """
         Extracts current relative humidity percentage(%)
         at 2 meters(m) above the ground level.
         """
-        return self._get_current_data({"current": "relative_humidity_2m"})
+        return self._get_current_data("relative_humidity_2m")
 
     def get_current_precipitation(self, unit: str = "mm") -> int | float:
         """
@@ -390,10 +384,9 @@ class Weather(BaseForecast, BaseWeather):
         #### Params:
         - unit: Precipitation unit; must be `mm` or `inch`. Defaults to `mm`.
         """
+
         self._verify_precipitation_unit(unit)
-        return self._get_current_data(
-            {"current": "precipitation", "precipitation_unit": unit}
-        )
+        return self._get_current_data("precipitation", precipitation_unit=unit)
 
     def get_current_pressure(self, level: str = "surface") -> int | float:
         """
@@ -405,13 +398,13 @@ class Weather(BaseForecast, BaseWeather):
         data; must be `surface` or `sealevel`. Defaults to `surface`.
         """
 
-        # Mapped value of the specified pressure level.
-        pressure: str | None = constants.PRESSURE_LEVEL_MAPPING.get(level)
+        # Metric associated with the specified pressure level.
+        metric: str | None = constants.PRESSURE_LEVEL_MAPPING.get(level)
 
-        if pressure is None:
+        if metric is None:
             raise ValueError(f"Invalid measurement level specified: {level!r}")
 
-        return self._get_current_data({"current": pressure})
+        return self._get_current_data(metric)
 
     def get_current_rainfall(self, unit: str = "mm") -> int | float:
         """
@@ -420,23 +413,24 @@ class Weather(BaseForecast, BaseWeather):
         #### Params:
         - unit: Precipitation unit; must be `mm` or `inch`. Defaults to `mm`.
         """
+
         self._verify_precipitation_unit(unit)
-        return self._get_current_data({"current": "rain", "precipitation_unit": unit})
+        return self._get_current_data("rain", precipitation_unit=unit)
 
     def get_current_snowfall(self) -> int | float:
         """Extracts current snowfall in centimeters(m)."""
-        return self._get_current_data({"current": "snowfall"})
+        return self._get_current_data("snowfall")
 
     def get_current_visibility(self) -> int | float:
         """Extracts current visibility in meters(m)."""
-        return self._get_current_data({"current": "visibility"})
+        return self._get_current_data("visibility")
 
     def is_day_or_night(self) -> int:
         """
         Returns whether it's day or night. Returns the
         integer `1` for daytime and `0` for nighttime.
         """
-        return int(self._get_current_data({"current": "is_day"}))
+        return self._get_current_data("is_day")
 
     def get_hourly_visibility(self) -> pd.Series:
         """Extracts hourly visibility data in meters(m)."""
