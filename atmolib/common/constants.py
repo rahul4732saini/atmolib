@@ -76,6 +76,7 @@ ARCHIVE_WIND_ALTITUDES = 10, 100
 
 GASES = (
     "ozone",
+    "ammonia",
     "carbon_monoxide",
     "carbon_dioxide",
     "nitrogen_dioxide",
