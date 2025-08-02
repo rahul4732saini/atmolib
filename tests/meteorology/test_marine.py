@@ -13,7 +13,7 @@ from atmolib import MarineWeather, constants
 class TestMarineWeather:
     """Tests the 'MarineWeather' class."""
 
-    def test_object_init_with_valid_coordinates(
+    def test_init_with_valid_coordinates(
         self, valid_marine_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
         """Test the object initialization with valid coordinates."""
@@ -21,13 +21,13 @@ class TestMarineWeather:
         for lat, long in valid_marine_coordinates:
             MarineWeather(lat, long)
 
-    def test_object_initialization_with_valid_forecast_days(self) -> None:
+    def test_init_with_valid_forecast_days(self) -> None:
         """Test the object initialization with valid forecast days."""
 
         for days in (1, 4, 8):
             MarineWeather(0, 0, forecast_days=days)
 
-    def test_object_init_with_valid_timeouts(
+    def test_init_with_valid_timeouts(
         self, valid_timeouts: tuple[int | float | None, ...]
     ) -> None:
         """Tests the object initialization with valid request timeouts."""
@@ -35,20 +35,20 @@ class TestMarineWeather:
         for timeout in valid_timeouts:
             MarineWeather(0, 0, timeout=timeout)
 
-    def test_object_init_with_invalid_forecast_days(self) -> None:
+    def test_init_with_invalid_forecast_days(self) -> None:
         """Tests the object initialization with invalid forecast days."""
 
         with pytest.raises(ValueError):
             for days in (0, -1, 9):
                 MarineWeather(0, 0, forecast_days=days)
 
-    def test_object_init_with_wave_types(self) -> None:
+    def test_init_with_wave_types(self) -> None:
         """Tests the object initialization with different wave types."""
 
         for type_ in constants.WAVE_TYPES:
             MarineWeather(0, 0, type_)
 
-    def test_object_init_with_invalid_timeouts(
+    def test_init_with_invalid_timeouts(
         self, invalid_timeouts: tuple[int | float | None, ...]
     ) -> None:
         """
