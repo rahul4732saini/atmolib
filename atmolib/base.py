@@ -129,7 +129,7 @@ class BaseMeteor:
             self._session, self._api, params, dtype, self._timeout
         )
 
-    def _get_hourly_summary(self, metrics: str, labels: str) -> pd.DataFrame:
+    def _get_hourly_summary(self, metrics: str, labels: str, **kwargs) -> pd.DataFrame:
         """
         Extracts hourly meteorology summary data associated with
         the specified metrics from Open-Meteo's API endpoints.
@@ -138,14 +138,15 @@ class BaseMeteor:
         - metrics (str): Name of the data metrics separated by commas.
         - labels (list[str]): List of strings for column identification
         in the resultant pandas DataFrame object.
+        - **kwargs (Any): Additional parameters to be passed to the API.
         """
 
-        params: dict[str, Any] = self._params | {"hourly": metrics}
+        params: dict[str, Any] = self._params | kwargs | {"hourly": metrics}
         return tools.get_periodical_summary(
             self._session, self._api, params, labels, self._timeout
         )
 
-    def _get_daily_summary(self, metrics: str, labels: str) -> pd.DataFrame:
+    def _get_daily_summary(self, metrics: str, labels: str, **kwargs) -> pd.DataFrame:
         """
         Extracts daily meteorology summary data associated with
         the specified metrics from Open-Meteo's API endpoints.
@@ -154,9 +155,10 @@ class BaseMeteor:
         - metrics (str): Name of the data metrics separated by commas.
         - labels (list[str]): List of strings for column identification
         in the resultant pandas DataFrame object.
+        - **kwargs (Any): Additional parameters to be passed to the API.
         """
 
-        params: dict[str, Any] = self._params | {"daily": metrics}
+        params: dict[str, Any] = self._params | kwargs | {"daily": metrics}
         return tools.get_periodical_summary(
             self._session, self._api, params, labels, self._timeout
         )
