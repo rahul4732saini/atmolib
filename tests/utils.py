@@ -36,6 +36,8 @@ def verify_temperature_data_series(series: pd.Series) -> None:
     the specified pandas Series object.
     """
 
+    verify_positive_data_series(series)
+
     assert isinstance(series, pd.Series)
     assert issubclass(series.dtype.type, np.integer | np.floating)
 
