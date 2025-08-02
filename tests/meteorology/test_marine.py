@@ -16,19 +16,19 @@ class TestMarineWeather:
     def test_init_with_valid_coordinates(
         self, valid_marine_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
-        """Test the object initialization with valid coordinates."""
+        """Test object initialization with valid coordinates."""
 
         for lat, long in valid_marine_coordinates:
             MarineWeather(lat, long)
 
     def test_init_with_valid_forecast_days(self) -> None:
-        """Test the object initialization with valid forecast days."""
+        """Test object initialization with valid forecast days."""
 
         for days in (1, 4, 8):
             MarineWeather(0, 0, forecast_days=days)
 
     def test_init_with_valid_past_days(self, valid_past_days: tuple[int]) -> None:
-        """Tests object initialization with valid past days argument."""
+        """Tests object initialization with valid past days."""
 
         for days in valid_past_days:
             MarineWeather(0, 0, past_days=days)
@@ -36,27 +36,27 @@ class TestMarineWeather:
     def test_init_with_valid_timeouts(
         self, valid_timeouts: tuple[int | float | None, ...]
     ) -> None:
-        """Tests the object initialization with valid request timeouts."""
+        """Tests object initialization with valid request timeouts."""
 
         for timeout in valid_timeouts:
             MarineWeather(0, 0, timeout=timeout)
 
     def test_init_with_invalid_forecast_days(self) -> None:
-        """Tests the object initialization with invalid forecast days."""
+        """Tests object initialization with invalid forecast days."""
 
         with pytest.raises(ValueError):
             for days in (0, -1, 9):
                 MarineWeather(0, 0, forecast_days=days)
 
     def test_init_with_invalid_past_days(self, invalid_past_days: tuple[int]) -> None:
-        """Tests object initialization with invalid past days argument."""
+        """Tests object initialization with invalid past days."""
 
         with pytest.raises(ValueError):
             for days in invalid_past_days:
                 MarineWeather(0, 0, past_days=days)
 
     def test_init_with_wave_types(self) -> None:
-        """Tests the object initialization with different wave types."""
+        """Tests object initialization with different wave types."""
 
         for type_ in constants.WAVE_TYPES:
             MarineWeather(0, 0, type_)
@@ -64,9 +64,7 @@ class TestMarineWeather:
     def test_init_with_invalid_timeouts(
         self, invalid_timeouts: tuple[int | float | None, ...]
     ) -> None:
-        """
-        Tests the object initialization with invalid request timeouts.
-        """
+        """Tests object initialization with invalid request timeouts."""
 
         with pytest.raises(ValueError):
             for timeout in invalid_timeouts:
