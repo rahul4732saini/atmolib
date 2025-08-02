@@ -45,3 +45,13 @@ def invalid_archive_dates() -> tuple[tuple[str, str], ...]:
         ("1939-12-21", "1993-12-31"),
         ("2022-02-12", "2022-02-01"),
     )
+
+
+@pytest.fixture
+def valid_past_days() -> tuple[int]:
+    return 0, 10, 1, 92, 53
+
+
+@pytest.fixture
+def invalid_past_days() -> tuple[int]:
+    return -1, 93, -10, 100
