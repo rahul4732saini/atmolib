@@ -42,16 +42,16 @@ def _request_json(
     handler: requests.Session | ModuleType = session if session else requests
 
     with handler.get(api, params=params, timeout=timeout) as response:
-        results: dict[str, Any] = response.json()
+        result: dict[str, Any] = response.json()
 
         # Extracts the reason from the API response and raises a request
         # error if the status code does not indicate a success.
         if response.status_code // 100 != 2:
-            message = results["reason"]
+            message = result["reason"]
 
             raise RequestError(response.status_code, message)
 
-    return results
+    return result
 
 
 def _verify_keys(params: dict[str, Any], keys: tuple[str, ...]) -> None:
