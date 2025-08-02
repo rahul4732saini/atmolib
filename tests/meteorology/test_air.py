@@ -13,7 +13,7 @@ from atmolib import AirQuality, constants
 class TestAirQuality:
     """Tests the `AirQuality` class and its defined methods."""
 
-    def test_object_initializations_with_valid_coordinates(
+    def test_init_with_valid_coordinates(
         self, valid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
         """
@@ -24,7 +24,7 @@ class TestAirQuality:
         for lat, long in valid_coordinates:
             AirQuality(lat, long)
 
-    def test_object_initialization_with_valid_forecast_days(self) -> None:
+    def test_init_with_valid_forecast_days(self) -> None:
         """
         Tests the `AirQuality` object initialization
         with valid forecast days.
@@ -33,7 +33,7 @@ class TestAirQuality:
         for days in (1, 4, 7):
             AirQuality(0, 0, forecast_days=days)
 
-    def test_object_initialization_with_valid_timeouts(
+    def test_init_with_valid_timeouts(
         self, valid_timeouts: tuple[int | float | None, ...]
     ) -> None:
         """
@@ -44,7 +44,7 @@ class TestAirQuality:
         for timeout in valid_timeouts:
             AirQuality(0, 0, timeout=timeout)
 
-    def test_object_initializations_with_invalid_coordinates(
+    def test_init_with_invalid_coordinates(
         self, invalid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
         """
@@ -56,7 +56,7 @@ class TestAirQuality:
             for lat, long in invalid_coordinates:
                 AirQuality(lat, long)
 
-    def test_object_initialization_with_invalid_forecast_days(self) -> None:
+    def test_init_with_invalid_forecast_days(self) -> None:
         """
         Tests the `AirQuality` object initialization
         with invalid forecast days.
@@ -66,7 +66,7 @@ class TestAirQuality:
             for days in (0, -1, 9):
                 AirQuality(0, 0, forecast_days=days)
 
-    def test_object_initialization_with_invalid_timeouts(
+    def test_init_with_invalid_timeouts(
         self, invalid_timeouts: tuple[int | float | None, ...]
     ) -> None:
         """
