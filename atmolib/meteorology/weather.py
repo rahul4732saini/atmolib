@@ -405,13 +405,13 @@ class Weather(BaseForecast, BaseWeather):
 
     def get_hourly_visibility(self) -> pd.Series:
         """Extracts hourly visibility data in meters(m)."""
-        return self._get_periodical_data({"hourly": "visibility"}, dtype=np.int32)
+        return self._get_hourly_data("visibility", dtype=np.int32)
 
     def get_hourly_precipitation_probability(self) -> pd.Series:
         """
         Extracts hourly precipitation (rain + showers + snowfall) percentage(%).
         """
-        return self._get_periodical_data({"hourly": "precipitation_probability"})
+        return self._get_hourly_data("precipitation_probability")
 
     def get_hourly_wind_speed(self, altitude: int = 10, unit: str = "kmh") -> pd.Series:
         """
@@ -432,9 +432,7 @@ class Weather(BaseForecast, BaseWeather):
         self._verify_wind_altitude(altitude)
         self._verify_wind_speed_unit(unit)
 
-        return self._get_periodical_data(
-            {"hourly": f"wind_speed_{altitude}m", "wind_speed_unit": unit}
-        )
+        return self._get_hourly_data(f"wind_speed_{altitude}m", wind_speed_unit=unit)
 
     def get_hourly_wind_direction(self, altitude: int = 10) -> pd.Series:
         """
@@ -446,7 +444,7 @@ class Weather(BaseForecast, BaseWeather):
         must be 10, 80, 120 or 180. Defaults to 10. Defaults to 10.
         """
         self._verify_wind_altitude(altitude)
-        return self._get_periodical_data({"hourly": f"wind_direction_{altitude}m"})
+        return self._get_hourly_data(f"wind_direction_{altitude}m")
 
     def get_hourly_soil_temperature(
         self, depth: int = 0, unit: str = "celsius"
@@ -468,8 +466,8 @@ class Weather(BaseForecast, BaseWeather):
 
         self._verify_temperature_unit(unit)
 
-        return self._get_periodical_data(
-            {"hourly": f"soil_temperature_{depth}cm", "temperature_unit": unit}
+        return self._get_hourly_data(
+            f"soil_temperature_{depth}cm", temperature_unit=unit
         )
 
     def get_hourly_soil_moisture(self, depth: int = 7) -> pd.Series:
@@ -495,15 +493,15 @@ class Weather(BaseForecast, BaseWeather):
         else:
             raise ValueError(f"Invalid depth value specified: {depth}")
 
-        return self._get_periodical_data({"hourly": f"soil_moisture_{depth_range}cm"})
+        return self._get_hourly_data(f"soil_moisture_{depth_range}cm")
 
     def get_daily_max_uv_index(self) -> pd.Series:
         """Extracts daily maximum Ultra-Violet (UV) index data."""
-        return self._get_periodical_data({"daily": "uv_index_max"})
+        return self._get_daily_data("uv_index_max")
 
     def get_daily_max_precipitation_probability(self) -> pd.Series:
         """
         Extracts daily maximum precipitation (rain +
         showers + snowfall) probability percentage(%).
         """
-        return self._get_periodical_data({"daily": "precipitation_probability_max"})
+        return self._get_daily_data("precipitation_probability_max")
