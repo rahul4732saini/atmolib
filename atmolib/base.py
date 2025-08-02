@@ -129,7 +129,9 @@ class BaseMeteor:
             self._session, self._api, params, dtype, self._timeout
         )
 
-    def _get_hourly_summary(self, metrics: str, labels: str, **kwargs) -> pd.DataFrame:
+    def _get_hourly_summary(
+        self, metrics: str, labels: str, /, **kwargs: Any
+    ) -> pd.DataFrame:
         """
         Extracts hourly meteorology summary data associated with
         the specified metrics from Open-Meteo's API endpoints.
@@ -147,7 +149,9 @@ class BaseMeteor:
             self._session, self._api, params, labels, self._timeout
         )
 
-    def _get_daily_summary(self, metrics: str, labels: str, **kwargs) -> pd.DataFrame:
+    def _get_daily_summary(
+        self, metrics: str, labels: str, /, **kwargs: Any
+    ) -> pd.DataFrame:
         """
         Extracts daily meteorology summary data associated with
         the specified metrics from Open-Meteo's API endpoints.
