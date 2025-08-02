@@ -1,6 +1,6 @@
 """
-Tests the classes and methods defined
-within atmolib/meteorology/marine.py.
+Tests the classes and methods defined within
+atmolib/meteorology/marine.py.
 """
 
 import pytest
@@ -11,9 +11,7 @@ from atmolib import MarineWeather, constants
 
 
 class TestMarineWeather:
-    """
-    Tests the `MarineWeather` class and its defined methods.
-    """
+    """Tests the 'MarineWeather' class."""
 
     def test_object_initialization_with_valid_coordinates(
         self, valid_marine_coordinates: tuple[tuple[float, float], ...]
@@ -75,8 +73,9 @@ class TestMarineWeather:
         assert isinstance(hourly, pd.DataFrame)
         assert isinstance(daily, pd.DataFrame)
 
-        # Verifies the indices and columns of the resultant
-        # pandas Series and DataFrame objects.
+        # Verifies the indices and columns of the resultant pandas
+        # Series and DataFrame objects.
+
         assert current.index.tolist() == constants.MARINE_WEATHER_SUMMARY_PARAMS
         assert hourly.columns.tolist() == constants.MARINE_WEATHER_SUMMARY_PARAMS
         assert daily.columns.tolist() == constants.MARINE_WEATHER_SUMMARY_PARAMS
