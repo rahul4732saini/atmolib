@@ -12,8 +12,8 @@ import pandas as pd
 
 def verify_positive_data_series(series: pd.Series) -> None:
     """
-    Verifies that all the values stored within the
-    specified pandas Series object are greater than 0.
+    Verifies that all the values stored within the specified
+    pandas Series object are positive or 0.
     """
 
     assert isinstance(series, pd.Series)
@@ -32,8 +32,8 @@ def verify_positive_or_null_data_series(series: pd.Series) -> None:
 
 def verify_temperature_data_series(series: pd.Series) -> None:
     """
-    Verifies the temperature data stored within
-    the specified pandas Series object.
+    Verifies the temperature data stored within the
+    specified pandas Series object.
     """
 
     verify_positive_data_series(series)
@@ -45,7 +45,7 @@ def verify_temperature_data_series(series: pd.Series) -> None:
 def verify_positive_range_data_series(series: pd.Series, end: int) -> None:
     """
     Verifies that all the values stored within the specified pandas
-    Series object are greater than 0 and less than the specified end.
+    Series object positive or 0, and less than the specified end.
     """
 
     verify_positive_data_series(series)
