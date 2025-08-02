@@ -254,10 +254,7 @@ class WeatherArchive(BaseWeather):
             raise ValueError(f"Invalid altitude level specified: {altitude}")
 
         self._verify_wind_speed_unit(unit)
-
-        return self._get_periodical_data(
-            {"hourly": f"wind_speed_{altitude}m", "wind_speed_unit": unit}
-        )
+        return self._get_hourly_data(f"wind_speed_{altitude}m", wind_speed_unit=unit)
 
     def get_hourly_wind_direction(self, altitude: int = 10) -> pd.Series:
         """
@@ -272,7 +269,7 @@ class WeatherArchive(BaseWeather):
         if altitude not in constants.ARCHIVE_WIND_ALTITUDES:
             raise ValueError(f"Invalid altitude level specified: {altitude}")
 
-        return self._get_periodical_data({"hourly": f"wind_direction_{altitude}m"})
+        return self._get_hourly_data(f"wind_direction_{altitude}m")
 
     def get_hourly_soil_temperature(
         self, depth: int = 0, unit: str = "celsius"
@@ -294,8 +291,8 @@ class WeatherArchive(BaseWeather):
         # Extracts the string representation of the depth range.
         depth_range: str = self._get_soil_depth(depth)
 
-        return self._get_periodical_data(
-            {"hourly": f"soil_temperature_{depth_range}cm", "temperature_unit": unit},
+        return self._get_hourly_data(
+            f"soil_temperature_{depth_range}cm", temperature_unit=unit
         )
 
     def get_hourly_soil_moisture(self, depth: int = 0) -> pd.Series:
@@ -312,4 +309,4 @@ class WeatherArchive(BaseWeather):
         # Extracts the string representation of the depth range.
         depth_range: str = self._get_soil_depth(depth)
 
-        return self._get_periodical_data({"hourly": f"soil_moisture_{depth_range}cm"})
+        return self._get_hourly_data(f"soil_moisture_{depth_range}cm")
