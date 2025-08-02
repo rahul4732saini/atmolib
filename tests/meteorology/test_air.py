@@ -13,6 +13,12 @@ from atmolib import AirQuality, constants
 class TestAirQuality:
     """Tests the 'AirQuality' class."""
 
+    def test_init_with_time_formats(self) -> None:
+        """Tests object initialization with different time formats."""
+
+        for format in constants.TIME_FORMATS:
+            AirQuality(0, 0, timefmt=format)
+
     def test_init_with_valid_coordinates(
         self, valid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
@@ -97,7 +103,7 @@ class TestAirQuality:
         assert current in range(0, 501)
 
     @pytest.mark.parametrize("gas", constants.GASES)
-    def test_gaseous_conc_methods(self, air_quality: AirQuality, gas: str) -> None:
+    def test_gas_conc_methods(self, air_quality: AirQuality, gas: str) -> None:
         """Test the atmospheric gas concentration extraction methods."""
 
         current = air_quality.get_current_gas_conc(gas)
