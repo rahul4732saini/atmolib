@@ -129,6 +129,38 @@ class BaseMeteor:
             self._session, self._api, params, dtype, self._timeout
         )
 
+    def _get_hourly_summary(self, metrics: str, labels: str) -> pd.DataFrame:
+        """
+        Extracts hourly meteorology summary data associated with
+        the specified metrics from Open-Meteo's API endpoints.
+
+        #### Params:
+        - metrics (str): Name of the data metrics separated by commas.
+        - labels (list[str]): List of strings for column identification
+        in the resultant pandas DataFrame object.
+        """
+
+        params: dict[str, Any] = self._params | {"hourly": metrics}
+        return tools.get_periodical_summary(
+            self._session, self._api, params, labels, self._timeout
+        )
+
+    def _get_daily_summary(self, metrics: str, labels: str) -> pd.DataFrame:
+        """
+        Extracts daily meteorology summary data associated with
+        the specified metrics from Open-Meteo's API endpoints.
+
+        #### Params:
+        - metrics (str): Name of the data metrics separated by commas.
+        - labels (list[str]): List of strings for column identification
+        in the resultant pandas DataFrame object.
+        """
+
+        params: dict[str, Any] = self._params | {"daily": metrics}
+        return tools.get_periodical_summary(
+            self._session, self._api, params, labels, self._timeout
+        )
+
 
 class BaseForecast(BaseMeteor):
     """Base class of all meteorological forecast classes."""
