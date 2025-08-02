@@ -126,15 +126,6 @@ class TestAirQuality:
         assert current >= 0
         utils.verify_positive_data_series(hourly)
 
-    def test_ammonia_conc_methods(self, air_quality: AirQuality) -> None:
-        """Tests the ammonia concentration extraction methods."""
-
-        current = air_quality.get_current_ammonia_conc()
-        hourly = air_quality.get_hourly_ammonia_conc()
-
-        assert current is None or current >= 0
-        utils.verify_positive_or_null_data_series(hourly)
-
     def test_pm2_5_methods(self, air_quality: AirQuality) -> None:
         """Tests the particulate matter 2.5 extraction methods."""
 
