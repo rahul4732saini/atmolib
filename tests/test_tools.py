@@ -7,10 +7,10 @@ from atmolib import tools
 
 
 def test_get_elevation_function_with_valid_coordinates(
-    valid_coordinates: tuple[tuple[float, float], ...]
+    valid_coordinates: tuple[tuple[float, float], ...],
 ) -> None:
     """
-    Tests the `tools.get_elevation` function with valid coordinates.
+    Tests the 'tools.get_elevation' function with valid coordinates.
     """
 
     for lat, long in valid_coordinates:
@@ -18,10 +18,10 @@ def test_get_elevation_function_with_valid_coordinates(
 
 
 def test_get_elevation_function_with_invalid_coordinates(
-    invalid_coordinates: tuple[tuple[float, float], ...]
+    invalid_coordinates: tuple[tuple[float, float], ...],
 ) -> None:
     """
-    Tests the `tools.get_elevation` function with invalid coordinates.
+    Tests the 'tools.get_elevation' function with invalid coordinates.
     """
 
     with pytest.raises(ValueError):
@@ -30,10 +30,10 @@ def test_get_elevation_function_with_invalid_coordinates(
 
 
 def test_get_elevation_function_with_valid_timeouts(
-    valid_timeouts: tuple[int | float | None, ...]
+    valid_timeouts: tuple[int | float | None, ...],
 ) -> None:
     """
-    Tests the `tools.get_elevation` function with valid request timeouts.
+    Tests the 'tools.get_elevation' function with valid request timeouts.
     """
 
     for timeout in valid_timeouts:
@@ -41,10 +41,10 @@ def test_get_elevation_function_with_valid_timeouts(
 
 
 def test_get_elevation_function_with_invalid_timeouts(
-    invalid_timeouts: tuple[int | float | None, ...]
+    invalid_timeouts: tuple[int | float | None, ...],
 ) -> None:
     """
-    Tests the `tools.get_evevation` function with invliad request timeouts.
+    Tests the 'tools.get_elevation' function with invalid request timeouts.
     """
 
     with pytest.raises(ValueError):
@@ -54,7 +54,7 @@ def test_get_elevation_function_with_invalid_timeouts(
 
 def test_city_details_function(cities: tuple[str, ...]) -> None:
     """
-    Tests the `tools.get_city_details` function with different city names.
+    Tests the 'tools.get_city_details' function with different city names.
     """
 
     for city in cities:
@@ -65,8 +65,8 @@ def test_city_details_function_with_invalid_count(
     invalid_city_counts: tuple[int | float, ...],
 ) -> None:
     """
-    Tests the `tools.get_city_details` function
-    with invalid city count arguments.
+    Tests the 'tools.get_city_details' function with an
+    invalid city count argument.
     """
 
     with pytest.raises(ValueError):
@@ -75,11 +75,11 @@ def test_city_details_function_with_invalid_count(
 
 
 def test_city_details_function_with_valid_timeouts(
-    valid_timeouts: tuple[int | float | None, ...]
+    valid_timeouts: tuple[int | float | None, ...],
 ) -> None:
     """
-    Tests the `tools.get_city_details`
-    function with valid request timeouts.
+    Tests the 'tools.get_city_details' function with
+    valid request timeouts.
     """
 
     for timeout in valid_timeouts:
@@ -90,8 +90,8 @@ def test_city_details_function_with_invalid_timeouts(
     invalid_timeouts: tuple[int | float | None],
 ) -> None:
     """
-    Tests the `tools.get_city_details`
-    function with invliad request timeouts.
+    Tests the 'tools.get_city_details' function with
+    invalid request timeouts.
     """
 
     with pytest.raises(ValueError):
