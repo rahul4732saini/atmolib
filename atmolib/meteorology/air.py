@@ -102,16 +102,10 @@ class AirQuality(BaseForecast):
         - Ammonia[NH3] Concentration (Only available for Europe)
         """
 
-        # String representation of the summary data types separated
-        # by commas as supported for requesting the API endpoint.
-        data_types: str = f",".join(constants.CURRENT_AIR_QUALITY_SUMMARY_PARAMS)
+        metrics: str = f",".join(constants.CURRENT_AIR_QUALITY_SUMMARY_PARAMS)
 
-        return tools.get_current_summary(
-            self._session,
-            self._api,
-            self._params | {"current": data_types},
-            constants.CURRENT_AIR_QUALITY_SUMMARY_PARAMS,
-            self._timeout,
+        return self._get_current_summary(
+            metrics, constants.CURRENT_AIR_QUALITY_SUMMARY_PARAMS
         )
 
     def get_hourly_summary(self) -> pd.DataFrame:
@@ -130,8 +124,6 @@ class AirQuality(BaseForecast):
         - Ammonia[NH3] Concentration (Only available for Europe)
         """
 
-        # String representation of the summary data types separated
-        # by commas as supported for requesting the API endpoint.
         metrics: str = f",".join(constants.HOURLY_AIR_QUALITY_SUMMARY_PARAMS)
 
         return self._get_hourly_summary(

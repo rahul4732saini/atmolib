@@ -109,25 +109,16 @@ class Weather(BaseForecast, BaseWeather):
         - wind speed (10m above ground level)
         - wind direction in degrees (10m above ground level)
         """
+
         self._verify_units(temperature_unit, precipitation_unit, wind_speed_unit)
+        metrics: str = ",".join(constants.CURRENT_WEATHER_SUMMARY_PARAMS)
 
-        # A string representation of the weather summary data types
-        # separated by commas as supported for requesting the Web API.
-        data_types: str = ",".join(constants.CURRENT_WEATHER_SUMMARY_PARAMS)
-
-        params: dict[str, Any] = {
-            "current": data_types,
-            "temperature_unit": temperature_unit,
-            "precipitation_unit": precipitation_unit,
-            "wind_speed_unit": wind_speed_unit,
-        }
-
-        return tools.get_current_summary(
-            self._session,
-            self._api,
-            self._params | params,
+        return self._get_current_summary(
+            metrics,
             constants.CURRENT_WEATHER_SUMMARY_LABELS,
-            self._timeout,
+            temperature_unit=temperature_unit,
+            precipitation_unit=precipitation_unit,
+            wind_speed_unit=wind_speed_unit,
         )
 
     def get_hourly_summary(

@@ -112,18 +112,12 @@ class MarineWeather(BaseForecast):
         - Wave period
         """
 
-        # String representation of the summary data types separated
-        # by commas as supported for requesting the API endpoint.
-        data_types: str = self._type + f",{self._type}".join(
+        metrics: str = self._type + f",{self._type}".join(
             constants.MARINE_WEATHER_SUMMARY_PARAMS
         )
 
-        return tools.get_current_summary(
-            self._session,
-            self._api,
-            self._params | {"current": data_types},
-            constants.MARINE_WEATHER_SUMMARY_PARAMS,
-            self._timeout,
+        return self._get_current_summary(
+            metrics, constants.MARINE_WEATHER_SUMMARY_PARAMS
         )
 
     def get_hourly_summary(self) -> pd.DataFrame:
