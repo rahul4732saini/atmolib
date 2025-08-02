@@ -27,6 +27,12 @@ class TestMarineWeather:
         for days in (1, 4, 8):
             MarineWeather(0, 0, forecast_days=days)
 
+    def test_init_with_valid_past_days(self, valid_past_days: tuple[int]) -> None:
+        """Tests object initialization with valid past days argument."""
+
+        for days in valid_past_days:
+            MarineWeather(0, 0, past_days=days)
+
     def test_init_with_valid_timeouts(
         self, valid_timeouts: tuple[int | float | None, ...]
     ) -> None:
@@ -41,6 +47,13 @@ class TestMarineWeather:
         with pytest.raises(ValueError):
             for days in (0, -1, 9):
                 MarineWeather(0, 0, forecast_days=days)
+
+    def test_init_with_invalid_past_days(self, invalid_past_days: tuple[int]) -> None:
+        """Tests object initialization with invalid past days argument."""
+
+        with pytest.raises(ValueError):
+            for days in invalid_past_days:
+                MarineWeather(0, 0, past_days=days)
 
     def test_init_with_wave_types(self) -> None:
         """Tests the object initialization with different wave types."""
