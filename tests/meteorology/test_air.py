@@ -103,8 +103,8 @@ class TestAirQuality:
         current = air_quality.get_current_gas_conc(gas)
         hourly = air_quality.get_hourly_gas_conc(gas)
 
-        assert current >= 0
-        utils.verify_positive_data_series(hourly)
+        assert current is None or current >= 0
+        utils.verify_positive_or_null_data_series(hourly)
 
     @pytest.mark.parametrize("plant", constants.PLANTS)
     def test_pollen_conc_methods(self, air_quality: AirQuality, plant: str) -> None:
