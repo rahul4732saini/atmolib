@@ -135,7 +135,8 @@ class BaseMeteor:
         the specified metrics from Open-Meteo's API endpoints.
 
         #### Params:
-        - metrics (str): Name of the data metrics separated by commas.
+        - metrics (str): String comprising the name of the data metrics
+        separated by commas.
         - labels (list[str]): List of strings for column identification
         in the resultant pandas DataFrame object.
         - **kwargs (Any): Additional parameters to be passed to the API.
@@ -152,7 +153,8 @@ class BaseMeteor:
         the specified metrics from Open-Meteo's API endpoints.
 
         #### Params:
-        - metrics (str): Name of the data metrics separated by commas.
+        - metrics (str): String comprising the name of the data metrics
+        separated by commas.
         - labels (list[str]): List of strings for column identification
         in the resultant pandas DataFrame object.
         - **kwargs (Any): Additional parameters to be passed to the API.
