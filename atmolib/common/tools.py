@@ -68,9 +68,7 @@ def _verify_keys(params: dict[str, Any], keys: tuple[str, ...]) -> None:
         if key in params:
             continue
 
-        raise KeyError(
-            f"Required parameter {key!r} not found in the request parameters."
-        )
+        raise KeyError(f"Required parameter {key!r} not found in request parameters.")
 
 
 def get_current_data(
@@ -124,8 +122,8 @@ def get_periodical_data(
 
     #### Returns:
     - pd.Series: A pandas Series object comprising the periodical meteorology
-    data. The index comprises the date or datetime depending upon the frequency
-    in ISO-8601 format (YYYY-MM-DDTHH:MM) or (YYYY-MM-DD).
+    data. The index comprises the date or datetime in ISO-8601 format, or the
+    unix timestamp, based on the time format specified with the requests parameter.
     """
 
     _verify_keys(params, ("latitude", "longitude"))
@@ -233,7 +231,7 @@ def get_periodical_summary(
     results: dict[str, Any] = _request_json(api, params, session, timeout)
 
     # Extracts the summary data mapped to the name of
-    # the frequency within the 'results' dictioanary.
+    # the frequency within the 'results' dictionary.
     data: dict[str, Any] = results[frequency]
 
     # Extracts the timeline array to use the datetime labels
@@ -250,7 +248,7 @@ def get_elevation(
 ) -> float:
     """
     Extracts elevation in meters(m) from the sea-level at the specified
-    latitude and longitude from Open-meteo's elevation API.
+    latitude and longitude from Open-Meteo's elevation API.
 
     #### Params:
     - lat (int | float): latitudinal coordinates of the location.
@@ -287,7 +285,7 @@ def get_city_details(
     timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
 ) -> list[dict[str, Any]] | None:
     """
-    Extracts the details of the specified city from Open-meteo's geocoding API.
+    Extracts the details of the specified city from Open-Meteo's geocoding API.
 
     #### Params:
     - name (str): The name of the city to retrieve details for.
