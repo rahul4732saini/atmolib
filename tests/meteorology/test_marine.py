@@ -19,6 +19,12 @@ class TestMarineWeather:
         for type_ in constants.WAVE_TYPES:
             MarineWeather(0, 0, type_)
 
+    def test_init_with_time_formats(self) -> None:
+        """Tests object initialization with different time formats."""
+
+        for format in constants.TIME_FORMATS:
+            MarineWeather(0, 0, timefmt=format)
+
     def test_init_with_valid_coordinates(
         self, valid_marine_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
