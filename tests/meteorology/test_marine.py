@@ -13,6 +13,12 @@ from atmolib import MarineWeather, constants
 class TestMarineWeather:
     """Tests the 'MarineWeather' class."""
 
+    def test_init_with_wave_types(self) -> None:
+        """Tests object initialization with different wave types."""
+
+        for type_ in constants.WAVE_TYPES:
+            MarineWeather(0, 0, type_)
+
     def test_init_with_valid_coordinates(
         self, valid_marine_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
@@ -54,12 +60,6 @@ class TestMarineWeather:
         with pytest.raises(ValueError):
             for days in invalid_past_days:
                 MarineWeather(0, 0, past_days=days)
-
-    def test_init_with_wave_types(self) -> None:
-        """Tests object initialization with different wave types."""
-
-        for type_ in constants.WAVE_TYPES:
-            MarineWeather(0, 0, type_)
 
     def test_init_with_invalid_timeouts(
         self, invalid_timeouts: tuple[int | float | None, ...]
