@@ -93,13 +93,12 @@ class TestAirQuality:
 
         current = air_quality.get_current_aqi(source)
 
-        # Effectively verifies that the AQI is an integer
-        # and lies within the below specified range.
+        # Verifies that the AQI is an integer and lies within range.
         assert current in range(0, 501)
 
     @pytest.mark.parametrize("gas", constants.GASES)
     def test_gaseous_conc_methods(self, air_quality: AirQuality, gas: str) -> None:
-        """Test the gaseous concentration extraction methods."""
+        """Test the atmospheric gas concentration extraction methods."""
 
         current = air_quality.get_current_gas_conc(gas)
         hourly = air_quality.get_hourly_gas_conc(gas)
