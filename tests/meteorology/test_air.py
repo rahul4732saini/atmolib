@@ -1,6 +1,6 @@
 """
-Tests the classes and methods defined
-within atmolib/meteorology/air.py.
+Tests the classes and methods defined within
+atmolib/meteorology/air.py.
 """
 
 import pytest
@@ -11,24 +11,18 @@ from atmolib import AirQuality, constants
 
 
 class TestAirQuality:
-    """Tests the `AirQuality` class and its defined methods."""
+    """Tests the 'AirQuality' class."""
 
     def test_init_with_valid_coordinates(
         self, valid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
-        """
-        Tests the `AirQuality` object initialization
-        with valid coordinates.
-        """
+        """Tests object initialization with valid coordinates."""
 
         for lat, long in valid_coordinates:
             AirQuality(lat, long)
 
     def test_init_with_valid_forecast_days(self) -> None:
-        """
-        Tests the `AirQuality` object initialization
-        with valid forecast days.
-        """
+        """Tests object initialization with valid forecast days."""
 
         for days in (1, 4, 7):
             AirQuality(0, 0, forecast_days=days)
@@ -36,10 +30,7 @@ class TestAirQuality:
     def test_init_with_valid_timeouts(
         self, valid_timeouts: tuple[int | float | None, ...]
     ) -> None:
-        """
-        Tests the `AirQuality` object initialization
-        with valid request timeouts.
-        """
+        """Tests object initialization with valid request timeouts."""
 
         for timeout in valid_timeouts:
             AirQuality(0, 0, timeout=timeout)
@@ -47,20 +38,14 @@ class TestAirQuality:
     def test_init_with_invalid_coordinates(
         self, invalid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
-        """
-        Tests the `AirQuality` object initialization
-        with invalid coordinates.
-        """
+        """Tests object initialization with invalid coordinates."""
 
         with pytest.raises(ValueError):
             for lat, long in invalid_coordinates:
                 AirQuality(lat, long)
 
     def test_init_with_invalid_forecast_days(self) -> None:
-        """
-        Tests the `AirQuality` object initialization
-        with invalid forecast days.
-        """
+        """Tests object initialization with invalid forecast days."""
 
         with pytest.raises(ValueError):
             for days in (0, -1, 9):
@@ -69,10 +54,7 @@ class TestAirQuality:
     def test_init_with_invalid_timeouts(
         self, invalid_timeouts: tuple[int | float | None, ...]
     ) -> None:
-        """
-        Tests the `AirQuality` object initialization
-        with invalid request timeouts.
-        """
+        """Tests object initialization with invalid request timeouts."""
 
         with pytest.raises(ValueError):
             for timeout in invalid_timeouts:
