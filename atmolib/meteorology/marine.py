@@ -178,11 +178,11 @@ class MarineWeather(BaseForecast):
 
     def get_hourly_wave_height(self) -> pd.Series:
         """Extracts hourly wave height forecast in meters(m)."""
-        return self._get_periodical_data({"hourly": f"{self._type}wave_height"})
+        return self._get_hourly_data(f"{self._type}wave_height")
 
     def get_hourly_wave_direction(self) -> pd.Series:
         """Extracts hourly wave direction forecast in degrees."""
-        return self._get_periodical_data({"hourly": f"{self._type}wave_direction"})
+        return self._get_hourly_data(f"{self._type}wave_direction")
 
     def get_hourly_wave_period(self) -> pd.Series:
         """
@@ -193,17 +193,15 @@ class MarineWeather(BaseForecast):
         Wave period refers to the time taken by two consecutive
         wave crests (or troughs) to pass through a fixed point.
         """
-        return self._get_periodical_data({"hourly": f"{self._type}wave_period"})
+        return self._get_hourly_data(f"{self._type}wave_period")
 
     def get_daily_max_wave_height(self) -> pd.Series:
         """Extracts daily maximum wave height forecast in meters(m)."""
-        return self._get_periodical_data({"daily": f"{self._type}wave_height_max"})
+        return self._get_daily_data(f"{self._type}wave_height_max")
 
     def get_daily_dominant_wave_direction(self) -> pd.Series:
         """Extracts daily dominant wave direction forecast in degrees."""
-        return self._get_periodical_data(
-            {"daily": f"{self._type}wave_direction_dominant"}
-        )
+        return self._get_daily_data(f"{self._type}wave_direction_dominant")
 
     def get_daily_max_wave_period(self) -> pd.Series:
         """
@@ -214,4 +212,4 @@ class MarineWeather(BaseForecast):
         Wave period refers to the time taken by two consecutive
         wave crests (or troughs) to pass through a fixed point.
         """
-        return self._get_periodical_data({"daily": f"{self._type}wave_period_max"})
+        return self._get_daily_data(f"{self._type}wave_period_max")
