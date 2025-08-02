@@ -11,7 +11,7 @@ A brief overview of all meteorology data extraction
 classes is provided below for quick user reference:
 
 ### Weather Class
-The Weather class defines mechanism for extracting current and
+The Weather class defines methods for extracting current and
 forecast weather data for any location based on the coordinates.
 
 #### Basic Usage:
@@ -24,7 +24,7 @@ forecast weather data for any location based on the coordinates.
 10.7
 
 ### WeatherArchive Class:
-The WeatherArchive class defines mechansim for extracting
+The WeatherArchive class defines methods for extracting
 past weather data since 1940 for analysis and reporting.
 
 #### Basic Usage:
@@ -39,8 +39,8 @@ Date3   Val3
 dtype: float32
 
 ### MarineWeather Class
-The MarineWeather class defines mechanism for extracting current and forecast
-marine weather data for marinetime activities with a resolution of 5 kilometers(km).
+The MarineWeather class defines methods for extracting current and forecast
+marine weather data for marine-time activities with a resolution of 5 kilometers(km).
 
 #### Basic Usage:
 
@@ -58,8 +58,8 @@ Date7   Val7
 Length: 7, dtype: float32
 
 ### AirQuality Class
-The AirQuality class defines mechanism for extracting real-time
-air quality data for monitoring environmental conditions.
+The AirQuality class defines methods for extracting real-time air quality data
+for monitoring environmental conditions with a resolution of 11 kilometers(km).
 
 >>> import atmolib as atmo
 >>> air = atmo.AirQuality(28.91, 75.67)
