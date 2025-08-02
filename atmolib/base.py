@@ -251,6 +251,26 @@ class BaseForecast(BaseMeteor):
         params: dict[str, Any] = self._params | {"current": metric, **kwargs}
         return tools.get_current_data(self._session, self._api, params, self._timeout)
 
+    def _get_current_summary(
+        self, metrics: str, labels: str, /, **kwargs: Any
+    ) -> pd.DataFrame:
+        """
+        Extracts current meteorology summary data associated with
+        the specified metrics from Open-Meteo's API endpoints.
+
+        #### Params:
+        - metrics (str): String comprising the name of the data metrics
+        separated by commas.
+        - labels (list[str]): List of strings for column identification
+        in the resultant pandas DataFrame object.
+        - **kwargs (Any): Additional parameters to be passed to the API.
+        """
+
+        params: dict[str, Any] = self._params | kwargs | {"current": metrics}
+        return tools.get_current_summary(
+            self._session, self._api, params, labels, self._timeout
+        )
+
 
 class BaseWeather(BaseMeteor):
     """Baseclass of all weather classes."""
