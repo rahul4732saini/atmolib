@@ -136,18 +136,12 @@ class MarineWeather(BaseForecast):
         - Wave period
         """
 
-        # String representation of the summary data types separated
-        # by commas as supported for requesting the API endpoint.
-        data_types: str = self._type + f",{self._type}".join(
+        metrics: str = self._type + f",{self._type}".join(
             constants.MARINE_WEATHER_SUMMARY_PARAMS
         )
 
-        return tools.get_periodical_summary(
-            self._session,
-            self._api,
-            self._params | {"hourly": data_types},
-            constants.MARINE_WEATHER_SUMMARY_PARAMS,
-            self._timeout,
+        return self._get_hourly_summary(
+            metrics, constants.MARINE_WEATHER_SUMMARY_PARAMS
         )
 
     def get_daily_summary(self) -> pd.DataFrame:
@@ -160,18 +154,13 @@ class MarineWeather(BaseForecast):
         - Max wave period
         """
 
-        # String representation of the summary data types separated
-        # by commas as supported for requesting the API endpoint.
-        data_types: str = self._type + f",{self._type}".join(
+        metrics: str = self._type + f",{self._type}".join(
             constants.DAILY_MARINE_WEATHER_SUMMARY_PARAMS
         )
 
-        return tools.get_periodical_summary(
-            self._session,
-            self._api,
-            self._params | {"daily": data_types},
+        return self._get_daily_summary(
+            metrics,
             constants.MARINE_WEATHER_SUMMARY_PARAMS,
-            self._timeout,
         )
 
     def get_current_wave_height(self) -> int | float | None:

@@ -105,7 +105,7 @@ class Weather(BaseForecast, BaseWeather):
         - precipitation (sum of rain/showers/snowfall)
         - weather code
         - cloud cover percentage
-        - surface pressure in Hectopascal(HPa)
+        - surface pressure in Hectopascals(HPa)
         - wind speed (10m above ground level)
         - wind direction in degrees (10m above ground level)
         """
@@ -161,29 +161,20 @@ class Weather(BaseForecast, BaseWeather):
         - weather code
         - visibility in meters(m)
         - cloud cover percentage(%)
-        - surface pressure in Hectopascal(HPa)
+        - surface pressure in Hectopascals(HPa)
         - wind speed (10m above ground level)
         - surface soil temperature
         """
+
         self._verify_units(temperature_unit, precipitation_unit, wind_speed_unit)
+        metrics: str = ",".join(constants.HOURLY_WEATHER_SUMMARY_PARAMS)
 
-        # A string representation of the weather summary data types
-        # separated by commas as supported for requesting the Web API.
-        data_types: str = ",".join(constants.HOURLY_WEATHER_SUMMARY_PARAMS)
-
-        params: dict[str, Any] = {
-            "hourly": data_types,
-            "temperature_unit": temperature_unit,
-            "precipitation_unit": precipitation_unit,
-            "wind_speed_unit": wind_speed_unit,
-        }
-
-        return tools.get_periodical_summary(
-            self._session,
-            self._api,
-            self._params | params,
+        return self._get_hourly_summary(
+            metrics,
             constants.HOURLY_WEATHER_SUMMARY_LABELS,
-            self._timeout,
+            temperature_unit=temperature_unit,
+            precipitation_unit=precipitation_unit,
+            wind_speed_unit=wind_speed_unit,
         )
 
     def get_daily_summary(
@@ -218,25 +209,16 @@ class Weather(BaseForecast, BaseWeather):
         - mean wind speed (10m above ground level)
         - dominant wind direction
         """
+
         self._verify_units(temperature_unit, precipitation_unit, wind_speed_unit)
+        metrics: str = ",".join(constants.DAILY_WEATHER_SUMMARY_PARAMS)
 
-        # A string representation of the weather summary data types
-        # separated by commas as supported for requesting the Web API.
-        data_types: str = ",".join(constants.DAILY_WEATHER_SUMMARY_PARAMS)
-
-        params: dict[str, Any] = {
-            "daily": data_types,
-            "temperature_unit": temperature_unit,
-            "precipitation_unit": precipitation_unit,
-            "wind_speed_unit": wind_speed_unit,
-        }
-
-        return tools.get_periodical_summary(
-            self._session,
-            self._api,
-            self._params | params,
+        return self._get_daily_summary(
+            metrics,
             constants.DAILY_WEATHER_SUMMARY_LABELS,
-            self._timeout,
+            temperature_unit=temperature_unit,
+            precipitation_unit=precipitation_unit,
+            wind_speed_unit=wind_speed_unit,
         )
 
     def get_current_temperature(
@@ -390,7 +372,7 @@ class Weather(BaseForecast, BaseWeather):
 
     def get_current_pressure(self, level: str = "surface") -> int | float:
         """
-        Extracts current atmospheric pressure in Hectopascal(hPa)
+        Extracts current atmospheric pressure in Hectopascals(hPa)
         at the specified measurement level.
 
         #### Params:

@@ -174,30 +174,21 @@ class WeatherArchive(BaseWeather):
         - relative humidity (2m above ground level)
         - dew point (2m above ground level)
         - precipitation (sum of rain/showers/snowfall)
-        - surface pressure in Hectopascal(HPa)
+        - surface pressure in Hectopascals(HPa)
         - wind speed (10m above ground level)
         - surface soil temperature
         - weather code
         """
+
         self._verify_units(temperature_unit, precipitation_unit, wind_speed_unit)
+        metrics: str = ",".join(constants.HOURLY_ARCHIVE_SUMMARY_PARAMS)
 
-        # String representation of the summary data types separated
-        # by commas as supported for requesting the API endpoint.
-        data_types: str = ",".join(constants.HOURLY_ARCHIVE_SUMMARY_PARAMS)
-
-        params: dict[str, Any] = {
-            "hourly": data_types,
-            "temperature_unit": temperature_unit,
-            "precipitation_unit": precipitation_unit,
-            "wind_speed_unit": wind_speed_unit,
-        }
-
-        return tools.get_periodical_summary(
-            self._session,
-            self._api,
-            self._params | params,
+        return self._get_hourly_summary(
+            metrics,
             constants.HOURLY_ARCHIVE_SUMMARY_LABELS,
-            self._timeout,
+            temperature_unit=temperature_unit,
+            precipitation_unit=precipitation_unit,
+            wind_speed_unit=wind_speed_unit,
         )
 
     def get_daily_summary(
@@ -227,29 +218,20 @@ class WeatherArchive(BaseWeather):
         - Mean temperature (2m above ground level)
         - precipitation (sum of rain/showers/snowfall)
         - Daylight duration in seconds
-        - surface pressure in Hectopascal(HPa)
+        - surface pressure in Hectopascals(HPa)
         - Mean wind speed (10m above ground level)
         - weather code
         """
+
         self._verify_units(temperature_unit, precipitation_unit, wind_speed_unit)
+        metrics: str = ",".join(constants.DAILY_ARCHIVE_SUMMARY_PARAMS)
 
-        # String representation of the summary data types separated
-        # by commas as supported for requesting the API endpoint.
-        data_types: str = ",".join(constants.DAILY_ARCHIVE_SUMMARY_PARAMS)
-
-        params: dict[str, Any] = {
-            "daily": data_types,
-            "temperature_unit": temperature_unit,
-            "precipitation_unit": precipitation_unit,
-            "wind_speed_unit": wind_speed_unit,
-        }
-
-        return tools.get_periodical_summary(
-            self._session,
-            self._api,
-            self._params | params,
+        return self._get_hourly_summary(
+            metrics,
             constants.DAILY_ARCHIVE_SUMMARY_LABELS,
-            self._timeout,
+            temperature_unit=temperature_unit,
+            precipitation_unit=precipitation_unit,
+            wind_speed_unit=wind_speed_unit,
         )
 
     def get_hourly_wind_speed(self, altitude: int = 10, unit: str = "kmh") -> pd.Series:
