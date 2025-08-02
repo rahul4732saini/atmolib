@@ -9,7 +9,7 @@ of marine weather data from Open-Meteo's Marine Weather API.
 import pandas as pd
 
 from ..base import BaseForecast
-from ..common import constants, tools
+from ..common import constants
 
 
 class MarineWeather(BaseForecast):

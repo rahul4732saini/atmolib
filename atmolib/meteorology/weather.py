@@ -6,12 +6,10 @@ This module defines the Weather class facilitating extraction
 of weather data from Open-Meteo's Weather API.
 """
 
-from typing import Any
-
 import numpy as np
 import pandas as pd
 
-from ..common import constants, tools
+from ..common import constants
 from ..base import BaseForecast, BaseWeather
 
 

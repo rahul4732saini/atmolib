@@ -6,12 +6,11 @@ This module defines the WeatherArchive class facilitating extraction
 of historical weather data from Open-Meteo's Weather History API.
 """
 
-from typing import Any
 from datetime import date, datetime
 
 import pandas as pd
 
-from ..common import constants, tools
+from ..common import constants
 from ..base import BaseWeather
 
 

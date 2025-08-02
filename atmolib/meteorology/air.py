@@ -9,7 +9,7 @@ of air quality data from Open-Meteo's Air Quality API.
 import pandas as pd
 
 from ..base import BaseForecast
-from ..common import constants, tools
+from ..common import constants
 
 
 class AirQuality(BaseForecast):
