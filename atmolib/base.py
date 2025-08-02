@@ -107,7 +107,7 @@ class BaseMeteor:
         - **kwargs (Any): Additional parameters to be passed to the API.
         """
 
-        params: dict[str, Any] = self._params | {"hourly": metric, **kwargs}
+        params: dict[str, Any] = self._params | kwargs | {"hourly": metric}
         return tools.get_periodical_data(
             self._session, self._api, params, dtype, self._timeout
         )
@@ -124,7 +124,7 @@ class BaseMeteor:
         - **kwargs (Any): Additional parameters to be passed to the API.
         """
 
-        params: dict[str, Any] = self._params | {"daily": metric, **kwargs}
+        params: dict[str, Any] = self._params | kwargs | {"daily": metric}
         return tools.get_periodical_data(
             self._session, self._api, params, dtype, self._timeout
         )
