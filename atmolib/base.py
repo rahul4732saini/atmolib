@@ -25,7 +25,9 @@ class BaseMeteor:
     # be explicitly defined by child classes as per requirements.
     _api: str
 
-    # Initializes a shared session and closes it upon exit.
+    # Initializes a shared session for all meteorology classes and
+    # closes it upon exit.
+
     _session = requests.Session()
     atexit.register(_session.close)
 
