@@ -20,7 +20,13 @@ class TestWeatherArchive:
         """Tests object initialization with different time formats."""
 
         for format in constants.TIME_FORMATS:
-            WeatherArchive(0, 0, timefmt=format)
+            WeatherArchive(
+                0,
+                0,
+                start_date="2020-01-01",
+                end_date="2020-01-05",
+                timefmt=format,
+            )
 
     def test_init_with_valid_coordinates(
         self, valid_coordinates: tuple[tuple[float, float], ...]
