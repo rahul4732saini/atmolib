@@ -38,7 +38,7 @@ class AirQuality(BaseForecast):
         self,
         lat: int | float,
         long: int | float,
-        forecast_days: int = 5,
+        forecast_days: int = constants.DEFAULT_FORECAST_DAYS,
         past_days: int = constants.DEFAULT_PAST_DAYS,
         timefmt: str = constants.DEFAULT_TIME_FORMAT,
         timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
