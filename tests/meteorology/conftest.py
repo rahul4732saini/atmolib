@@ -4,17 +4,17 @@ import pytest
 import atmolib
 
 
-@pytest.fixture
+@pytest.fixture(scope="class")
 def weather() -> atmolib.Weather:
     return atmolib.Weather(0, 0, forecast_days=2)
 
 
-@pytest.fixture
+@pytest.fixture(scope="class")
 def archive() -> atmolib.WeatherArchive:
     return atmolib.WeatherArchive(0, 0, "2020-01-01", "2020-01-10")
 
 
-@pytest.fixture
+@pytest.fixture(scope="class")
 def air_quality() -> atmolib.AirQuality:
     return atmolib.AirQuality(0, 0, forecast_days=2)
 
