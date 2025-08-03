@@ -73,8 +73,8 @@ class TestWeather:
         self, weather: Weather, unit: str
     ) -> None:
         """
-        Test the weather summary extraction methods
-        with different temperature units.
+        Test the weather summary extraction methods with different
+        temperature units.
         """
         self._verify_summary_methods(weather, {"temperature_unit": unit})
 
@@ -83,8 +83,8 @@ class TestWeather:
         self, weather: Weather, unit: str
     ) -> None:
         """
-        Test the weather summary extraction methods
-        with different precipitation units.
+        Test the weather summary extraction methods with different
+        precipitation units.
         """
         self._verify_summary_methods(weather, {"precipitation_unit": unit})
 
@@ -93,8 +93,8 @@ class TestWeather:
         self, weather: Weather, unit: str
     ) -> None:
         """
-        Test the weather summary extraction methods
-        with different wind speed units.
+        Test the weather summary extraction methods with different
+        wind speed units.
         """
         self._verify_summary_methods(weather, {"wind_speed_unit": unit})
 
@@ -105,8 +105,8 @@ class TestWeather:
         self, weather: Weather, unit: str
     ) -> None:
         """
-        Tests the temperature extraction methods
-        with different temperature units.
+        Tests the temperature extraction methods with different
+        temperature units.
         """
 
         current = weather.get_current_temperature(unit=unit)
@@ -123,8 +123,8 @@ class TestWeather:
         self, weather: Weather, altitude: int
     ) -> None:
         """
-        Tests the temperature extraction methods
-        with different altitudes levels.
+        Tests the temperature extraction methods with
+        different altitudes levels.
         """
 
         current = weather.get_current_temperature(altitude=altitude)
@@ -138,8 +138,8 @@ class TestWeather:
         self, weather: Weather, unit: str
     ) -> None:
         """
-        Tests the apparent temperature extraction
-        methods with different temperature units.
+        Tests the apparent temperature extraction methods with
+        different temperature units.
         """
 
         current = weather.get_current_apparent_temperature(unit=unit)
@@ -156,8 +156,8 @@ class TestWeather:
         self, weather: Weather, metric: str
     ) -> None:
         """
-        Tests the daily temperature extraction methods
-        with different weather statistical metrics.
+        Tests the daily temperature extraction methods with different
+        weather statistical metrics.
         """
 
         temp = weather.get_daily_temperature(metric=metric)
@@ -171,8 +171,8 @@ class TestWeather:
         self, weather: Weather, unit: str
     ) -> None:
         """
-        Tests the soil temperature extraction
-        methods with different temperature units.
+        Tests the soil temperature extraction methods with
+        different temperature units.
         """
 
         hourly = weather.get_hourly_soil_temperature(unit=unit)
@@ -183,8 +183,8 @@ class TestWeather:
         self, weather: Weather, depth: int
     ) -> None:
         """
-        Tests the soil temperature extraction
-        methods with different soil depths.
+        Tests the soil temperature extraction methods with
+        different soil depths.
         """
 
         hourly = weather.get_hourly_soil_temperature(depth=depth)
@@ -197,7 +197,8 @@ class TestWeather:
         self, weather: Weather, unit: str
     ) -> None:
         """
-        Tests the precipitation extraction methods with different temperature units.
+        Tests the precipitation extraction methods with different
+        temperature units.
         """
 
         current = weather.get_current_precipitation(unit=unit)
@@ -242,7 +243,8 @@ class TestWeather:
         self, weather: Weather, level: str
     ) -> None:
         """
-        Test the cloud cover extraction methods with different altitude levels.
+        Test the cloud cover extraction methods with different
+        altitude levels.
         """
 
         current = weather.get_current_cloud_cover(level=level)
@@ -253,8 +255,8 @@ class TestWeather:
 
     def test_total_cloud_cover_methods(self, weather: Weather) -> None:
         """
-        Test the total cloud cover extraction
-        methods with different altitude levels.
+        Test the total cloud cover extraction methods with
+        different altitude levels.
         """
 
         current = weather.get_current_total_cloud_cover()
@@ -270,7 +272,8 @@ class TestWeather:
         self, weather: Weather, unit: str
     ) -> None:
         """
-        Tests the wind speed extraction methods with different wind speed units.
+        Tests the wind speed extraction methods with different
+        wind speed units.
         """
 
         current = weather.get_current_wind_speed(unit=unit)
@@ -299,7 +302,8 @@ class TestWeather:
         self, weather: Weather, unit: str
     ) -> None:
         """
-        Tests the wind gusts extraction methods with different wind speed units.
+        Tests the wind gusts extraction methods with different
+        wind speed units.
         """
 
         current = weather.get_current_wind_gusts(unit=unit)
@@ -347,8 +351,8 @@ class TestWeather:
         self, weather: Weather, level: str
     ) -> None:
         """
-        Tests the atmospheric pressure extraction
-        methods with different measurement levels.
+        Tests the atmospheric pressure extraction methods with
+        different measurement levels.
         """
 
         current = weather.get_current_pressure(level=level)
@@ -374,7 +378,7 @@ class TestWeather:
         utils.verify_positive_data_series(moisture)
 
     def test_daily_max_uv_index_method(self, weather: Weather) -> None:
-        """Tests the `Weather.get_daily_max_uv_index` method."""
+        """Tests the maximum UV index extraction method."""
 
         uv = weather.get_daily_max_uv_index()
         utils.verify_positive_data_series(uv)
