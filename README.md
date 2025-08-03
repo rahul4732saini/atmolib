@@ -39,9 +39,9 @@ The classes along with their corresponding descriptions are mentioned as follows
 
 - `WeatherArchive` enables retrieval of historical weather data, spanning hourly and daily records from 1940 till the present day.
 
-- `MarineWeather` grants access to current, hourly, and daily marine weather forecast data, covering wave height, direction, and period, with a resolution of up to 5 kilometers.
+- `MarineWeather` grants access to current, hourly, and daily marine weather forecast data, covering wave height, direction, and period, with a resolution of 5 kilometers.
 
-- `AirQuality` provides current and hourly forecasts for air quality metrics, including AQI, atmospheric gas concentrations, and UV index.
+- `AirQuality` provides current and hourly forecasts for air quality metrics, including AQI, atmospheric gas concentrations, and UV index, with a resolution of 11 kilometers.
 
 The package also provides users with some useful functions as mentioned below:
 
@@ -49,107 +49,59 @@ The package also provides users with some useful functions as mentioned below:
 
 - `get_city_details` extracts the city details such as coordinates, country, timezone, etc. based on the specified city name.
 
-## Basic Usage
+## Basic Overview
 
-This guide provides the basic usage of the package and highlights some of the generally used methods. All the methods in the package are designed to be used with minimal arguments with default arguments primarily specified in all of them.
-
-- `Weather` class usage:
-
-```python
-import atmolib as atmo
-
-# 'forecast_days' is an optional argument and specifies the number
-# of days for which forecast data is desired to be extracted.
-weather = atmo.Weather(lat=26.91, long=75.54, forecast_days=10)
-
-# Extracts a summary of weather forecast data.
-weather.get_current_summary()
-weather.get_hourly_summary()
-weather.get_daily_summary()
-
-# Extracts the current weather conditions.
-weather.get_current_temperature()
-weather.get_current_weather_code()
-weather.get_current_cloud_cover()
-weather.get_current_wind_speed()
-weather.get_current_pressure()
-weather.get_current_precipitation()
-weather.get_current_relative_humidity()
-
-# Extracts the hourly weather forecast data.
-weather.get_hourly_temperature()
-weather.get_hourly_visibility()
-weather.get_hourly_wind_speed()
-weather.get_hourly_precipitation_probability()
-weather.get_hourly_soil_temperature()
-
-# Extracts the daily weather forecast data.
-weather.get_daily_temperature()
-weather.get_daily_max_precipitation_probability()
-weather.get_daily_max_uv_index()
-weather.get_daily_max_wind_speed()
-weather.get_daily_total_precipitation()
-weather.get_daily_sunshine_duration()
-```
-
-- `WeatherArchive` provides the same methods as the `Weather` class with some exclusions.
-
-- `MarineWeather` class usage:
+The following provides a basic overview of the classes defined within the package and highlights some of the generally used methods.
+All the methods within the classes are designed to be used with minimal arguments, with default arguments primarily specified in all of them.
 
 ```python
-import atmolib as atmo
-
-# 'forecast_days' is an optional argument and specifies the number
-# of days for which forecast data is desired to be extracted.
-# 'wave_type' refers to the type of waves for which marine
-# weather data is desired to be extracted.
-marine = atmo.MarineWeather(lat=0, long=0, wave_type='wind', forecast_days=7)
-
-# Extracts a summary of marine weather forecast data.
-marine.get_current_summary()
-marine.get_hourly_summary()
-marine.get_daily_summary()
-
-# Extracts the current weather conditions.
-marine.get_current_wave_height()
-marine.get_current_wave_direction()
-marine.get_current_wave_period()
-
-# Extracts the hourly weather forecast data.
-marine.get_hourly_wave_height()
-marine.get_hourly_wave_direction()
-marine.get_hourly_wave_period()
-
-# Extracts the daily weather forecast data.
-marine.get_daily_max_wave_height()
-marine.get_daily_dominant_wave_direction()
-marine.get_daily_max_wave_period()
-```
-
-- `AirQuality` class usage:
-
-```python
-import atmolib as atmo
-
-air = atmo.AirQuality(lat=26.91, long=75.54, forecast_days=7)
-
-# Extracts a summary of air quality forecast data.
-air.get_current_summary()
-air.get_hourly_summary()
-
-# Extracts the current weather conditions.
-air.get_current_aqi()
-air.get_current_pm2_5_conc()
-air.get_current_pm10_conc()
-air.get_current_uv_index()
-air.get_hourly_dust_conc()
-
-# Extracts the hourly weather forecast data.
-air.get_hourly_uv_index()
-air.get_hourly_uv_index()
-air.get_hourly_pm2_5_conc()
-air.get_hourly_pm10_conc()
-air.get_hourly_aerosol_optical_depth()
+>>> import atmolib as atmo
+>>>
+>>> # Weather class usage
+>>>
+>>> weather = atmo.Weather(lat=26.91, long=75.78)
+>>> weather.get_current_temperature()
+31.1
+>>> weather.get_daily_max_uv_index()
+Date
+2025-08-03  7.80
+2025-08-04  5.60
+...
+2025-08-09  2.35
+>>>
+>>> # WeatherArchive class usage
+>>>
+>>> archive = atmo.WeatherArchive(lat=25.67, long=91.74, start_date="2010-08-01", end_date="2010-08-03")
+>>> archive.get_hourly_precipitation()
+Datetime
+2010-08-01T00:00    0.1
+2010-08-01T01:00    0.4
+...
+2010-08-03T23:00    0.0
+>>>
+>>> # MarineWeather class usage
+>>>
+>>> marine = atmo.MarineWeather(lat=19.41, long=89.30)
+>>> marine.get_current_wave_direction()
+191
+>>> marine.get_daily_wave_height()
+Date
+2025-08-03  1.76
+2025-08-04  1.48
+...
+2025-08-09  1.78
+>>>
+>>> # AirQuality class usage
+>>>
+>>> air = atmo.AirQuality(lat=24.78, long=73.14)
+>>> air.get_current_aqi()
+70
+>>> air.get_hourly_dust_conc()
+Datetime
+2025-08-03T00:00    89.0
+2025-08-03T01:00    83.0
+...
+2025-08-07T32:00    NaN
 ```
 
 ## Legals
