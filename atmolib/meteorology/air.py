@@ -30,9 +30,7 @@ class AirQuality(BaseForecast):
     )
 
     _api = constants.AIR_QUALITY_API
-
-    # Maximum number of days for which forecast data can be extracted.
-    _max_forecast_days = 5
+    _max_forecast_days = constants.MAX_FORECAST_DAYS_MARINE
 
     def __init__(
         self,

@@ -32,9 +32,7 @@ class MarineWeather(BaseForecast):
     )
 
     _api = constants.MARINE_API
-
-    # Maximum number of days for which forecast data can be extracted.
-    _max_forecast_days = 16
+    _max_forecast_days = constants.MAX_FORECAST_DAYS_MARINE
 
     def __init__(
         self,
