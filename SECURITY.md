@@ -25,14 +25,6 @@ If you discover a security vulnerability in this project, we appreciate your hel
 
 Our team will respond as soon as possible to verify the issue and work on a fix.
 
-## Response Process
-
-Upon receiving a report, we aim to:
-
-1. Acknowledge receipt within 2 days.
-2. Investigate and assess the vulnerability within 7 days.
-3. Provide a timeline for a patch, if necessary, and keep you updated on the resolution progress.
-
 ## Security Updates
 
 We will document any security patches in the repository's changelog, and contributors are encouraged to keep their dependencies up-to-date to ensure security compliance.
