@@ -31,7 +31,7 @@ setup(
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
     ],
-    packages=find_packages(),
+    packages=find_packages(exclude=["tests", "tests.*"]),
     package_data={"atmolib": ["weather_codes.json"]},
     platforms=["any"],
     install_requires=REQUIREMENTS.split("\n"),
