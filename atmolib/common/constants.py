@@ -15,7 +15,14 @@ import numpy as np
 DEFAULT_REQUEST_TIMEOUT = 30
 
 MAX_PAST_DAYS = 92
+
+# Maximum forecast days supported by compatible meteorology classes.
+MAX_FORECAST_DAYS_WEATHER = 16
+MAX_FORECAST_DAYS_AIR = 5
+MAX_FORECAST_DAYS_MARINE = 16
+
 DEFAULT_PAST_DAYS = 0
+DEFAULT_FORECAST_DAYS = 2
 
 # Time formats supported by the API for data extraction.
 TIME_FMT_UNIX = "unixtime"
