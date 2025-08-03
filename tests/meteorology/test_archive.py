@@ -16,7 +16,7 @@ from atmolib import WeatherArchive, constants
 class TestWeatherArchive:
     """Tests the 'WeatherArchive' class."""
 
-    def test_object_initialization_with_valid_coordinates(
+    def test_init_with_valid_coordinates(
         self, valid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
         """Tests object initialization with valid coordinates."""
@@ -24,7 +24,7 @@ class TestWeatherArchive:
         for lat, long in valid_coordinates:
             WeatherArchive(lat, long, start_date="2020-01-01", end_date="2020-01-05")
 
-    def test_object_initialization_with_valid_dates(
+    def test_init_with_valid_dates(
         self, valid_archive_dates: tuple[tuple[str, str], ...]
     ) -> None:
         """Tests object initialization with valid archive dates."""
@@ -32,7 +32,7 @@ class TestWeatherArchive:
         for start, end in valid_archive_dates:
             WeatherArchive(0, 0, start_date=start, end_date=end)
 
-    def test_object_initialization_with_valid_timeouts(
+    def test_init_with_valid_timeouts(
         self, valid_timeouts: tuple[int | float | None, ...]
     ) -> None:
         """Test object initialization with valid request timeouts."""
@@ -42,7 +42,7 @@ class TestWeatherArchive:
                 0, 0, start_date="2020-01-01", end_date="2020-01-05", timeout=timeout
             )
 
-    def test_object_initialization_with_invalid_coordinates(
+    def test_init_with_invalid_coordinates(
         self, invalid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
         """Test object initialization with invalid coordinates."""
@@ -53,7 +53,7 @@ class TestWeatherArchive:
                     lat, long, start_date="2020-01-01", end_date="2020-01-05"
                 )
 
-    def test_object_initialization_with_invalid_dates(
+    def test_init_with_invalid_dates(
         self, invalid_archive_dates: tuple[tuple[str, str], ...]
     ) -> None:
         """Tests object initialization with invalid archive dates."""
@@ -62,7 +62,7 @@ class TestWeatherArchive:
             for start, end in invalid_archive_dates:
                 WeatherArchive(0, 0, start, end)
 
-    def test_object_initialization_with_invalid_timeouts(
+    def test_init_with_invalid_timeouts(
         self, invalid_timeouts: tuple[int | float | None, ...]
     ) -> None:
         """Test object initialization with invalid request timeouts."""
