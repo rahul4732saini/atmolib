@@ -30,7 +30,7 @@ class TestAirQuality:
     def test_init_with_valid_forecast_days(self) -> None:
         """Tests object initialization with valid forecast days."""
 
-        for days in (1, 4, 7):
+        for days in (1, 2, 5):
             AirQuality(0, 0, forecast_days=days)
 
     def test_init_with_valid_past_days(self, valid_past_days: tuple[int]) -> None:
@@ -60,7 +60,7 @@ class TestAirQuality:
         """Tests object initialization with invalid forecast days."""
 
         with pytest.raises(ValueError):
-            for days in (0, -1, 9):
+            for days in (0, -1, 6, 9):
                 AirQuality(0, 0, forecast_days=days)
 
     def test_init_with_invalid_past_days(self, invalid_past_days: tuple[int]) -> None:
