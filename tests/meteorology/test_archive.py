@@ -107,8 +107,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, unit: str
     ) -> None:
         """
-        Tests the summary extraction methods
-        with different temperature units.
+        Tests the summary extraction methods with different
+        temperature units.
         """
         self._verify_summary_methods(archive, {"temperature_unit": unit})
 
@@ -117,8 +117,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, unit: str
     ) -> None:
         """
-        Tests the summary extraction methods
-        with different precipitation units.
+        Tests the summary extraction methods with different
+        precipitation units.
         """
         self._verify_summary_methods(archive, {"precipitation_unit": unit})
 
@@ -127,8 +127,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, unit: str
     ) -> None:
         """
-        Tests the summary extraction methods
-        with different wind speed units.
+        Tests the summary extraction methods with different
+        wind speed units.
         """
         self._verify_summary_methods(archive, {"wind_speed_unit": unit})
 
@@ -139,8 +139,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, altitude: int
     ) -> None:
         """
-        Tests the temperature data extraction
-        methods with different attitude levels.
+        Tests the temperature data extraction methods with different
+        attitude levels.
         """
 
         hourly = archive.get_hourly_temperature(altitude=altitude)
@@ -151,8 +151,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, unit: str
     ) -> None:
         """
-        Tests the temperature extraction methods
-        with different temperature units.
+        Tests the temperature data extraction methods with different
+        temperature units.
         """
 
         hourly = archive.get_hourly_temperature(unit=unit)
@@ -166,8 +166,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, unit: str
     ) -> None:
         """
-        Tests the apparent temperature extraction
-        methods with different temperature units.
+        Tests the apparent temperature extraction methods with
+        different temperature units.
         """
 
         hourly = archive.get_hourly_apparent_temperature(unit=unit)
@@ -181,8 +181,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, unit: str
     ) -> None:
         """
-        Tests the soil temperature extraction
-        methods with different temperature units.
+        Tests the soil temperature extraction methods with
+        different temperature units.
         """
 
         hourly = archive.get_hourly_soil_temperature(unit=unit)
@@ -193,8 +193,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, depth: int
     ) -> None:
         """
-        Tests the soil temperature extraction
-        methods with different soil depths.
+        Tests the soil temperature extraction methods with
+        different soil depths.
         """
 
         hourly = archive.get_hourly_soil_temperature(depth=depth)
@@ -222,8 +222,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, unit: str
     ) -> None:
         """
-        Tests the precipitation extraction methods
-        with different precipitation units.
+        Tests the precipitation extraction methods with different
+        precipitation units.
         """
 
         hourly = archive.get_hourly_precipitation(unit=unit)
@@ -237,8 +237,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, unit: str
     ) -> None:
         """
-        Tests the rainfall extraction methods
-        with different precipitation units.
+        Tests the rainfall extraction methods with different
+        precipitation units.
         """
 
         hourly = archive.get_hourly_rainfall(unit=unit)
@@ -254,8 +254,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, level: str
     ) -> None:
         """
-        Tests the cloud coverage extraction
-        methods with different altitude levels.
+        Tests the cloud coverage extraction methods with different
+        altitude levels.
         """
 
         hourly = archive.get_hourly_cloud_cover(level=level)
@@ -268,8 +268,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, unit: str
     ) -> None:
         """
-        Tests the wind speed extraction methods
-        with different wind speed units.
+        Tests the wind speed extraction methods with different
+        wind speed units.
         """
 
         hourly = archive.get_hourly_wind_speed(unit=unit)
@@ -283,8 +283,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, altitude: int
     ) -> None:
         """
-        Tests the wind speed extraction methods
-        with different altitude levels.
+        Tests the wind speed extraction methods with different
+        altitude levels.
         """
 
         hourly = archive.get_hourly_wind_speed(altitude=altitude)
@@ -298,8 +298,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, unit: str
     ) -> None:
         """
-        Tests the wind gusts extraction methods
-        with different wind speed units.
+        Tests the wind gusts extraction methods with different
+        wind speed units.
         """
 
         hourly = archive.get_hourly_wind_speed(unit=unit)
@@ -313,8 +313,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, altitude: int
     ) -> None:
         """
-        Tests the wind direction extraction methods
-        with different altitude levels.
+        Tests the wind direction extraction methods with
+        different altitude levels.
         """
 
         hourly = archive.get_hourly_wind_direction(altitude=altitude)
@@ -330,8 +330,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, frequency: str
     ) -> None:
         """
-        Tests the periodical weather code extraction
-        method with different data frequencies.
+        Tests the periodical weather code extraction method with
+        different data frequencies.
         """
 
         code = archive.get_periodical_weather_code(frequency)
@@ -345,8 +345,8 @@ class TestWeatherArchive:
         assert code["data"].isin(constants.WEATHER_CODES).all()
         assert code["description"].isin(constants.WEATHER_CODES.values()).all()
 
-    # All other types of weather data extraction
-    # methods are tested in the following block.
+    # All other types of weather data extraction methods are tested
+    # in the following block.
 
     def test_relative_humidity_methods(self, archive: WeatherArchive) -> None:
         """Tests the relative humidity extraction methods."""
@@ -359,8 +359,8 @@ class TestWeatherArchive:
         self, archive: WeatherArchive, level: str
     ) -> None:
         """
-        Tests the atmospheric pressure extraction
-        method with different measurement levels.
+        Tests the atmospheric pressure extraction method with
+        different measurement levels.
         """
 
         hourly = archive.get_hourly_pressure(level=level)
@@ -369,7 +369,8 @@ class TestWeatherArchive:
     @pytest.mark.parametrize("depth", (0, 26, 182, 255))
     def test_soil_moisture_methods(self, archive: WeatherArchive, depth: int) -> None:
         """
-        Test the soil moisture extraction methods with different soil depths.
+        Test the soil moisture extraction methods with different
+        soil depths.
         """
 
         hourly = archive.get_hourly_soil_moisture(depth=depth)
