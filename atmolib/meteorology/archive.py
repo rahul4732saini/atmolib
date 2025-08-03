@@ -225,7 +225,7 @@ class WeatherArchive(BaseWeather):
         self._verify_units(temperature_unit, precipitation_unit, wind_speed_unit)
         metrics: str = ",".join(constants.DAILY_ARCHIVE_SUMMARY_PARAMS)
 
-        return self._get_hourly_summary(
+        return self._get_daily_summary(
             metrics,
             constants.DAILY_ARCHIVE_SUMMARY_LABELS,
             temperature_unit=temperature_unit,
