@@ -1,6 +1,6 @@
 """
-Tests the classes and methods defined
-within `atmolib/meteorology/archive.py`.
+Tests the classes and methods defined within
+atmolib/meteorology/archive.py.
 """
 
 from datetime import datetime
@@ -14,14 +14,12 @@ from atmolib import WeatherArchive, constants
 
 
 class TestWeatherArchive:
-    """
-    Tests the `WeatherArchive` class and its defined methods.
-    """
+    """Tests the 'WeatherArchive' class."""
 
     def test_object_initialization_with_valid_coordinates(
         self, valid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
-        """Tests the object initialization with valid coordinates."""
+        """Tests object initialization with valid coordinates."""
 
         for lat, long in valid_coordinates:
             WeatherArchive(lat, long, start_date="2020-01-01", end_date="2020-01-05")
@@ -29,7 +27,7 @@ class TestWeatherArchive:
     def test_object_initialization_with_valid_dates(
         self, valid_archive_dates: tuple[tuple[str, str], ...]
     ) -> None:
-        """Tests the object initialization with valid archive dates."""
+        """Tests object initialization with valid archive dates."""
 
         for start, end in valid_archive_dates:
             WeatherArchive(0, 0, start_date=start, end_date=end)
@@ -37,7 +35,7 @@ class TestWeatherArchive:
     def test_object_initialization_with_valid_timeouts(
         self, valid_timeouts: tuple[int | float | None, ...]
     ) -> None:
-        """Test the object initialization with valid request timeouts."""
+        """Test object initialization with valid request timeouts."""
 
         for timeout in valid_timeouts:
             WeatherArchive(
@@ -47,7 +45,7 @@ class TestWeatherArchive:
     def test_object_initialization_with_invalid_coordinates(
         self, invalid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
-        """Test the object initialization with invalid coordinates."""
+        """Test object initialization with invalid coordinates."""
 
         with pytest.raises(ValueError):
             for lat, long in invalid_coordinates:
@@ -58,7 +56,7 @@ class TestWeatherArchive:
     def test_object_initialization_with_invalid_dates(
         self, invalid_archive_dates: tuple[tuple[str, str], ...]
     ) -> None:
-        """Tests the object initialization with invalid archive dates."""
+        """Tests object initialization with invalid archive dates."""
 
         with pytest.raises(ValueError):
             for start, end in invalid_archive_dates:
@@ -67,7 +65,7 @@ class TestWeatherArchive:
     def test_object_initialization_with_invalid_timeouts(
         self, invalid_timeouts: tuple[int | float | None, ...]
     ) -> None:
-        """Test the object initilization with invalid request timeouts."""
+        """Test object initialization with invalid request timeouts."""
 
         with pytest.raises(ValueError):
             for timeout in invalid_timeouts:
