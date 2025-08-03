@@ -200,7 +200,7 @@ def get_periodical_summary(
     timeout: int | float | None = constants.DEFAULT_REQUEST_TIMEOUT,
 ) -> pd.DataFrame:
     """
-    Extracts periodical (hourly or daily)meteorology summary data
+    Extracts periodical (hourly or daily) meteorology summary data
     from the specified API endpoint.
 
     #### Params:
@@ -238,7 +238,10 @@ def get_periodical_summary(
     # as indices for the resultant DataFrame object.
     timeline: list[str] = data.pop("time")
 
-    return pd.DataFrame(data, index=timeline, columns=labels)
+    dataframe = pd.DataFrame(data, index=timeline)
+    dataframe.columns = labels
+
+    return dataframe
 
 
 def get_elevation(
