@@ -36,6 +36,20 @@ class TestWeather:
         for days in (1, 10, 16):
             Weather(0, 0, days)
 
+    def test_init_with_valid_past_days(self, valid_past_days: tuple[int]) -> None:
+        """Tests object initialization with valid past days."""
+
+        for days in valid_past_days:
+            Weather(0, 0, past_days=days)
+
+    def test_init_with_valid_timeouts(
+        self, valid_timeouts: tuple[int | float | None, ...]
+    ) -> None:
+        """Tests object initialization with valid request timeouts."""
+
+        for timeout in valid_timeouts:
+            Weather(0, 0, timeout=timeout)
+
     def test_init_with_invalid_coordinates(
         self, invalid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
@@ -51,6 +65,22 @@ class TestWeather:
         with pytest.raises(ValueError):
             for days in (0, -1, 17):
                 Weather(0, 0, days)
+
+    def test_init_with_invalid_past_days(self, invalid_past_days: tuple[int]) -> None:
+        """Tests object initialization with invalid past days."""
+
+        with pytest.raises(ValueError):
+            for days in invalid_past_days:
+                Weather(0, 0, past_days=days)
+
+    def test_init_with_invalid_timeouts(
+        self, invalid_timeouts: tuple[int | float | None, ...]
+    ) -> None:
+        """Tests object initialization with invalid request timeouts."""
+
+        with pytest.raises(ValueError):
+            for timeout in invalid_timeouts:
+                Weather(0, 0, timeout)
 
     # The following block comprises test verification methods.
 
