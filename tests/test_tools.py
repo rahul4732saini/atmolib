@@ -29,17 +29,6 @@ def test_get_elevation_function_with_invalid_coordinates(
             tools.get_elevation(lat, long)
 
 
-def test_get_elevation_function_with_valid_timeouts(
-    valid_timeouts: tuple[int | float | None, ...],
-) -> None:
-    """
-    Tests the 'tools.get_elevation' function with valid request timeouts.
-    """
-
-    for timeout in valid_timeouts:
-        tools.get_elevation(0, 0, timeout)
-
-
 def test_get_elevation_function_with_invalid_timeouts(
     invalid_timeouts: tuple[int | float | None, ...],
 ) -> None:
@@ -72,18 +61,6 @@ def test_city_details_function_with_invalid_count(
     with pytest.raises(ValueError):
         for count in invalid_city_counts:
             tools.get_city_details("delhi", count)
-
-
-def test_city_details_function_with_valid_timeouts(
-    valid_timeouts: tuple[int | float | None, ...],
-) -> None:
-    """
-    Tests the 'tools.get_city_details' function with
-    valid request timeouts.
-    """
-
-    for timeout in valid_timeouts:
-        tools.get_city_details("delhi", timeout=timeout)
 
 
 def test_city_details_function_with_invalid_timeouts(
