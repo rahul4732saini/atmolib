@@ -11,32 +11,6 @@ from pathlib import Path
 
 import numpy as np
 
-# Default timeout for requesting data from API endpoints in seconds(s).
-DEFAULT_REQUEST_TIMEOUT = 30
-
-MAX_PAST_DAYS = 92
-
-# Maximum forecast days supported by compatible meteorology classes.
-MAX_FORECAST_DAYS_WEATHER = 16
-MAX_FORECAST_DAYS_AIR = 5
-MAX_FORECAST_DAYS_MARINE = 16
-
-DEFAULT_PAST_DAYS = 0
-DEFAULT_FORECAST_DAYS = 2
-
-# Time formats supported by the API for data extraction.
-TIME_FMT_UNIX = "unixtime"
-TIME_FMT_ISO = "iso8601"
-
-DEFAULT_TIME_FORMAT = TIME_FMT_ISO
-TIME_FORMATS = TIME_FMT_ISO, TIME_FMT_UNIX
-
-# Numpy data types for storing the associated time formats.
-TIME_FMT_DTYPES = {
-    TIME_FMT_ISO: np.object_,
-    TIME_FMT_UNIX: np.int32,
-}
-
 # API endpoint URLs.
 WEATHER_API = "https://api.open-meteo.com/v1/forecast"
 WEATHER_ARCHIVE_API = "https://archive-api.open-meteo.com/v1/archive"
@@ -51,6 +25,33 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # codes mapped with their corresponding descriptions.
 with open(BASE_DIR / "weather_codes.json") as file:
     WEATHER_CODES: dict[str, str] = json.load(file)
+
+# Maximum forecast days supported by compatible meteorology classes.
+MAX_FORECAST_DAYS_WEATHER = 16
+MAX_FORECAST_DAYS_AIR = 5
+MAX_FORECAST_DAYS_MARINE = 16
+
+# Global maximum past days value for all meteorology class.
+MAX_PAST_DAYS = 92
+
+# Time formats supported by the API for data extraction.
+TIME_FMT_UNIX = "unixtime"
+TIME_FMT_ISO = "iso8601"
+
+TIME_FORMATS = TIME_FMT_ISO, TIME_FMT_UNIX
+
+# Numpy data types for storing the associated time formats.
+TIME_FMT_DTYPES = {
+    TIME_FMT_ISO: np.object_,
+    TIME_FMT_UNIX: np.int32,
+}
+
+# Default timeout for requesting data from API endpoints in seconds(s).
+DEFAULT_REQUEST_TIMEOUT = 30
+
+DEFAULT_TIME_FORMAT = TIME_FMT_ISO
+DEFAULT_PAST_DAYS = 0
+DEFAULT_FORECAST_DAYS = 2
 
 AQI_SOURCES = "european", "us"
 
