@@ -24,13 +24,13 @@ class TestWeather:
         for lat, long in valid_coordinates:
             Weather(lat, long)
 
-    def test_object_initialization_with_valid_forecast_days(self) -> None:
+    def test_init_with_valid_forecast_days(self) -> None:
         """Tests object initialization with valid forecast days."""
 
         for days in (1, 10, 16):
             Weather(0, 0, days)
 
-    def test_object_initialization_with_invalid_coordinates(
+    def test_init_with_invalid_coordinates(
         self, invalid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
         """Tests object initialization with invalid coordinates."""
@@ -39,7 +39,7 @@ class TestWeather:
             for lat, long in invalid_coordinates:
                 Weather(lat, long)
 
-    def test_object_initialization_with_invalid_forecast_days(self) -> None:
+    def test_init_with_invalid_forecast_days(self) -> None:
         """Tests object initialization with invalid forecast days."""
 
         with pytest.raises(ValueError):
