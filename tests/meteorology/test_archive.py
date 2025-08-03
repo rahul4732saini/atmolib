@@ -16,6 +16,12 @@ from atmolib import WeatherArchive, constants
 class TestWeatherArchive:
     """Tests the 'WeatherArchive' class."""
 
+    def test_init_with_time_formats(self) -> None:
+        """Tests object initialization with different time formats."""
+
+        for format in constants.TIME_FORMATS:
+            WeatherArchive(0, 0, timefmt=format)
+
     def test_init_with_valid_coordinates(
         self, valid_coordinates: tuple[tuple[float, float], ...]
     ) -> None:
