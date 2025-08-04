@@ -131,11 +131,9 @@ SOIL_MOISTURE_DEPTH = {
 }
 
 DAILY_WEATHER_STATISTICAL_METRICS = "max", "min", "mean"
-WAVE_TYPES = "composite", "wind", "swell"
 
 # Maps user specified arguments with their corresponding request
 # parameters for extracting meteorology data from API endpoints.
-WAVE_TYPES_MAP = {"composite": "", "wind": "wind_", "swell": "swell_"}
 PRESSURE_LEVEL_MAPPING = {"sealevel": "pressure_msl", "surface": "surface_pressure"}
 
 # The constants defined below comprise requests metric names and their
