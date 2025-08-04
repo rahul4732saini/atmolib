@@ -16,7 +16,7 @@ class TestMarineWeather:
     def test_init_with_wave_types(self) -> None:
         """Tests object initialization with different wave types."""
 
-        for type_ in constants.WAVE_TYPES:
+        for type_ in constants.WAVE_TYPES_MAP:
             MarineWeather(0, 0, type_)
 
     def test_init_with_time_formats(self) -> None:
@@ -76,7 +76,7 @@ class TestMarineWeather:
             for timeout in invalid_timeouts:
                 MarineWeather(0, 0, timeout=timeout)
 
-    @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
+    @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES_MAP)
     def test_marine_weather_summary_methods(self, wave_type: str) -> None:
         """Test the marine weather summary extraction methods."""
 
@@ -97,7 +97,7 @@ class TestMarineWeather:
         assert hourly.columns.tolist() == constants.MARINE_WEATHER_SUMMARY_PARAMS
         assert daily.columns.tolist() == constants.MARINE_WEATHER_SUMMARY_PARAMS
 
-    @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
+    @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES_MAP)
     def test_wave_height_methods(self, wave_type: str) -> None:
         """Tests the wave height extraction methods."""
 
@@ -111,7 +111,7 @@ class TestMarineWeather:
         utils.verify_positive_or_null_data_series(hourly)
         utils.verify_positive_or_null_data_series(daily)
 
-    @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
+    @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES_MAP)
     def test_wave_direction_methods(self, wave_type: str) -> None:
         """Tests the wave direction extraction methods."""
 
@@ -125,7 +125,7 @@ class TestMarineWeather:
         utils.verify_positive_or_null_data_series(hourly)
         utils.verify_positive_or_null_data_series(daily)
 
-    @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES)
+    @pytest.mark.parametrize("wave_type", constants.WAVE_TYPES_MAP)
     def test_wave_period_methods(self, wave_type: str) -> None:
         """Tests the wave period extraction methods."""
 
