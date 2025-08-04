@@ -46,12 +46,24 @@ TIME_FMT_DTYPES = {
     TIME_FMT_UNIX: np.int32,
 }
 
+# Different wave types supported for extracting marine weather data.
+WAVE_TYPE_COMPOSITE = "composite"
+WAVE_TYPE_WIND = "wind"
+WAVE_TYPE_SWELL = "swell"
+
+WAVE_TYPE_MAP = {
+    WAVE_TYPE_COMPOSITE: "",
+    WAVE_TYPE_SWELL: "swell_",
+    WAVE_TYPE_WIND: "wind_",
+}
+
 # Default timeout for requesting data from API endpoints in seconds(s).
 DEFAULT_REQUEST_TIMEOUT = 30
 
 DEFAULT_TIME_FORMAT = TIME_FMT_ISO
 DEFAULT_PAST_DAYS = 0
 DEFAULT_FORECAST_DAYS = 2
+DEFAULT_WAVE_TYPE = WAVE_TYPE_COMPOSITE
 
 AQI_SOURCES = "european", "us"
 
