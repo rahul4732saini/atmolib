@@ -53,7 +53,7 @@ WAVE_TYPE_SWELL = "swell"
 
 # Maps user specified arguments with their corresponding
 # API request parameters.
-WAVE_TYPE_MAP = {
+WAVE_TYPES_MAP = {
     WAVE_TYPE_COMPOSITE: "",
     WAVE_TYPE_SWELL: "swell_",
     WAVE_TYPE_WIND: "wind_",
