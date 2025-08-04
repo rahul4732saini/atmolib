@@ -51,14 +51,17 @@ WAVE_TYPE_COMPOSITE = "composite"
 WAVE_TYPE_WIND = "wind"
 WAVE_TYPE_SWELL = "swell"
 
+# Maps user specified arguments with their corresponding
+# API request parameters.
 WAVE_TYPE_MAP = {
     WAVE_TYPE_COMPOSITE: "",
     WAVE_TYPE_SWELL: "swell_",
     WAVE_TYPE_WIND: "wind_",
 }
 
-# Default timeout for requesting data from API endpoints in seconds(s).
-DEFAULT_REQUEST_TIMEOUT = 30
+# Default values for different components within the package.
+
+DEFAULT_REQUEST_TIMEOUT = 30  # timeout value in seconds(s).
 
 DEFAULT_TIME_FORMAT = TIME_FMT_ISO
 DEFAULT_PAST_DAYS = 0
