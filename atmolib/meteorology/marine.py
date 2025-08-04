@@ -38,7 +38,7 @@ class MarineWeather(BaseForecast):
         self,
         lat: int | float,
         long: int | float,
-        wave_type: str = "composite",
+        wave_type: str = constants.DEFAULT_WAVE_TYPE,
         forecast_days: int = constants.DEFAULT_FORECAST_DAYS,
         past_days: int = constants.DEFAULT_PAST_DAYS,
         timefmt: str = constants.DEFAULT_TIME_FORMAT,
