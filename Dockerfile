@@ -7,7 +7,9 @@ RUN apt-get update && apt-get install -y build-essential \
 WORKDIR /home/atmolib
 COPY . .
 
-RUN pip install --no-cache-dir --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
+# Upgrades pip, and installs the base requirements for the
+# running the package and pytest for testing purposes.
+RUN pip install --no-cache-dir --upgrade pip \
+ && pip install --no-cache-dir -r requirements.txt pytest
 
 CMD ["/bin/bash"]
